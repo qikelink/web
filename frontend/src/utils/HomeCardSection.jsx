@@ -5,14 +5,15 @@ import {
   CardBody,
   CardFooter,
   Avatar,
-  Button,
-  Image,
 } from "@nextui-org/react";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
+import {Tabs, Tab} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 
 const HomeCardSection = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   const list = [
     {
@@ -58,7 +59,20 @@ const HomeCardSection = () => {
   ];
 
   return (
-    <div className="flex flex-row gap-4 flex-wrap p-4">
+    <>
+    <div className="flex flex-col">
+    <div className="flex flex-wrap gap-4 p-4">
+        <Tabs variant="bordered" aria-label="Tabs variants">
+          <Tab key="tech" title="Tech"/>
+          <Tab key="youtuber" title="Youtuber"/>
+          <Tab key="startup" title="StartUps"/>
+          <Tab key="personalDevelopment" title="PersonalDevelopment"/>
+          <Tab key="education" title="Education"/>
+          <Tab key="psychology" title="Psychology"/>
+        </Tabs>
+    </div>
+    <div className="flex flex-row gap-4 mt-6 flex-wrap px-4">
+        
       {list.map((item, index) => (
         <Card className="py-4 ">
           <CardHeader className="justify-between">
@@ -88,7 +102,7 @@ const HomeCardSection = () => {
               radius="md"
               size="sm"
               variant={isFollowed ? "bordered" : "solid"}
-              onPress={() => setIsFollowed(!isFollowed)}
+              onPress={onOpen}
             >
               {isFollowed ? "UnRequest" : "Request"}
             </Button>
@@ -122,18 +136,51 @@ Frontend developer and UI/UX enthusiast.<br/> Join me on this coding adventure!
               <p className="font-semibold text-default-400 text-small">$40</p>
               <p className="text-default-400 text-small">Per Min</p>
             </div>
-            {/* <div className="flex gap-1">
-              <p className="font-semibold text-default-400 text-small">4</p>
-              <p className=" text-default-400 text-small">Following</p>
-            </div>
-            <div className="flex gap-1">
-              <p className="font-semibold text-default-400 text-small">97.1K</p>
-              <p className="text-default-400 text-small">Followers</p>
-            </div> */}
+            
           </CardFooter>
         </Card>
       ))}
     </div>
+    </div>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalBody>
+                <p> 
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
+                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. 
+                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. 
+                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
+                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+    
+    
   );
 };
 
