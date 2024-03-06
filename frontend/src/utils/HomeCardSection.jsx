@@ -60,7 +60,7 @@ const HomeCardSection = () => {
   return (
     <div className="flex flex-row gap-4 flex-wrap p-4">
       {list.map((item, index) => (
-        <Card className="py-4 ">
+        <Card key={index} className="py-4 ">
           <CardHeader className="justify-between">
             <div className="flex gap-2">
               <Avatar
