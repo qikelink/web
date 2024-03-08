@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Header from "@/components/Header";
-import HomeSection from "@/components/HomeSection";
-import { isUserValid } from "../../../backend/src/pocketbase";
+import OrganizationSection from "@/components/OrganizationSection";
 import ListSection from "@/utils/ListSection";
+import React from "react";
 
-export default function Home() {
+const page = () => {
   return (
     <main className="">
       <Header />
@@ -16,11 +15,13 @@ export default function Home() {
             <ListSection />
           </div>
 
-          <div className="text-black w-3/4 flex justify-center">
-            <HomeSection />
+          <div className="text-black w-3/4 flex justify-center p-4">
+            <OrganizationSection />
           </div>
         </div>
       </div>
     </main>
   );
-}
+};
+
+export default page;
