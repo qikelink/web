@@ -17,8 +17,10 @@ import {
   Button,
 } from "@nextui-org/react";
 import { AiFillAmazonCircle, AiOutlineSearch } from "react-icons/ai";
-import { signout } from "../../../backend/src/pocketbase";
+import { isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
+import { User } from "@nextui-org/react";
+import Image from "next/image";
 import { CheckIcon } from "@/utils/CheckIcon";
 import { IoNotifications } from "react-icons/io5";
 import { FaMicrophone } from "react-icons/fa";
@@ -33,6 +35,7 @@ export default function Header() {
   };
 
   return (
+   
     <Navbar maxWidth="xl">
       <NavbarBrand className="flex gap-4">
         <Button isIconOnly variant="light" color="default">
@@ -44,7 +47,7 @@ export default function Header() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <Input
           classNames={{
-            base: "max-w-full sm:max-w-[20rem] h-10",
+            base: "w-96 sm:max-w-[30rem] h-10", // Adjust the max-width for large devices
             mainWrapper: "h-full",
             input: "text-small",
             inputWrapper:
@@ -66,6 +69,42 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent as="div" justify="end">
+        <div className="flex items-center space-x-3">
+          <User
+            name="Jane Doe"
+            // description="Product Designer"
+            avatarProps={{
+              src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+              size: "sm",
+            }}
+          />
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Image
+                src="/down.svg"
+                className="text-lightbackground"
+                alt="trigger"
+                width={20}
+                height={20}
+              />
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Profile Actions"
+              variant="flat"
+              className="text-black"
+            >
+              {!isUserValid ? (
+                <DropdownItem key="signin">
+                  <Link href="/signInPage" className="text-darktext">
+                    Sign In
+                  </Link>
+                </DropdownItem>
+              ) : null}
+              <DropdownItem key="profile">
+                <Link href="/profilePage" className="text-darktext">
+                  Profile
+                </Link>
+              </DropdownItem>
         <div className="flex flex-row justify-between gap-5">
           <Badge content="9+" shape="circle" color="danger" size="lg">
             <Button
@@ -104,6 +143,32 @@ export default function Header() {
                 <Link href="/settingsPage">Settings</Link>
               </DropdownItem>
 
+              {isUserValid ? (
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  onClick={handleSignout}
+                >
+                  Sign Out
+                </DropdownItem>
+              ) : null}
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Image src="/bell.svg" alt="bell" width={20} height={20} />
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Profile Actions"
+              variant="flat"
+              className="text-darktext"
+            >
+              <DropdownItem key="signin">
+                Space for messages and notifications as they come
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
               <DropdownItem key="logout" color="danger" onClick={handleSignout}>
                 Log Out
               </DropdownItem>
