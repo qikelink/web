@@ -35,7 +35,7 @@ export default function Header() {
   };
 
   return (
-    <Navbar maxWidth="xl" className="font-poppins text-black dark:text-lighttext">
+    <Navbar maxWidth="xl" className="font-poppins text-black dark:text-lighttext shadow-sm">
       <NavbarBrand className="flex gap-4">
         {/* <Button isIconOnly variant="light" color="default">
           <IoIosMenu size={36} color="white" />
