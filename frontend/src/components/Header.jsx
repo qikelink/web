@@ -16,6 +16,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "./ui/input";
+import CreateAccountDialog from "./dialog/create-account";
+import LoginDialog from "./dialog/login";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -25,66 +27,64 @@ export default function Header() {
   };
 
   return (
-    <div
-      
-      className="font-poppins shadow-sm"
-    >
+    <div className="sticky top-0 z-50 w-full bg-background font-poppins flex justify-between items-center px-5 py-2 ">
       <div className="flex gap-4">
-        {/* <Button isIconOnly variant="light" color="default">
-          <IoIosMenu size={36} color="white" />
-        </Button> */}
         <p className="font-extrabold text-xl">Y-PROJECT</p>
         <ThemeSwitcher />
       </div>
-
-      <div className="hidden sm:flex gap-4" justify="center">
-        <Input
-          classNames={{
-            base: "w-96 sm:max-w-[30rem] h-10", // Adjust the max-width for large devices
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-500/20",
-          }}
-          placeholder="Type to search..."
-          size="md"
-          startContent={<AiOutlineSearch size={18} />}
-          type="search"
-          endContent={<FaMicrophone size={18} />}
-        />
+      <div className="hidden sm:flex gap-4 justify-center">
+        <div className="relative flex w-full">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <AiOutlineSearch size={18} />
+          </span>
+          <Input
+            className="w-full sm:w-48 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground"
+            placeholder="Type to search..."
+            size="md"
+            type="search"
+          />
+          <span className="absolute inset-y-0 right-0 flex items-center pr-3">
+            <FaMicrophone size={18} />
+          </span>
+        </div>
       </div>
 
       <div as="div" justify="end">
         <div className="flex items-center space-x-5">
-          <div>
-            {isUserValid ? (
-              <User
-                // name="Jane Doe"
-                //  description="Product Designer"
-                avatarProps={{
-                  src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                  size: "sm",
-                }}
-              />
-            ) : (
-              "Sign in"
-            )}
-          </div>
+          {isUserValid ? (
+            <>
+              <DropdownMenu placement="bottom-end">
+                <DropdownMenuTrigger asChild>
+                  <Image src="/bell.svg" alt="bell" width={22} height={22} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
 
-          <DropdownMenu placement="bottom-end">
-            <DropdownMenuTrigger asChild>
-              <Image src="/bell.svg" alt="bell" width={22} height={22} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    {" "}
+                    Space for messages and notifications as they come
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-              <DropdownMenuItem>
-                {" "}
-                Space for messages and notifications as they come
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <div>
+                <User
+                  // name="Jane Doe"
+                  //  description="Product Designer"
+                  avatarProps={{
+                    src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                    size: "sm",
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <LoginDialog />
+              <CreateAccountDialog />
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Input, Button } from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import { RightIcon } from "@/icons/RightIcon";
 
 const KeywordBar = () => {
-  const [selectedButtons, setSelectedButtons] = useState([]);
+  const [selectedButtons, setSelectedButtons] = useState(['All']);
 
   const handleButtonClick = (button) => {
     if (selectedButtons.includes(button)) {
@@ -24,11 +24,11 @@ const KeywordBar = () => {
   };
 
   return (
-    <div>
+    <div className="my-3 space-y-3">
       <div className="flex justify-end ">
         <Button
-          size="sm"
-          isIconOnly
+          variant="secondary"
+          size="icon"
           aria-label="more keywords"
           onClick={handleScrollRight}
         >
@@ -55,10 +55,10 @@ const KeywordBar = () => {
         ].map((buttonText) => (
           <Button
             key={buttonText}
-            variant="flat"
-            className={`w-[120px] font-medium text-lg ${
+            variant="secondary"
+            className={`w-full font-medium text-lg ${
               selectedButtons.includes(buttonText)
-                ? "bg-primary text-white"
+                ? "bg-primary text-secondary hover:bg-primary"
                 : ""
             }`}
             onClick={() => handleButtonClick(buttonText)}
