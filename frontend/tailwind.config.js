@@ -19,7 +19,7 @@ module.exports = {
 
       colors: {
         mainbackground: "#141516",
-        lightbackground: "#FFFFFF",
+        whitebackground: "#FFFFFF",
         darktext: "#808191",
         lighttext: "#FFFFFF",
         verifiedblue: "#08A0F7",

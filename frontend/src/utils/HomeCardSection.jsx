@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Card,
@@ -72,17 +74,7 @@ const HomeCardSection = () => {
   return (
     <>
       <div className="flex flex-col">
-        <div className="flex flex-wrap gap-4 py-4 px-2">
-          <Tabs variant="bordered" aria-label="Tabs variants">
-            <Tab key="tech" title="Tech" />
-            <Tab key="youtuber" title="Youtuber" />
-            <Tab key="startup" title="StartUps" />
-            <Tab key="personalDevelopment" title="PersonalDevelopment" />
-            <Tab key="education" title="Education" />
-            <Tab key="psychology" title="Psychology" />
-          </Tabs>
-        </div>
-        <div className="flex flex-row mt-3 gap-2 flex-wrap p-2 w-full">
+        <div className="flex flex-row gap-2 flex-wrap px-2 w-full">
           {list.map((item, index) => (
             <Card key={index} className="py-4 ">
               <CardHeader className="justify-between">
@@ -197,10 +189,7 @@ const HomeCardSection = () => {
                 </span>
                 <div className="flex flex-col mx-2 bg-red-400">
                   <p className="text-primary">Pick A Date</p>
-                  <Calendar
-                    onChange={onChange}
-                    value={value}
-                  />
+                  <Calendar onChange={onChange} value={value} />
                 </div>
                 <Input
                   size={"lg"}

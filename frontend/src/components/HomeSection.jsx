@@ -1,23 +1,22 @@
 import HomeCardSection from "@/utils/HomeCardSection";
+import KeywordBar from "@/utils/KeywordBar";
 import ListSection from "@/utils/ListSection";
 import React from "react";
-import HeaderCardSection from "@/utils/HeaderCards";
 
 const HomeSection = () => {
   return (
-    <div className="flex flex-row justify-center px-5 w-full bg-mainbackground">
-      <div className="w-1/4 text-black py-4">
-        <ListSection />
-      </div>
-      <div className="text-black w-3/4 flex justify-center flex-col">
-        <HeaderCardSection />
-
-        <HomeCardSection />
+    <div className="min-h-screen font-poppins px-8 py-3 w-full">
+      <KeywordBar />
+      <div className="flex flex-row justify-center py-4">
+        <div className="w-1/4 px-3 ">
+          <ListSection />
+        </div>
+        <div className=" w-3/4 flex justify-center flex-col">
+          <HomeCardSection />
+        </div>
       </div>
     </div>
   );
 };
 
 export default HomeSection;
-
-
