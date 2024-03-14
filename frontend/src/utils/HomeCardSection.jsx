@@ -91,11 +91,11 @@ const HomeCardSection = () => {
                         Zoey Lang
                       </h4>
                       <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                        4.3/5.0 <FaStar color="yellow" size={18} />
+                        4.3/5.0 <FaStar className="ml-1" color="#FFC72C" size={16} />
                       </span>
                     </div>
                   </div>
-                  <Button variant="outline" size="icon">
+                  <Button variant="ghost" size="icon">
                     <BsJournalBookmarkFill />
                   </Button>
                   {/* <ModalBox buttonName="Request" /> */}
@@ -122,7 +122,7 @@ const HomeCardSection = () => {
                   <p className="font-semibold text-default-400 text-small">
                     $40 /
                   </p>
-                  <p className="text-default-400 text-small">30 Min</p>
+                  <p className="text-default-400 text-small">session</p>
                 </Badge>
               </CardFooter>
             </Card>

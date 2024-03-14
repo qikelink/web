@@ -76,7 +76,7 @@ const ListSection = () => {
         </li>
       </ul>
 
-      <Separator orientation="vertical" className="grow-0" />
+      <Separator orientation="vertical" className="grow-0 mx-2" />
     </div>
   );
 };
