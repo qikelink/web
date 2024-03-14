@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { RightIcon } from "@/icons/RightIcon";
 
 const KeywordBar = () => {
-  const [selectedButtons, setSelectedButtons] = useState(['All']);
+  const [selectedButtons, setSelectedButtons] = useState(["All"]);
 
   const handleButtonClick = (button) => {
     if (selectedButtons.includes(button)) {
@@ -24,21 +24,11 @@ const KeywordBar = () => {
   };
 
   return (
-    <div className="my-3 space-y-3">
-      <div className="flex justify-end ">
-        <Button
-          variant="secondary"
-          size="icon"
-          aria-label="more keywords"
-          onClick={handleScrollRight}
-        >
-          <RightIcon />
-        </Button>
-      </div>
-
+    <div className="flex my-2 space-y-3 space-x-2">
       <div
         id="buttonContainer"
-        className="flex py-4 gap-4 w-full overflow-x-auto"
+        className="flex py-4 px-2 gap-4 w-full overflow-x-scroll"
+        style={{ "scrollbar-width": "thin", overflow: "transparent" }}
       >
         {[
           "All",
@@ -66,6 +56,16 @@ const KeywordBar = () => {
             {buttonText}
           </Button>
         ))}
+      </div>
+      <div className="py-1 justify-end ">
+        <Button
+          variant="secondary"
+          size="icon"
+          aria-label="more keywords"
+          onClick={handleScrollRight}
+        >
+          <RightIcon />
+        </Button>
       </div>
     </div>
   );

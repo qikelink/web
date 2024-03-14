@@ -71,7 +71,7 @@ const HomeCardSection = () => {
   return (
     <>
       <div>
-        <div className="grid grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-3 gap-3 w-full">
           {list.map((item, index) => (
             <Card key={index}>
               <CardHeader>
