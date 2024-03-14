@@ -85,7 +85,6 @@ export default function Header() {
           ) : (
             <>
               <LoginDialog />
-              <CreateAccountDialog />
             </>
           )}
         </div>
