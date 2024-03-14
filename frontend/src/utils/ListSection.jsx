@@ -64,10 +64,10 @@ const ListSection = () => {
         <li class="flex gap-4 items-center">
           <div className="flex space-x-2 items-center bg-inputbackground p-3 rounded-lg mr-3 mt-4">
             <span className="flex space-x-2 items-start">
-              <EarnIcon size={60} />
-              <p className="text-lg text-wrap ">
+              <EarnIcon size={40} />
+              <p className="text-base text-wrap ">
                 {" "}
-                Upgrade your account to start earning.
+                Upgrade your account to start earning as a mentor.
               </p>
             </span>
 

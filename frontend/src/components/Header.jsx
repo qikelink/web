@@ -22,7 +22,7 @@ import LoginDialog from "./dialog/login";
 import { FaBars } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PiBookBookmarkDuotone } from "react-icons/pi";
+import { PiBookBookmarkDuotone, PiPerson } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,10 @@ import { HomeIcon } from "@/icons/HomeIcon";
 import { Separator } from "@/components/ui/separator";
 import { RightIcon } from "@/icons/RightIcon";
 import { EarnIcon } from "@/icons/EarnIcon";
+import { UserIcon } from "@/icons/UserIcon";
+import { InviteIcon } from "@/icons/InviteIcon";
+import { SettingIcon } from "@/icons/SettingIcon";
+import { LogoutIcon } from "@/icons/LogoutIcon";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -80,7 +84,7 @@ export default function Header() {
                     <div class="flex items-start space-x-2 ">
                       <EarnIcon size={40} />
                       <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                        <p className="text-base text-wrap ">
+                        <p className="text-base text-wrap text-darktext ">
                           {" "}
                           Upgrade your account to start earning as a mentor.
                         </p>
@@ -97,7 +101,7 @@ export default function Header() {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                        <p className="text-base text-wrap ">
+                        <p className="text-base text-wrap text-darktext ">
                           {" "}
                           Upgrade your account to start earning as a mentor.
                         </p>
@@ -111,7 +115,7 @@ export default function Header() {
                     <div class="flex items-start space-x-2 ">
                       <EarnIcon size={40} />
                       <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                        <p className="text-base text-wrap ">
+                        <p className="text-base text-wrap text-darktext ">
                           {" "}
                           Upgrade your account to start earning as a mentor.
                         </p>
@@ -128,7 +132,7 @@ export default function Header() {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                        <p className="text-base text-wrap ">
+                        <p className="text-base text-wrap text-darktext ">
                           {" "}
                           Upgrade your account to start earning as a mentor.
                         </p>
@@ -170,7 +174,7 @@ export default function Header() {
                       href="/Sessions"
                       className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                     >
-                      <PiBookBookmarkDuotone size={20} />
+                      <UserIcon/>
                       <p>My account</p>
                     </Link>
                   </DropdownMenuItem>
@@ -181,7 +185,7 @@ export default function Header() {
                         pathname === "/Sessions" ? "bg-[#f7fafc] text-blue" : ""
                       } py-1 text-lg font-medium`}
                     >
-                      <BsJournalBookmarkFill size={20} />
+                      <InviteIcon/>
                       <p>Invite friends</p>
                     </Link>
                   </DropdownMenuItem>
@@ -190,7 +194,7 @@ export default function Header() {
                       href="/Sessions"
                       className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                     >
-                      <IoMdSettings size={20} />
+                      <SettingIcon/>
                       <p>Support</p>
                     </Link>
                   </DropdownMenuItem>
@@ -218,7 +222,7 @@ export default function Header() {
                       href="/Sessions"
                       className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                     >
-                      <IoMdSettings size={20} />
+                      <LogoutIcon/>
                       <p>Log out</p>
                     </Link>
                   </DropdownMenuItem>
