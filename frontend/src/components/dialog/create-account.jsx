@@ -69,12 +69,12 @@ const CreateAccountDialog = () => {
       <DialogTrigger>
         <Button
           size="sm"
-          className="w-full text-white bg-blue hover:bg-darkblue rounded-full text-lg">
+          className="w-full text-white bg-blue hover:bg-darkblue rounded-full text-lg"
+        >
           Create account
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm ">
-        <DialogHeader className="mt-10 mb-2">
         <DialogHeader className="mt-10 mb-2">
           <DialogTitle>Create Account</DialogTitle>
           <DialogDescription>
@@ -93,7 +93,9 @@ const CreateAccountDialog = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <Label htmlFor="password" className='mt-2' >Password</Label>
+            <Label htmlFor="password" className="mt-2">
+              Password
+            </Label>
             <Input
               isRequired
               placeholder="Enter password"
