@@ -10,10 +10,8 @@ import Calendar from "react-calendar";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import ModalBox from "./ModalBox";
 import { Button } from "@/components/ui/button";
@@ -21,9 +19,9 @@ import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import KeywordBar from "@/utils/KeywordBar";
-import { dataset } from "@/dummy_api/dataSet";
+import { dataset, status } from "@/dummy_api/dataSet";
 
-const HomeCardSection = () => {
+const SessionCard = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
   const [value, onChange] = useState(new Date());
 
@@ -73,7 +71,7 @@ const HomeCardSection = () => {
   return (
     <>
       <div>
-        <KeywordBar data={dataset} />
+        <KeywordBar data={status} />
 
         <div className="grid grid-cols-3 gap-3 w-full">
           {list.map((item, index) => (
@@ -131,4 +129,4 @@ const HomeCardSection = () => {
   );
 };
 
-export default HomeCardSection;
+export default SessionCard;

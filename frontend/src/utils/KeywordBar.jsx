@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RightIcon } from "@/icons/RightIcon";
 
-const KeywordBar = () => {
+const KeywordBar = ({ data }) => {
   const [selectedButtons, setSelectedButtons] = useState(["All"]);
 
   const handleButtonClick = (button) => {
@@ -24,25 +24,12 @@ const KeywordBar = () => {
   };
 
   return (
-    <div className="flex my-2 space-y-3 space-x-2">
+    <div className="flex my-3 space-y-3 space-x-2 w-full">
       <div
         id="buttonContainer"
         className="flex py-4 px-2 gap-4 w-full overflow-x-scroll"
-        style={{ "scrollbar-width": "thin", overflow: "transparent" }}
-      >
-        {[
-          "All",
-          "Tech",
-          "Youtuber",
-          "StartUps",
-          "Personal Development",
-          "Education",
-          "Psychology",
-          "Business",
-          "Career",
-          "Design",
-          "Lifestyle",
-        ].map((buttonText) => (
+        style={{ "scrollbar-width": "thin" }}>
+        {data.map((buttonText) => (
           <Button
             key={buttonText}
             variant="secondary"
@@ -51,8 +38,7 @@ const KeywordBar = () => {
                 ? "bg-primary text-secondary hover:bg-primary"
                 : ""
             }`}
-            onClick={() => handleButtonClick(buttonText)}
-          >
+            onClick={() => handleButtonClick(buttonText)}>
             {buttonText}
           </Button>
         ))}
@@ -62,8 +48,7 @@ const KeywordBar = () => {
           variant="secondary"
           size="icon"
           aria-label="more keywords"
-          onClick={handleScrollRight}
-        >
+          onClick={handleScrollRight}>
           <RightIcon />
         </Button>
       </div>

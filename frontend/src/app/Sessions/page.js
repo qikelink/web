@@ -13,7 +13,7 @@ const page = () => {
   return (
     <>
       {domLoaded && (
-        <main>
+        <main className="mx-5">
           <Header />
           <SessionComp />
         </main>

@@ -18,6 +18,8 @@ import {
 import { Input } from "./ui/input";
 import CreateAccountDialog from "./dialog/create-account";
 import LoginDialog from "./dialog/login";
+import { FaBars } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -27,10 +29,11 @@ export default function Header() {
   };
 
   return (
-    <div className="sticky top-0 z-50 w-full bg-background font-poppins flex justify-between items-center px-5 py-3 ">
-      <div className="flex gap-4">
+    <div className="sticky top-0 z-50 w-full bg-background font-poppins flex justify-between items-center py-3 px-1 ">
+      <div className="flex items-center justify-center gap-4">
+        <FaBars size={20} />
+
         <p className="font-extrabold text-xl">Y-PROJECT</p>
-        <ThemeSwitcher />
       </div>
       <div className="hidden sm:flex gap-4 justify-center">
         <div className="relative flex w-full">
