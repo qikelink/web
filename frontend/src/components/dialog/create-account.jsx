@@ -75,6 +75,7 @@ const CreateAccountDialog = () => {
       </DialogTrigger>
       <DialogContent className="max-w-sm ">
         <DialogHeader className="mt-10 mb-2">
+        <DialogHeader className="mt-10 mb-2">
           <DialogTitle>Create Account</DialogTitle>
           <DialogDescription>
             Get started and book a mentor of your choice
@@ -82,6 +83,7 @@ const CreateAccountDialog = () => {
         </DialogHeader>
         <div>
           <form className="flex flex-col gap-4 " onSubmit={handleFormSubmit}>
+            <Label htmlFor="email">Email</Label>
             <Input
               isRequired
               placeholder="Enter your email"
@@ -90,10 +92,11 @@ const CreateAccountDialog = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+
+            <Label htmlFor="password" className='mt-2' >Password</Label>
             <Input
               isRequired
-              label="Password"
-              placeholder="Enter your password"
+              placeholder="Enter password"
               type="password"
               name="password"
               value={password}
@@ -102,8 +105,9 @@ const CreateAccountDialog = () => {
 
             <Button
               size="xl"
-              className="bg-blue  hover:bg-darkblue text-lg rounded-lg "
-              type="submit">
+              className="bg-blue  hover:bg-darkblue text-lg rounded-lg mt-3"
+              type="submit"
+            >
               {isloading ? "Signing up.." : "Continue"}
             </Button>
           </form>
