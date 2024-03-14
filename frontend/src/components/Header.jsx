@@ -27,7 +27,7 @@ export default function Header() {
   };
 
   return (
-    <div className="sticky top-0 z-50 w-full bg-background font-poppins flex justify-between items-center px-5 py-2 ">
+    <div className="sticky top-0 z-50 w-full bg-background font-poppins flex justify-between items-center px-5 py-3 ">
       <div className="flex gap-4">
         <p className="font-extrabold text-xl">Y-PROJECT</p>
         <ThemeSwitcher />
@@ -40,7 +40,7 @@ export default function Header() {
           <Input
             className="w-full sm:w-48 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground"
             placeholder="Type to search..."
-            size="md"
+            size="lg"
             type="search"
           />
           <span className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -50,7 +50,7 @@ export default function Header() {
       </div>
 
       <div as="div" justify="end">
-        <div className="flex items-center space-x-5">
+        <div className="flex items-center space-x-5 justify-center">
           {isUserValid ? (
             <>
               <DropdownMenu placement="bottom-end">
@@ -82,7 +82,6 @@ export default function Header() {
           ) : (
             <>
               <LoginDialog />
-              <CreateAccountDialog />
             </>
           )}
         </div>

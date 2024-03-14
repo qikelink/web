@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Signup } from "../../../../backend/src/pocketbase";
@@ -69,13 +69,12 @@ const CreateAccountDialog = () => {
       <DialogTrigger>
         <Button
           size="sm"
-          className="w-full text-white bg-blue hover:bg-darkblue rounded-full text-lg"
-        >
+          className="w-full text-white bg-blue hover:bg-darkblue rounded-full text-lg">
           Create account
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm ">
-        <DialogHeader className='mt-10 mb-2'>
+        <DialogHeader className="mt-10 mb-2">
           <DialogTitle>Create Account</DialogTitle>
           <DialogDescription>
             Get started and book a mentor of your choice
@@ -85,7 +84,6 @@ const CreateAccountDialog = () => {
           <form className="flex flex-col gap-4 " onSubmit={handleFormSubmit}>
             <Input
               isRequired
-             
               placeholder="Enter your email"
               type="email"
               name="email"
@@ -102,7 +100,10 @@ const CreateAccountDialog = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Button size='xl' className='bg-blue  hover:bg-darkblue text-lg rounded-lg ' type="submit">
+            <Button
+              size="xl"
+              className="bg-blue  hover:bg-darkblue text-lg rounded-lg "
+              type="submit">
               {isloading ? "Signing up.." : "Continue"}
             </Button>
           </form>

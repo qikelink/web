@@ -5,9 +5,9 @@ import React from "react";
 
 const HomeSection = () => {
   return (
-    <div className="min-h-screen font-poppins px-8 py-3 w-full">
+    <div className="min-h-screen font-poppins px-8 w-full">
       <KeywordBar />
-      <div className="flex flex-row justify-center py-4">
+      <div className="flex flex-row justify-center py-1">
         <div className="w-1/4 px-3 ">
           <ListSection />
         </div>

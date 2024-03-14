@@ -7,13 +7,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button"
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { login } from "../../../../backend/src/pocketbase";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useState } from "react";
+import { CgProfile } from "react-icons/cg";
 
 const LoginDialog = () => {
   const [selected, setSelected] = React.useState("login");
@@ -63,8 +64,9 @@ const LoginDialog = () => {
       <DialogTrigger>
         <Button
           size="sm"
-          className="w-full dark:text-darkblue text-blue bg-lightblue hover:bg-lightblue2 rounded-full text-lg"
+          className="w-full  dark:text-darkblue text-blue bg-[#b9e3f3] hover:bg-lightblue2 rounded-full text-lg"
         >
+          <CgProfile className='mr-2 h-4 w-4'/>
           Log in
         </Button>
       </DialogTrigger>
