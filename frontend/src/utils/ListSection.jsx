@@ -8,6 +8,8 @@ import { IoMdSettings } from "react-icons/io";
 import { GrHomeRounded } from "react-icons/gr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { RightIcon } from "@/icons/RightIcon";
+import { EarnIcon } from "@/icons/EarnIcon";
 
 const ListSection = () => {
   const router = useRouter();
@@ -22,7 +24,8 @@ const ListSection = () => {
             href="/"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
               pathname === "/" ? "bg-[#f7fafc] text-blue" : ""
-            }`}>
+            }`}
+          >
             <HomeIcon />
             <p>Home</p>
           </Link>
@@ -30,7 +33,8 @@ const ListSection = () => {
         <li>
           <Link
             href="/Sessions"
-            className="flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue">
+            className="flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue"
+          >
             <PiBookBookmarkDuotone size={20} />
             <p>BookMarked</p>
           </Link>
@@ -40,7 +44,8 @@ const ListSection = () => {
             href="/Sessions"
             className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
               pathname === "/Sessions" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue`}>
+            } hover:text-blue`}
+          >
             <BsJournalBookmarkFill size={20} />
             <p>Sessions</p>
           </Link>
@@ -48,15 +53,26 @@ const ListSection = () => {
         <li>
           <Link
             href="/Sessions"
-            className="flex gap-4 items-center py-5 px-1 cursor-pointer hover:text-blue">
+            className="flex gap-4 items-center py-5 px-1 cursor-pointer hover:text-blue"
+          >
             <IoMdSettings size={20} />
             <p>Settings</p>
           </Link>
         </li>
         <Separator orientation="horizontal" />
-        <li className="flex gap-4 items-center py-5 px-1">
-          <HomeIcon />
-          <p>Home</p>
+
+        <li class="flex gap-4 items-center">
+          <div className="flex space-x-2 items-center bg-inputbackground p-3 rounded-lg mr-3">
+            <span className="flex space-x-2 items-start">
+              <EarnIcon size={60} />
+              <p className="text-lg text-wrap ">
+                {" "}
+                Upgrade your account to start earning.
+              </p>
+            </span>
+
+            <RightIcon size={25} />
+          </div>
         </li>
       </ul>
 

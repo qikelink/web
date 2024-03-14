@@ -89,7 +89,7 @@ const LoginDialog = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className='mt-2' >Password</Label>
             <Input
               isRequired
               placeholder="Enter password"
@@ -101,7 +101,7 @@ const LoginDialog = () => {
 
             <Button
               size="xl"
-              className="bg-blue hover:bg-darkblue text-lg rounded-lg "
+              className="bg-blue hover:bg-darkblue text-lg rounded-lg mt-3"
               type="submit"
             >
               {isloading ? "Logging in.." : "Continue"}
