@@ -3,23 +3,18 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
-import { FaStarHalf } from "react-icons/fa";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import Calendar from "react-calendar";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import ModalBox from "./ModalBox";
-import { Button } from "@/components/ui/button";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Toggle } from "@/components/ui/toggle"
 import KeywordBar from "@/utils/KeywordBar";
 import { dataset } from "@/dummy_api/dataSet";
 
@@ -95,9 +90,9 @@ const HomeCardSection = () => {
                       </span>
                     </div>
                   </div>
-                  <Button variant="ghost" size="icon">
+                  <Toggle aria-label="Toggle italic">
                     <BsJournalBookmarkFill />
-                  </Button>
+                  </Toggle>
                   {/* <ModalBox buttonName="Request" /> */}
                 </div>
               </CardHeader>
@@ -118,11 +113,11 @@ const HomeCardSection = () => {
                 <ModalBox buttonName="Request" />
                 <Badge
                   variant={"outline"}
-                  className="flex gap-1 rounded-full bg-green-200">
-                  <p className="font-semibold text-default-400 text-small">
+                  className="flex gap-1 rounded-full bg-primary">
+                  <p className="font-semibold text-secondary text-small">
                     $40 /
                   </p>
-                  <p className="text-default-400 text-small">session</p>
+                  <p className="text-secondary text-small">session</p>
                 </Badge>
               </CardFooter>
             </Card>
