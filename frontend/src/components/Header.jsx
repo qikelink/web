@@ -75,7 +75,7 @@ export default function Header() {
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <BellIcon size={24} />
+                  <Image src='/bell.svg' width={24} height={24} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="max-w-md p-3 space-y-3">
                   <DropdownMenuLabel>Notifications (2) </DropdownMenuLabel>

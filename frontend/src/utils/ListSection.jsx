@@ -32,7 +32,7 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/Sessions"
+            href="/bookmark"
             className="flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue"
           >
             <PiBookBookmarkDuotone size={20} />
@@ -41,7 +41,7 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/Sessions"
+            href="/sessions"
             className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
               pathname === "/Sessions" ? "bg-[#f7fafc] text-blue" : ""
             } hover:text-blue`}
