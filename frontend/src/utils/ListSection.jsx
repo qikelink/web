@@ -62,7 +62,7 @@ const ListSection = () => {
         <Separator orientation="horizontal" />
 
         <li class="flex gap-4 items-center">
-          <div className="flex space-x-2 items-center bg-inputbackground p-3 rounded-lg mr-3">
+          <div className="flex space-x-2 items-center bg-inputbackground p-3 rounded-lg mr-3 mt-4">
             <span className="flex space-x-2 items-start">
               <EarnIcon size={60} />
               <p className="text-lg text-wrap ">
@@ -71,7 +71,7 @@ const ListSection = () => {
               </p>
             </span>
 
-            <RightIcon size={25} />
+            <RightIcon size={20} />
           </div>
         </li>
       </ul>

@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { login } from "../../../../backend/src/pocketbase";
@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import { Separator } from "../ui/separator";
 
 const LoginDialog = () => {
   const [selected, setSelected] = React.useState("login");
@@ -66,12 +67,12 @@ const LoginDialog = () => {
           size="sm"
           className="w-full  dark:text-darkblue text-blue bg-[#b9e3f3] hover:bg-lightblue2 rounded-full text-lg"
         >
-          <CgProfile className='mr-2 h-4 w-4'/>
+          <CgProfile className="mr-2 h-4 w-4" />
           Log in
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm">
-        <DialogHeader className='mt-10 mb-2'>
+        <DialogHeader className="mt-10 mb-2">
           <DialogTitle>Log in </DialogTitle>
           <DialogDescription>
             Get started and book a mentor of your choice
@@ -81,6 +82,7 @@ const LoginDialog = () => {
           <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
             <Label htmlFor="email">Email</Label>
             <Input
+              className="p-6"
               isRequired
               placeholder="Enter your email"
               type="email"
@@ -89,8 +91,11 @@ const LoginDialog = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <Label htmlFor="password" className='mt-2' >Password</Label>
+            <Label htmlFor="password" className="mt-2">
+              Password
+            </Label>
             <Input
+              className="p-6"
               isRequired
               placeholder="Enter password"
               type="password"
@@ -105,6 +110,16 @@ const LoginDialog = () => {
               type="submit"
             >
               {isloading ? "Logging in.." : "Continue"}
+            </Button>
+
+            <Separator />
+
+            <Button
+              size="xl"
+              className="bg-inputbackground hover:bg-darkblue text-lg rounded-lg"
+              type="submit"
+            >
+              {isloading ? "Logging in.." : "Google"}
             </Button>
           </form>
         </div>

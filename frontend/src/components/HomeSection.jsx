@@ -2,10 +2,12 @@ import HomeCardSection from "@/utils/HomeCardSection";
 import ListSection from "@/utils/ListSection";
 import React from "react";
 import { isUserValid } from "../../../backend/src/pocketbase";
+import KeywordBar from "@/utils/KeywordBar";
 
 const HomeSection = () => {
   return (
-    <div className="min-h-screen font-poppins w-full">
+    <div className="min-h-screen font-poppins px-8 w-full">
+      {/* <KeywordBar data={['All', 'Masterpiece', 'testing 2', 'All', 'Masterpiece', 'testing 2', 'All', 'Masterpiece', 'testing 2', 'All', 'Masterpiece', 'testing 2']}/> */}
       {!isUserValid ? (
         <div className="flex flex-row justify-center py-1">
           <div className="w-1/4 ">

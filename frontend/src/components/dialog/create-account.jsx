@@ -14,6 +14,7 @@ import { Signup } from "../../../../backend/src/pocketbase";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useState } from "react";
+import { Separator } from "../ui/separator";
 
 const CreateAccountDialog = () => {
   const [selected, setSelected] = React.useState("login");
@@ -85,6 +86,7 @@ const CreateAccountDialog = () => {
           <form className="flex flex-col gap-4 " onSubmit={handleFormSubmit}>
             <Label htmlFor="email">Email</Label>
             <Input
+              className="p-6"
               isRequired
               placeholder="Enter your email"
               type="email"
@@ -97,6 +99,7 @@ const CreateAccountDialog = () => {
               Password
             </Label>
             <Input
+              className="p-6"
               isRequired
               placeholder="Enter password"
               type="password"
@@ -111,6 +114,15 @@ const CreateAccountDialog = () => {
               type="submit"
             >
               {isloading ? "Signing up.." : "Continue"}
+            </Button>
+            <Separator />
+
+            <Button
+              size="xl"
+              className="bg-inputbackground hover:bg-darkblue text-lg rounded-lg"
+              type="submit"
+            >
+              {isloading ? "Logging in.." : "Google"}
             </Button>
           </form>
         </div>
