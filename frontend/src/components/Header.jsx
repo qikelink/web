@@ -35,6 +35,7 @@ import { UserIcon } from "@/icons/UserIcon";
 import { InviteIcon } from "@/icons/InviteIcon";
 import { SettingIcon } from "@/icons/SettingIcon";
 import { LogoutIcon } from "@/icons/LogoutIcon";
+import { BellIcon } from "@/icons/BellIcon";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -74,7 +75,7 @@ export default function Header() {
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Image src="/bell.svg" alt="bell" width={22} height={22} />
+                  <BellIcon />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="max-w-md p-3 space-y-3">
                   <DropdownMenuLabel>Notifications (2) </DropdownMenuLabel>
@@ -141,7 +142,6 @@ export default function Header() {
                       </div>
                     </div>
                   </DropdownMenuItem>
-                 
                 </DropdownMenuContent>
               </DropdownMenu>
 
@@ -174,7 +174,7 @@ export default function Header() {
                       href="/Sessions"
                       className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                     >
-                      <UserIcon/>
+                      <UserIcon />
                       <p>My account</p>
                     </Link>
                   </DropdownMenuItem>
@@ -185,7 +185,7 @@ export default function Header() {
                         pathname === "/Sessions" ? "bg-[#f7fafc] text-blue" : ""
                       } py-1 text-lg font-medium`}
                     >
-                      <InviteIcon/>
+                      <InviteIcon />
                       <p>Invite friends</p>
                     </Link>
                   </DropdownMenuItem>
@@ -194,7 +194,7 @@ export default function Header() {
                       href="/Sessions"
                       className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                     >
-                      <SettingIcon/>
+                      <SettingIcon />
                       <p>Support</p>
                     </Link>
                   </DropdownMenuItem>
@@ -222,7 +222,7 @@ export default function Header() {
                       href="/Sessions"
                       className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                     >
-                      <LogoutIcon/>
+                      <LogoutIcon />
                       <p>Log out</p>
                     </Link>
                   </DropdownMenuItem>
