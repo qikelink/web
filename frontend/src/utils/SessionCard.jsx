@@ -19,7 +19,9 @@ import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import KeywordBar from "@/utils/KeywordBar";
-import { dataset, status } from "@/dummy_api/dataSet";
+import { status } from "@/dummy_api/dataSet";
+import { IoBook } from "react-icons/io5";
+import { FaBookmark } from "react-icons/fa6";
 
 const SessionCard = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -36,36 +38,6 @@ const SessionCard = () => {
       img: "/images/fruit-2.jpeg",
       price: "$3.00",
     },
-    {
-      title: "Raspberry",
-      img: "/images/fruit-3.jpeg",
-      price: "$10.00",
-    },
-    {
-      title: "Lemon",
-      img: "/images/fruit-4.jpeg",
-      price: "$5.30",
-    },
-    {
-      title: "Avocado",
-      img: "/images/fruit-5.jpeg",
-      price: "$15.70",
-    },
-    {
-      title: "Lemon 2",
-      img: "/images/fruit-6.jpeg",
-      price: "$8.00",
-    },
-    {
-      title: "Banana",
-      img: "/images/fruit-7.jpeg",
-      price: "$7.50",
-    },
-    {
-      title: "Watermelon",
-      img: "/images/fruit-8.jpeg",
-      price: "$12.20",
-    },
   ];
 
   return (
@@ -77,6 +49,16 @@ const SessionCard = () => {
           {list.map((item, index) => (
             <Card key={index}>
               <CardHeader>
+                <div className="flex flex-row justify-between text-sm">
+                  <span>Session With</span>
+                  <Badge
+                    variant="outline"
+                    className="rounded-full bg-yellow-100">
+                    Inprogress
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="text-small text-default-400">
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Avatar>
@@ -93,33 +75,21 @@ const SessionCard = () => {
                       </span>
                     </div>
                   </div>
-                  <Button variant="outline" size="icon">
-                    <BsJournalBookmarkFill />
-                  </Button>
+
                   {/* <ModalBox buttonName="Request" /> */}
                 </div>
-              </CardHeader>
-              <CardContent className="text-small text-default-400">
-                <div className=" ">
-                  Frontend developer and UI/UX.
-                  <br /> Join me on this coding adventure!
+                <div className="py-2 flex items-center ">
+                  <IoBook color="#0096FF" className="mr-2" size={20} /> Purpose:
+                  Enterprise
                 </div>
-                <span className="pt-2">
-                  #FrontendWithZoey
-                  <span className="py-2" aria-label="computer" role="img">
-                    💻
-                  </span>
+                <span className="py-2 flex items-center">
+                  <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}
+                  SessionDate: 4th July, 2024 - 4pm WAT
                 </span>
                 <Separator className="my-2 -mb-4" />
               </CardContent>
               <CardFooter className="flex justify-between ">
-                <ModalBox buttonName="Request" />
-                <Badge className="flex gap-1 rounded-full">
-                  <p className="font-semibold text-default-400 text-small">
-                    $40
-                  </p>
-                  <p className="text-default-400 text-small">Per Min</p>
-                </Badge>
+                <ModalBox buttonName="View booking details" blue="text-blue" />
               </CardFooter>
             </Card>
           ))}

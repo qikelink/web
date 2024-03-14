@@ -33,7 +33,7 @@ const KeywordBar = ({ data }) => {
           <Button
             key={buttonText}
             variant="secondary"
-            className={`w-full font-medium text-lg ${
+            className={`w-fit font-medium text-lg ${
               selectedButtons.includes(buttonText)
                 ? "bg-primary text-secondary hover:bg-primary"
                 : ""

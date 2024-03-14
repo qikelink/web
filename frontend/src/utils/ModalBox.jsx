@@ -13,14 +13,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BsFillSendArrowDownFill } from "react-icons/bs";
 
-const ModalBox = ({ buttonName }) => {
+const ModalBox = ({ buttonName, blue }) => {
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="ghost">
-            <p>{buttonName} </p>
-            <BsFillSendArrowDownFill color="skyBlue" className="ml-2 h-4 w-4" />
+          <Button variant="outline">
+            <p className={blue ? "text-blue" : ""}>{buttonName} </p>
+            <BsFillSendArrowDownFill
+              color={blue ? "#0096FF" : "#0096FF"}
+              className="ml-2 h-4 w-4"
+            />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

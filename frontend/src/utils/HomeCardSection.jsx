@@ -116,11 +116,13 @@ const HomeCardSection = () => {
               </CardContent>
               <CardFooter className="flex justify-between ">
                 <ModalBox buttonName="Request" />
-                <Badge className="flex gap-1 rounded-full">
+                <Badge
+                  variant={"outline"}
+                  className="flex gap-1 rounded-full bg-green-200">
                   <p className="font-semibold text-default-400 text-small">
-                    $40
+                    $40 /
                   </p>
-                  <p className="text-default-400 text-small">Per Min</p>
+                  <p className="text-default-400 text-small">30 Min</p>
                 </Badge>
               </CardFooter>
             </Card>
