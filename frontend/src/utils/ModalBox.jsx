@@ -78,7 +78,7 @@ const ModalBox = ({ buttonName, blue }) => {
           <div className="space-y-3">
             {/* Info section */}
             <div>
-              <Label className="font-semibold text-md">Personal details</Label>
+              <Label className="font-semibold ">Personal details</Label>
               <p className="text-sm text-darktext">
                 James madison is an english footballer with the english national
                 team, Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -90,7 +90,7 @@ const ModalBox = ({ buttonName, blue }) => {
 
             {/* Achievements section */}
             <div>
-              <Label className="font-semibold text-md">Achievements</Label>
+              <Label className="font-semibold ">Achievements</Label>
               <ol className="text-sm text-darktext list-disc">
                 <li>Winner Ballon'dor 2021 🏆</li>
                 <li>Winner English player of the year award 🥇</li>
@@ -100,7 +100,7 @@ const ModalBox = ({ buttonName, blue }) => {
 
             {/* Time slot section */}
             <div className="max-w-[370px] mx-auto">
-              <Label className="font-semibold text-md">
+              <Label className="font-semibold ">
                 Available sessions - Jan 20th
               </Label>
               <SessionBar data={sessions} />
@@ -108,13 +108,13 @@ const ModalBox = ({ buttonName, blue }) => {
 
             {/* Section section
             <div className="max-w-[380px] mx-auto">
-              <Label className='font-semibold text-md'>Session tag </Label>
+              <Label className='font-semibold '>Session tag </Label>
               <SessionBar data={sessiontags} />
             </div> */}
 
             {/* Questions section */}
             <div>
-              <Label className="font-semibold text-md">Meeting details</Label>
+              <Label className="font-semibold ">Meeting details</Label>
               <Textarea
                 className="w-full mt-2"
                 placeholder="Why do you want to request a session?"
