@@ -7,6 +7,8 @@ import { useState } from "react";
 import {
   Card,
   CardContent,
+  CardTitle,
+  CardDescription,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
@@ -26,6 +28,25 @@ const HomeCardSection = () => {
     <>
       <div>
         <KeywordBar data={dataset} />
+        <div className="grid grid-cols-2 gap-3 w-full py-2">
+          <Card>
+            <CardContent>
+              <p>Card Content</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Card Title</CardTitle>
+              <CardDescription>Card Description</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p>Card Content</p>
+            </CardContent>
+            <CardFooter>
+              <p>Card Footer</p>
+            </CardFooter>
+          </Card>
+        </div>
 
         <div className="grid grid-cols-3 gap-3 w-full">
           {list.map((item, index) => (
