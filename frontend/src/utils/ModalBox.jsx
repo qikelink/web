@@ -67,19 +67,18 @@ const ModalBox = ({ buttonName, blue }) => {
               </div>
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription className="flex space-x-3 mt-2">
+          <DialogDescription className="flex flex-wrap space-x-3 mt-2">
             <p>Interests:</p>
             <Badge variant="outline">Startup</Badge>
             <Badge variant="outline">Tech</Badge>
             <Badge variant="outline">Business</Badge>
-            <Badge variant="outline">Education</Badge>
+            <Badge variant="outline">Health</Badge>
           </DialogDescription>
+
           <div className="space-y-3">
             {/* Info section */}
             <div>
-              <Label className="font-semibold text-base">
-                Personal details
-              </Label>
+              <Label className="font-semibold text-md">Personal details</Label>
               <p className="text-sm text-darktext">
                 James madison is an english footballer with the english national
                 team, Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -91,7 +90,7 @@ const ModalBox = ({ buttonName, blue }) => {
 
             {/* Achievements section */}
             <div>
-              <Label className="font-semibold text-base">Achievements</Label>
+              <Label className="font-semibold text-md">Achievements</Label>
               <ol className="text-sm text-darktext list-disc">
                 <li>Winner Ballon'dor 2021 🏆</li>
                 <li>Winner English player of the year award 🥇</li>
@@ -101,7 +100,7 @@ const ModalBox = ({ buttonName, blue }) => {
 
             {/* Time slot section */}
             <div className="max-w-[370px] mx-auto">
-              <Label className="font-semibold text-base">
+              <Label className="font-semibold text-md">
                 Available sessions - Jan 20th
               </Label>
               <SessionBar data={sessions} />
@@ -109,13 +108,13 @@ const ModalBox = ({ buttonName, blue }) => {
 
             {/* Section section
             <div className="max-w-[380px] mx-auto">
-              <Label className='font-semibold text-base'>Session tag </Label>
+              <Label className='font-semibold text-md'>Session tag </Label>
               <SessionBar data={sessiontags} />
             </div> */}
 
             {/* Questions section */}
             <div>
-              <Label className="font-semibold text-base">Meeting details</Label>
+              <Label className="font-semibold text-md">Meeting details</Label>
               <Textarea
                 className="w-full mt-2"
                 placeholder="Why do you want to request a session?"

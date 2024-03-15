@@ -53,7 +53,7 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/Settings"
+            href="/setting"
             className="flex gap-4 items-center py-5 px-1 cursor-pointer hover:text-blue"
           >
             <IoMdSettings size={20} />
