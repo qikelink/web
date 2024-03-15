@@ -13,6 +13,24 @@ export const dataset = [
   "Music",
 ];
 
+export const sessions = [
+  "9:00-9:30 AM",
+  "9:45-10:15 AM",
+  "10:30-11:00 AM",
+  "9:00-9:30 PM",
+  "9:45-10:15 PM",
+  "10:30-11:00 PM",
+];
+
+export const sessiontags = [
+  "Counselling",
+  "Startup",
+  "Tech",
+  "Business",
+  "Education",
+  "Prayer",
+];
+
 export const status = ["Upcoming", "Pending", "Past"];
 
 export const list = [
