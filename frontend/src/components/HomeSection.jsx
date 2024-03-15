@@ -6,7 +6,7 @@ import KeywordBar from "@/utils/KeywordBar";
 
 const HomeSection = () => {
   return (
-    <div className="min-h-screen font-poppins px-8 w-full">
+    <div className="min-h-screen font-poppins w-full">
       {/* <KeywordBar data={['All', 'Masterpiece', 'testing 2', 'All', 'Masterpiece', 'testing 2', 'All', 'Masterpiece', 'testing 2', 'All', 'Masterpiece', 'testing 2']}/> */}
       {!isUserValid ? (
         <div className="flex flex-row justify-center py-1">

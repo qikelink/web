@@ -18,7 +18,7 @@ const ModalBox = ({ buttonName, blue }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="ghost">
+          <Button variant="outline">
             <p className={blue ? "text-blue" : ""}>{buttonName} </p>
             <BsFillSendArrowDownFill
               color={blue ? "#0096FF" : "#0096FF"}
@@ -48,7 +48,9 @@ const ModalBox = ({ buttonName, blue }) => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit" variant="outline">
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

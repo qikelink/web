@@ -75,7 +75,7 @@ export default function Header() {
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Image src='/bell.svg' width={24} height={24} />
+                  <Image src="/bell.svg" width={24} height={24} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="max-w-md p-3 space-y-3">
                   <DropdownMenuLabel>Notifications (2) </DropdownMenuLabel>
@@ -126,7 +126,7 @@ export default function Header() {
                     </div>
                   </DropdownMenuItem>
                   <Separator orientation="horizontal" className="my-2" />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="-p-3">
                     <div class="flex items-start space-x-2 ">
                       <Avatar>
                         <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
@@ -172,8 +172,7 @@ export default function Header() {
                   <DropdownMenuItem>
                     <Link
                       href="/Sessions"
-                      className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                    >
+                      className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
                       <UserIcon />
                       <p>My account</p>
                     </Link>
@@ -183,8 +182,7 @@ export default function Header() {
                       href="/Sessions"
                       className={`flex gap-4 items-center cursor-pointer ${
                         pathname === "/Sessions" ? "bg-[#f7fafc] text-blue" : ""
-                      } py-1 text-lg font-medium`}
-                    >
+                      } py-1 text-lg font-medium`}>
                       <InviteIcon />
                       <p>Invite friends</p>
                     </Link>
@@ -192,8 +190,7 @@ export default function Header() {
                   <DropdownMenuItem>
                     <Link
                       href="/Sessions"
-                      className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                    >
+                      className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
                       <SettingIcon />
                       <p>Support</p>
                     </Link>
@@ -220,8 +217,7 @@ export default function Header() {
                   <DropdownMenuItem>
                     <Link
                       href="/Sessions"
-                      className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                    >
+                      className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
                       <LogoutIcon />
                       <p>Log out</p>
                     </Link>

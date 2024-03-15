@@ -14,56 +14,13 @@ import ModalBox from "./ModalBox";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Toggle } from "@/components/ui/toggle"
+import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
-import { dataset } from "@/dummy_api/dataSet";
+import { dataset, list } from "@/dummy_api/dataSet";
 
 const HomeCardSection = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
   const [value, onChange] = useState(new Date());
-
-  const list = [
-    {
-      title: "Orange",
-      img: "/images/fruit-1.jpeg",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "/images/fruit-2.jpeg",
-      price: "$3.00",
-    },
-    {
-      title: "Raspberry",
-      img: "/images/fruit-3.jpeg",
-      price: "$10.00",
-    },
-    {
-      title: "Lemon",
-      img: "/images/fruit-4.jpeg",
-      price: "$5.30",
-    },
-    {
-      title: "Avocado",
-      img: "/images/fruit-5.jpeg",
-      price: "$15.70",
-    },
-    {
-      title: "Lemon 2",
-      img: "/images/fruit-6.jpeg",
-      price: "$8.00",
-    },
-    {
-      title: "Banana",
-      img: "/images/fruit-7.jpeg",
-      price: "$7.50",
-    },
-    {
-      title: "Watermelon",
-      img: "/images/fruit-8.jpeg",
-      price: "$12.20",
-    },
-  ];
 
   return (
     <>
@@ -83,10 +40,11 @@ const HomeCardSection = () => {
 
                     <div className="flex flex-col gap-1 items-start justify-center">
                       <h4 className="text-small font-semibold leading-none text-default-600">
-                        Zoey Lang
+                        {item.name}
                       </h4>
                       <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                        4.3/5.0 <FaStar className="ml-1" color="#FFC72C" size={16} />
+                        {item.rating}{" "}
+                        <FaStar className="ml-1" color="#FFC72C" size={16} />
                       </span>
                     </div>
                   </div>
@@ -98,7 +56,7 @@ const HomeCardSection = () => {
               </CardHeader>
               <CardContent className="text-small text-default-400">
                 <div className=" ">
-                  Frontend developer and UI/UX.
+                  {item.bio}
                   <br /> Join me on this coding adventure!
                 </div>
                 <span className="pt-2">
@@ -112,12 +70,12 @@ const HomeCardSection = () => {
               <CardFooter className="flex justify-between ">
                 <ModalBox buttonName="Request" />
                 <Badge
-                  variant={"outline"}
-                  className="flex gap-1 rounded-full bg-primary">
-                  <p className="font-semibold text-secondary text-small">
+                  variant="outline"
+                  className="flex gap-1 rounded-full bg-green-500">
+                  <p className="font-semibold text-primary text-secondary">
                     $40 /
                   </p>
-                  <p className="text-secondary text-small">session</p>
+                  <p className="text-secondary ">session</p>
                 </Badge>
               </CardFooter>
             </Card>
