@@ -9,13 +9,14 @@ import { GrHomeRounded } from "react-icons/gr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
+import { IoMdHelpCircleOutline } from "react-icons/io";
 
 const ListSection = () => {
   const router = useRouter();
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between h-full w-full my-3 ">
+    <div className="flex flex-row justify-between h-screen w-full my-3 ">
       {/* menu items */}
       <ul className="flex flex-col grow">
         <li>
@@ -65,12 +66,23 @@ const ListSection = () => {
         <li class="flex gap-4 items-center">
           <Link
             href="/Profile"
-            className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
+            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
               pathname === "/Profile" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue `}
+            }`}
           >
             <CgProfile size={20} />
             <p>Profile</p>
+          </Link>
+        </li>
+        <li class="flex gap-4 items-center">
+          <Link
+            href="/Help"
+            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+              pathname === "/Help" ? "bg-[#f7fafc] text-blue" : ""
+            }`}
+          >
+            <IoMdHelpCircleOutline size={20} />
+            <p>Help</p>
           </Link>
         </li>
       </ul>
