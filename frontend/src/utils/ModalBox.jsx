@@ -11,7 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BsFillSendArrowDownFill } from "react-icons/bs";
+import { BsFillSendArrowDownFill, BsShareFill } from "react-icons/bs";
+import { BsJournalBookmarkFill } from "react-icons/bs";
+import { Toggle } from "@/components/ui/toggle";
+import { FaStar } from "react-icons/fa";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import SessionBar from "./SessionBar";
+import { sessions, sessiontags } from "@/dummy_api/dataSet";
+import { Textarea } from "@/components/ui/textarea";
 
 const ModalBox = ({ buttonName, blue }) => {
   return (
@@ -28,28 +36,98 @@ const ModalBox = ({ buttonName, blue }) => {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
+            <DialogTitle>
+              <div className="flex justify-between">
+                <div className="flex gap-2">
+                  <Avatar>
+                    <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex flex-col gap-1 items-start justify-center">
+                    <h4 className="text-small font-semibold leading-none text-default-600">
+                      James Madison
+                    </h4>
+                    <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
+                      4.5/5
+                      <FaStar className="ml-1" color="#FFC72C" size={16} />
+                    </span>
+                  </div>
+                </div>
+                <div className="flex space-x-2 items-center">
+                  <Toggle variant="outline" aria-label="Toggle italic">
+                    <BsJournalBookmarkFill />
+                  </Toggle>
+                  <Button size="icon" variant="outline">
+                    <BsShareFill />
+                  </Button>
+                </div>
+
+                {/* <ModalBox buttonName="Request" /> */}
+              </div>
+            </DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
+          <DialogDescription className="flex flex-wrap space-x-3 mt-2">
+            <p>Interests:</p>
+            <Badge variant="outline">Startup</Badge>
+            <Badge variant="outline">Tech</Badge>
+            <Badge variant="outline">Business</Badge>
+            <Badge variant="outline">Health</Badge>
+          </DialogDescription>
+
+          <div className="space-y-3">
+            {/* Info section */}
+            <div>
+              <Label className="font-semibold ">Personal details</Label>
+              <p className="text-sm text-darktext">
+                James madison is an english footballer with the english national
+                team, Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Necessitatibus nemo dolor aut dolore hic aliquid repellendus
+                maiores maxime libero doloribus ipsa perspiciatis earum nisi
+                explicabo, eius quis atque aperiam et!
+              </p>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
+
+            {/* Achievements section */}
+            <div>
+              <Label className="font-semibold ">Achievements</Label>
+              <ol className="text-sm text-darktext list-disc">
+                <li>Winner Ballon'dor 2021 🏆</li>
+                <li>Winner English player of the year award 🥇</li>
+                <li>Times magazine most influencer sports personality 🌟</li>
+              </ol>
+            </div>
+
+            {/* Time slot section */}
+            <div className="max-w-[370px] mx-auto">
+              <Label className="font-semibold ">
+                Available sessions - Jan 20th
               </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
+              <SessionBar data={sessions} />
+            </div>
+
+            {/* Section section
+            <div className="max-w-[380px] mx-auto">
+              <Label className='font-semibold '>Session tag </Label>
+              <SessionBar data={sessiontags} />
+            </div> */}
+
+            {/* Questions section */}
+            <div>
+              <Label className="font-semibold ">Meeting details</Label>
+              <Textarea
+                className="w-full mt-2"
+                placeholder="Why do you want to request a session?"
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" variant="outline">
-              Save changes
+            <Button
+              size="xl"
+              className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full"
+              type="submit"
+            >
+              Request
             </Button>
           </DialogFooter>
         </DialogContent>

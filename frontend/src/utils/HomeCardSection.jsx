@@ -95,18 +95,14 @@ const HomeCardSection = () => {
                     variant="outline"
                     className="flex gap-1 rounded-full bg-green-500"
                   >
-                    <p className="font-semibold text-primary text-secondary">
-                      {item.rate}
-                    </p>
+                    <p className="font-semibold  text-secondary">{item.rate}</p>
                   </Badge>
                 ) : (
                   <Badge
                     variant="outline"
                     className="flex gap-1 rounded-full bg-red"
                   >
-                    <p className="font-semibold text-primary text-secondary">
-                      Free
-                    </p>
+                    <p className="font-semibold  text-secondary">Free</p>
                   </Badge>
                 )}
               </CardFooter>
