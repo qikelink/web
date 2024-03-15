@@ -2,7 +2,7 @@
 
 import Header from "@/components/Header";
 import { useState, useEffect } from "react";
-import ProfileSection from "@/components/ProfileSection";
+import ManagerSection from "@/components/ManagerSection";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
@@ -15,7 +15,7 @@ export default function page() {
       {domLoaded && (
         <main className="mx-5">
           <Header />
-          <ProfileSection />
+          <ManagerSection />
         </main>
       )}
     </>

@@ -5,11 +5,11 @@ import { Separator } from "@/components/ui/separator";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
-import { GrHomeRounded } from "react-icons/gr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import { IoMdHelpCircleOutline } from "react-icons/io";
+import { MdOutlineFeedback } from "react-icons/md";
 
 const ListSection = () => {
   const router = useRouter();
@@ -55,7 +55,9 @@ const ListSection = () => {
         <li>
           <Link
             href="/setting"
-            className="flex gap-4 items-center py-5 px-1 cursor-pointer hover:text-blue"
+            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+              pathname === "/setting" ? "bg-[#f7fafc] text-blue" : ""
+            }`}
           >
             <IoMdSettings size={20} />
             <p>Settings</p>
@@ -63,15 +65,15 @@ const ListSection = () => {
         </li>
         <Separator orientation="horizontal" />
 
-        <li class="flex gap-4 items-center">
+        <li>
           <Link
-            href="/Profile"
+            href="/Manager"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/Profile" ? "bg-[#f7fafc] text-blue" : ""
+              pathname === "/Manager" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
             <CgProfile size={20} />
-            <p>Profile</p>
+            <p>Manager</p>
           </Link>
         </li>
         <li class="flex gap-4 items-center">
@@ -83,6 +85,17 @@ const ListSection = () => {
           >
             <IoMdHelpCircleOutline size={20} />
             <p>Help</p>
+          </Link>
+        </li>
+        <li class="flex gap-4 items-center">
+          <Link
+            href="/FeedBack"
+            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+              pathname === "/FeedBack" ? "bg-[#f7fafc] text-blue" : ""
+            }`}
+          >
+            <MdOutlineFeedback size={20} />
+            <p>Send FeedBack</p>
           </Link>
         </li>
       </ul>
