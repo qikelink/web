@@ -23,15 +23,19 @@ const ListSection = () => {
             href="/"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
               pathname === "/" ? "bg-[#f7fafc] text-blue" : ""
-            }`}>
+            }`}
+          >
             <HomeIcon />
             <p>Home</p>
           </Link>
         </li>
         <li>
           <Link
-            href="/bookmark"
-            className="flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue">
+            href="/Bookmark"
+            className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
+              pathname === "/Bookmark" ? "bg-[#f7fafc] text-blue" : ""
+            }`}
+          >
             <PiBookBookmarkDuotone size={20} />
             <p>BookMarked</p>
           </Link>
@@ -41,7 +45,8 @@ const ListSection = () => {
             href="/Sessions"
             className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
               pathname === "/Sessions" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue`}>
+            } hover:text-blue`}
+          >
             <BsJournalBookmarkFill size={20} />
             <p>Sessions</p>
           </Link>
@@ -49,7 +54,8 @@ const ListSection = () => {
         <li>
           <Link
             href="/Settings"
-            className="flex gap-4 items-center py-5 px-1 cursor-pointer hover:text-blue">
+            className="flex gap-4 items-center py-5 px-1 cursor-pointer hover:text-blue"
+          >
             <IoMdSettings size={20} />
             <p>Settings</p>
           </Link>
@@ -61,7 +67,8 @@ const ListSection = () => {
             href="/Profile"
             className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
               pathname === "/Profile" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue `}>
+            } hover:text-blue `}
+          >
             <CgProfile size={20} />
             <p>Profile</p>
           </Link>

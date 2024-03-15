@@ -22,7 +22,7 @@ export const list = [
     rating: "4.3/5.0",
     bio: "Make What People Want",
     field: ["startup", "Finance", "investing", "Christianity"],
-    rate: "$50.50 Per/30min",
+    rate: "$50.50 /30min",
   },
   {
     name: "Anna Smith",
@@ -30,7 +30,7 @@ export const list = [
     rating: "4.8/5.0",
     bio: "Passionate Chef & Nutritionist",
     field: ["culinary", "nutrition", "health", "wellness"],
-    rate: "$40.00 Per/30min",
+    rate: "$40.00 /30min",
   },
   {
     name: "John Doe",
@@ -38,7 +38,7 @@ export const list = [
     rating: "4.5/5.0",
     bio: "Tech Entrepreneur & Innovator",
     field: ["technology", "entrepreneurship", "innovation"],
-    rate: "$60.00 Per/30min",
+    rate: "free",
   },
   {
     name: "Emily Johnson",
@@ -46,7 +46,7 @@ export const list = [
     rating: "4.7/5.0",
     bio: "Creative Artist & Designer",
     field: ["art", "design", "creativity"],
-    rate: "$55.00 Per/30min",
+    rate: "$55.00 /30min",
   },
   {
     name: "David Smith",
@@ -54,7 +54,7 @@ export const list = [
     rating: "4.6/5.0",
     bio: "Fitness Coach & Personal Trainer",
     field: ["fitness", "health", "exercise"],
-    rate: "$45.00 Per/30min",
+    rate: "free",
   },
   {
     name: "Sarah Brown",
@@ -62,7 +62,7 @@ export const list = [
     rating: "4.9/5.0",
     bio: "Experienced Lawyer & Legal Advisor",
     field: ["law", "legal", "advisory"],
-    rate: "$75.00 Per/30min",
+    rate: "$75.00 /30min",
   },
   {
     name: "Michael Johnson",
@@ -70,7 +70,7 @@ export const list = [
     rating: "4.4/5.0",
     bio: "Financial Analyst & Investment Consultant",
     field: ["finance", "investment", "analysis"],
-    rate: "$65.00 Per/30min",
+    rate: "$65.00 /30min",
   },
   {
     name: "Grace Thompson",
@@ -78,7 +78,7 @@ export const list = [
     rating: "4.7/5.0",
     bio: "Life Coach & Motivational Speaker",
     field: ["coaching", "motivation", "self-help"],
-    rate: "$50.00 Per/30min",
+    rate: "$50.00 /30min",
   },
   {
     name: "Alex Rodriguez",
@@ -86,7 +86,7 @@ export const list = [
     rating: "4.2/5.0",
     bio: "Real Estate Agent & Property Consultant",
     field: ["real estate", "property", "consulting"],
-    rate: "$70.00 Per/30min",
+    rate: "$70.00 /30min",
   },
   {
     name: "Emma White",
@@ -94,6 +94,6 @@ export const list = [
     rating: "4.6/5.0",
     bio: "Marketing Specialist & Brand Strategist",
     field: ["marketing", "branding", "strategy"],
-    rate: "$60.00 Per/30min",
+    rate: "free",
   },
 ];
