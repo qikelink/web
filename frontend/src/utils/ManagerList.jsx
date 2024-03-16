@@ -25,7 +25,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Manager/Organization"
-            className={`flex gap-4 justify-center items-center rounded-full py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/Manager/Organization"
                 ? "bg-[#f7fafc] text-blue"
                 : ""
@@ -38,7 +38,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Manager/Metrics"
-            className={`flex gap-4 justify-center items-center rounded-full cursor-pointer py-5 px-1 hover:text-blue ${
+            className={`flex gap-2 items-center rounded-full cursor-pointer py-5 px-4 hover:text-blue ${
               pathname === "/Manager/Metrics" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -49,7 +49,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Manager/Request"
-            className={`flex gap-4 justify-center items-center rounded-full py-5 cursor-pointer ${
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer ${
               pathname === "/Manager/Request" ? "bg-[#f7fafc] text-blue" : ""
             } hover:text-blue`}
           >
@@ -60,7 +60,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/setting"
-            className={`flex gap-4 justify-center items-center rounded-full py-5 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/setting" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -73,7 +73,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Profile"
-            className={`flex gap-4 justify-center items-center rounded-full py-5 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/Profile" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -84,7 +84,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Help"
-            className={`flex gap-4 justify-center items-center rounded-full py-5 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/Help" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -95,7 +95,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/FeedBack"
-            className={`flex gap-4 justify-center items-center rounded-full py-5 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/FeedBack" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
