@@ -16,7 +16,7 @@ const ListSection = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between h-screen w-full my-3 ">
+    <div className="flex flex-row justify-between h-screen w-full ">
       {/* menu items */}
       <ul className="flex flex-col grow">
         <li>

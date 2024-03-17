@@ -17,11 +17,22 @@ const ManagerList = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between h-screen w-full my-3 ">
+    <div className="flex flex-row justify-between h-screen w-full ">
       {/* menu items */}
       <Separator orientation="vertical" className="grow-0 mx-2" />
 
       <ul className="flex flex-col grow ">
+        <li>
+          <Link
+            href="/Manager/Request"
+            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer ${
+              pathname === "/Manager/Request" ? "bg-[#f7fafc] text-blue" : ""
+            } hover:text-blue`}
+          >
+            <MdOutlineGroupAdd size={25} />
+            <p>Request</p>
+          </Link>
+        </li>
         <li>
           <Link
             href="/Manager/Organization"
@@ -46,17 +57,7 @@ const ManagerList = () => {
             <p>Metrics</p>
           </Link>
         </li>
-        <li>
-          <Link
-            href="/Manager/Request"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer ${
-              pathname === "/Manager/Request" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue`}
-          >
-            <MdOutlineGroupAdd size={25} />
-            <p>Request</p>
-          </Link>
-        </li>
+
         <li>
           <Link
             href="/setting"

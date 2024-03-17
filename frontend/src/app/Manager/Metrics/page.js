@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { useState, useEffect } from "react";
 import ListSection from "@/utils/ListSection";
 import ManagerList from "@/utils/ManagerList";
+import MetricSection from "@/components/MetricSection";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
@@ -23,7 +24,9 @@ export default function page() {
               </div>
               <div className=" w-3/4 flex flex-col px-1 ">
                 <div className="w-full flex flex-row">
-                  <div className="w-2/3">Metrics</div>
+                  <div className="w-2/3">
+                    <MetricSection/>
+                  </div>
                   <div className="w-1/3">
                     <ManagerList />
                   </div>
