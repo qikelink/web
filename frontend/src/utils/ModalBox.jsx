@@ -81,10 +81,7 @@ const ModalBox = ({ buttonName, blue }) => {
               <Label className="font-semibold ">Personal details</Label>
               <p className="text-sm text-darktext">
                 James madison is an english footballer with the english national
-                team, Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Necessitatibus nemo dolor aut dolore hic aliquid repellendus
-                maiores maxime libero doloribus ipsa perspiciatis earum nisi
-                explicabo, eius quis atque aperiam et!
+                team, eius quis atque aperiam et!
               </p>
             </div>
 
