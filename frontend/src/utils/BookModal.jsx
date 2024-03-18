@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BsFillSendArrowDownFill, BsShareFill } from "react-icons/bs";
 import { BsJournalBookmarkFill } from "react-icons/bs";
@@ -17,11 +16,25 @@ import { Toggle } from "@/components/ui/toggle";
 import { FaStar } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import SessionBar from "./SessionBar";
-import { sessions, sessiontags } from "@/dummy_api/dataSet";
 import { Textarea } from "@/components/ui/textarea";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-const ModalBox = ({ buttonName, blue }) => {
+const BookModal = ({ buttonName, blue }) => {
+  const [date, setDate] = useState();
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div>
       <Dialog>
@@ -63,7 +76,7 @@ const ModalBox = ({ buttonName, blue }) => {
                   </Button>
                 </div>
 
-                {/* <ModalBox buttonName="Request" /> */}
+                {/* <BookModal buttonName="Request" /> */}
               </div>
             </DialogTitle>
           </DialogHeader>
@@ -76,18 +89,34 @@ const ModalBox = ({ buttonName, blue }) => {
           </DialogDescription>
 
           <div className="space-y-3">
-            {/* Info section */}
+            {/* personal details */}
             <div>
-              <Label className="font-semibold ">Personal details</Label>
-              <p className="text-sm text-darktext">
-                James madison is an english footballer with the english national
-                team, eius quis atque aperiam et!
-              </p>
+              <Label className="font-semibold">Personal details</Label>
+              <div
+                className={`text-sm text-darktext max-w-[380px] mx-auto ${
+                  isExpanded ? " line-clamp-none" : "line-clamp-2"
+                }`}
+              >
+                <p>
+                  James madison is an english footballer with the english
+                  national team, eius quis atque aperiam et! Lorem ipsum, dolor
+                  sit amet consectetur adipisicing elit. Velit illum iusto,
+                  libero veritatis quis, quae veniam omnis officia debitis
+                  deleniti non exercitationem autem blanditiis architecto
+                  doloremque, reiciendis a neque dolores?
+                </p>
+              </div>
+              <button
+                onClick={toggleExpand}
+                className="text-blue-600 hover:underline focus:outline-none text-sm"
+              >
+                {isExpanded ? "Read Less" : "Read More"}
+              </button>
             </div>
 
             {/* Achievements section */}
             <div>
-              <Label className="font-semibold ">Achievements</Label>
+              <Label className="font-semibold">Achievements</Label>
               <ol className="text-sm text-darktext list-disc">
                 <li>Winner Ballon'dor 2021 🏆</li>
                 <li>Winner English player of the year award 🥇</li>
@@ -96,22 +125,35 @@ const ModalBox = ({ buttonName, blue }) => {
             </div>
 
             {/* Time slot section */}
-            <div className="max-w-[370px] mx-auto">
-              <Label className="font-semibold ">
-                Available sessions - Jan 20th
-              </Label>
-              <SessionBar data={sessions} />
+            <div className="flex flex-col space-y-2">
+              <Label className="font-semibold">Schedule date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
-
-            {/* Section section
-            <div className="max-w-[380px] mx-auto">
-              <Label className='font-semibold '>Session tag </Label>
-              <SessionBar data={sessiontags} />
-            </div> */}
 
             {/* Questions section */}
             <div>
-              <Label className="font-semibold ">Meeting details</Label>
+              <Label className="font-semibold">Meeting details</Label>
               <Textarea
                 className="w-full mt-2"
                 placeholder="Why do you want to request a session?"
@@ -133,4 +175,4 @@ const ModalBox = ({ buttonName, blue }) => {
   );
 };
 
-export default ModalBox;
+export default BookModal;

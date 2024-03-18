@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import ModalBox from "./ModalBox";
+import BookModal from "./BookModal";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
@@ -72,7 +72,7 @@ const HomeCardSection = () => {
                   <Toggle aria-label="Toggle italic">
                     <BsJournalBookmarkFill />
                   </Toggle>
-                  {/* <ModalBox buttonName="Request" /> */}
+                  {/* <BookModal buttonName="Request" /> */}
                 </div>
               </CardHeader>
               <CardContent className="text-small text-default-400">
@@ -89,7 +89,7 @@ const HomeCardSection = () => {
                 <Separator className="my-2 -mb-4" />
               </CardContent>
               <CardFooter className="flex justify-between ">
-                <ModalBox buttonName="Request" />
+                <BookModal buttonName="Request" />
                 {item.rate != "free" ? (
                   <Badge
                     variant="outline"

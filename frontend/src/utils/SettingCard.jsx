@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { UploadIcon } from "@/icons/UploadIcon";
+import { Badge } from "@/components/ui/badge";
+import VerifyModal from "./VerifyModal";
 
 const SettingCard = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -19,9 +21,22 @@ const SettingCard = () => {
         {/* Profile image */}
         <Label className="text-lg">Your profile picture</Label>
         <div className="flex items-center justify-center mt-1 border-2 border-gray-600 rounded-lg border-dashed bg-inputbackground h-32 w-32">
-        <UploadIcon/>
+          <UploadIcon />
         </div>
-        <Input id="picture" type="file" className='max-w-xs bg-inputbackground mt-4 ' />
+        <div className="flex justify-between items-center  mt-4">
+          <Input
+            id="picture"
+            type="file"
+            className="max-w-xs bg-inputbackground "
+          />
+          <Badge
+            variant="outline"
+            className="rounded-full bg-red text-secondary h-8 flex justify-center font-bold text-sm mr-5 px-5"
+          >
+            Not Verified
+          </Badge>
+        </div>
+
         <Separator className="my-6"></Separator>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
@@ -69,14 +84,16 @@ const SettingCard = () => {
           />
         </div>
 
-        <div>
+        <div className="flex items-center mt-6 h-10 space-x-5">
           <Button
             size="xl"
-            className="bg-blue hover:bg-darkblue text-lg rounded-lg mt-6"
+            className="bg-blue hover:bg-darkblue text-lg rounded-lg"
             type="submit"
           >
             Update Profile
           </Button>
+          {/* <Separator orientation="vertical" className='bg-darktext'/> */}
+          <VerifyModal/>
         </div>
       </div>
     </>
