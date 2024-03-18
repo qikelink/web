@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       {domLoaded && (
-        <main className="mx-5">
+        <main className="mx-2 lg:mx-5">
           <Header />
           <HomeSection />
         </main>

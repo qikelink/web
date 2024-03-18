@@ -28,16 +28,35 @@ const HomeCardSection = () => {
     <>
       <div>
         <KeywordBar data={dataset} />
-        <div className="grid grid-cols-2 gap-3 w-full py-2">
-          <Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full py-2">
+          <Card className="lg:hidden w-full">
+            <CardHeader>
+              <CardTitle>Card Title</CardTitle>
+              <CardDescription>First card</CardDescription>
+            </CardHeader>
             <CardContent>
               <p>Card Content</p>
             </CardContent>
+            <CardFooter>
+              <p>Card Footer</p>
+            </CardFooter>
           </Card>
-          <Card>
+          <Card className="hidden lg:inline">
             <CardHeader>
               <CardTitle>Card Title</CardTitle>
-              <CardDescription>Card Description</CardDescription>
+              <CardDescription>Second card</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p>Card Content</p>
+            </CardContent>
+            <CardFooter>
+              <p>Card Footer</p>
+            </CardFooter>
+          </Card>
+          <Card className="hidden lg:inline">
+            <CardHeader>
+              <CardTitle>Card Title</CardTitle>
+              <CardDescription>Third card</CardDescription>
             </CardHeader>
             <CardContent>
               <p>Card Content</p>
@@ -48,7 +67,7 @@ const HomeCardSection = () => {
           </Card>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
           {list.map((item, index) => (
             <Card key={index}>
               <CardHeader>

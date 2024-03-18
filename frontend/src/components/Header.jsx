@@ -4,9 +4,7 @@ import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
-import Image from "next/image";
 import { FaMicrophone } from "react-icons/fa";
-import { ThemeSwitcher } from "@/contexts/switch-theme";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -22,7 +20,6 @@ import { FaBars } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { RightIcon } from "@/icons/RightIcon";
 import { EarnIcon } from "@/icons/EarnIcon";
 import { UserIcon } from "@/icons/UserIcon";
 import { InviteIcon } from "@/icons/InviteIcon";
@@ -31,6 +28,15 @@ import { LogoutIcon } from "@/icons/LogoutIcon";
 import { BsHeadsetVr } from "react-icons/bs";
 import { IoNotifications } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -44,17 +50,30 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-background ">
       <div className="font-poppins flex justify-between items-center py-3 px-1 ">
         <div className="flex items-center justify-center gap-4">
-          <FaBars size={20} />
+          <Sheet>
+            <SheetTrigger>
+              <FaBars className="md:hidden" size={16} />
+            </SheetTrigger>
+            <SheetContent side='left'>
+              <SheetHeader>
+                <SheetTitle>Are you absolutely sure?</SheetTitle>
+                <SheetDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
 
           <h2 className="font-extrabold text-current text-xl">Y-PROJECT</h2>
         </div>
-        <div className="hidden sm:flex gap-4 justify-center">
+        <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
               <AiOutlineSearch size={18} />
             </span>
             <Input
-              className="w-full sm:w-48 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground rounded-full "
+              className="w-full sm:w-52 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground rounded-full "
               placeholder="Type to search..."
               size="md"
               type="search"
@@ -69,13 +88,19 @@ export default function Header() {
           <div className="flex items-center space-x-5 justify-center">
             {!isUserValid ? (
               <>
-                <Badge variant="outline" className={"rounded-full p-2"}>
+                <Badge
+                  variant="outline"
+                  className={"rounded-full p-2 hidden md:inline"}
+                >
                   <BsHeadsetVr size={24} className="text-current" />
                 </Badge>
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Badge variant="outline" className={"rounded-full p-2"}>
+                    <Badge
+                      variant="outline"
+                      className={"rounded-full p-2 hidden md:inline"}
+                    >
                       <IoNotifications size={24} className="text-current" />
                     </Badge>
                   </DropdownMenuTrigger>

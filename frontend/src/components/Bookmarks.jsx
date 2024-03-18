@@ -9,10 +9,10 @@ const Bookmarks = () => {
   return (
     <div className="min-h-screen font-poppins w-full">
       <div className="flex flex-row  py-1">
-        <div className="w-1/4 ">
+        <div className="hidden md:inline w-1/4 ">
           <ListSection />
         </div>
-        <div className=" w-3/4 flex  flex-col px-1 ">
+        <div className=" w-full md:w-3/4 flex flex-col px-1 ">
           {!isUserValid ? <BookmarkCard /> : <BookmarkEmpty />}
         </div>
       </div>
