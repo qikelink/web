@@ -10,7 +10,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { login, Signup } from "../../../../backend/src/pocketbase";
+import {
+  login,
+  Signup,
+  SignupGoogle,
+} from "../../../../backend/src/pocketbase";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useState } from "react";
@@ -44,7 +48,7 @@ const LoginDialog = () => {
       return;
     }
 
-    if (isSignIn && password.length < 1 || email.length < 1) {
+    if ((isSignIn && password.length < 1) || email.length < 1) {
       toast({
         title: "Input cannot be empty",
         description: "Inputs cannot be empty, please provide your credentials",
@@ -108,13 +112,18 @@ const LoginDialog = () => {
   };
 
   const handleGoogle = () => {
-    setIsLoadingGoogle(true)
-  }
+    setIsLoadingGoogle(true);
+    SignupGoogle();
+    setTimeout(() => {
+      setIsLoadingGoogle(false);
+    }, 3000);
+  };
 
   const buttonText = isSignIn ? "Sign In" : "Sign Up";
   const googleText = isSignIn ? "Sign in with google " : "Sign up with google";
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
+  
   return (
     <Dialog>
       <DialogTrigger>
@@ -128,13 +137,16 @@ const LoginDialog = () => {
       </DialogTrigger>
       <DialogContent className="max-w-sm">
         <DialogHeader className="mt-4 mb-2">
-          <DialogTitle className='text-left'> {isSignIn ? "Log in" : "Sign up"} </DialogTitle>
-          <DialogDescription className='text-left'>
+          <DialogTitle className="text-left">
+            {" "}
+            {isSignIn ? "Log in" : "Sign up"}{" "}
+          </DialogTitle>
+          <DialogDescription className="text-left">
             Get started and book a mentor of your choice
           </DialogDescription>
         </DialogHeader>
         <div>
-          <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
+          <form className="flex flex-col gap-3" onSubmit={handleFormSubmit}>
             <Label htmlFor="email">Email</Label>
             <Input
               className="p-6"
@@ -179,15 +191,14 @@ const LoginDialog = () => {
             </p>
 
             <Separator />
-
-            <Button
-              size="xl"
-              className="bg-indigo hover:bg-darkblue text-lg rounded-lg"
-              onClick={handleGoogle}
-            >
-              {isloadingGoogle ? "Signing in.." : googleText}
-            </Button>
           </form>
+          <Button
+            size="xl"
+            className="bg-indigo hover:bg-darkblue text-lg rounded-lg w-full mt-3"
+            onClick={handleGoogle}
+          >
+            {isloadingGoogle ? "Signing in.." : googleText}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

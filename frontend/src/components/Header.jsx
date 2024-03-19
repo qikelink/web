@@ -68,6 +68,8 @@ export default function Header() {
     }
   };
 
+  console.log(user)
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
       <div className="font-poppins flex justify-between items-center py-3 px-1 ">
@@ -200,18 +202,19 @@ export default function Header() {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
+
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Avatar>
-                        <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarImage src={userInfo.avatar} />
+                        <AvatarFallback>{userInfo.email.slice(0,2).toUpperCase()}</AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="max-w-sm p-5 space-y-3">
                       <DropdownMenuLabel className="flex space-x-3 items-center">
                         <Avatar>
-                          <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                          <AvatarFallback>CN</AvatarFallback>
+                          <AvatarImage src={userInfo.avatar} />
+                          <AvatarFallback>{userInfo.email.slice(0,2).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <div>
                           <p className="text-xl font-medium">
