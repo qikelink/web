@@ -23,7 +23,7 @@ const ListSection = () => {
           <Link
             href="/"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/" ? "bg-[#f7fafc] text-blue" : ""
+              pathname === "/" ? "bg-[#f7fafc] text-blue rounded-md" : ""
             }`}
           >
             <HomeIcon />

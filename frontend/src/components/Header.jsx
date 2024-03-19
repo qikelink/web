@@ -4,7 +4,6 @@ import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
-import { FaMicrophone } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -20,13 +19,12 @@ import { FaBars } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { EarnIcon } from "@/icons/EarnIcon";
 import { UserIcon } from "@/icons/UserIcon";
 import { InviteIcon } from "@/icons/InviteIcon";
 import { SettingIcon } from "@/icons/SettingIcon";
 import { LogoutIcon } from "@/icons/LogoutIcon";
 import { BsHeadsetVr } from "react-icons/bs";
-import { IoNotifications } from "react-icons/io5";
+import { FaRegBell } from "react-icons/fa6";
 import { Badge } from "@/components/ui/badge";
 import {
   Sheet,
@@ -35,8 +33,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-
+} from "@/components/ui/sheet";
+import { TiMicrophoneOutline } from "react-icons/ti";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -48,13 +46,13 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
-      <div className="font-poppins flex justify-between items-center py-3 px-1 ">
-        <div className="flex items-center justify-center gap-4">
+      <div className="font-poppins flex justify-between items-center py-3 ">
+        <div className="flex items-center justify-between gap-1">
           <Sheet>
             <SheetTrigger>
               <FaBars className="md:hidden" size={16} />
             </SheetTrigger>
-            <SheetContent side='left'>
+            <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle>Are you absolutely sure?</SheetTitle>
                 <SheetDescription>
@@ -65,21 +63,23 @@ export default function Header() {
             </SheetContent>
           </Sheet>
 
+          <FaBars size={20} className="mr-2" />
+
           <h2 className="font-extrabold text-current text-xl">Y-PROJECT</h2>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <AiOutlineSearch size={18} />
+              <AiOutlineSearch size={20} />
             </span>
             <Input
-              className="w-full sm:w-52 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground rounded-full "
+              className="w-full sm:w-52 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground rounded-md"
               placeholder="Type to search..."
               size="md"
               type="search"
             />
             <span className="absolute inset-y-0 right-0 flex items-center pr-3">
-              <FaMicrophone size={18} />
+              <TiMicrophoneOutline size={20} />
             </span>
           </div>
         </div>
@@ -92,85 +92,15 @@ export default function Header() {
                   variant="outline"
                   className={"rounded-full p-2 hidden md:inline"}
                 >
-                  <BsHeadsetVr size={24} className="text-current" />
+                  <BsHeadsetVr size={20} className="text-current" />
                 </Badge>
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Badge
-                      variant="outline"
-                      className={"rounded-full p-2 hidden md:inline"}
-                    >
-                      <IoNotifications size={24} className="text-current" />
-                    </Badge>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="max-w-md p-3 space-y-3">
-                    <DropdownMenuLabel>Notifications (2) </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-
-                    <DropdownMenuItem>
-                      <div class="flex items-start space-x-2 ">
-                        <EarnIcon size={40} />
-                        <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                          <p className="text-base text-wrap text-darktext ">
-                            {" "}
-                            Upgrade your account to start earning as a mentor.
-                          </p>
-
-                          <p className="font-medium">2 hours ago</p>
-                        </div>
-                      </div>
-                    </DropdownMenuItem>
-                    <Separator orientation="horizontal" className="my-2" />
-                    <DropdownMenuItem>
-                      <div class="flex items-start space-x-2 ">
-                        <Avatar>
-                          <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                          <p className="text-base text-wrap text-darktext ">
-                            {" "}
-                            Upgrade your account to start earning as a mentor.
-                          </p>
-
-                          <p className="font-medium">2 hours ago</p>
-                        </div>
-                      </div>
-                    </DropdownMenuItem>
-                    <Separator orientation="horizontal" className="my-2" />
-                    <DropdownMenuItem>
-                      <div class="flex items-start space-x-2 ">
-                        <EarnIcon size={40} />
-                        <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                          <p className="text-base text-wrap text-darktext ">
-                            {" "}
-                            Upgrade your account to start earning as a mentor.
-                          </p>
-
-                          <p className="font-medium">2 hours ago</p>
-                        </div>
-                      </div>
-                    </DropdownMenuItem>
-                    <Separator orientation="horizontal" className="my-2" />
-                    <DropdownMenuItem>
-                      <div class="flex items-start space-x-2 ">
-                        <Avatar>
-                          <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col items-start space-y-1  rounded-lg ">
-                          <p className="text-base text-wrap text-darktext ">
-                            {" "}
-                            Upgrade your account to start earning as a mentor.
-                          </p>
-
-                          <p className="font-medium">2 hours ago</p>
-                        </div>
-                      </div>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Badge
+                  variant="outline"
+                  className={"rounded-full p-2 hidden md:inline"}
+                >
+                  <FaRegBell size={20} className="text-current" />
+                </Badge>
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

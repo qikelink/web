@@ -19,6 +19,8 @@ import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
+import Image from "next/image";
+import somerandom from "../../images/YYY.jpg";
 
 const HomeCardSection = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -42,16 +44,13 @@ const HomeCardSection = () => {
             </CardFooter>
           </Card>
           <Card className="hidden lg:inline">
-            <CardHeader>
-              <CardTitle>Card Title</CardTitle>
-              <CardDescription>Second card</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-              <p>Card Footer</p>
-            </CardFooter>
+            <Image
+              src={somerandom}
+              width={470}
+              height={450}
+              className="rounded-md"
+              alt="Picture of the author"
+            />
           </Card>
           <Card className="hidden lg:inline">
             <CardHeader>
@@ -114,16 +113,16 @@ const HomeCardSection = () => {
                 {item.rate != "free" ? (
                   <Badge
                     variant="outline"
-                    className="flex gap-1 rounded-full bg-green-500"
+                    className="flex gap-1 rounded-full bg-green-200"
                   >
-                    <p className="font-semibold  text-secondary">{item.rate}</p>
+                    <p className="font-semibold  text-green-700">{item.rate}</p>
                   </Badge>
                 ) : (
                   <Badge
                     variant="outline"
-                    className="flex gap-1 rounded-full bg-red"
+                    className="flex gap-1 rounded-full bg-red-100"
                   >
-                    <p className="font-semibold  text-secondary">Free</p>
+                    <p className="font-semibold  text-red-500">Free</p>
                   </Badge>
                 )}
               </CardFooter>
