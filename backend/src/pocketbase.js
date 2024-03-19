@@ -36,12 +36,4 @@ export function signout(setIsUserValid) {
 }
 
 
-export async function createRequestCollab(name, social_handle, contact, about) {
-  const data = {
-    name: name,
-    social_handle: social_handle,
-    contact: contact,
-    about: about,
-  }
-  await client.collection("y_requests").create(data)
-}
+

@@ -7,7 +7,7 @@ import KeywordBar from "@/utils/KeywordBar";
 const HomeSection = () => {
   return (
     <div className="min-h-screen font-poppins w-full">
-      {!isUserValid ? (
+      {isUserValid ? (
         <div className="flex flex-row py-1">
           <div className="hidden md:inline w-1/4 ">
             <ListSection />

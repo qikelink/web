@@ -35,15 +35,22 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-
+} from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
   const pathname = usePathname();
+  const history = useRouter();
 
   const handleSignout = () => {
     signout(setIsUserValid);
+    if (pathname === '/') {
+      window.reload()
+    } else {
+      history.push('/')
+    }
   };
 
   return (
@@ -54,7 +61,7 @@ export default function Header() {
             <SheetTrigger>
               <FaBars className="md:hidden" size={16} />
             </SheetTrigger>
-            <SheetContent side='left'>
+            <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle>Are you absolutely sure?</SheetTitle>
                 <SheetDescription>
@@ -86,7 +93,7 @@ export default function Header() {
 
         <div as="div" justify="end">
           <div className="flex items-center space-x-5 justify-center">
-            {!isUserValid ? (
+            {isUserValid ? (
               <>
                 <Badge
                   variant="outline"
@@ -230,13 +237,14 @@ export default function Header() {
 
                     <Separator orientation="horizontal" />
                     <DropdownMenuItem>
-                      <Link
-                        href="/Sessions"
+                      <button
+                    
+                        onClick={handleSignout}
                         className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
                       >
                         <LogoutIcon />
                         <p>Log out</p>
-                      </Link>
+                      </button>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
