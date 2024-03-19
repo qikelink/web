@@ -24,9 +24,9 @@ const ManagerList = () => {
       <ul className="flex flex-col grow ">
         <li>
           <Link
-            href="/Manager/Request"
+            href="/manager/Request"
             className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer ${
-              pathname === "/Manager/Request" ? "bg-[#f7fafc] text-blue" : ""
+              pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
             } hover:text-blue`}
           >
             <MdOutlineGroupAdd size={25} />
@@ -35,9 +35,9 @@ const ManagerList = () => {
         </li>
         <li>
           <Link
-            href="/Manager/Organization"
+            href="/manager/Organization"
             className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
-              pathname === "/Manager/Organization"
+              pathname === "/manager/Organization"
                 ? "bg-[#f7fafc] text-blue"
                 : ""
             }`}
@@ -48,9 +48,9 @@ const ManagerList = () => {
         </li>
         <li>
           <Link
-            href="/Manager/Metrics"
+            href="/manager/Metrics"
             className={`flex gap-2 items-center rounded-full cursor-pointer py-5 px-4 hover:text-blue ${
-              pathname === "/Manager/Metrics" ? "bg-[#f7fafc] text-blue" : ""
+              pathname === "/manager/Metrics" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
             <VscGraphLine size={20} />

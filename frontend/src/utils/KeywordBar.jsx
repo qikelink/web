@@ -28,17 +28,21 @@ const KeywordBar = ({ data }) => {
       <div
         id="buttonContainer"
         className="flex py-4 px-2 gap-4 w-full overflow-x-scroll"
-        style={{ "scrollbar-width": "thin" }}>
-        {data.map((buttonText) => (
+        style={{ "scrollbar-width": "thin" }}
+      >
+        {data.map((buttonText, index) => (
           <Button
             key={buttonText}
             variant="secondary"
             className={`w-fit font-medium text-lg ${
               selectedButtons.includes(buttonText)
                 ? "bg-primary text-secondary hover:bg-primary"
+                : index === 0
+                ? "bg-blue text-white hover:bg-blue"
                 : ""
             }`}
-            onClick={() => handleButtonClick(buttonText)}>
+            onClick={() => handleButtonClick(buttonText)}
+          >
             {buttonText}
           </Button>
         ))}
@@ -48,7 +52,8 @@ const KeywordBar = ({ data }) => {
           variant="secondary"
           size="icon"
           aria-label="more keywords"
-          onClick={handleScrollRight}>
+          onClick={handleScrollRight}
+        >
           <RightIcon />
         </Button>
       </div>

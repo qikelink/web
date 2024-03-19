@@ -54,7 +54,7 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/setting"
+            href="/settings"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
               pathname === "/settings" ? "bg-[#f7fafc] text-blue" : ""
             }`}

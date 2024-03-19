@@ -74,7 +74,9 @@ const HomeCardSection = () => {
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Avatar>
-                      <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
+                      <AvatarImage
+                        src={`https://i.pravatar.cc/150?u=${index}`}
+                      />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
 
