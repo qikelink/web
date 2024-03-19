@@ -35,10 +35,10 @@ const LoginDialog = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    if (!isSignIn && password.length < 6) {
+    if (!isSignIn && password.length < 8) {
       toast({
         title: "Weak Password",
-        description: "Password must be at least 6 characters long",
+        description: "Password must be at least 8 characters long",
         variant: "destructive",
       });
       return;
@@ -58,7 +58,7 @@ const LoginDialog = () => {
     if (isSignIn) {
       login(email, password, setIsUserValid)
         .then(() => {
-          history.push("/settings");
+          window.location.reload();
         })
         .catch((error) => {
           toast({

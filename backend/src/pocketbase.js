@@ -9,7 +9,7 @@ client.autoCancellation(false)
 export const isUserValid = client.authStore.model && client.authStore.model.id !== null;
 
 
-export async function getInfos() {
+export async function getUser() {
   return await client.collection("users").getFullList()
 }
 
