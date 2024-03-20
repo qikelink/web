@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { isUserValid, signout } from "../../../backend/src/pocketbase";
+import { isUserValid, signout, getUser } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -37,14 +37,39 @@ import {
 import { TiMicrophoneOutline } from "react-icons/ti";
 import Image from "next/image";
 import logo from "../../images/loho.png";
+import { useRouter } from "next/navigation";
+// import { Button } from "./ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Header() {
+  const [user, setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { setIsUserValid } = useAuth();
   const pathname = usePathname();
+  const history = useRouter();
+
+  useEffect(() => {
+    getUser()
+      .then((res) => {
+        setUser(res);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
+      });
+  }, [isUserValid]);
 
   const handleSignout = () => {
     signout(setIsUserValid);
+    if (pathname === "/") {
+      window.location.reload();
+    } else {
+      history.push("/");
+    }
   };
+
+  console.log(user)
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
@@ -94,14 +119,21 @@ export default function Header() {
 
         <div as="div" justify="end">
           <div className="flex items-center space-x-5 justify-center">
-            {!isUserValid ? (
+            {isLoading && isUserValid ? (
               <>
-                <Badge
-                  variant="outline"
-                  className={"rounded-full p-2 hidden md:inline"}
-                >
-                  <BsHeadsetVr size={20} className="text-current" />
-                </Badge>
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </>
+            ) : (
+              user.map((userInfo, index) => (
+                <>
+                  <Badge
+                    variant="outline"
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
+                    <BsHeadsetVr size={20} className="text-current" />
+                  </Badge>
 
                 <Badge
                   variant="outline"
@@ -110,80 +142,83 @@ export default function Header() {
                   <FaRegBell size={20} className="text-current" />
                 </Badge>
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Avatar>
-                      <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="max-w-sm p-5 space-y-3">
-                    <DropdownMenuLabel className="flex space-x-3 items-center">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
                       <Avatar>
-                        <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarImage src={userInfo.avatar} />
+                        <AvatarFallback>
+                          {userInfo.email.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
                       </Avatar>
-                      <div>
-                        <p className="text-xl font-medium">Samuel Arimo</p>
-                        <p className="text-xs font-light">
-                          SamuelArimo@gmail.com
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="max-w-sm p-5 space-y-3">
+                      <DropdownMenuLabel className="flex space-x-3 items-center">
+                        <Avatar>
+                          <AvatarImage src={userInfo.avatar} />
+                          <AvatarFallback>
+                            {userInfo.email.slice(0, 2).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-xl font-medium">
+                            {userInfo.username}
+                          </p>
+                          <p className="text-xs font-light">{userInfo.email}</p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
 
-                    {/* menu items */}
+                      {/* menu items */}
 
-                    <DropdownMenuItem>
-                      <Link
-                        href="/Sessions"
-                        className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                      >
-                        <UserIcon />
-                        <p>My account</p>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link
-                        href="/Sessions"
-                        className={`flex gap-4 items-center cursor-pointer ${
-                          pathname === "/Sessions"
-                            ? "bg-[#f7fafc] text-blue"
-                            : ""
-                        } py-1 text-lg font-medium`}
-                      >
-                        <InviteIcon />
-                        <p>Invite friends</p>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link
-                        href="/Sessions"
-                        className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                      >
-                        <SettingIcon />
-                        <p>Support</p>
-                      </Link>
-                    </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/Sessions"
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
+                          <UserIcon />
+                          <p>My account</p>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/Sessions"
+                          className={`flex gap-4 items-center cursor-pointer ${
+                            pathname === "/Sessions"
+                              ? "bg-[#f7fafc] text-blue"
+                              : ""
+                          } py-1 text-lg font-medium`}
+                        >
+                          <InviteIcon />
+                          <p>Invite friends</p>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/Sessions"
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
+                          <SettingIcon />
+                          <p>Support</p>
+                        </Link>
+                      </DropdownMenuItem>
 
-                    <Separator orientation="horizontal" />
-                    <DropdownMenuItem>
-                      <Link
-                        href="/Sessions"
-                        className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                      >
-                        <LogoutIcon />
-                        <p>Log out</p>
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <>
-                <LoginDialog />
-              </>
+                      <Separator orientation="horizontal" />
+                      <DropdownMenuItem>
+                        <button
+                          onClick={handleSignout}
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
+                          <LogoutIcon />
+                          <p>Log out</p>
+                        </button>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ))
             )}
+
+            {!isUserValid ? <LoginDialog /> : null}
           </div>
         </div>
       </div>
