@@ -35,7 +35,7 @@ const KeywordBar = ({ data }) => {
             variant="secondary"
             className={`w-fit font-medium text-base ${
               selectedButtons.includes(buttonText)
-                ? "bg-primary text-secondary hover:bg-green "
+                ? "bg-blue text-secondary hover:bg-green "
                 : index === 0
                 ? "bg-blue text-white "
                 : ""

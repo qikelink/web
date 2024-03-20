@@ -35,6 +35,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { TiMicrophoneOutline } from "react-icons/ti";
+import Image from "next/image";
+import logo from "../../images/loho.png";
 
 export default function Header() {
   const { setIsUserValid } = useAuth();
@@ -63,9 +65,15 @@ export default function Header() {
             </SheetContent>
           </Sheet>
 
-          <FaBars size={20} className="mr-2" />
+          <FaBars size={20} className="mr-4" />
 
-          <h2 className="font-extrabold text-current text-xl">Y-PROJECT</h2>
+          {/* <h2 className="font-extrabold text-current text-xl">VRMEET</h2> */}
+          <Image
+            src={logo}
+            width={150}
+            className="rounded-md"
+            alt="Picture of the author"
+          />
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
@@ -73,7 +81,7 @@ export default function Header() {
               <AiOutlineSearch size={20} />
             </span>
             <Input
-              className="w-full sm:w-52 md:w-72 lg:w-96 pl-10 pr-8 bg-inputbackground rounded-md"
+              className="w-full sm:w-52 md:w-72 lg:w-96 pl-10 pr-8 bg-secondary rounded-md"
               placeholder="Type to search..."
               size="md"
               type="search"

@@ -20,7 +20,8 @@ import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
 import Image from "next/image";
-import somerandom from "../../images/YYY.jpg";
+import pic4 from "../../images/pic4.gif";
+import pic5 from "../../images/pic6.jpg";
 
 const HomeCardSection = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -43,26 +44,23 @@ const HomeCardSection = () => {
               <p>Card Footer</p>
             </CardFooter>
           </Card>
-          <Card className="hidden lg:inline">
+          <Card className="hidden flex justify-center item-center bg-black ">
             <Image
-              src={somerandom}
-              width={470}
+              src={pic4}
+              width={450}
               height={450}
               className="rounded-md"
               alt="Picture of the author"
             />
           </Card>
-          <Card className="hidden lg:inline">
-            <CardHeader>
-              <CardTitle>Card Title</CardTitle>
-              <CardDescription>Third card</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-              <p>Card Footer</p>
-            </CardFooter>
+          <Card className="hidden flex justify-center item-center bg-gray-300">
+            <Image
+              src={pic5}
+              width={450}
+              height={450}
+              className="rounded-md"
+              alt="Picture of the author"
+            />
           </Card>
         </div>
 

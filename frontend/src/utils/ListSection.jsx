@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineFeedback } from "react-icons/md";
+import { AiOutlineHome } from "react-icons/ai";
 
 const ListSection = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const ListSection = () => {
               pathname === "/" ? "bg-[#f7fafc] text-blue rounded-md" : ""
             }`}
           >
-            <HomeIcon />
+            <AiOutlineHome size={20} />
             <p>Home</p>
           </Link>
         </li>
