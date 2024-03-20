@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { isUserValid, signout, getUser } from "../../../backend/src/pocketbase";
+import { isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -38,38 +38,20 @@ import { TiMicrophoneOutline } from "react-icons/ti";
 import Image from "next/image";
 import logo from "../../images/loho.png";
 import { useRouter } from "next/navigation";
-// import { Button } from "./ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUser } from "@/contexts/user-context";
 
 export default function Header() {
-  const [user, setUser] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { setIsUserValid } = useAuth();
+  const { user, isLoading, setUser } = useUser();
   const pathname = usePathname();
   const history = useRouter();
-
-  useEffect(() => {
-    getUser()
-      .then((res) => {
-        setUser(res);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      });
-  }, [isUserValid]);
+  const { setIsUserValid } = useAuth();
 
   const handleSignout = () => {
     signout(setIsUserValid);
-    if (pathname === "/") {
-      window.location.reload();
-    } else {
-      history.push("/");
-    }
+    setUser([]);
+    window.location.reload();
   };
-
-  console.log(user);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
@@ -118,25 +100,30 @@ export default function Header() {
         </div>
 
         <div as="div" justify="end">
-          <div className="flex items-center space-x-5 justify-center">
+          <div>
             {isLoading && isUserValid ? (
-              <>
-                <Skeleton className="h-10 w-10 rounded-full" />
-                <Skeleton className="h-10 w-10 rounded-full" />
-                <Skeleton className="h-10 w-10 rounded-full" />
-              </>
-            ) : (
+              <div className="flex items-center space-x-5 justify-center">
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </div>
+            ) : user.length > 0 ? (
               user.map((userInfo, index) => (
-                <>
+                <div
+                  key={index}
+                  className="flex items-center space-x-5 justify-center"
+                >
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}>
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
                     <BsHeadsetVr size={20} className="text-current" />
                   </Badge>
 
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}>
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
                     <FaRegBell size={20} className="text-current" />
                   </Badge>
 
@@ -171,7 +158,8 @@ export default function Header() {
                       <DropdownMenuItem>
                         <Link
                           href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
                           <UserIcon />
                           <p>My account</p>
                         </Link>
@@ -183,7 +171,8 @@ export default function Header() {
                             pathname === "/Sessions"
                               ? "bg-[#f7fafc] text-blue"
                               : ""
-                          } py-1 text-lg font-medium`}>
+                          } py-1 text-lg font-medium`}
+                        >
                           <InviteIcon />
                           <p>Invite friends</p>
                         </Link>
@@ -191,7 +180,8 @@ export default function Header() {
                       <DropdownMenuItem>
                         <Link
                           href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
                           <SettingIcon />
                           <p>Support</p>
                         </Link>
@@ -201,18 +191,19 @@ export default function Header() {
                       <DropdownMenuItem>
                         <button
                           onClick={handleSignout}
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
                           <LogoutIcon />
                           <p>Log out</p>
                         </button>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </>
+                </div>
               ))
+            ) : (
+              <LoginDialog />
             )}
-
-            {!isUserValid ? <LoginDialog /> : null}
           </div>
         </div>
       </div>

@@ -19,6 +19,7 @@ import { useToast } from "@/components/ui/use-toast";
 const SettingCard = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [value, onChange] = useState(new Date());
+  const [formData, setFormData] = useState({});
   const [user, setUser] = useState([]);
   const { toast } = useToast();
 
@@ -32,14 +33,30 @@ const SettingCard = () => {
       });
   }, [isUserValid]);
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    username: "",
-    phoneNumber: "",
-    bio: "",
-    awards: "",
-  });
+  useEffect(() => {
+    const defaultFormData = {
+      fullName: "",
+      email: "",
+      username: "",
+      phoneNumber: "",
+      bio: "",
+      awards: "",
+    };
+
+    const initialFormData =
+      user.length > 0
+        ? {
+            fullName: user[0].fullName || "",
+            email: user[0].email || "",
+            username: user[0].username || "",
+            phoneNumber: user[0].phoneNumber || "",
+            bio: user[0].bio || "",
+            awards: user[0].awards || "",
+          }
+        : defaultFormData;
+
+    setFormData(initialFormData);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +69,7 @@ const SettingCard = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const id = user.map((user) => user.id);
+    const id = user[0].id;
 
     editSetting(
       id,
@@ -77,16 +94,7 @@ const SettingCard = () => {
         });
         console.error("Setting error:", error);
       })
-      .finally(() => {
-        // setFormData({
-        //   fullName: "",
-        //   email: "",
-        //   username: "",
-        //   phoneNumber: "",
-        //   bio: "",
-        //   awards: "",
-        // });
-      });
+      .finally(() => {});
   };
 
   return (
@@ -132,7 +140,7 @@ const SettingCard = () => {
                 name="email"
                 type="email"
                 value={formData.email}
-                onChange={handleChange}
+                readOnly
               />
             </div>
             <div>
