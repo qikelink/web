@@ -69,7 +69,7 @@ export default function Header() {
     }
   };
 
-  console.log(user)
+  console.log(user);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
@@ -121,26 +121,24 @@ export default function Header() {
           <div className="flex items-center space-x-5 justify-center">
             {isLoading && isUserValid ? (
               <>
-                <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-10 w-10 rounded-full" />
+                <Skeleton className="h-10 w-10 rounded-full" />
+                <Skeleton className="h-10 w-10 rounded-full" />
               </>
             ) : (
               user.map((userInfo, index) => (
                 <>
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}
-                  >
+                    className={"rounded-full p-2 hidden md:inline"}>
                     <BsHeadsetVr size={20} className="text-current" />
                   </Badge>
 
-                <Badge
-                  variant="outline"
-                  className={"rounded-full p-2 hidden md:inline"}
-                >
-                  <FaRegBell size={20} className="text-current" />
-                </Badge>
+                  <Badge
+                    variant="outline"
+                    className={"rounded-full p-2 hidden md:inline"}>
+                    <FaRegBell size={20} className="text-current" />
+                  </Badge>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -173,8 +171,7 @@ export default function Header() {
                       <DropdownMenuItem>
                         <Link
                           href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                        >
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
                           <UserIcon />
                           <p>My account</p>
                         </Link>
@@ -186,8 +183,7 @@ export default function Header() {
                             pathname === "/Sessions"
                               ? "bg-[#f7fafc] text-blue"
                               : ""
-                          } py-1 text-lg font-medium`}
-                        >
+                          } py-1 text-lg font-medium`}>
                           <InviteIcon />
                           <p>Invite friends</p>
                         </Link>
@@ -195,8 +191,7 @@ export default function Header() {
                       <DropdownMenuItem>
                         <Link
                           href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                        >
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
                           <SettingIcon />
                           <p>Support</p>
                         </Link>
@@ -206,8 +201,7 @@ export default function Header() {
                       <DropdownMenuItem>
                         <button
                           onClick={handleSignout}
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                        >
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
                           <LogoutIcon />
                           <p>Log out</p>
                         </button>

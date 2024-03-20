@@ -19,14 +19,13 @@ const ListSection = () => {
   return (
     <div className="flex flex-row justify-between h-full w-full my-3 ">
       {/* menu items */}
-      <ul className="flex flex-col grow">
+      <ul className="flex text-base flex-col grow">
         <li>
           <Link
             href="/"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/" ? "bg-[#f7fafc] text-blue rounded-md" : ""
-            }`}
-          >
+              pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
+            }`}>
             <AiOutlineHome size={20} />
             <p>Home</p>
           </Link>
@@ -35,9 +34,8 @@ const ListSection = () => {
           <Link
             href="/bookmark"
             className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
-              pathname === "/bookmark" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+              pathname === "/bookmark" ? "bg-[#e2eff8] text-blue" : ""
+            }`}>
             <PiBookBookmarkDuotone size={20} />
             <p>BookMarked</p>
           </Link>
@@ -46,9 +44,8 @@ const ListSection = () => {
           <Link
             href="/sessions"
             className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
-              pathname === "/sessions" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue`}
-          >
+              pathname === "/sessions" ? "bg-[#e2eff8] text-blue" : ""
+            } hover:text-blue`}>
             <BsJournalBookmarkFill size={20} />
             <p>Sessions</p>
           </Link>
@@ -57,9 +54,8 @@ const ListSection = () => {
           <Link
             href="/settings"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/settings" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+              pathname === "/settings" ? "bg-[#e2eff8] text-blue" : ""
+            }`}>
             <IoMdSettings size={20} />
             <p>Settings</p>
           </Link>
@@ -70,31 +66,28 @@ const ListSection = () => {
           <Link
             href="/manager"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/manager" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+              pathname === "/manager" ? "bg-[#e2eff8] text-blue" : ""
+            }`}>
             <CgProfile size={20} />
             <p>Manager</p>
           </Link>
         </li>
-        <li class="flex gap-4 items-center">
+        <li>
           <Link
             href="/help"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/help" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+              pathname === "/help" ? "bg-[#e2eff8] text-blue" : ""
+            }`}>
             <IoMdHelpCircleOutline size={20} />
             <p>Help</p>
           </Link>
         </li>
-        <li class="flex gap-4 items-center">
+        <li>
           <Link
             href="/feedBack"
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/feedBack" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+              pathname === "/feedBack" ? "bg-[#e2eff8] text-blue" : ""
+            }`}>
             <MdOutlineFeedback size={20} />
             <p>Send FeedBack</p>
           </Link>
