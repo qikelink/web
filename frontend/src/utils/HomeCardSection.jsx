@@ -53,7 +53,7 @@ const HomeCardSection = () => {
               alt="Picture of the author"
             />
           </Card>
-          <Card className="hidden flex justify-center item-center bg-gray-300">
+          <Card className="hidden flex justify-center item-center bg-gray-200">
             <Image
               src={pic5}
               width={450}
@@ -111,15 +111,13 @@ const HomeCardSection = () => {
                 {item.rate != "free" ? (
                   <Badge
                     variant="outline"
-                    className="flex gap-1 rounded-full bg-green-200"
-                  >
+                    className="flex gap-1 rounded-full bg-green-200">
                     <p className="font-semibold  text-green-700">{item.rate}</p>
                   </Badge>
                 ) : (
                   <Badge
                     variant="outline"
-                    className="flex gap-1 rounded-full bg-red-100"
-                  >
+                    className="flex gap-1 rounded-full bg-red-100">
                     <p className="font-semibold  text-red-500">Free</p>
                   </Badge>
                 )}

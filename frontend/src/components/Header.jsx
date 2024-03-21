@@ -40,11 +40,12 @@ import logo from "../../images/loho.png";
 import { useRouter } from "next/navigation";
 // import { Button } from "./ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Progress } from "@/components/ui/progress";
 
 export default function Header() {
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { setIsUserValid } = useAuth();
+  const { setIsUserValid, progress, setProgress } = useAuth();
   const pathname = usePathname();
   const history = useRouter();
 
@@ -216,6 +217,13 @@ export default function Header() {
           </div>
         </div>
       </div>
+      {progress === 0 ? null : (
+        <Progress
+          value={progress}
+          variant="secondary"
+          className="w-[100%] h-[1px]"
+        />
+      )}
     </header>
   );
 }
