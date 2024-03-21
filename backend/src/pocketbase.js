@@ -12,6 +12,10 @@ export async function getUser() {
   return await client.collection("users").getFullList();
 }
 
+export async function getMentors() {
+  return await client.collection("mentors").getFullList();
+}
+
 export async function Signup(email, password) {
   const data = {
     email: email,
@@ -38,14 +42,44 @@ export function signout(setIsUserValid) {
   setIsUserValid(false);
 }
 
-export async function editSetting(id, fullName, username, phoneNumber, bio, awards) {
+export async function editSetting(
+  id,
+  fullName,
+  username,
+  phoneNumber,
+  bio,
+  awards
+) {
   const data = {
     fullName: fullName,
     username: username,
     phoneNumber: phoneNumber,
-     bio: bio,
-    awards: awards
-   
-  }
-  await client.collection("users").update(id, data)
+    bio: bio,
+    awards: awards,
+  };
+  await client.collection("users").update(id, data);
+}
+
+export async function verifyRequest(
+  fullName,
+  username,
+  phoneNumber,
+  bio,
+  awards,
+  businessName,
+  contact,
+  account
+) {
+  const data = {
+    fullName: fullName,
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+    businessName: businessName,
+    contact: contact,
+    account: account,
+    user: client.authStore.model.id,
+  };
+  await client.collection("mentors").create(data);
 }

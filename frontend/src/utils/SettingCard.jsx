@@ -17,8 +17,6 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 const SettingCard = () => {
-  const [isFollowed, setIsFollowed] = useState(false);
-  const [value, onChange] = useState(new Date());
   const [formData, setFormData] = useState({});
   const [user, setUser] = useState([]);
   const { toast } = useToast();
@@ -195,7 +193,7 @@ const SettingCard = () => {
               Update Profile
             </Button>
             {/* <Separator orientation="vertical" className='bg-darktext'/> */}
-            <VerifyModal />
+            <VerifyModal userData={user} />
           </div>
         </div>
       </form>
