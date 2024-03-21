@@ -18,7 +18,7 @@ const ListSection = () => {
   const { setIsUserValid, progress, setProgress } = useAuth();
 
   return (
-    <div className="flex flex-row justify-between h-full w-full my-3 ">
+    <div className="flex flex-row justify-between h-full w-full ">
       {/* menu items */}
       <ul className="flex text-base flex-col grow">
         <li>

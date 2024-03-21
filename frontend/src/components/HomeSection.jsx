@@ -1,5 +1,3 @@
-"use client";
-
 import HomeCardSection from "@/utils/HomeCardSection";
 import ListSection from "@/utils/ListSection";
 import React from "react";
@@ -7,9 +5,9 @@ import { isUserValid } from "../../../backend/src/pocketbase";
 
 const HomeSection = () => {
   return (
-    <div className="min-h-screen font-poppins w-full">
+    <>
       {isUserValid ? (
-        <div className="flex flex-row py-1">
+        <div className="h-screen relative flex flex-row py-1 overflow-contain ">
           <div className="hidden md:inline w-1/4 ">
             <ListSection />
           </div>
@@ -22,7 +20,7 @@ const HomeSection = () => {
           <HomeCardSection />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
