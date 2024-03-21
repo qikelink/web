@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { isUserValid, signout, getUser } from "../../../backend/src/pocketbase";
+import { isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -38,39 +38,21 @@ import { TiMicrophoneOutline } from "react-icons/ti";
 import Image from "next/image";
 import logo from "../../images/loho.png";
 import { useRouter } from "next/navigation";
-// import { Button } from "./ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUser } from "@/contexts/user-context";
 import { Progress } from "@/components/ui/progress";
 
 export default function Header() {
-  const [user, setUser] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isLoading, setUser } = useUser();
   const { setIsUserValid, progress, setProgress } = useAuth();
   const pathname = usePathname();
   const history = useRouter();
 
-  useEffect(() => {
-    getUser()
-      .then((res) => {
-        setUser(res);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      });
-  }, [isUserValid]);
-
   const handleSignout = () => {
     signout(setIsUserValid);
-    if (pathname === "/") {
-      window.location.reload();
-    } else {
-      history.push("/");
-    }
+    setUser([]);
+    window.location.reload();
   };
-
-  console.log(user);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
@@ -119,16 +101,18 @@ export default function Header() {
         </div>
 
         <div as="div" justify="end">
-          <div className="flex items-center space-x-5 justify-center">
+          <div>
             {isLoading && isUserValid ? (
-              <>
-                <Skeleton className="h-10 w-10 rounded-full" />
-                <Skeleton className="h-10 w-10 rounded-full" />
-                <Skeleton className="h-10 w-10 rounded-full" />
-              </>
-            ) : (
+              <div className="flex items-center space-x-5 justify-center">
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </div>
+            ) : user.length > 0 ? (
               user.map((userInfo, index) => (
-                <>
+                <div
+                  key={index}
+                  className="flex items-center space-x-5 justify-center">
                   <Badge
                     variant="outline"
                     className={"rounded-full p-2 hidden md:inline"}>
@@ -209,11 +193,11 @@ export default function Header() {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </>
+                </div>
               ))
+            ) : (
+              <LoginDialog />
             )}
-
-            {!isUserValid ? <LoginDialog /> : null}
           </div>
         </div>
       </div>
