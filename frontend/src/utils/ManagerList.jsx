@@ -24,19 +24,8 @@ const ManagerList = () => {
       <ul className="flex flex-col grow ">
         <li>
           <Link
-            href="/manager/Request"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer ${
-              pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue`}
-          >
-            <MdOutlineGroupAdd size={25} />
-            <p>Request</p>
-          </Link>
-        </li>
-        <li>
-          <Link
             href="/manager/Organization"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/manager/Organization"
                 ? "bg-[#f7fafc] text-blue"
                 : ""
@@ -48,8 +37,20 @@ const ManagerList = () => {
         </li>
         <li>
           <Link
+            href="/manager/Request"
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer ${
+              pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
+            } hover:text-blue`}
+          >
+            <MdOutlineGroupAdd size={25} />
+            <p>Request</p>
+          </Link>
+        </li>
+
+        <li>
+          <Link
             href="/manager/Metrics"
-            className={`flex gap-2 items-center rounded-full cursor-pointer py-5 px-4 hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md cursor-pointer py-5 px-4 hover:text-blue ${
               pathname === "/manager/Metrics" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -61,7 +62,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/setting"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/setting" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -74,7 +75,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Profile"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/Profile" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -85,7 +86,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/Help"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/Help" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >
@@ -96,7 +97,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/FeedBack"
-            className={`flex gap-2 items-center rounded-full py-5 px-4 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/FeedBack" ? "bg-[#f7fafc] text-blue" : ""
             }`}
           >

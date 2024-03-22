@@ -32,18 +32,6 @@ const HomeCardSection = () => {
       <div>
         <KeywordBar data={dataset} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full py-2">
-          <Card className="lg:hidden w-full">
-            <CardHeader>
-              <CardTitle>Card Title</CardTitle>
-              <CardDescription>First card</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-              <p>Card Footer</p>
-            </CardFooter>
-          </Card>
           <Card className="hidden flex justify-center item-center bg-black ">
             <Image
               src={pic4}

@@ -27,8 +27,9 @@ const ListSection = () => {
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
               pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-            }`}>
-            <AiOutlineHome size={20} />
+            }`}
+          >
+            <AiOutlineHome size={24} className="ml-2" />
             <p>Home</p>
           </Link>
         </li>
@@ -40,8 +41,9 @@ const ListSection = () => {
               pathname === "/bookmark"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}>
-            <PiBookBookmarkDuotone size={20} />
+            }`}
+          >
+            <PiBookBookmarkDuotone size={24} className="ml-2" />
             <p>BookMarked</p>
           </Link>
         </li>
@@ -53,8 +55,9 @@ const ListSection = () => {
               pathname === "/sessions"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            } hover:text-blue`}>
-            <BsJournalBookmarkFill size={20} />
+            } hover:text-blue`}
+          >
+            <BsJournalBookmarkFill size={24} className="ml-2" />
             <p>Sessions</p>
           </Link>
         </li>
@@ -66,8 +69,9 @@ const ListSection = () => {
               pathname === "/settings"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}>
-            <IoMdSettings size={20} />
+            }`}
+          >
+            <IoMdSettings size={24} className="ml-2" />
             <p>Settings</p>
           </Link>
         </li>
@@ -75,12 +79,13 @@ const ListSection = () => {
 
         <li>
           <Link
-            href="/manager"
+            href="/manager/Organization"
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/manager" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-            }`}>
-            <CgProfile size={20} />
+              pathname === "/manager/Organization" ? "bg-[#e2eff8] text-blue rounded-md" : ""
+            }`}
+          >
+            <CgProfile size={24} className="ml-2" />
             <p>Manager</p>
           </Link>
         </li>
@@ -90,8 +95,9 @@ const ListSection = () => {
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
               pathname === "/help" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-            }`}>
-            <IoMdHelpCircleOutline size={20} />
+            }`}
+          >
+            <IoMdHelpCircleOutline size={24} className="ml-2" />
             <p>Help</p>
           </Link>
         </li>
@@ -103,8 +109,9 @@ const ListSection = () => {
               pathname === "/feedBack"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}>
-            <MdOutlineFeedback size={20} />
+            }`}
+          >
+            <MdOutlineFeedback size={24} className="ml-2" />
             <p>Send FeedBack</p>
           </Link>
         </li>

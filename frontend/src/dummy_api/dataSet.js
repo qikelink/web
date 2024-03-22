@@ -31,7 +31,7 @@ export const sessiontags = [
   "Prayer",
 ];
 
-export const status = ["Now", "Upcoming", "Pending", "Past"];
+export const status = ["Now", "Approved", "Pending", "Past"];
 
 export const list = [
   {

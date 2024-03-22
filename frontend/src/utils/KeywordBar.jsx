@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RightIcon } from "@/icons/RightIcon";
+import { useUser } from "@/contexts/user-context";
 
 const KeywordBar = ({ data }) => {
-  const [selectedButtons, setSelectedButtons] = useState(["All"]);
+  const { selectedButtons, setSelectedButtons } = useUser();
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setSelectedButtons(data[0]);
+    }
+  }, [data]);
 
   const handleButtonClick = (button) => {
-    if (selectedButtons.includes(button)) {
-      setSelectedButtons(selectedButtons.filter((item) => item !== button));
-    } else {
-      setSelectedButtons([...selectedButtons, button]);
-    }
+    setSelectedButtons(button);
   };
 
   const handleScrollLeft = () => {
@@ -23,6 +26,8 @@ const KeywordBar = ({ data }) => {
     container.scrollLeft += 100;
   };
 
+  console.log(selectedButtons);
+
   return (
     <div className="flex my-3 space-x-2 w-full">
       <div
@@ -33,11 +38,11 @@ const KeywordBar = ({ data }) => {
           <Button
             key={buttonText}
             variant="secondary"
-            className={`w-fit font-medium text-base ${
-              selectedButtons.includes(buttonText)
-                ? "bg-blue text-secondary hover:bg-green "
+            className={`w-fit font-medium text-base hover:bg-blue  ${
+              selectedButtons === buttonText
+                ? "bg-blue text-secondary "
                 : index === 0
-                ? "bg-blue text-white "
+                ? " text-primary"
                 : ""
             }`}
             onClick={() => handleButtonClick(buttonText)}

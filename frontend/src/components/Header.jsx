@@ -41,6 +41,13 @@ import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import { Progress } from "@/components/ui/progress";
+import { PiBookBookmarkDuotone } from "react-icons/pi";
+import { BsJournalBookmarkFill } from "react-icons/bs";
+import { IoMdSettings } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { IoMdHelpCircleOutline } from "react-icons/io";
+import { MdOutlineFeedback } from "react-icons/md";
+import { AiOutlineHome } from "react-icons/ai";
 
 export default function Header() {
   const { user, isLoading, setUser } = useUser();
@@ -58,19 +65,120 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-background ">
       <div className="font-poppins flex justify-between items-center py-3 ">
         <div
-          className="flex items-center justify-between gap-1"
+          className="flex items-center justify-between gap-1 hover:cursor"
           onClick={() => router.push(`/`)}
         >
           <Sheet>
             <SheetTrigger>
-              <FaBars className="md:hidden" size={16} />
+              <Badge variant={"outline"} className={"p-2 md:hidden"}>
+                <FaBars className="md:hidden" size={16} />
+              </Badge>
             </SheetTrigger>
             <SheetContent side="left">
               <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
+                <SheetDescription className="mt-2">
+                  <ul className="flex text-base flex-col grow">
+                    <li>
+                      <Link
+                        href="/"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                          pathname === "/"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        }`}
+                      >
+                        <AiOutlineHome size={24} className="ml-2" />
+                        <p>Home</p>
+                      </Link>
+                    </li>
+                    <li onClick={() => router.push(`/bookmark`)}>
+                      <Link
+                        href="/bookmark"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
+                          pathname === "/bookmark"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        }`}
+                      >
+                        <PiBookBookmarkDuotone size={24} className="ml-2" />
+                        <p>BookMarked</p>
+                      </Link>
+                    </li>
+                    <li onClick={() => router.push(`/sessions`)}>
+                      <Link
+                        href="/sessions"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
+                          pathname === "/sessions"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        } hover:text-blue`}
+                      >
+                        <BsJournalBookmarkFill size={24} className="ml-2" />
+                        <p>Sessions</p>
+                      </Link>
+                    </li>
+                    <li onClick={() => router.push(`/settings`)}>
+                      <Link
+                        href="/settings"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                          pathname === "/settings"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        }`}
+                      >
+                        <IoMdSettings size={24} className="ml-2" />
+                        <p>Settings</p>
+                      </Link>
+                    </li>
+                    <Separator orientation="horizontal" />
+
+                    <li>
+                      <Link
+                        href="/manager/Organization"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                          pathname === "/manager/Organization"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        }`}
+                      >
+                        <CgProfile size={24} className="ml-2" />
+                        <p>Manager</p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/help"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                          pathname === "/help"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        }`}
+                      >
+                        <IoMdHelpCircleOutline size={24} className="ml-2" />
+                        <p>Help</p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/feedBack"
+                        onClick={() => setProgress(90)}
+                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                          pathname === "/feedBack"
+                            ? "bg-[#e2eff8] text-blue rounded-md"
+                            : ""
+                        }`}
+                      >
+                        <MdOutlineFeedback size={24} className="ml-2" />
+                        <p>Send FeedBack</p>
+                      </Link>
+                    </li>
+                  </ul>
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
@@ -83,7 +191,7 @@ export default function Header() {
           <Image
             src={logo}
             width={150}
-            className="rounded-md w-10 lg:w-28"
+            className="rounded-md w-28 lg:w-28"
             alt="Picture of the author"
           />
         </div>
@@ -122,7 +230,10 @@ export default function Header() {
                     variant="outline"
                     className={"rounded-full p-2 hidden md:inline"}
                   >
-                    <BsHeadsetVr size={20} className="text-current" />
+                    <BsHeadsetVr
+                      size={20}
+                      className="text-current hover:animate-spin"
+                    />
                   </Badge>
 
                   <Badge

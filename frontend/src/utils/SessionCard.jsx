@@ -3,10 +3,7 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
-import { FaStarHalf } from "react-icons/fa";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import Calendar from "react-calendar";
 import {
   Card,
   CardContent,
@@ -24,16 +21,17 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { BsHeadsetVr } from "react-icons/bs";
 import { createRoom } from "./createRoom";
+import { useUser } from "@/contexts/user-context";
 
 const SessionCard = () => {
-  const [isFollowed, setIsFollowed] = useState(false);
-  const [value, onChange] = useState(new Date());
-  const [roomId, setRoomId] = useState("");
   const router = useRouter();
+  const { selectedButtons, setSelectedButtons } = useUser();
+  const [isSpinning, setIsSpinning] = useState(false);
 
   const createMeet = async () => {
-      const roomId = await createRoom();
-      router.push(`/${roomId}`);
+    setIsSpinning(true);
+    const roomId = await createRoom();
+    router.push(`/${roomId}`);
   };
 
   const list = [
@@ -44,7 +42,6 @@ const SessionCard = () => {
       purpose: "Enterprise Consulting",
       sessionDate: "4th July, 2024 - 4pm WAT",
     },
-
     {
       status: "Approved",
       sessionWith: "John Doe",
@@ -59,8 +56,74 @@ const SessionCard = () => {
       purpose: "Marketing Strategy",
       sessionDate: "6th July, 2024 - 10am WAT",
     },
-    // Add more objects as
+    // Adding more objects based on the template
+    {
+      status: "Past",
+      sessionWith: "Alice Johnson",
+      rating: "4.6/5.0",
+      purpose: "Software Development",
+      sessionDate: "7th July, 2024 - 2pm WAT",
+    },
+    {
+      status: "Approved",
+      sessionWith: "Bob Brown",
+      rating: "4.9/5.0",
+      purpose: "Investment Analysis",
+      sessionDate: "8th July, 2024 - 11am WAT",
+    },
+    {
+      status: "Pending",
+      sessionWith: "Chris Evans",
+      rating: "4.7/5.0",
+      purpose: "Product Management",
+      sessionDate: "9th July, 2024 - 9am WAT",
+    },
+    {
+      status: "Past",
+      sessionWith: "Diana Smith",
+      rating: "4.2/5.0",
+      purpose: "Graphic Design",
+      sessionDate: "10th July, 2024 - 3pm WAT",
+    },
+    {
+      status: "Approved",
+      sessionWith: "Eva Green",
+      rating: "4.6/5.0",
+      purpose: "Legal Consultation",
+      sessionDate: "11th July, 2024 - 1pm WAT",
+    },
+    {
+      status: "Pending",
+      sessionWith: "Frank Miller",
+      rating: "4.4/5.0",
+      purpose: "Customer Support",
+      sessionDate: "12th July, 2024 - 10am WAT",
+    },
+    {
+      status: "Past",
+      sessionWith: "George Brown",
+      rating: "4.8/5.0",
+      purpose: "Marketing Campaign",
+      sessionDate: "13th July, 2024 - 4pm WAT",
+    },
+    {
+      status: "Approved",
+      sessionWith: "Hannah White",
+      rating: "4.9/5.0",
+      purpose: "Educational Training",
+      sessionDate: "14th July, 2024 - 2pm WAT",
+    },
+    {
+      status: "Pending",
+      sessionWith: "Irene Johnson",
+      rating: "4.3/5.0",
+      purpose: "Human Resources",
+      sessionDate: "15th July, 2024 - 11am WAT",
+    },
+    // Add more objects as needed
   ];
+
+  const filteredList = list.filter((item) => item.status === selectedButtons);
 
   return (
     <>
@@ -68,7 +131,7 @@ const SessionCard = () => {
         <KeywordBar data={status} />
 
         <div className="grid grid-cols-3 gap-3 w-full">
-          {list.map((item, index) => (
+          {filteredList.map((item, index) => (
             <Card key={index}>
               <CardHeader>
                 <div className="flex flex-row justify-between text-sm">
@@ -125,7 +188,12 @@ const SessionCard = () => {
                     className="bg-blue flex justify-around gap-2 item-center"
                   >
                     Join Meeting{" "}
-                    <BsHeadsetVr size={20} className="text-current" />
+                    <BsHeadsetVr
+                      size={20}
+                      className={`text-current ${
+                        isSpinning ? "animate-spin" : ""
+                      }`}
+                    />
                   </Button>
                 ) : (
                   <ModalBox

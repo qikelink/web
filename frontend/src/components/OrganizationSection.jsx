@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -23,10 +23,23 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const data = [1, 2, 3];
 
 const OrganizationSection = () => {
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  const handleClick = () => {
+    // Start spinning animation
+    setIsSpinning(true);
+
+    // Stop spinning after a short delay (adjust as needed)
+    setTimeout(() => {
+      setIsSpinning(false);
+    }, 1000); // Adjust the delay as needed
+  };
+
   return (
     <div className="p-2">
       <div className="flex justify-between items-center">
@@ -38,12 +51,19 @@ const OrganizationSection = () => {
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
+              <DialogTitle>Create Organization</DialogTitle>
               <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
+                You can Create an Organization in sec, include a profile image
+                to increase chances of request Success.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="image" className="text-right">
+                  Profile Image
+                </Label>
+                <Input id="image" type="file" className="col-span-3" />
+              </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
                   Name
@@ -51,14 +71,33 @@ const OrganizationSection = () => {
                 <Input id="name" value="Pedro Duarte" className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Username
+                <Label htmlFor="tagLine" className="text-right">
+                  Tagline
                 </Label>
-                <Input id="username" value="@peduarte" className="col-span-3" />
+                <Input
+                  id="name"
+                  value="An Engineering Institute by NUESA"
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="members" className="text-right">
+                  Members
+                </Label>
+                <Input
+                  id="members"
+                  value="Members Email"
+                  className="col-span-3"
+                />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <Button onClick={() => handleClick()}>
+                {isSpinning ? "Creating" : "Create"}
+                <AiOutlineLoading3Quarters
+                  className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+                />
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

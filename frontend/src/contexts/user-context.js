@@ -12,6 +12,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedButtons, setSelectedButtons] = useState();
 
   // Fetch user data on initial load
   useEffect(() => {
@@ -27,7 +28,9 @@ export const UserProvider = ({ children }) => {
   }, [isUserValid]);
 
   return (
-    <UserContext.Provider value={{ user, isLoading, setUser }}>
+    <UserContext.Provider
+      value={{ user, isLoading, setUser, selectedButtons, setSelectedButtons }}
+    >
       {children}
     </UserContext.Provider>
   );

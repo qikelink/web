@@ -90,7 +90,7 @@ export default function Home({ params }) {
               </Button>
 
               <Button
-                className="bg-secondary p-2 mx-2 rounded-lg "
+                className="hover:bg-secondary p-2 mx-2 rounded-lg "
                 onClick={async () => {
                   isVideoOn ? await disableVideo() : await enableVideo();
                 }}
@@ -98,7 +98,7 @@ export default function Home({ params }) {
                 {isVideoOn ? BasicIcons.off.cam : BasicIcons.on.cam}
               </Button>
               <Button
-                className="bg-secondary p-2 mx-2 rounded-full"
+                className="hover:bg-secondary p-2 mx-2 rounded-full"
                 onClick={async () => {
                   isAudioOn ? await disableAudio() : await enableAudio();
                 }}
@@ -121,7 +121,7 @@ export default function Home({ params }) {
           {state === "connected" && (
             <>
               <Button
-                className="bg-secondary p-2 mx-2 rounded-lg"
+                className="hover:bg-secondary p-2 mx-2 rounded-lg"
                 onClick={async () => {
                   isVideoOn ? await disableVideo() : await enableVideo();
                 }}
@@ -129,7 +129,7 @@ export default function Home({ params }) {
                 {isVideoOn ? BasicIcons.off.cam : BasicIcons.on.cam}
               </Button>
               <Button
-                className="bg-secondary p-2 mx-2 rounded-full"
+                className="hover:bg-secondary p-2 mx-2 rounded-full"
                 onClick={async () => {
                   isAudioOn ? await disableAudio() : await enableAudio();
                 }}
