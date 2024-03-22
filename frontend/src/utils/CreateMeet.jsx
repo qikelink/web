@@ -9,7 +9,7 @@ export default function Component() {
   useEffect(() => {
     const goToRoom = async () => {
       const roomId = await createRoom();
-      router.push(`/${roomId}`);
+      router.push(`manager/${roomId}`);
     };
     goToRoom();
   });
