@@ -1,7 +1,12 @@
-'use client'
+"use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getMentors, getUser, isUserValid } from "../../../backend/src/pocketbase";
+import {
+  getMentors,
+  getMentor,
+  getUser,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
 
 // Create a context for managing user data
 const UserContext = createContext();
@@ -12,6 +17,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [mentors, setMentors] = useState([]);
+  const [mentor, setMentor] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch user data on initial load
@@ -26,20 +32,37 @@ export const UserProvider = ({ children }) => {
         setIsLoading(false);
       });
 
+      // get all mentors for the profile card 
     getMentors()
       .then((res) => {
         setMentors(res);
         setIsLoading(false);
       })
       .catch((error) => {
+        console.error("Error fetching mentors data:", error);
+        setIsLoading(false);
+      });
+  }, [isUserValid]);
+
+
+  // get specific mentor data on user login
+ useEffect(() => {
+  if (user.length > 0) {
+    getMentor(user[0].id)
+      .then((res) => {
+        setMentor(res);
+        setIsLoading(false);
+      })
+      .catch((error) => {
         console.error("Error fetching mentor data:", error);
         setIsLoading(false);
       });
+  }
+}, [user]);
 
-  }, [isUserValid]);
 
   return (
-    <UserContext.Provider value={{ user,  setUser, isLoading, mentors }}>
+    <UserContext.Provider value={{ user, setUser, isLoading, mentors, mentor }}>
       {children}
     </UserContext.Provider>
   );

@@ -23,7 +23,6 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
     account: "",
   });
 
-  const [isExpanded, setIsExpanded] = useState(false);
   const { toast } = useToast();
 
   const handleChange = (e) => {
@@ -91,10 +90,6 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
           account: "",
         });
       });
-  };
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
   };
 
   return (

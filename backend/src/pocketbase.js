@@ -12,9 +12,18 @@ export async function getUser() {
   return await client.collection("users").getFullList();
 }
 
+// to get all the verified mentors for the home card
 export async function getMentors() {
-  return await client.collection("mentors").getFullList();
+  return await client
+    .collection("mentors")
+    .getFullList({ filter: "verified = True" });
 }
+
+// to get a single mentor, for verification purposes
+export async function getMentor(id) {
+  return await client.collection("mentors").getFirstListItem(`user = '${id}'`);
+}
+
 
 export async function Signup(email, password) {
   const data = {

@@ -9,27 +9,17 @@ import { Button } from "@/components/ui/button";
 import { UploadIcon } from "@/icons/UploadIcon";
 import { Badge } from "@/components/ui/badge";
 import VerifyModal from "./VerifyModal";
-import {
-  isUserValid,
-  getUser,
-  editSetting,
-} from "../../../backend/src/pocketbase";
+import { editSetting } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@/contexts/user-context";
+import { Skeleton } from "@/components/ui/skeleton";
+import { userAgentFromString } from "next/server";
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
-  const [user, setUser] = useState([]);
   const { toast } = useToast();
-
-  useEffect(() => {
-    getUser()
-      .then((res) => {
-        setUser(res);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [isUserValid]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user, mentor } = useUser();
 
   useEffect(() => {
     const defaultFormData = {
@@ -39,6 +29,7 @@ const SettingCard = () => {
       phoneNumber: "",
       bio: "",
       awards: "",
+      verified: false,
     };
 
     const initialFormData =
@@ -50,10 +41,12 @@ const SettingCard = () => {
             phoneNumber: user[0].phoneNumber || "",
             bio: user[0].bio || "",
             awards: user[0].awards || "",
+            verified: user[0].verified,
           }
         : defaultFormData;
 
     setFormData(initialFormData);
+    setIsLoading(false);
   }, [user]);
 
   const handleChange = (e) => {
@@ -95,6 +88,8 @@ const SettingCard = () => {
       .finally(() => {});
   };
 
+  console.log(formData.verified);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -110,12 +105,18 @@ const SettingCard = () => {
               type="file"
               className="max-w-xs bg-inputbackground "
             />
-            <Badge
-              variant="outline"
-              className="rounded-full bg-red text-secondary h-8 flex justify-center font-bold text-sm mr-5 px-5"
-            >
-              Not Verified
-            </Badge>
+            {isLoading ? (
+              <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
+            ) : (
+              <Badge
+                variant="outline"
+                className={`rounded-full ${
+                  formData.verified === true ? "bg-green-600" : "bg-red"
+                } text-secondary h-8 flex justify-center font-bold text-sm mr-5 px-5`}
+              >
+                {formData.verified === true ? "Verified" : "Not Verified"}
+              </Badge>
+            )}
           </div>
 
           <Separator className="my-6"></Separator>
@@ -193,7 +194,9 @@ const SettingCard = () => {
               Update Profile
             </Button>
             {/* <Separator orientation="vertical" className='bg-darktext'/> */}
-            <VerifyModal userData={user} />
+            {formData.verified === true ? null : !isLoading ? (
+              <VerifyModal userData={user} />
+            ) : null}
           </div>
         </div>
       </form>
