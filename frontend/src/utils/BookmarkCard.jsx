@@ -51,86 +51,87 @@ const BookmarkCard = () => {
           })
           .catch((error) => {
             console.error("Error fetching bookmarks data:", error);
-            setBookmarks(bookmarks); 
+            setBookmarks(bookmarks);
           });
       });
   };
 
   return (
-    <>
-      <div className="min-h-screen">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
-          {isLoading ? (
-            list.map((item, index) => (
-              <Skeleton key={index} className="h-52 w-64 rounded-lg" />
-            ))
-          ) : bookmarks.length > 0 ? (
-            bookmarks.map((item, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex justify-between">
-                    <div className="flex gap-2">
-                      <Avatar>
-                        <AvatarImage
-                          src={`https://i.pravatar.cc/150?u=${index}`}
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-
-                      <div className="flex flex-col gap-1 items-start justify-center">
-                        <h4 className="text-small font-semibold leading-none text-default-600">
-                          {item.username}
-                        </h4>
-                        <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                          {item.rating}{" "}
-                          <FaStar className="ml-1" color="#FFC72C" size={16} />
-                        </span>
-                      </div>
-                    </div>
-                    <Toggle
-                      aria-label="Toggle italic"
-                      variant="outline"
-                      onClick={() => handleRemove(item.id)}
-                    >
-                      <BsJournalBookmarkFill />
-                    </Toggle>
-                  </div>
-                </CardHeader>
-                <CardContent className="text-small text-default-400">
-                  <div className=" ">{item.bio}</div>
-
-                  <Separator className="my-2 -mb-4" />
-                </CardContent>
-                <CardFooter className="flex justify-between ">
-                  <BookModal buttonName="Request" />
-                  {item.rate != "free" ? (
-                    <Badge
-                      variant="outline"
-                      className="flex gap-1 rounded-full bg-green-200"
-                    >
-                      <p className="font-semibold  text-green-700">
-                        {item.rate}
-                      </p>
-                    </Badge>
-                  ) : (
-                    <Badge
-                      variant="outline"
-                      className="flex gap-1 rounded-full bg-red-100"
-                    >
-                      <p className="font-semibold  text-red-500">Free</p>
-                    </Badge>
-                  )}
-                </CardFooter>
-              </Card>
-            ))
-          ) : (
-            <div className="flex items-center justify-center">
-              <BookmarkEmpty />
-            </div>
-          )}
+    <div className="h-screen">
+      {isLoading ? (
+        <div className="flex justify-center items-center h-full">
+          {/* Skeleton loaders */}
+          {list.map((item, index) => (
+            <Skeleton key={index} className="h-52 w-64 rounded-lg" />
+          ))}
         </div>
-      </div>
-    </>
+      ) : bookmarks.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
+          {/* Render bookmark cards */}
+          {bookmarks.map((item, index) => (
+            <Card key={index}>
+              <CardHeader>
+                <div className="flex justify-between">
+                  <div className="flex gap-2">
+                    <Avatar>
+                      <AvatarImage
+                        src={`https://i.pravatar.cc/150?u=${index}`}
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+
+                    <div className="flex flex-col gap-1 items-start justify-center">
+                      <h4 className="text-small font-semibold leading-none text-default-600">
+                        {item.username}
+                      </h4>
+                      <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
+                        {item.rating}{" "}
+                        <FaStar className="ml-1" color="#FFC72C" size={16} />
+                      </span>
+                    </div>
+                  </div>
+                  <Toggle
+                    aria-label="Toggle italic"
+                    variant="outline"
+                    onClick={() => handleRemove(item.id)}
+                  >
+                    <BsJournalBookmarkFill />
+                  </Toggle>
+                </div>
+              </CardHeader>
+              <CardContent className="text-small text-default-400">
+                <div className=" ">{item.bio}</div>
+
+                <Separator className="my-2 -mb-4" />
+              </CardContent>
+              <CardFooter className="flex justify-between ">
+                <BookModal buttonName="Request" />
+                {item.rate != "free" ? (
+                  <Badge
+                    variant="outline"
+                    className="flex gap-1 rounded-full bg-green-200"
+                  >
+                    <p className="font-semibold  text-green-700">{item.rate}</p>
+                  </Badge>
+                ) : (
+                  <Badge
+                    variant="outline"
+                    className="flex gap-1 rounded-full bg-red-100"
+                  >
+                    <p className="font-semibold  text-red-500">Free</p>
+                  </Badge>
+                )}
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          {/* Render BookmarkEmpty when no bookmarks exist */}
+          <BookmarkEmpty />
+        </div>
+      )}
+    </div>
   );
 };
 

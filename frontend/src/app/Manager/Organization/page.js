@@ -5,12 +5,16 @@ import { useState, useEffect } from "react";
 import ListSection from "@/utils/ListSection";
 import ManagerList from "@/utils/ManagerList";
 import OrganizationSection from "@/components/OrganizationSection";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
+    const { setProgress } = useAuth();
+
 
   useEffect(() => {
     setDomLoaded(true);
+        setProgress(0);
   }, []);
   return (
     <>

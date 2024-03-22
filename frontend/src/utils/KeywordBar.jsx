@@ -29,7 +29,7 @@ const KeywordBar = ({ data }) => {
   console.log(selectedButtons);
 
   return (
-    <div className="flex my-3 space-x-2 w-full">
+    <div className="flex pb-1 space-x-2 w-full">
       <div
         id="buttonContainer"
         className="flex px-2 gap-4 w-full overflow-x-scroll custom-scrollbar"

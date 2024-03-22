@@ -4,14 +4,15 @@ import { HomeIcon } from "@/icons/HomeIcon";
 import { Separator } from "@/components/ui/separator";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
-import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CgProfile } from "react-icons/cg";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineFeedback } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "@/contexts/auth-context";
+import { RiUserSettingsLine } from "react-icons/ri";
+import { IoFlashOutline } from "react-icons/io5";
+import { PiDesktopTower } from "react-icons/pi";
 
 const ListSection = () => {
   const pathname = usePathname();
@@ -31,6 +32,18 @@ const ListSection = () => {
           >
             <AiOutlineHome size={22} className="ml-2" />
             <p>Home</p>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/quick"
+            onClick={() => setProgress(90)}
+            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+              pathname === "/quick" ? "bg-[#e2eff8] text-blue rounded-md" : ""
+            }`}
+          >
+            <IoFlashOutline size={22} className="ml-2" />
+            <p>Quick Service</p>
           </Link>
         </li>
         <li>
@@ -71,11 +84,11 @@ const ListSection = () => {
                 : ""
             }`}
           >
-            <IoMdSettings size={22} className="ml-2" />
+            <RiUserSettingsLine size={22} className="ml-2" />
             <p>Settings</p>
           </Link>
         </li>
-        <Separator orientation="horizontal" />
+        <Separator orientation="horizontal" className="my-1" />
 
         <li>
           <Link
@@ -87,7 +100,7 @@ const ListSection = () => {
                 : ""
             }`}
           >
-            <CgProfile size={22} className="ml-2" />
+            <PiDesktopTower size={22} className="ml-2 font-semibold" />
             <p>Manager</p>
           </Link>
         </li>
