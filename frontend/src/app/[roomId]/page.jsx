@@ -1,8 +1,9 @@
 "use client";
 
+import Header from "@/components/Header";
 // import ChatBox from "@/components/ChatBox/ChatBox";
 import RemotePeer from "@/components/RemotePeer";
-// import { TPeerMetadata } from "@/utils/types";
+import { useAuth } from "@/contexts/auth-context";
 import { Video } from "@huddle01/react/components";
 import {
   useLocalAudio,
@@ -12,12 +13,24 @@ import {
   usePeerIds,
   useRoom,
 } from "@huddle01/react/hooks";
-import { Inter } from "next/font/google";
+import { ButtonIcon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/navigation";
+import { BasicIcons } from "@/utils/BasicIcons";
+import { Button } from "@/components/ui/button";
 
 export default function Home({ params }) {
+  const { setProgress } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    const initializeVideo = async () => {
+      setProgress(0);
+    };
+
+    initializeVideo();
+  }, []);
+
   const [displayName, setDisplayName] = useState("");
   const [isRecording, setIsRecording] = useState(false);
 
@@ -44,8 +57,8 @@ export default function Home({ params }) {
   };
 
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center p-4 ${inter.className}`}>
+    <main className={`flex h-screen flex-col items-center mx-2 lg:mx-5  `}>
+      <Header />
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           <code className="font-mono font-bold">{state}</code>
@@ -57,58 +70,84 @@ export default function Home({ params }) {
                 disabled={state !== "idle"}
                 placeholder="Display Name"
                 type="text"
-                className="border-2 border-blue-400 rounded-lg p-2 mx-2 bg-black text-white"
+                className="border-2 border-blue-400 rounded-lg p-2 mx-2 bg-secondary text-black"
                 value={displayName}
                 onChange={(event) => setDisplayName(event.target.value)}
               />
 
-              <button
+              <Button
                 disabled={!displayName}
-                type="button"
-                className="bg-blue-500 p-2 mx-2 rounded-lg"
+                className="bg-secondary p-2 mx-2 rounded-lg text-zinc-500"
                 onClick={async () => {
                   const token = await getToken();
                   await joinRoom({
                     roomId: params.roomId,
                     token,
                   });
-                }}>
+                }}
+              >
                 Join Room
-              </button>
+              </Button>
+
+              <Button
+                className="bg-secondary p-2 mx-2 rounded-lg "
+                onClick={async () => {
+                  isVideoOn ? await disableVideo() : await enableVideo();
+                }}
+              >
+                {isVideoOn ? BasicIcons.off.cam : BasicIcons.on.cam}
+              </Button>
+              <Button
+                className="bg-secondary p-2 mx-2 rounded-full"
+                onClick={async () => {
+                  isAudioOn ? await disableAudio() : await enableAudio();
+                }}
+              >
+                {isAudioOn ? BasicIcons.off.mic : BasicIcons.on.mic}
+              </Button>
+              <Button
+                className="bg-secondary text-zinc-500 p-2 mx-2 rounded-lg"
+                onClick={async () => {
+                  shareStream
+                    ? await stopScreenShare()
+                    : await startScreenShare();
+                }}
+              >
+                {shareStream ? "Disable Screen" : "Enable Screen"}
+              </Button>
             </>
           )}
 
           {state === "connected" && (
             <>
-              <button
-                type="button"
-                className="bg-blue-500 p-2 mx-2 rounded-lg"
+              <Button
+                className="bg-secondary p-2 mx-2 rounded-lg"
                 onClick={async () => {
                   isVideoOn ? await disableVideo() : await enableVideo();
-                }}>
-                {isVideoOn ? "Disable Video" : "Enable Video"}
-              </button>
-              <button
-                type="button"
-                className="bg-blue-500 p-2 mx-2 rounded-lg"
+                }}
+              >
+                {isVideoOn ? BasicIcons.off.cam : BasicIcons.on.cam}
+              </Button>
+              <Button
+                className="bg-secondary p-2 mx-2 rounded-full"
                 onClick={async () => {
                   isAudioOn ? await disableAudio() : await enableAudio();
-                }}>
-                {isAudioOn ? "Disable Audio" : "Enable Audio"}
-              </button>
-              <button
-                type="button"
-                className="bg-blue-500 p-2 mx-2 rounded-lg"
+                }}
+              >
+                {isAudioOn ? BasicIcons.off.mic : BasicIcons.on.mic}
+              </Button>
+              <Button
+                className="bg-secondary text-zinc-500 p-2 mx-2 rounded-lg"
                 onClick={async () => {
                   shareStream
                     ? await stopScreenShare()
                     : await startScreenShare();
-                }}>
+                }}
+              >
                 {shareStream ? "Disable Screen" : "Enable Screen"}
-              </button>
-              <button
-                type="button"
-                className="bg-blue-500 p-2 mx-2 rounded-lg"
+              </Button>
+              <Button
+                className="bg-secondary text-zinc-500 p-2 mx-2 rounded-lg"
                 onClick={async () => {
                   const status = isRecording
                     ? await fetch(`/stopRecording?roomId=${params.roomId}`)
@@ -117,9 +156,10 @@ export default function Home({ params }) {
                   const data = await status.json();
                   console.log({ data });
                   setIsRecording(!isRecording);
-                }}>
+                }}
+              >
                 {isRecording ? "Stop Recording" : "Start Recording"}
-              </button>
+              </Button>
             </>
           )}
         </div>
@@ -150,6 +190,9 @@ export default function Home({ params }) {
               peerId ? <RemotePeer key={peerId} peerId={peerId} /> : null
             )}
           </div>
+          {state === "connected" ? null : (
+            <div className="text-xl">Lobby Space</div>
+          )}
         </div>
         {/* {state === "connected" && <ChatBox />} */}
       </div>

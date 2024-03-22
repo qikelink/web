@@ -12,9 +12,7 @@ const ManagerSection = () => {
         </div>
         <div className=" w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
           <div className="w-full flex flex-row">
-            <div className="w-2/3">
-              <CreateMeet />
-            </div>
+            <div className="w-2/3">ask</div>
             <div className="w-1/3">
               <ManagerList />
             </div>

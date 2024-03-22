@@ -46,7 +46,7 @@ export default function Header() {
   const { user, isLoading, setUser } = useUser();
   const { setIsUserValid, progress, setProgress } = useAuth();
   const pathname = usePathname();
-  const history = useRouter();
+  const router = useRouter();
 
   const handleSignout = () => {
     signout(setIsUserValid);
@@ -57,7 +57,10 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
       <div className="font-poppins flex justify-between items-center py-3 ">
-        <div className="flex items-center justify-between gap-1">
+        <div
+          className="flex items-center justify-between gap-1"
+          onClick={() => router.push(`/`)}
+        >
           <Sheet>
             <SheetTrigger>
               <FaBars className="md:hidden" size={16} />
@@ -72,14 +75,15 @@ export default function Header() {
               </SheetHeader>
             </SheetContent>
           </Sheet>
-
-          <FaBars size={20} className="mr-4" />
+          <Badge variant={"outline"} className="p-2 mr-3 hidden md:block">
+            <FaBars size={20} />
+          </Badge>
 
           {/* <h2 className="font-extrabold text-current text-xl">VRMEET</h2> */}
           <Image
             src={logo}
             width={150}
-            className="rounded-md"
+            className="rounded-md w-10 lg:w-28"
             alt="Picture of the author"
           />
         </div>
@@ -112,16 +116,19 @@ export default function Header() {
               user.map((userInfo, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-5 justify-center">
+                  className="flex items-center space-x-5 justify-center"
+                >
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}>
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
                     <BsHeadsetVr size={20} className="text-current" />
                   </Badge>
 
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}>
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
                     <FaRegBell size={20} className="text-current" />
                   </Badge>
 
@@ -156,7 +163,8 @@ export default function Header() {
                       <DropdownMenuItem>
                         <Link
                           href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
                           <UserIcon />
                           <p>My account</p>
                         </Link>
@@ -168,7 +176,8 @@ export default function Header() {
                             pathname === "/Sessions"
                               ? "bg-[#f7fafc] text-blue"
                               : ""
-                          } py-1 text-lg font-medium`}>
+                          } py-1 text-lg font-medium`}
+                        >
                           <InviteIcon />
                           <p>Invite friends</p>
                         </Link>
@@ -176,7 +185,8 @@ export default function Header() {
                       <DropdownMenuItem>
                         <Link
                           href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
                           <SettingIcon />
                           <p>Support</p>
                         </Link>
@@ -186,7 +196,8 @@ export default function Header() {
                       <DropdownMenuItem>
                         <button
                           onClick={handleSignout}
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium">
+                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
+                        >
                           <LogoutIcon />
                           <p>Log out</p>
                         </button>

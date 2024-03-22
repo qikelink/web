@@ -23,19 +23,17 @@ import { FaBookmark } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { BsHeadsetVr } from "react-icons/bs";
+import { createRoom } from "./createRoom";
 
 const SessionCard = () => {
-  const [isFollowed, setIsFollowed] = React.useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
   const [value, onChange] = useState(new Date());
   const [roomId, setRoomId] = useState("");
   const router = useRouter();
 
-  const createRoom = async () => {
-    const res = await fetch("/api/room");
-    const data = await res.json();
-    if (data.roomId) {
-      router.push(`/${data.roomId}`);
-    }
+  const createMeet = async () => {
+      const roomId = await createRoom();
+      router.push(`/${roomId}`);
   };
 
   const list = [
@@ -123,7 +121,7 @@ const SessionCard = () => {
               <CardFooter className="flex justify-between ">
                 {item.status === "Now" ? (
                   <Button
-                    onClick={createRoom}
+                    onClick={() => createMeet()}
                     className="bg-blue flex justify-around gap-2 item-center"
                   >
                     Join Meeting{" "}
