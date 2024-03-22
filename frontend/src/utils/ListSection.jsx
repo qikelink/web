@@ -29,7 +29,7 @@ const ListSection = () => {
               pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
             }`}
           >
-            <AiOutlineHome size={24} className="ml-2" />
+            <AiOutlineHome size={22} className="ml-2" />
             <p>Home</p>
           </Link>
         </li>
@@ -43,7 +43,7 @@ const ListSection = () => {
                 : ""
             }`}
           >
-            <PiBookBookmarkDuotone size={24} className="ml-2" />
+            <PiBookBookmarkDuotone size={22} className="ml-2" />
             <p>BookMarked</p>
           </Link>
         </li>
@@ -57,7 +57,7 @@ const ListSection = () => {
                 : ""
             } hover:text-blue`}
           >
-            <BsJournalBookmarkFill size={24} className="ml-2" />
+            <BsJournalBookmarkFill size={22} className="ml-2" />
             <p>Sessions</p>
           </Link>
         </li>
@@ -71,7 +71,7 @@ const ListSection = () => {
                 : ""
             }`}
           >
-            <IoMdSettings size={24} className="ml-2" />
+            <IoMdSettings size={22} className="ml-2" />
             <p>Settings</p>
           </Link>
         </li>
@@ -82,10 +82,12 @@ const ListSection = () => {
             href="/manager/Organization"
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-              pathname === "/manager/Organization" ? "bg-[#e2eff8] text-blue rounded-md" : ""
+              pathname === "/manager/Organization"
+                ? "bg-[#e2eff8] text-blue rounded-md"
+                : ""
             }`}
           >
-            <CgProfile size={24} className="ml-2" />
+            <CgProfile size={22} className="ml-2" />
             <p>Manager</p>
           </Link>
         </li>
@@ -97,7 +99,7 @@ const ListSection = () => {
               pathname === "/help" ? "bg-[#e2eff8] text-blue rounded-md" : ""
             }`}
           >
-            <IoMdHelpCircleOutline size={24} className="ml-2" />
+            <IoMdHelpCircleOutline size={22} className="ml-2" />
             <p>Help</p>
           </Link>
         </li>
@@ -111,7 +113,7 @@ const ListSection = () => {
                 : ""
             }`}
           >
-            <MdOutlineFeedback size={24} className="ml-2" />
+            <MdOutlineFeedback size={22} className="ml-2" />
             <p>Send FeedBack</p>
           </Link>
         </li>
