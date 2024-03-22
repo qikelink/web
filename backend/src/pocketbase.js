@@ -12,6 +12,18 @@ export async function getUser() {
   return await client.collection("users").getFullList();
 }
 
+// to get all the verified mentors for the home card
+export async function getMentors() {
+  return await client
+    .collection("mentors")
+    .getFullList({ filter: "verified = True" });
+}
+
+// to get a single mentor, for verification purposes
+export async function getMentor(id) {
+  return await client.collection("mentors").getFirstListItem(`user = '${id}'`);
+}
+
 export async function Signup(email, password) {
   const data = {
     email: email,
@@ -38,14 +50,77 @@ export function signout(setIsUserValid) {
   setIsUserValid(false);
 }
 
-export async function editSetting(id, fullName, username, phoneNumber, bio, awards) {
+export async function editSetting(
+  id,
+  fullName,
+  username,
+  phoneNumber,
+  bio,
+  awards
+) {
   const data = {
     fullName: fullName,
     username: username,
     phoneNumber: phoneNumber,
-     bio: bio,
-    awards: awards
-   
-  }
-  await client.collection("users").update(id, data)
+    bio: bio,
+    awards: awards,
+  };
+  await client.collection("users").update(id, data);
 }
+
+export async function verifyRequest(
+  fullName,
+  username,
+  phoneNumber,
+  bio,
+  awards,
+  businessName,
+  contact,
+  account
+) {
+  const data = {
+    fullName: fullName,
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+    businessName: businessName,
+    contact: contact,
+    account: account,
+    user: client.authStore.model.id,
+  };
+  await client.collection("mentors").create(data);
+}
+
+export async function CreateBookmark(
+  fullName,
+  username,
+  phoneNumber,
+  bio,
+  awards,
+  businessName,
+  contact,
+  account
+) {
+  const data = {
+    fullName: fullName,
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+    businessName: businessName,
+    contact: contact,
+    account: account,
+    user: client.authStore.model.id,
+  };
+  await client.collection("bookmarks").create(data);
+}
+
+export async function RemoveBookmark(id) {
+  await client.collection("bookmarks").delete(`${id}`);
+}
+
+export async function getBookmarks(id) {
+  return await client.collection("bookmarks").getFullList({ filter: `user = '${id}'` });
+}
+

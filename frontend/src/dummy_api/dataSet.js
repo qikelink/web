@@ -90,28 +90,5 @@ export const list = [
     field: ["finance", "investment", "analysis"],
     rate: "$65.00 /30min",
   },
-  {
-    name: "Grace Thompson",
-    img: "/images/grace-thompson.jpeg",
-    rating: "4.7/5.0",
-    bio: "Life Coach & Motivational Speaker",
-    field: ["coaching", "motivation", "self-help"],
-    rate: "$50.00 /30min",
-  },
-  {
-    name: "Alex Rodriguez",
-    img: "/images/alex-rodriguez.jpeg",
-    rating: "4.2/5.0",
-    bio: "Real Estate Agent & Property Consultant",
-    field: ["real estate", "property", "consulting"],
-    rate: "$70.00 /30min",
-  },
-  {
-    name: "Emma White",
-    img: "/images/emma-white.jpeg",
-    rating: "4.6/5.0",
-    bio: "Marketing Specialist & Brand Strategist",
-    field: ["marketing", "branding", "strategy"],
-    rate: "free",
-  },
+
 ];

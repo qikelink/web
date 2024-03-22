@@ -13,7 +13,7 @@ const Bookmarks = () => {
           <ListSection />
         </div>
         <div className=" w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
-          {!isUserValid ? <BookmarkCard /> : <BookmarkEmpty />}
+           <BookmarkCard /> 
         </div>
       </div>
     </>
