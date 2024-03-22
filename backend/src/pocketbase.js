@@ -24,7 +24,6 @@ export async function getMentor(id) {
   return await client.collection("mentors").getFirstListItem(`user = '${id}'`);
 }
 
-
 export async function Signup(email, password) {
   const data = {
     email: email,
@@ -92,3 +91,38 @@ export async function verifyRequest(
   };
   await client.collection("mentors").create(data);
 }
+
+export async function CreateBookmark(
+  fullName,
+  username,
+  phoneNumber,
+  bio,
+  awards,
+  businessName,
+  contact,
+  account
+) {
+  const data = {
+    fullName: fullName,
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+    businessName: businessName,
+    contact: contact,
+    account: account,
+    user: client.authStore.model.id,
+  };
+  await client.collection("bookmarks").create(data);
+}
+
+export async function RemoveBookmark(id) {
+  await client.collection("bookmarks").delete(`${id}`);
+}
+
+export async function getBookmarks() {
+  return await client.collection("bookmarks").getFullList({
+    sort: '-created',
+});
+}
+

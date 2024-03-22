@@ -42,7 +42,7 @@ const ListSection = () => {
                 : ""
             }`}>
             <PiBookBookmarkDuotone size={20} />
-            <p>BookMarked</p>
+            <p>Bookmarks</p>
           </Link>
         </li>
         <li>

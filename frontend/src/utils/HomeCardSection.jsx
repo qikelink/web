@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
@@ -24,9 +24,114 @@ import pic4 from "../../images/pic4.gif";
 import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
+import {
+  CreateBookmark,
+  RemoveBookmark,
+  getBookmarks,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 const HomeCardSection = () => {
   const { mentors, isLoading } = useUser();
+  const { toast } = useToast();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [bookmark, setBookmark] = useState([]);
+
+  const handleBookmarkToggle = () => {
+    if (!isUserValid) {
+      prompt("show login dialog");
+      return;
+    }
+
+    CreateBookmark(
+      mentors[0].fullName,
+      mentors[0].username,
+      mentors[0].phoneNumber,
+      mentors[0].bio,
+      mentors[0].awards,
+      mentors[0].businessName,
+      mentors[0].contact,
+      mentors[0].account
+    )
+      .then(() => {
+        toast({
+          title: "Added to bookmarks",
+          description: "Added to bookmarks successfully!",
+          variant: "default",
+        });
+        
+      })
+      .catch((error) => {
+        toast({
+          title: "Failed to add to bookmarks",
+          description: "An error occurred while adding to bookmarks.",
+          variant: "destructive",
+        });
+        console.error("Bookmark addition error:", error);
+      });
+
+    // toggle functionality incase  we need it  
+    // if (isBookmarked && bookmark.length > 0) {
+    //   // Check if bookmark is not empty
+    //   RemoveBookmark(bookmark[0].id)
+    //     .then(() => {
+    //       toast({
+    //         title: "Removed from bookmarks",
+    //         description: "Removed from bookmarks successfully!",
+    //         variant: "default",
+    //       });
+    //       setIsBookmarked(false); // Update state to reflect removal
+    //     })
+    //     .catch((error) => {
+    //       toast({
+    //         title: "Failed to remove from bookmarks",
+    //         description: "An error occurred while removing from bookmarks.",
+    //         variant: "destructive",
+    //       });
+    //       console.error("Bookmark removal error:", error);
+    //     });
+    // } else {
+    //   CreateBookmark(
+    //     mentors[0].fullName,
+    //     mentors[0].username,
+    //     mentors[0].phoneNumber,
+    //     mentors[0].bio,
+    //     mentors[0].awards,
+    //     mentors[0].businessName,
+    //     mentors[0].contact,
+    //     mentors[0].account
+    //   )
+    //     .then(() => {
+    //       toast({
+    //         title: "Added to bookmarks",
+    //         description: "Added to bookmarks successfully!",
+    //         variant: "default",
+    //       });
+    //       setIsBookmarked(true);
+    //     })
+    //     .catch((error) => {
+    //       toast({
+    //         title: "Failed to add to bookmarks",
+    //         description: "An error occurred while adding to bookmarks.",
+    //         variant: "destructive",
+    //       });
+    //       console.error("Bookmark addition error:", error);
+    //     })
+    //     .finally(() => {
+    //       getBookmarks()
+    //         .then((res) => {
+    //           setBookmark(res);
+    //         })
+    //         .catch((error) => {
+    //           console.error("Error fetching bookmarks data:", error);
+    //           setBookmark([]); // Set bookmark state to empty array in case of error
+    //         });
+    //     });
+    // }
+  };
+
 
   return (
     <>
@@ -93,10 +198,13 @@ const HomeCardSection = () => {
                         </span>
                       </div>
                     </div>
-                    <Toggle aria-label="Toggle italic">
+                    <Toggle
+                      aria-label="Toggle italic"
+                      variant="outline"
+                      onClick={handleBookmarkToggle}
+                    >
                       <BsJournalBookmarkFill />
                     </Toggle>
-                    {/* <BookModal buttonName="Request" /> */}
                   </div>
                 </CardHeader>
                 <CardContent className="text-small text-default-400">

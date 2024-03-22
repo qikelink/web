@@ -6,6 +6,7 @@ import {
   getMentor,
   getUser,
   isUserValid,
+  getBookmarks,
 } from "../../../backend/src/pocketbase";
 
 // Create a context for managing user data
@@ -18,6 +19,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [mentors, setMentors] = useState([]);
   const [mentor, setMentor] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch user data on initial load
@@ -42,6 +44,16 @@ export const UserProvider = ({ children }) => {
         console.error("Error fetching mentors data:", error);
         setIsLoading(false);
       });
+
+    getBookmarks()
+      .then((res) => {
+        setBookmarks(res);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching bookmarks data:", error);
+        setIsLoading(false);
+      });
   }, [isUserValid]);
 
 
@@ -62,7 +74,7 @@ export const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, mentors, mentor }}>
+    <UserContext.Provider value={{ user, setUser, isLoading, mentors, mentor, bookmarks, setBookmarks }}>
       {children}
     </UserContext.Provider>
   );
