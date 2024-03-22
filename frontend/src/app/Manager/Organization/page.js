@@ -6,15 +6,16 @@ import ListSection from "@/utils/ListSection";
 import ManagerList from "@/utils/ManagerList";
 import OrganizationSection from "@/components/OrganizationSection";
 import { useAuth } from "@/contexts/auth-context";
+import { isUserValid } from "../../../../../backend/src/pocketbase";
+import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
-    const { setProgress } = useAuth();
-
+  const { setProgress } = useAuth();
 
   useEffect(() => {
     setDomLoaded(true);
-        setProgress(0);
+    setProgress(0);
   }, []);
   return (
     <>
@@ -27,14 +28,21 @@ export default function page() {
                 <ListSection />
               </div>
               <div className=" w-3/4 flex flex-col px-1 ">
-                <div className="w-full flex flex-row">
-                  <div className="w-2/3">
-                    <OrganizationSection/>
+                {isUserValid ? (
+                  <div className="w-full flex flex-row">
+                    <div className="w-2/3">
+                      <OrganizationSection />
+                    </div>
+                    <div className="w-1/3">
+                      <ManagerList />
+                    </div>
                   </div>
-                  <div className="w-1/3">
-                    <ManagerList />
+                ) : (
+                  <div className="flex justify-center items-center h-full">
+                    {/* Render BookmarkEmpty when no bookmarks exist */}
+                    <BookmarkEmpty/>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

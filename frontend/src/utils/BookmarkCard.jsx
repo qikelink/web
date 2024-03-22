@@ -58,7 +58,7 @@ const BookmarkCard = () => {
 
   return (
     <div className="h-screen">
-      {isLoading ? (
+      { isLoading ? (
         <div className="flex justify-center items-center h-full">
           {/* Skeleton loaders */}
           {list.map((item, index) => (

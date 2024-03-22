@@ -13,7 +13,14 @@ const Bookmarks = () => {
           <ListSection />
         </div>
         <div className=" w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
-           <BookmarkCard /> 
+          {isUserValid ? (
+            <BookmarkCard />
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              {/* Render BookmarkEmpty when no bookmarks exist */}
+              <BookmarkEmpty />
+            </div>
+          )}
         </div>
       </div>
     </>

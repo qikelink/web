@@ -123,13 +123,12 @@ const LoginDialog = () => {
   const googleText = isSignIn ? "Sign in with google " : "Sign up with google";
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
-  
   return (
     <Dialog>
       <DialogTrigger>
         <Button
           size="sm"
-          className="w-full  dark:text-darkblue text-blue bg-[#b9e3f3] hover:bg-lightblue2 rounded-full text-lg"
+          className="w-full bg-blue text-secondary hover:text-primary hover:bg-lightblue2 rounded-md text-lg"
         >
           <CgProfile className="mr-2 h-4 w-4" />
           Log in
