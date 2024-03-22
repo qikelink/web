@@ -24,7 +24,7 @@ import { RemoveBookmark, getBookmarks } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 
 const BookmarkCard = () => {
-  const { bookmarks, setBookmarks, isLoading } = useUser();
+  const { user, bookmarks, setBookmarks, isLoading } = useUser();
   const { toast } = useToast();
 
   const handleRemove = (id) => {
@@ -45,7 +45,7 @@ const BookmarkCard = () => {
         console.error("Bookmark removal error:", error);
       })
       .finally(() => {
-        getBookmarks()
+        getBookmarks(user[0].id)
           .then((res) => {
             setBookmarks(res);
           })

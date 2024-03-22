@@ -120,9 +120,7 @@ export async function RemoveBookmark(id) {
   await client.collection("bookmarks").delete(`${id}`);
 }
 
-export async function getBookmarks() {
-  return await client.collection("bookmarks").getFullList({
-    sort: '-created',
-});
+export async function getBookmarks(id) {
+  return await client.collection("bookmarks").getFullList({ filter: `user = '${id}'` });
 }
 

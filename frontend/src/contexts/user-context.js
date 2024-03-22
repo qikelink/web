@@ -34,7 +34,7 @@ export const UserProvider = ({ children }) => {
         setIsLoading(false);
       });
 
-      // get all mentors for the profile card 
+    // get all mentors for the profile card
     getMentors()
       .then((res) => {
         setMentors(res);
@@ -44,37 +44,45 @@ export const UserProvider = ({ children }) => {
         console.error("Error fetching mentors data:", error);
         setIsLoading(false);
       });
-
-    getBookmarks()
-      .then((res) => {
-        setBookmarks(res);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching bookmarks data:", error);
-        setIsLoading(false);
-      });
   }, [isUserValid]);
 
-
   // get specific mentor data on user login
- useEffect(() => {
-  if (user.length > 0) {
-    getMentor(user[0].id)
-      .then((res) => {
-        setMentor(res);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching mentor data:", error);
-        setIsLoading(false);
-      });
-  }
-}, [user]);
+  useEffect(() => {
+    if (user.length > 0) {
+      getMentor(user[0].id)
+        .then((res) => {
+          setMentor(res);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching mentor data:", error);
+          setIsLoading(false);
+        });
 
+      getBookmarks(user[0].id)
+        .then((res) => {
+          setBookmarks(res);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching bookmarks data:", error);
+          setIsLoading(false);
+        });
+    }
+  }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, mentors, mentor, bookmarks, setBookmarks }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        isLoading,
+        mentors,
+        mentor,
+        bookmarks,
+        setBookmarks,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
