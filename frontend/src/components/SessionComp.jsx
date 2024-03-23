@@ -13,15 +13,16 @@ const SessionComp = () => {
         <div className="hidden md:inline w-1/4 ">
           <ListSection />
         </div>
-        <div className=" w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
+        <div className=" w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
           {/* <HomeCardSection /> */}
           {isUserValid ? (
-          <SessionCard />) : (
-        <div className="flex justify-center items-center h-full">
-          {/* Render BookmarkEmpty when no bookmarks exist */}
-          <BookmarkEmpty/>
-        </div>
-      )}
+            <SessionCard />
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              {/* Render BookmarkEmpty when no bookmarks exist */}
+              <BookmarkEmpty />
+            </div>
+          )}
         </div>
       </div>
     </>

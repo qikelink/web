@@ -26,7 +26,7 @@ const ListSection = () => {
           <Link
             href="/"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
             }`}
           >
@@ -38,7 +38,7 @@ const ListSection = () => {
           <Link
             href="/quick"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/quick" ? "bg-[#e2eff8] text-blue rounded-md" : ""
             }`}
           >
@@ -50,7 +50,7 @@ const ListSection = () => {
           <Link
             href="/bookmark"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
+            className={`flex gap-4 items-center cursor-pointer py-5 hover:text-blue ${
               pathname === "/bookmark"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
@@ -64,7 +64,7 @@ const ListSection = () => {
           <Link
             href="/sessions"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
+            className={`flex gap-4 items-center py-5 cursor-pointer ${
               pathname === "/sessions"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
@@ -78,7 +78,7 @@ const ListSection = () => {
           <Link
             href="/settings"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/settings"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
@@ -94,7 +94,7 @@ const ListSection = () => {
           <Link
             href="/manager/Organization"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/manager/Organization"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
@@ -108,7 +108,7 @@ const ListSection = () => {
           <Link
             href="/help"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/help" ? "bg-[#e2eff8] text-blue rounded-md" : ""
             }`}
           >
@@ -120,7 +120,7 @@ const ListSection = () => {
           <Link
             href="/feedBack"
             onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/feedBack"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""

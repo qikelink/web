@@ -93,17 +93,17 @@ const SettingCard = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="min-h-screen border border-gray-200 rounded-lg p-10 text-lg">
+        <div className="min-h-screen border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
           {/* Profile image */}
           <Label className="text-lg">Your profile picture</Label>
           <div className="flex items-center justify-center mt-1 border-2 border-gray-600 rounded-lg border-dashed bg-inputbackground h-32 w-32">
             <UploadIcon />
           </div>
-          <div className="flex justify-between items-center  mt-4">
+          <div className="flex justify-between items-center gap-3 mt-4">
             <Input
               id="picture"
               type="file"
-              className="max-w-xs bg-inputbackground "
+              className="lg:max-w-xs w-fit bg-inputbackground "
             />
             {isLoading ? (
               <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
@@ -112,7 +112,7 @@ const SettingCard = () => {
                 variant="outline"
                 className={`rounded-full ${
                   formData.verified === true ? "bg-green-600" : "bg-red"
-                } text-secondary h-8 flex justify-center font-bold text-sm mr-5 px-5`}
+                } text-secondary h-8 flex justify-center font-bold text-sm text-wrap lg:mr-5 px-5`}
               >
                 {formData.verified === true ? "Verified" : "Not Verified"}
               </Badge>
@@ -185,7 +185,7 @@ const SettingCard = () => {
             />
           </div>
 
-          <div className="flex items-center mt-6 h-10 space-x-5">
+          <div className="flex flex-col gap-3 justify-center lg:flex-row items-center mt-6 h-full space-x-5">
             <Button
               size="xl"
               className="bg-blue hover:bg-darkblue text-lg rounded-lg"

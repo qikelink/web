@@ -127,10 +127,10 @@ const SessionCard = () => {
 
   return (
     <>
-      <div >
+      <div>
         <KeywordBar data={status} />
 
-        <div className="grid grid-cols-3 gap-3 w-full mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {filteredList.map((item, index) => (
             <Card key={index}>
               <CardHeader>

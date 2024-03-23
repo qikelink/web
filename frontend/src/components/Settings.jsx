@@ -13,7 +13,7 @@ const Settings = () => {
         <div className="hidden md:inline w-1/4 ">
           <ListSection />
         </div>
-        <div className=" w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
+        <div className=" w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
           {isUserValid ? (
             <SettingCard />
           ) : (
@@ -25,7 +25,7 @@ const Settings = () => {
         </div>
       </div>
     </>
-  ) 
+  ); 
 };
 
 export default Settings;

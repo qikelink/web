@@ -34,6 +34,7 @@ export default function Header() {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
+    const { setProgress } = useAuth();
 
   const handleSignout = () => {
     signout(setIsUserValid);
@@ -44,21 +45,21 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       <div className="font-poppins flex justify-between items-center py-3">
-        <div
-          className="flex items-center justify-between gap-1 hover:cursor"
-          onClick={() => router.push(`/`)}>
+        <div className="flex items-center justify-between gap-1 hover:cursor">
           {isDropdownOpen ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
               <FaX className="md:hidden" size={16} />
             </Badge>
           ) : (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
               <FaBars className="md:hidden" size={16} />
             </Badge>
           )}
@@ -71,6 +72,7 @@ export default function Header() {
             src={logo}
             width={150}
             className="rounded-md w-28 lg:w-28"
+            onClick={() => router.push(`/`)}
             alt="Logo"
           />
         </div>
@@ -102,10 +104,12 @@ export default function Header() {
               user.map((userInfo, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-5 justify-center">
+                  className="flex items-center space-x-5 justify-center"
+                >
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}>
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
                     <BsHeadsetVr
                       size={20}
                       className="text-current hover:animate-spin"
@@ -113,7 +117,8 @@ export default function Header() {
                   </Badge>
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}>
+                    className={"rounded-full p-2 hidden md:inline"}
+                  >
                     <FaRegBell size={20} className="text-current" />
                   </Badge>
                   <Avatar>
@@ -140,7 +145,8 @@ export default function Header() {
                   onClick={() => setProgress(90)}
                   className={`flex gap-4 justify-start py-5 cursor-pointer hover:text-blue ${
                     pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-                  }`}>
+                  }`}
+                >
                   <AiOutlineHome size={24} className="ml-2" />
                   <p>Home</p>
                 </Link>
@@ -153,7 +159,8 @@ export default function Header() {
                     pathname === "/bookmark"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <PiBookBookmarkDuotone size={24} className="ml-2" />
                   <p>BookMarked</p>
                 </Link>
@@ -166,7 +173,8 @@ export default function Header() {
                     pathname === "/sessions"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  } hover:text-blue`}>
+                  } hover:text-blue`}
+                >
                   <BsJournalBookmarkFill size={24} className="ml-2" />
                   <p>Sessions</p>
                 </Link>
@@ -179,7 +187,8 @@ export default function Header() {
                     pathname === "/settings"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <IoMdSettings size={24} className="ml-2" />
                   <p>Settings</p>
                 </Link>
@@ -194,7 +203,8 @@ export default function Header() {
                     pathname === "/manager/Organization"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <CgProfile size={24} className="ml-2" />
                   <p>Manager</p>
                 </Link>
@@ -207,7 +217,8 @@ export default function Header() {
                     pathname === "/help"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <IoMdHelpCircleOutline size={24} className="ml-2" />
                   <p>Help</p>
                 </Link>
@@ -220,7 +231,8 @@ export default function Header() {
                     pathname === "/feedBack"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <MdOutlineFeedback size={24} className="ml-2" />
                   <p>Send FeedBack</p>
                 </Link>

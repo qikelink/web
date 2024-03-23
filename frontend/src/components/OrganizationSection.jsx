@@ -41,9 +41,9 @@ const OrganizationSection = () => {
   };
 
   return (
-    <div className="p-2">
+    <div className="py-2">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl">Organization Created</h2>
+        <h2 className="text-xl">Organizations</h2>
 
         <Dialog>
           <DialogTrigger asChild>
