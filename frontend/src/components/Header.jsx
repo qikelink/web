@@ -1,39 +1,14 @@
-"use client";
-
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "./ui/input";
 import LoginDialog from "./dialog/login";
 import { FaBars } from "react-icons/fa6";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
-import { UserIcon } from "@/icons/UserIcon";
-import { InviteIcon } from "@/icons/InviteIcon";
-import { SettingIcon } from "@/icons/SettingIcon";
-import { LogoutIcon } from "@/icons/LogoutIcon";
 import { BsHeadsetVr } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa6";
 import { Badge } from "@/components/ui/badge";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { TiMicrophoneOutline } from "react-icons/ti";
 import Image from "next/image";
 import logo from "../../images/loho.png";
@@ -41,6 +16,8 @@ import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
@@ -48,12 +25,15 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineFeedback } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
+import { Separator } from "@/components/ui/separator";
+import { FaX } from "react-icons/fa6";
 
 export default function Header() {
   const { user, isLoading, setUser } = useUser();
-  const { setIsUserValid, progress, setProgress } = useAuth();
-  const pathname = usePathname();
+  const { setIsUserValid, progress } = useAuth();
   const router = useRouter();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleSignout = () => {
     signout(setIsUserValid);
@@ -62,137 +42,36 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background ">
-      <div className="font-poppins flex justify-between items-center py-3 ">
+    <header className="sticky top-0 z-50 w-full bg-background">
+      <div className="font-poppins flex justify-between items-center py-3">
         <div
           className="flex items-center justify-between gap-1 hover:cursor"
-          onClick={() => router.push(`/`)}
-        >
-          <Sheet>
-            <SheetTrigger>
-              <Badge variant={"outline"} className={"p-2 md:hidden"}>
-                <FaBars className="md:hidden" size={16} />
-              </Badge>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <SheetHeader>
-                <SheetDescription className="mt-2">
-                  <ul className="flex text-base flex-col grow">
-                    <li>
-                      <Link
-                        href="/"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                          pathname === "/"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        }`}
-                      >
-                        <AiOutlineHome size={24} className="ml-2" />
-                        <p>Home</p>
-                      </Link>
-                    </li>
-                    <li onClick={() => router.push(`/bookmark`)}>
-                      <Link
-                        href="/bookmark"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
-                          pathname === "/bookmark"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        }`}
-                      >
-                        <PiBookBookmarkDuotone size={24} className="ml-2" />
-                        <p>BookMarked</p>
-                      </Link>
-                    </li>
-                    <li onClick={() => router.push(`/sessions`)}>
-                      <Link
-                        href="/sessions"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
-                          pathname === "/sessions"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        } hover:text-blue`}
-                      >
-                        <BsJournalBookmarkFill size={24} className="ml-2" />
-                        <p>Sessions</p>
-                      </Link>
-                    </li>
-                    <li onClick={() => router.push(`/settings`)}>
-                      <Link
-                        href="/settings"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                          pathname === "/settings"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        }`}
-                      >
-                        <IoMdSettings size={24} className="ml-2" />
-                        <p>Settings</p>
-                      </Link>
-                    </li>
-                    <Separator orientation="horizontal" />
+          onClick={() => router.push(`/`)}>
+          {isDropdownOpen ? (
+            <Badge
+              variant={"outline"}
+              className={"p-2 md:hidden"}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              <FaX className="md:hidden" size={16} />
+            </Badge>
+          ) : (
+            <Badge
+              variant={"outline"}
+              className={"p-2 md:hidden"}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              <FaBars className="md:hidden" size={16} />
+            </Badge>
+          )}
 
-                    <li>
-                      <Link
-                        href="/manager/Organization"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                          pathname === "/manager/Organization"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        }`}
-                      >
-                        <CgProfile size={24} className="ml-2" />
-                        <p>Manager</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/help"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                          pathname === "/help"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        }`}
-                      >
-                        <IoMdHelpCircleOutline size={24} className="ml-2" />
-                        <p>Help</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/feedBack"
-                        onClick={() => setProgress(90)}
-                        className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                          pathname === "/feedBack"
-                            ? "bg-[#e2eff8] text-blue rounded-md"
-                            : ""
-                        }`}
-                      >
-                        <MdOutlineFeedback size={24} className="ml-2" />
-                        <p>Send FeedBack</p>
-                      </Link>
-                    </li>
-                  </ul>
-                </SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
           <Badge variant={"outline"} className="p-2 mr-3 hidden md:block">
             <FaBars size={20} />
           </Badge>
 
-          {/* <h2 className="font-extrabold text-current text-xl">VRMEET</h2> */}
           <Image
             src={logo}
             width={150}
             className="rounded-md w-28 lg:w-28"
-            alt="Picture of the author"
+            alt="Logo"
           />
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
@@ -211,7 +90,6 @@ export default function Header() {
             </span>
           </div>
         </div>
-
         <div as="div" justify="end">
           <div>
             {isLoading && isUserValid ? (
@@ -224,97 +102,26 @@ export default function Header() {
               user.map((userInfo, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-5 justify-center"
-                >
+                  className="flex items-center space-x-5 justify-center">
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}
-                  >
+                    className={"rounded-full p-2 hidden md:inline"}>
                     <BsHeadsetVr
                       size={20}
                       className="text-current hover:animate-spin"
                     />
                   </Badge>
-
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}
-                  >
+                    className={"rounded-full p-2 hidden md:inline"}>
                     <FaRegBell size={20} className="text-current" />
                   </Badge>
-
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Avatar>
-                        <AvatarImage src={userInfo.avatar} />
-                        <AvatarFallback>
-                          {userInfo.email.slice(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="max-w-sm p-5 space-y-3">
-                      <DropdownMenuLabel className="flex space-x-3 items-center">
-                        <Avatar>
-                          <AvatarImage src={userInfo.avatar} />
-                          <AvatarFallback>
-                            {userInfo.email.slice(0, 2).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="text-xl font-medium">
-                            {userInfo.username}
-                          </p>
-                          <p className="text-xs font-light">{userInfo.email}</p>
-                        </div>
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-
-                      {/* menu items */}
-
-                      <DropdownMenuItem>
-                        <Link
-                          href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                        >
-                          <UserIcon />
-                          <p>My account</p>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link
-                          href="/Sessions"
-                          className={`flex gap-4 items-center cursor-pointer ${
-                            pathname === "/Sessions"
-                              ? "bg-[#f7fafc] text-blue"
-                              : ""
-                          } py-1 text-lg font-medium`}
-                        >
-                          <InviteIcon />
-                          <p>Invite friends</p>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link
-                          href="/Sessions"
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                        >
-                          <SettingIcon />
-                          <p>Support</p>
-                        </Link>
-                      </DropdownMenuItem>
-
-                      <Separator orientation="horizontal" />
-                      <DropdownMenuItem>
-                        <button
-                          onClick={handleSignout}
-                          className="flex gap-4 items-center cursor-pointer py-1 text-lg font-medium"
-                        >
-                          <LogoutIcon />
-                          <p>Log out</p>
-                        </button>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Avatar>
+                    <AvatarImage src={userInfo.avatar} />
+                    <AvatarFallback>
+                      {userInfo.email.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
               ))
             ) : (
@@ -323,11 +130,110 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {progress === 0 ? null : (
+      {isDropdownOpen && (
+        <div className="absolute top-full left-0 w-full bg-background py-2 h-screen">
+          <div className="flex flex-col  ">
+            <ul className="flex text-base flex-col justify-between">
+              <li>
+                <Link
+                  href="/"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start py-5 cursor-pointer hover:text-blue ${
+                    pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
+                  }`}>
+                  <AiOutlineHome size={24} className="ml-2" />
+                  <p>Home</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bookmark"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
+                    pathname === "/bookmark"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}>
+                  <PiBookBookmarkDuotone size={24} className="ml-2" />
+                  <p>BookMarked</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/sessions"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 items-center py-5 px-1 cursor-pointer ${
+                    pathname === "/sessions"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  } hover:text-blue`}>
+                  <BsJournalBookmarkFill size={24} className="ml-2" />
+                  <p>Sessions</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/settings"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/settings"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}>
+                  <IoMdSettings size={24} className="ml-2" />
+                  <p>Settings</p>
+                </Link>
+              </li>
+              <Separator orientation="horizontal" />
+
+              <li>
+                <Link
+                  href="/manager/Organization"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/manager/Organization"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}>
+                  <CgProfile size={24} className="ml-2" />
+                  <p>Manager</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/help"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/help"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}>
+                  <IoMdHelpCircleOutline size={24} className="ml-2" />
+                  <p>Help</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/feedBack"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/feedBack"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}>
+                  <MdOutlineFeedback size={24} className="ml-2" />
+                  <p>Send FeedBack</p>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
+      {progress !== 0 && (
         <Progress
           value={progress}
           variant="secondary"
-          className="w-[100%] h-[1px]"
+          className="w-full h-[1px] my-1"
         />
       )}
     </header>

@@ -32,8 +32,7 @@ const KeywordBar = ({ data }) => {
     <div className="flex pb-1 space-x-2 w-full">
       <div
         id="buttonContainer"
-        className="flex px-2 gap-4 w-full overflow-x-scroll custom-scrollbar"
-      >
+        className="flex gap-4 w-full overflow-x-scroll custom-scrollbar">
         {data.map((buttonText, index) => (
           <Button
             key={buttonText}
@@ -45,8 +44,7 @@ const KeywordBar = ({ data }) => {
                 ? " text-primary"
                 : ""
             }`}
-            onClick={() => handleButtonClick(buttonText)}
-          >
+            onClick={() => handleButtonClick(buttonText)}>
             {buttonText}
           </Button>
         ))}
@@ -56,8 +54,7 @@ const KeywordBar = ({ data }) => {
           variant="secondary"
           size="icon"
           aria-label="more keywords"
-          onClick={handleScrollRight}
-        >
+          onClick={handleScrollRight}>
           <RightIcon />
         </Button>
       </div>

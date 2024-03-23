@@ -14,6 +14,7 @@ export default function Home() {
     setDomLoaded(true);
     setProgress(0);
   }, []);
+
   return (
     <>
       {domLoaded && (
