@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import {
   Card,
   CardContent,
-  CardTitle,
-  CardDescription,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
@@ -26,12 +24,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import {
   CreateBookmark,
-  RemoveBookmark,
-  getBookmarks,
   isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
+import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
 const HomeCardSection = () => {
   const { mentors, isLoading } = useUser();
@@ -223,9 +219,10 @@ const HomeCardSection = () => {
               </Card>
             ))
           ) : (
-            <div>
-              <p>Failed to load network issues Bah blah ..</p>
-            </div>
+             // change to be an empty state that shows no sesssion to show for now
+             <div className="flex justify-center items-center">
+             <EmptyBookmarkIcon />
+           </div>
           )}
         </div>
       </div>

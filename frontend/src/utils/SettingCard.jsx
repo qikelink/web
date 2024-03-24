@@ -88,7 +88,6 @@ const SettingCard = () => {
       .finally(() => {});
   };
 
-  console.log(formData.verified);
 
   return (
     <>
@@ -185,7 +184,7 @@ const SettingCard = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-3 justify-center lg:flex-row items-center mt-6 h-full space-x-5">
+          <div className="flex md:justify-start gap-3 justify-center lg:flex-row items-center mt-6 h-full space-x-5">
             <Button
               size="xl"
               className="bg-blue hover:bg-darkblue text-lg rounded-lg"

@@ -1,22 +1,30 @@
 import React from "react";
-import { useRouter } from "next/navigation";
-import { HomeIcon } from "@/icons/HomeIcon";
 import { Separator } from "@/components/ui/separator";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdHelpCircleOutline } from "react-icons/io";
-import { MdOutlineFeedback } from "react-icons/md";
+import { MdLogout, MdOutlineFeedback } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "@/contexts/auth-context";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { IoFlashOutline } from "react-icons/io5";
 import { PiDesktopTower } from "react-icons/pi";
+import { signout } from "../../../backend/src/pocketbase";
+import { useUser } from "@/contexts/user-context";
 
 const ListSection = () => {
   const pathname = usePathname();
-  const { setIsUserValid, progress, setProgress } = useAuth();
+  const { setUser } = useUser();
+  const { setIsUserValid, setProgress } = useAuth();
+
+  const handleSignout = () => {
+    setProgress(90);
+    window.location.reload();
+    signout(setIsUserValid);
+    setUser([]);
+  };
 
   return (
     <div className="flex flex-row justify-between h-full w-full ">
@@ -131,6 +139,15 @@ const ListSection = () => {
             <MdOutlineFeedback size={22} className="ml-2" />
             <p>Send FeedBack</p>
           </Link>
+        </li>
+        <li>
+          <button
+            onClick={handleSignout}
+            className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red rounded-md"
+          >
+            <MdLogout size={22} className="ml-2" />
+            <p>Sign Out</p>
+          </button>
         </li>
       </ul>
 

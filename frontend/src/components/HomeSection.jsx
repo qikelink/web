@@ -6,6 +6,7 @@ import { isUserValid } from "../../../backend/src/pocketbase";
 const HomeSection = () => {
   return (
     <>
+      {isUserValid ? (
         <div className="h-screen relative flex flex-row py-1 overflow-contain ">
           <div className="hidden md:inline w-1/4 ">
             <ListSection />
@@ -14,6 +15,11 @@ const HomeSection = () => {
             <HomeCardSection />
           </div>
         </div>
+      ) : (
+        <div className=" w-full flex flex-col">
+          <HomeCardSection />
+        </div>
+      )}
     </>
   );
 };

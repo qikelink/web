@@ -124,7 +124,7 @@ const LoginDialog = () => {
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
   return (
-    <Dialog>
+    <Dialog >
       <DialogTrigger>
         <Button
           size="sm"
@@ -134,7 +134,7 @@ const LoginDialog = () => {
           Log in
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-sm">
+      <DialogContent className="max-w-sm rounded-md">
         <DialogHeader className="mt-4 mb-2">
           <DialogTitle className="text-left">
             {" "}
