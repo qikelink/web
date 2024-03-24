@@ -37,22 +37,18 @@ export const UserProvider = ({ children }) => {
     getUser()
       .then((res) => {
         setUser(res);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
-        setIsLoading(false);
       });
 
     // get all mentors for the profile card
     getMentors()
       .then((res) => {
         setMentors(res);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching mentors data:", error);
-        setIsLoading(false);
       });
   }, [isUserValid]);
 
@@ -62,51 +58,41 @@ export const UserProvider = ({ children }) => {
       getMentor(user[0].id)
         .then((res) => {
           setMentor(res);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching mentor data:", error);
-          setIsLoading(false);
         });
 
       getBookmarks(user[0].id)
         .then((res) => {
           setBookmarks(res);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching bookmarks data:", error);
-          setIsLoading(false);
         });
 
       getCreatedOrganizations(user[0].id)
         .then((res) => {
           setCreatedOrganization(res);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching session data:", error);
-          setIsLoading(false);
         });
 
       getAllOrganizations(user[0].id)
         .then((res) => {
           setAllOrganization(res);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching session data:", error);
-          setIsLoading(false);
         });
 
       getCreatedSessions(user[0].id)
         .then((res) => {
           setCreatedSessions(res);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching session data:", error);
-          setIsLoading(false);
         });
 
       getAllSessions(user[0].id)

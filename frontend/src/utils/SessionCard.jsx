@@ -26,7 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const SessionCard = () => {
   const router = useRouter();
-  const { selectedButtons, setSelectedButtons, allSessions, isLoading } =
+  const { selectedButtons, allSessions, isLoading } =
     useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
