@@ -26,7 +26,6 @@ const KeywordBar = ({ data }) => {
     container.scrollLeft += 100;
   };
 
-  console.log(selectedButtons);
 
   return (
     <div className="flex pb-1 space-x-2 w-full">

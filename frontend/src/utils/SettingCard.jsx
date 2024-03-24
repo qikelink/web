@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { UploadIcon } from "@/icons/UploadIcon";
 import { Badge } from "@/components/ui/badge";
 import VerifyModal from "./VerifyModal";
-import { editSetting } from "../../../backend/src/pocketbase";
+import { updateSetting } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -62,7 +62,7 @@ const SettingCard = () => {
 
     const id = user[0].id;
 
-    editSetting(
+    updateSetting(
       id,
       formData.fullName,
       formData.username,

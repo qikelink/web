@@ -50,7 +50,7 @@ export function signout(setIsUserValid) {
   setIsUserValid(false);
 }
 
-export async function editSetting(
+export async function updateSetting(
   id,
   fullName,
   username,
@@ -121,6 +121,67 @@ export async function RemoveBookmark(id) {
 }
 
 export async function getBookmarks(id) {
-  return await client.collection("bookmarks").getFullList({ filter: `user = '${id}'` });
+  return await client
+    .collection("bookmarks")
+    .getFullList({ filter: `user = '${id}'` });
 }
 
+export async function createSession(title, purpose, sessionDate, participants) {
+  const data = {
+    title: title,
+    purpose: purpose,
+    sessionDate: sessionDate,
+    owner: client.authStore.model.id,
+    participants: participants,
+  };
+  await client.collection("sessions").create(data);
+}
+
+export async function updateSession(id, link, time, approved, done) {
+  const data = {
+    link: link,
+    time: time,
+    approved: approved,
+    done: done,
+  };
+  await client.collection("sessions").update(id, data);
+}
+
+// hmmm learn brodie.. that like/contains
+export async function getCreatedSessions(id) {
+  return await client
+    .collection("sessions")
+    .getFullList({ filter: `owner = '${id}'` });
+}
+
+
+// using the like/cotains to fetch all sessions where user id exists
+export async function getAllSessions(id) {
+  return await client
+    .collection("sessions")
+    .getFullList({ filter: `owner = '${id}' || participants ~ '${id}'` });
+}
+
+export async function createOrganization(org_name, org_info, members) {
+  const data = {
+    org_name: org_name,
+    org_info: org_info,
+    members: members,
+    owner: client.authStore.model.id,
+  };
+  await client.collection("organization").create(data);
+}
+
+
+export async function getCreatedOrganizations(id) {
+  return await client
+    .collection("organization")
+    .getFullList({ filter: `owner = '${id}'` });
+}
+
+// using the like/cotains to fetch all organizations where user id exists
+export async function getAllOrganizations(id) {
+  return await client
+    .collection("organization")
+    .getFullList({ filter: `owner = '${id}' || members ~ '${id}'` });
+}

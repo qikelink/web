@@ -7,6 +7,11 @@ import {
   getUser,
   isUserValid,
   getBookmarks,
+  getCreatedOrganizations,
+  getAllOrganizations,
+  getCreatedSessions,
+  getAllSessions,
+  getOrganizations,
 } from "../../../backend/src/pocketbase";
 
 // Create a context for managing user data
@@ -20,10 +25,14 @@ export const UserProvider = ({ children }) => {
   const [mentors, setMentors] = useState([]);
   const [mentor, setMentor] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
+  const [createdSessions, setCreatedSessions] = useState([]);
+  const [allSessions, setAllSessions] = useState([]);
+  const [createdOrganization, setCreatedOrganization] = useState([]);
+  const [allOrganization, setAllOrganization] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedButtons, setSelectedButtons] = useState();
+  const [selectedButtons, setSelectedButtons] = useState("");
 
-  // Fetch user data on initial load
+  // Fetch user and mentor data on initial load
   useEffect(() => {
     getUser()
       .then((res) => {
@@ -47,7 +56,7 @@ export const UserProvider = ({ children }) => {
       });
   }, [isUserValid]);
 
-  // get specific mentor data on user login
+  // get other datas based on the specific user
   useEffect(() => {
     if (user.length > 0) {
       getMentor(user[0].id)
@@ -69,6 +78,46 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching bookmarks data:", error);
           setIsLoading(false);
         });
+
+      getCreatedOrganizations(user[0].id)
+        .then((res) => {
+          setCreatedOrganization(res);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+          setIsLoading(false);
+        });
+
+      getAllOrganizations(user[0].id)
+        .then((res) => {
+          setAllOrganization(res);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+          setIsLoading(false);
+        });
+
+      getCreatedSessions(user[0].id)
+        .then((res) => {
+          setCreatedSessions(res);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+          setIsLoading(false);
+        });
+
+      getAllSessions(user[0].id)
+        .then((res) => {
+          setAllSessions(res);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+          setIsLoading(false);
+        });
     }
   }, [user]);
 
@@ -82,6 +131,10 @@ export const UserProvider = ({ children }) => {
         mentor,
         bookmarks,
         setBookmarks,
+        createdSessions,
+        allSessions,
+        createdOrganization,
+        allOrganization,
         selectedButtons,
         setSelectedButtons,
       }}
