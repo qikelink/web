@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { isUserValid, signout } from "../../../backend/src/pocketbase";
+import { getImageUrl, isUserValid, signout } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "./ui/input";
@@ -124,7 +124,7 @@ export default function Header() {
                     <FaRegBell size={20} className="text-current" />
                   </Badge>
                   <Avatar>
-                    <AvatarImage src={userInfo.avatar} />
+                    <AvatarImage src={getImageUrl(userInfo.collectionId, userInfo.id, userInfo.avatar)} />
                     <AvatarFallback>
                       {userInfo.email.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
