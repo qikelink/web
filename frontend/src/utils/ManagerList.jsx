@@ -1,8 +1,6 @@
 import React from "react";
-import { useRouter } from "next/navigation";
 import { VscOrganization } from "react-icons/vsc";
 import { Separator } from "@/components/ui/separator";
-import { SlFire } from "react-icons/sl";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
@@ -11,17 +9,19 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineFeedback } from "react-icons/md";
 import { VscGraphLine } from "react-icons/vsc";
-import { AiOutlineUsergroupAdd } from "react-icons/ai";
 
 const ManagerList = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between h-screen w-full ">
+    <div className="flex flex-row justify-between lg:h-screen w-full border lg:border-0">
       {/* menu items */}
-      <Separator orientation="vertical" className="grow-0 mx-2" />
+      <Separator
+        orientation="vertical"
+        className="grow-0 mx-2 hidden lg:block"
+      />
 
-      <ul className="flex flex-col grow ">
+      <ul className="flex flex-row lg:flex-col grow ">
         <li>
           <Link
             href="/manager/Organization"
@@ -32,7 +32,7 @@ const ManagerList = () => {
             }`}
           >
             <VscOrganization size={20} />
-            <p>Organization</p>
+            <p className="hidden lg:block">Organization</p>
           </Link>
         </li>
         <li>
@@ -42,8 +42,8 @@ const ManagerList = () => {
               pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
             } hover:text-blue`}
           >
-            <MdOutlineGroupAdd size={25} />
-            <p>Request</p>
+            <MdOutlineGroupAdd size={20} />
+            <p className="hidden lg:block">Request</p>
           </Link>
         </li>
 
@@ -55,7 +55,7 @@ const ManagerList = () => {
             }`}
           >
             <VscGraphLine size={20} />
-            <p>Metrics</p>
+            <p className="hidden lg:block">Metrics</p>
           </Link>
         </li>
 
@@ -67,10 +67,10 @@ const ManagerList = () => {
             }`}
           >
             <IoMdSettings size={20} />
-            <p>Settings</p>
+            <p className="hidden lg:block">Settings</p>
           </Link>
         </li>
-        <Separator orientation="horizontal" />
+        <Separator orientation="horizontal" className="hidden lg:block" />
 
         <li>
           <Link
@@ -80,7 +80,7 @@ const ManagerList = () => {
             }`}
           >
             <CgProfile size={20} />
-            <p>Profile</p>
+            <p className="hidden lg:block">Profile</p>
           </Link>
         </li>
         <li>
@@ -91,7 +91,7 @@ const ManagerList = () => {
             }`}
           >
             <IoMdHelpCircleOutline size={20} />
-            <p>Help</p>
+            <p className="hidden lg:block">Help</p>
           </Link>
         </li>
         <li>
@@ -102,7 +102,7 @@ const ManagerList = () => {
             }`}
           >
             <MdOutlineFeedback size={20} />
-            <p>Send FeedBack</p>
+            <p className="hidden lg:block">Send FeedBack</p>
           </Link>
         </li>
       </ul>

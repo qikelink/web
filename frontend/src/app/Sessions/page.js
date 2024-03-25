@@ -11,7 +11,7 @@ const page = () => {
 
   useEffect(() => {
     setDomLoaded(true);
-    setProgress(0);
+    setProgress(22);
   }, []);
   return (
     <>

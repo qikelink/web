@@ -34,7 +34,7 @@ export default function Header() {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
-    const { setProgress } = useAuth();
+  const { setProgress } = useAuth();
 
   const handleSignout = () => {
     signout(setIsUserValid);
@@ -241,7 +241,7 @@ export default function Header() {
           </div>
         </div>
       )}
-      {progress !== 0 && (
+      {progress !== 22 && (
         <Progress
           value={progress}
           variant="secondary"

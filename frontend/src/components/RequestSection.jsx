@@ -28,7 +28,7 @@ const data = [1, 2, 3];
 
 const RequestSection = () => {
   return (
-    <div className="p-2">
+    <div className="py-2">
       <div className="flex justify-between items-center">
         <h2 className="text-base">Meeting Requests</h2>
       </div>
@@ -42,15 +42,15 @@ const RequestSection = () => {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div>
-            <AlertTitle>Heads up!</AlertTitle>
+            <AlertTitle>Chika Musa Tobi</AlertTitle>
             <AlertDescription>
-              You can add components to your app using the CLI.
+              CEO and President Nigeria Democratic Republic
             </AlertDescription>
           </div>
           <div className="flex-end">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">Details</Button>
+                <Button variant="outline">Meeting Details</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -60,30 +60,25 @@ const RequestSection = () => {
                     done.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
-                    </Label>
-                    <Input
-                      id="name"
-                      value="Pedro Duarte"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                      Username
-                    </Label>
-                    <Input
-                      id="username"
-                      value="@peduarte"
-                      className="col-span-3"
-                    />
-                  </div>
+                <div>
+                  I hope this message finds you well. I admire your expertise in
+                  the startup realm and would greatly appreciate the opportunity
+                  to seek your guidance on some challenging questions I'm facing
+                  with my own startup project. Specifically, I'm interested in
+                  discussing strategies for sustainable growth, market trends,
+                  common pitfalls, and leveraging technology. Your insights
+                  would be invaluable, and I'm flexible to meet at your
+                  convenience, whether virtually or otherwise. Thank you for
+                  considering my request, and I look forward to the possibility
+                  of connecting with you soon.
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Save changes</Button>
+                  <Button className="bg-red" type="submit">
+                    Reject
+                  </Button>
+                  <Button className="bg-green-500" type="submit">
+                    Accept
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

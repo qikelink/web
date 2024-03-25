@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/popover";
 import { createSession } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
 
 const BookModal = ({ buttonName, blue }) => {
   const [date, setDate] = useState();
@@ -36,6 +37,15 @@ const BookModal = ({ buttonName, blue }) => {
   const [formData, setFormData] = useState({
     purpose: "",
   });
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const options = [
+    { value: "Individual", label: "Individual" },
+    { value: "Google DSC", label: "Google DSC" },
+    { value: "Koinonia Prayer Dept", label: "Koinonia Prayer Dept" },
+    { value: "RCCG YAYA", label: "RCCG YAYA" },
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -206,6 +216,39 @@ const BookModal = ({ buttonName, blue }) => {
                     />
                   </PopoverContent>
                 </Popover>
+              </div>
+
+              <div className="relative inline-block w-[240px]">
+                <select
+                  className="block appearance-none w-full bg-white border border-gray-300 rounded-md py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-blue-500"
+                  value={selectedOption}
+                  onChange={(e) => setSelectedOption(e.target.value)}
+                >
+                  <option value="" disabled hidden>
+                    Select Meeting Party
+                  </option>
+                  {options.map((option) => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      className="py-2"
+                    >
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 12l-6-6 1.5-1.5L10 9l4.5-4.5L16 6l-6 6z"
+                    />
+                  </svg>
+                </div>
               </div>
 
               {/* Questions section */}

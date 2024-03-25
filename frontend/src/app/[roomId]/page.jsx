@@ -25,7 +25,7 @@ export default function Home({ params }) {
 
   useEffect(() => {
     const initializeVideo = async () => {
-      setProgress(0);
+      setProgress(22);
     };
 
     initializeVideo();

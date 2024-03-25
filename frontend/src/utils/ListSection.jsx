@@ -36,10 +36,12 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/quick"
+            href="/quickService"
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
-              pathname === "/quick" ? "bg-[#e2eff8] text-blue rounded-md" : ""
+              pathname === "/quickService"
+                ? "bg-[#e2eff8] text-blue rounded-md"
+                : ""
             }`}
           >
             <IoFlashOutline size={22} className="ml-2" />

@@ -17,7 +17,7 @@ export default function page() {
 
   useEffect(() => {
     setDomLoaded(true);
-    setProgress(0);
+    setProgress(22);
   }, []);
   return (
     <>
@@ -34,18 +34,8 @@ export default function page() {
                   <div className="w-full md:w-2/3">
                     <OrganizationSection />
                   </div>
-                  <div className="hidden lg:block md:w-1/3 w-full">
+                  <div className=" md:w-1/3 w-full">
                     <ManagerList />
-                  </div>
-                  <div className="md:hidden md:w-1/3 w-full">
-                    <Button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                      ManagerMenu
-                    </Button>
-                    {isDropdownOpen && (
-                      <div className="absolute bg-background w-full h-fit">
-                        <ManagerList />
-                      </div>
-                    )}
                   </div>
                 </div>
               ) : (

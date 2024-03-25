@@ -10,15 +10,14 @@ import { isUserValid } from "../../../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
 import { Button } from "@/components/ui/button";
 
-
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
-    const { setProgress } = useAuth();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { setProgress } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     setDomLoaded(true);
-    setProgress(0);
+    setProgress(22);
   }, []);
 
   //<MetricSection/>
@@ -37,18 +36,8 @@ export default function page() {
                   <div className="w-full md:w-2/3">
                     <MetricSection />
                   </div>
-                  <div className="hidden lg:block md:w-1/3 w-full">
+                  <div className=" md:w-1/3 w-full">
                     <ManagerList />
-                  </div>
-                  <div className="md:hidden md:w-1/3 w-full">
-                    <Button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                      ManagerMenu
-                    </Button>
-                    {isDropdownOpen && (
-                      <div className="absolute bg-background w-full h-fit">
-                        <ManagerList />
-                      </div>
-                    )}
                   </div>
                 </div>
               ) : (

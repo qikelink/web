@@ -29,6 +29,21 @@ const data = [1, 2, 3];
 
 const OrganizationSection = () => {
   const [isSpinning, setIsSpinning] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
+  const [name, setName] = useState("RealTube Association 2024");
+  const [tagline, setTagline] = useState("An Engineering Institute by NUESA");
+  const [members, setMembers] = useState([
+    "member1@example.com",
+    "member2@example.com",
+  ]);
+  const [newMember, setNewMember] = useState("");
+
+  const handleAddMember = () => {
+    if (newMember.trim() !== "") {
+      setMembers([...members, newMember]);
+      setNewMember("");
+    }
+  };
 
   const handleClick = () => {
     // Start spinning animation
@@ -59,38 +74,60 @@ const OrganizationSection = () => {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="image" className="text-right">
-                  Profile Image
-                </Label>
-                <Input id="image" type="file" className="col-span-3" />
+                <input
+                  id="image"
+                  type="file"
+                  placeholder="Image"
+                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+                  onChange={(e) => setProfileImage(e.target.value)}
+                />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input id="name" value="Pedro Duarte" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="tagLine" className="text-right">
-                  Tagline
-                </Label>
-                <Input
+                <input
                   id="name"
-                  value="An Engineering Institute by NUESA"
-                  className="col-span-3"
+                  value={name}
+                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="members" className="text-right">
-                  Members
-                </Label>
-                <Input
-                  id="members"
-                  value="Members Email"
-                  className="col-span-3"
+                <input
+                  id="tagLine"
+                  value={tagline}
+                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                  onChange={(e) => setTagline(e.target.value)}
                 />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <div className="col-span-3">
+                  <input
+                    id="members"
+                    value={newMember}
+                    type="email"
+                    placeholder="Enter Members email"
+                    className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setNewMember(e.target.value)}
+                  />
+                </div>
+                <Button
+                  className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  onClick={handleAddMember}
+                >
+                  Add
+                </Button>
+              </div>
+              <div className="grid grid-cols-4 gap-2 h-32 overflow-y-auto border p-1">
+                {members.map((email, index) => (
+                  <div
+                    key={index}
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                  >
+                    {email}
+                  </div>
+                ))}
               </div>
             </div>
+
             <DialogFooter>
               <Button onClick={() => handleClick()}>
                 {isSpinning ? "Creating" : "Create"}
@@ -112,9 +149,11 @@ const OrganizationSection = () => {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div>
-            <AlertTitle>Heads up!</AlertTitle>
+            <AlertTitle>YCombinator</AlertTitle>
             <AlertDescription>
-              You can add components to your app using the CLI.
+              Y Combinator Management, LLC (YC) is an American technology
+              startup accelerator and venture capital firm launched in March
+              2005
             </AlertDescription>
           </div>
           <div className="flex-end">
@@ -130,26 +169,25 @@ const OrganizationSection = () => {
                     done.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
-                    </Label>
-                    <Input
-                      id="name"
-                      value="Pedro Duarte"
-                      className="col-span-3"
-                    />
+                <div className="bg-white shadow-md rounded-md p-6">
+                  <h2 className="text-xl font-bold mb-4">companyName</h2>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-gray-600">Members Number</p>
+                      <p className="font-semibold">membersNumber</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">Meetings Held</p>
+                      <p className="font-semibold">meetingsHeld</p>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                      Username
-                    </Label>
-                    <Input
-                      id="username"
-                      value="@peduarte"
-                      className="col-span-3"
-                    />
+                  <div className="mt-4">
+                    <p className="text-gray-600">Other Details</p>
+                    <ul className="list-disc list-inside">
+                      {data.map((detail, index) => (
+                        <li key={index}>{detail}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 <DialogFooter>

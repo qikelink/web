@@ -12,13 +12,13 @@ export default function Home() {
 
   useEffect(() => {
     setDomLoaded(true);
-    setProgress(0);
+    setProgress(22);
   }, []);
 
   return (
     <>
       {domLoaded && (
-        <main className=" mx-2 lg:mx-5 ">
+        <main className=" px-2 lg:px-5 ">
           <Header />
           <HomeSection />
         </main>
