@@ -9,18 +9,24 @@ import { Button } from "@/components/ui/button";
 import { UploadIcon } from "@/icons/UploadIcon";
 import { Badge } from "@/components/ui/badge";
 import VerifyModal from "./VerifyModal";
-import { getImageUrl, updateSetting } from "../../../backend/src/pocketbase";
+import {
+  getImageUrl,
+  getUser,
+  updateSetting,
+} from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
   const [profileImage, setProfileImage] = useState("");
   const { toast } = useToast();
-  const { user, isLoading } = useUser();
+  const { user, isLoading, setUser } = useUser();
+  const [isSpinning, setIsSpinning] = useState(false);
 
   useEffect(() => {
     const defaultFormData = {
@@ -49,7 +55,6 @@ const SettingCard = () => {
         : defaultFormData;
 
     setFormData(initialFormData);
-    
   }, [user]);
 
   const handleChange = (e) => {
@@ -62,7 +67,7 @@ const SettingCard = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    setIsSpinning(true);
     const id = user[0].id;
 
     updateSetting(
@@ -89,7 +94,16 @@ const SettingCard = () => {
         });
         console.error("Setting error:", error);
       })
-      .finally(() => {});
+      .finally(() => {
+        getUser()
+          .then((res) => {
+            setUser(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+          });
+        setIsSpinning(false);
+      });
   };
 
   return (
@@ -210,7 +224,10 @@ const SettingCard = () => {
               className="bg-blue hover:bg-darkblue text-lg rounded-lg"
               type="submit"
             >
-              Update Profile
+              {isSpinning ? "Updating profile" : "Update profile"}
+              <AiOutlineLoading3Quarters
+                className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+              />
             </Button>
             {/* <Separator orientation="vertical" className='bg-darktext'/> */}
             {formData.verified === true ? null : !isLoading ? (

@@ -30,6 +30,7 @@ import {
   getImageUrl,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "./ui/use-toast";
+import { Label } from "./ui/label";
 
 const data = [1, 2, 3];
 
@@ -105,8 +106,9 @@ const OrganizationSection = () => {
                 to increase chances of request Success.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid gap-4 py-3">
+              <div className="flex flex-col space-y-1">
+                <Label className="text-lg">Organization logo</Label>
                 <input
                   id="image"
                   type="file"
@@ -115,7 +117,8 @@ const OrganizationSection = () => {
                   onChange={(e) => setProfileImage(e.target.files[0])}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="flex flex-col space-y-1">
+                <Label className="text-lg">Organization name</Label>
                 <input
                   id="name"
                   value={name}
@@ -123,7 +126,8 @@ const OrganizationSection = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="flex flex-col space-y-1">
+                <Label className="text-lg">About organization</Label>
                 <input
                   id="tagLine"
                   value={tagline}
@@ -131,8 +135,9 @@ const OrganizationSection = () => {
                   onChange={(e) => setTagline(e.target.value)}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <div className="col-span-3">
+              <div className="flex flex-col space-y-1">
+                <Label className="text-lg">Add members</Label>
+                <div className="flex justify-between w-full items-center space-x-3">
                   <input
                     id="members"
                     value={newMember}
@@ -141,13 +146,14 @@ const OrganizationSection = () => {
                     className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     onChange={(e) => setNewMember(e.target.value)}
                   />
+
+                  <Button
+                    className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                    onClick={handleAddMember}
+                  >
+                    Add
+                  </Button>
                 </div>
-                <Button
-                  className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                  onClick={handleAddMember}
-                >
-                  Add
-                </Button>
               </div>
               <div className="grid grid-cols-4 gap-2 h-32 overflow-y-auto border p-1">
                 {members.map((email, index) => (
