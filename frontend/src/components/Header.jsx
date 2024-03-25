@@ -119,9 +119,12 @@ export default function Header() {
                   </Badge>
                   <Badge
                     variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}
+                    className={"relative rounded-full p-2 hidden md:inline"}
                   >
                     <FaRegBell size={20} className="text-current" />
+                    <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
+                      9
+                    </span>
                   </Badge>
                   <Avatar>
                     <AvatarImage src={userInfo.avatar} />

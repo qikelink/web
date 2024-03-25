@@ -85,17 +85,6 @@ const ManagerList = () => {
         </li>
         <li>
           <Link
-            href="/Help"
-            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
-              pathname === "/Help" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
-            <IoMdHelpCircleOutline size={20} />
-            <p className="hidden lg:block">Help</p>
-          </Link>
-        </li>
-        <li>
-          <Link
             href="/FeedBack"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/FeedBack" ? "bg-[#f7fafc] text-blue" : ""
