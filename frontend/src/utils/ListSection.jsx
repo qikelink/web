@@ -17,7 +17,7 @@ import { useUser } from "@/contexts/user-context";
 const ListSection = () => {
   const pathname = usePathname();
   const { setUser } = useUser();
-  const { setIsUserValid, setProgress } = useAuth();
+  const { setIsUserValid, isUserValid , setProgress } = useAuth();
 
   const handleSignout = () => {
     setProgress(90);
@@ -140,7 +140,7 @@ const ListSection = () => {
             <p>Send FeedBack</p>
           </Link>
         </li>
-        <li>
+        {isUserValid && <li>
           <button
             onClick={handleSignout}
             className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red rounded-md"
@@ -148,7 +148,7 @@ const ListSection = () => {
             <MdLogout size={22} className="ml-2" />
             <p>Sign Out</p>
           </button>
-        </li>
+        </li>}
       </ul>
 
       <Separator orientation="vertical" className="grow-0 mx-2" />
