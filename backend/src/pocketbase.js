@@ -64,6 +64,7 @@ export function signout(setIsUserValid) {
 
 export async function updateSetting(
   id,
+  avatar,
   fullName,
   username,
   phoneNumber,
@@ -71,6 +72,7 @@ export async function updateSetting(
   awards
 ) {
   const data = {
+    avatar: avatar,
     fullName: fullName,
     username: username,
     phoneNumber: phoneNumber,

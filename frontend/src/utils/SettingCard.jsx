@@ -9,20 +9,22 @@ import { Button } from "@/components/ui/button";
 import { UploadIcon } from "@/icons/UploadIcon";
 import { Badge } from "@/components/ui/badge";
 import VerifyModal from "./VerifyModal";
-import { updateSetting } from "../../../backend/src/pocketbase";
+import { getImageUrl, updateSetting } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
-import { userAgentFromString } from "next/server";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
+  const [profileImage, setProfileImage] = useState("");
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(true);
-  const { user, mentor } = useUser();
+  const { user, isLoading } = useUser();
 
   useEffect(() => {
     const defaultFormData = {
+      avatar: profileImage,
       fullName: "",
       email: "",
       username: "",
@@ -35,6 +37,7 @@ const SettingCard = () => {
     const initialFormData =
       user.length > 0
         ? {
+            avatar: user[0].avatar || "",
             fullName: user[0].fullName || "",
             email: user[0].email || "",
             username: user[0].username || "",
@@ -46,7 +49,7 @@ const SettingCard = () => {
         : defaultFormData;
 
     setFormData(initialFormData);
-    setIsLoading(false);
+    
   }, [user]);
 
   const handleChange = (e) => {
@@ -64,6 +67,7 @@ const SettingCard = () => {
 
     updateSetting(
       id,
+      profileImage,
       formData.fullName,
       formData.username,
       formData.phoneNumber,
@@ -88,21 +92,37 @@ const SettingCard = () => {
       .finally(() => {});
   };
 
-
   return (
     <>
       <form onSubmit={handleSubmit}>
         <div className="min-h-screen border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
           {/* Profile image */}
-          <Label className="text-lg">Your profile picture</Label>
-          <div className="flex items-center justify-center mt-1 border-2 border-gray-600 rounded-lg border-dashed bg-inputbackground h-32 w-32">
-            <UploadIcon />
-          </div>
+          <Label className="text-lg">Profile image</Label>
+          {isLoading ? (
+            <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
+          ) : (
+            user.length > 0 && (
+              <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
+                <AvatarImage
+                  src={getImageUrl(
+                    user[0].collectionId,
+                    user[0].id,
+                    user[0].avatar
+                  )}
+                />
+                <AvatarFallback>
+                  {" "}
+                  {user[0].email.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            )
+          )}
           <div className="flex justify-between items-center gap-3 mt-4">
             <Input
               id="picture"
               type="file"
               className="lg:max-w-xs w-fit bg-inputbackground "
+              onChange={(e) => setProfileImage(e.target.files[0])}
             />
             {isLoading ? (
               <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
