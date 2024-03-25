@@ -116,12 +116,14 @@ export default function Header() {
                   >
                     <BsHeadsetVr
                       size={20}
-                      className="text-current hover:animate-spin"
+                      className="text-current hover:animate-spin cursor-pointer"
                     />
                   </Badge>
                   <Badge
                     variant="outline"
-                    className={"relative rounded-full p-2 hidden md:inline"}
+                    className={
+                      "relative rounded-full p-2 hidden md:inline cursor-pointer"
+                    }
                   >
                     <FaRegBell size={20} className="text-current" />
                     <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
@@ -129,7 +131,13 @@ export default function Header() {
                     </span>
                   </Badge>
                   <Avatar>
-                    <AvatarImage src={getImageUrl(userInfo.collectionId, userInfo.id, userInfo.avatar)} />
+                    <AvatarImage
+                      src={getImageUrl(
+                        userInfo.collectionId,
+                        userInfo.id,
+                        userInfo.avatar
+                      )}
+                    />
                     <AvatarFallback>
                       {userInfo.email.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
@@ -244,16 +252,17 @@ export default function Header() {
                   <p>Send FeedBack</p>
                 </Link>
               </li>
-              {isUserValid &&
-              <li>
-                <button
-                  onClick={handleSignout}
-                  className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red rounded-md"
-                >
-                  <MdLogout size={22} className="ml-2" />
-                  <p>Sign Out</p>
-                </button>
-              </li>}
+              {isUserValid && (
+                <li>
+                  <button
+                    onClick={handleSignout}
+                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red rounded-md"
+                  >
+                    <MdLogout size={22} className="ml-2" />
+                    <p>Sign Out</p>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
