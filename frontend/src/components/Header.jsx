@@ -11,7 +11,6 @@ import { FaRegBell } from "react-icons/fa6";
 import { Badge } from "@/components/ui/badge";
 import { TiMicrophoneOutline } from "react-icons/ti";
 import Image from "next/image";
-import logo from "../../images/loho.png";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
@@ -69,8 +68,11 @@ export default function Header() {
           </Badge>
 
           <Image
-            src={logo}
+            src={
+              "https://bafkreihsi2uofstr3oxu355zr3ggxyckxuguken4d6rhqgrah3kaqruo7u.ipfs.nftstorage.link/"
+            }
             width={150}
+            height={150}
             className="rounded-md w-28 lg:w-28"
             onClick={() => router.push(`/`)}
             alt="Logo"
