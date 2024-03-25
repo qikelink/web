@@ -8,6 +8,11 @@ client.autoCancellation(false);
 export const isUserValid =
   client.authStore.model && client.authStore.model.id !== null;
 
+ export const getImageUrl = (collectionId, recordId, fileName) => {
+    return `${url}/api/files/${collectionId}/${recordId}/${fileName}`;
+  };
+  
+
 export async function getUser() {
   return await client.collection("users").getFullList();
 }
@@ -17,6 +22,13 @@ export async function getMentors() {
   return await client
     .collection("mentors")
     .getFullList({ filter: "verified = True" });
+}
+
+// to get all the verified mentors available for quick service
+export async function getQuickMentors() {
+  return await client
+    .collection("mentors")
+    .getFullList({ filter: "verified = True && quickService = True" });
 }
 
 // to get a single mentor, for verification purposes
@@ -52,6 +64,7 @@ export function signout(setIsUserValid) {
 
 export async function updateSetting(
   id,
+  avatar,
   fullName,
   username,
   phoneNumber,
@@ -59,6 +72,7 @@ export async function updateSetting(
   awards
 ) {
   const data = {
+    avatar: avatar,
     fullName: fullName,
     username: username,
     phoneNumber: phoneNumber,
@@ -154,7 +168,6 @@ export async function getCreatedSessions(id) {
     .getFullList({ filter: `owner = '${id}'` });
 }
 
-
 // using the like/cotains to fetch all sessions where user id exists
 export async function getAllSessions(id) {
   return await client
@@ -162,16 +175,23 @@ export async function getAllSessions(id) {
     .getFullList({ filter: `owner = '${id}' || participants ~ '${id}'` });
 }
 
-export async function createOrganization(org_name, org_info, members) {
+export async function createOrganization(
+  avatar,
+  org_name,
+  org_about,
+  org_info,
+  members
+) {
   const data = {
+    avatar: avatar,
     org_name: org_name,
+    org_about: org_about,
     org_info: org_info,
     members: members,
     owner: client.authStore.model.id,
   };
   await client.collection("organization").create(data);
 }
-
 
 export async function getCreatedOrganizations(id) {
   return await client
@@ -180,8 +200,8 @@ export async function getCreatedOrganizations(id) {
 }
 
 // using the like/cotains to fetch all organizations where user id exists
-export async function getAllOrganizations(id) {
+export async function getAllOrganizations(id, email) {
   return await client
     .collection("organization")
-    .getFullList({ filter: `owner = '${id}' || members ~ '${id}'` });
+    .getFullList({ filter: `owner = '${id}' || members ~ '${email}'` });
 }

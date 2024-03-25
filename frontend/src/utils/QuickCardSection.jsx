@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import {
   Card,
   CardContent,
-  CardTitle,
-  CardDescription,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
@@ -24,36 +22,31 @@ import pic4 from "../../images/pic4.gif";
 import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import {
-  CreateBookmark,
-  RemoveBookmark,
-  getBookmarks,
-  isUserValid,
-} from "../../../backend/src/pocketbase";
+import { CreateBookmark, isUserValid } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
+import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
-const QuickCardSection = () => {
-  const { mentors, isLoading } = useUser();
+const HomeCardSection = () => {
+  const { quickMentors, isLoading } = useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
 
-  const handleBookmarkToggle = () => {
+  const handleBookmarkToggle = (mentor) => {
     if (!isUserValid) {
       prompt("show login dialog");
       return;
     }
 
     CreateBookmark(
-      mentors[0].fullName,
-      mentors[0].username,
-      mentors[0].phoneNumber,
-      mentors[0].bio,
-      mentors[0].awards,
-      mentors[0].businessName,
-      mentors[0].contact,
-      mentors[0].account
+      mentor.fullName,
+      mentor.username,
+      mentor.phoneNumber,
+      mentor.bio,
+      mentor.awards,
+      mentor.businessName,
+      mentor.contact,
+      mentor.account
     )
       .then(() => {
         toast({
@@ -70,6 +63,8 @@ const QuickCardSection = () => {
         });
         console.error("Bookmark addition error:", error);
       });
+
+   
   };
 
   return (
@@ -82,8 +77,8 @@ const QuickCardSection = () => {
             list.map((item, index) => (
               <Skeleton key={index} className="h-52 w-64 rounded-lg" />
             ))
-          ) : mentors.length > 0 ? (
-            mentors.map((item, index) => (
+          ) : quickMentors.length > 0 ? (
+            quickMentors.map((item, index) => (
               <Card key={index}>
                 <CardHeader>
                   <div className="flex justify-between">
@@ -108,7 +103,7 @@ const QuickCardSection = () => {
                     <Toggle
                       aria-label="Toggle italic"
                       variant="outline"
-                      onClick={handleBookmarkToggle}
+                      onClick={() => handleBookmarkToggle(item)}
                     >
                       <BsJournalBookmarkFill />
                     </Toggle>
@@ -142,8 +137,9 @@ const QuickCardSection = () => {
               </Card>
             ))
           ) : (
-            <div>
-              <p>Failed to load network issues Bah blah ..</p>
+            // change to be an empty state that shows no sesssion to show for now
+            <div className="flex justify-center items-center">
+              <EmptyBookmarkIcon />
             </div>
           )}
         </div>
@@ -152,4 +148,4 @@ const QuickCardSection = () => {
   );
 };
 
-export default QuickCardSection;
+export default HomeCardSection;

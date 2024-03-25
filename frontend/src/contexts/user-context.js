@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   getMentors,
+  getQuickMentors,
   getMentor,
   getUser,
   isUserValid,
@@ -11,7 +12,7 @@ import {
   getAllOrganizations,
   getCreatedSessions,
   getAllSessions,
-  getOrganizations,
+  
 } from "../../../backend/src/pocketbase";
 
 // Create a context for managing user data
@@ -23,6 +24,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [mentors, setMentors] = useState([]);
+  const [quickMentors, setQuickMentors] = useState([]);
   const [mentor, setMentor] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [createdSessions, setCreatedSessions] = useState([]);
@@ -47,10 +49,19 @@ export const UserProvider = ({ children }) => {
     getMentors()
       .then((res) => {
         setMentors(res);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching mentors data:", error);
+      });
+
+    // get all mentors available for quick services
+    getQuickMentors()
+      .then((res) => {
+        setQuickMentors(res);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching Quickmentors data:", error);
         setIsLoading(false);
       });
   }, [isUserValid]);
@@ -58,7 +69,6 @@ export const UserProvider = ({ children }) => {
   // get other datas based on the specific user
   useEffect(() => {
     if (user.length > 0) {
-    
       getMentor(user[0].id)
         .then((res) => {
           setMentor(res);
@@ -83,7 +93,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getAllOrganizations(user[0].id)
+      getAllOrganizations(user[0].id, user[0].email)
         .then((res) => {
           setAllOrganization(res);
         })
@@ -118,6 +128,7 @@ export const UserProvider = ({ children }) => {
         setUser,
         isLoading,
         isLoadingUserData,
+        quickMentors,
         mentors,
         mentor,
         bookmarks,
@@ -126,6 +137,7 @@ export const UserProvider = ({ children }) => {
         allSessions,
         createdOrganization,
         allOrganization,
+        setAllOrganization,
         selectedButtons,
         setSelectedButtons,
       }}
