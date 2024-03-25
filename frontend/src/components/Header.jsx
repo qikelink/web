@@ -47,7 +47,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-background">
       <div className="font-poppins flex justify-between items-center py-3">
         <div className="flex items-center justify-between gap-1 hover:cursor">
-          {isDropdownOpen && isUserValid ? (
+          {isDropdownOpen ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
@@ -142,7 +142,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {isDropdownOpen && isUserValid ? (
+      {isDropdownOpen ? (
         <div className="absolute top-full left-0 w-full bg-background py-2 h-screen">
           <div className="flex flex-col  ">
             <ul className="flex text-base flex-col justify-between">
@@ -244,6 +244,7 @@ export default function Header() {
                   <p>Send FeedBack</p>
                 </Link>
               </li>
+              {isUserValid &&
               <li>
                 <button
                   onClick={handleSignout}
@@ -252,7 +253,7 @@ export default function Header() {
                   <MdLogout size={22} className="ml-2" />
                   <p>Sign Out</p>
                 </button>
-              </li>
+              </li>}
             </ul>
           </div>
         </div>
