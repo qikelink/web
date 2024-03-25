@@ -30,6 +30,7 @@ export const UserProvider = ({ children }) => {
   const [createdOrganization, setCreatedOrganization] = useState([]);
   const [allOrganization, setAllOrganization] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingUserData, setIsLoadingUserData] = useState(true);
   const [selectedButtons, setSelectedButtons] = useState("");
 
   // Fetch user and mentor data on initial load
@@ -46,15 +47,18 @@ export const UserProvider = ({ children }) => {
     getMentors()
       .then((res) => {
         setMentors(res);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching mentors data:", error);
+        setIsLoading(false);
       });
   }, [isUserValid]);
 
   // get other datas based on the specific user
   useEffect(() => {
     if (user.length > 0) {
+    
       getMentor(user[0].id)
         .then((res) => {
           setMentor(res);
@@ -98,11 +102,11 @@ export const UserProvider = ({ children }) => {
       getAllSessions(user[0].id)
         .then((res) => {
           setAllSessions(res);
-          setIsLoading(false);
+          setIsLoadingUserData(false);
         })
         .catch((error) => {
           console.error("Error fetching session data:", error);
-          setIsLoading(false);
+          setIsLoadingUserData(false);
         });
     }
   }, [user]);
@@ -113,6 +117,7 @@ export const UserProvider = ({ children }) => {
         user,
         setUser,
         isLoading,
+        isLoadingUserData,
         mentors,
         mentor,
         bookmarks,

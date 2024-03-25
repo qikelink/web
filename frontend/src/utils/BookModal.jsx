@@ -111,7 +111,7 @@ const BookModal = ({ buttonName, blue }) => {
             />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] rounded-md">
           <form onSubmit={handleSubmit}>
             <DialogHeader>
               <DialogTitle>

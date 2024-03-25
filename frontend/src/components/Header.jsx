@@ -22,7 +22,7 @@ import { BsJournalBookmarkFill } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { IoMdHelpCircleOutline } from "react-icons/io";
-import { MdOutlineFeedback } from "react-icons/md";
+import { MdLogout, MdOutlineFeedback } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
@@ -35,17 +35,19 @@ export default function Header() {
   const pathname = usePathname();
   const { setProgress } = useAuth();
 
+
   const handleSignout = () => {
+    setProgress(90);
+    window.location.reload();
     signout(setIsUserValid);
     setUser([]);
-    window.location.reload();
   };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       <div className="font-poppins flex justify-between items-center py-3">
         <div className="flex items-center justify-between gap-1 hover:cursor">
-          {isDropdownOpen ? (
+          {isDropdownOpen && isUserValid ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
@@ -140,7 +142,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {isDropdownOpen && (
+      {isDropdownOpen && isUserValid ? (
         <div className="absolute top-full left-0 w-full bg-background py-2 h-screen">
           <div className="flex flex-col  ">
             <ul className="flex text-base flex-col justify-between">
@@ -242,10 +244,19 @@ export default function Header() {
                   <p>Send FeedBack</p>
                 </Link>
               </li>
+              <li>
+                <button
+                  onClick={handleSignout}
+                  className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red rounded-md"
+                >
+                  <MdLogout size={22} className="ml-2" />
+                  <p>Sign Out</p>
+                </button>
+              </li>
             </ul>
           </div>
         </div>
-      )}
+      ) : null}
       {progress !== 22 && (
         <Progress
           value={progress}

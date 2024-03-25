@@ -23,11 +23,11 @@ import { BsHeadsetVr } from "react-icons/bs";
 import { createRoom } from "./createRoom";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
 const SessionCard = () => {
   const router = useRouter();
-  const { selectedButtons, allSessions, isLoading } =
-    useUser();
+  const { selectedButtons, allSessions, isLoadingUserData } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
   const createMeet = async () => {
@@ -84,7 +84,8 @@ const SessionCard = () => {
         sessionDate.getDate() === currentDate.getDate() &&
         sessionDate.getMonth() === currentDate.getMonth() &&
         sessionDate.getFullYear() === currentDate.getFullYear() &&
-        item.approved && !item.done
+        item.approved &&
+        !item.done
       );
     }
   });
@@ -95,11 +96,11 @@ const SessionCard = () => {
         <KeywordBar data={status} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
-          {isLoading ? (
+          {isLoadingUserData ? (
             list.map((item, index) => (
               <Skeleton className="h-60 w-80 rounded-lg" key={index}></Skeleton>
             ))
-          ) : allSessions.length > 0 ? (
+          ) : filteredSessions.length > 0 ? (
             filteredSessions.map((item, index) => (
               <Card key={index}>
                 <CardHeader>
@@ -176,8 +177,9 @@ const SessionCard = () => {
               </Card>
             ))
           ) : (
-            <div>
-              <p>Failed to load network issues Bah blah ..</p>
+            // change to be an empty state that shows no sesssion to show for now
+            <div className="flex justify-center items-center">
+              <EmptyBookmarkIcon />
             </div>
           )}
         </div>

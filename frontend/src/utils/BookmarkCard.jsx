@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
@@ -24,8 +24,22 @@ import { RemoveBookmark, getBookmarks } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 
 const BookmarkCard = () => {
-  const { user, bookmarks, setBookmarks, isLoading } = useUser();
+  const { user, bookmarks, setBookmarks, isLoadingUserData } = useUser();
+  const [remove, setRemove] = useState(false)
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (user.length > 0) {
+      getBookmarks(user[0].id)
+        .then((res) => {
+          setBookmarks(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching bookmarks data:", error);
+          setBookmarks(bookmarks);
+        });
+    }
+  }, [remove]);
 
   const handleRemove = (id) => {
     RemoveBookmark(id)
@@ -35,6 +49,7 @@ const BookmarkCard = () => {
           description: "Removed from bookmarks successfully!",
           variant: "default",
         });
+        reloadBookmarks(); 
       })
       .catch((error) => {
         toast({
@@ -43,23 +58,18 @@ const BookmarkCard = () => {
           variant: "destructive",
         });
         console.error("Bookmark removal error:", error);
-      })
-      .finally(() => {
-        getBookmarks(user[0].id)
-          .then((res) => {
-            setBookmarks(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching bookmarks data:", error);
-            setBookmarks(bookmarks);
-          });
       });
   };
+  
+  const reloadBookmarks = () => {
+    setRemove((prevRemove) => !prevRemove); // Invert the 'remove' state to trigger the effect
+  };
+  
 
   return (
     <div className="h-screen">
-      { isLoading ? (
-        <div className="flex justify-center items-center h-full">
+      {isLoadingUserData ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {/* Skeleton loaders */}
           {list.map((item, index) => (
             <Skeleton key={index} className="h-52 w-64 rounded-lg" />
