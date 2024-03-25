@@ -22,10 +22,7 @@ import pic4 from "../../images/pic4.gif";
 import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import {
-  CreateBookmark,
-  isUserValid,
-} from "../../../backend/src/pocketbase";
+import { CreateBookmark, isUserValid } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
@@ -35,21 +32,21 @@ const HomeCardSection = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
 
-  const handleBookmarkToggle = () => {
+  const handleBookmarkToggle = (mentor) => {
     if (!isUserValid) {
       prompt("show login dialog");
       return;
     }
 
     CreateBookmark(
-      mentors[0].fullName,
-      mentors[0].username,
-      mentors[0].phoneNumber,
-      mentors[0].bio,
-      mentors[0].awards,
-      mentors[0].businessName,
-      mentors[0].contact,
-      mentors[0].account
+      mentor.fullName,
+      mentor.username,
+      mentor.phoneNumber,
+      mentor.bio,
+      mentor.awards,
+      mentor.businessName,
+      mentor.contact,
+      mentor.account
     )
       .then(() => {
         toast({
@@ -57,7 +54,6 @@ const HomeCardSection = () => {
           description: "Added to bookmarks successfully!",
           variant: "default",
         });
-        
       })
       .catch((error) => {
         toast({
@@ -68,7 +64,7 @@ const HomeCardSection = () => {
         console.error("Bookmark addition error:", error);
       });
 
-    // toggle functionality incase  we need it  
+    // toggle functionality incase  we need it
     // if (isBookmarked && bookmark.length > 0) {
     //   // Check if bookmark is not empty
     //   RemoveBookmark(bookmark[0].id)
@@ -128,13 +124,12 @@ const HomeCardSection = () => {
     // }
   };
 
-
   return (
     <>
       <div>
         <KeywordBar data={dataset} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full py-2">
-          <Card className="hidden flex justify-center item-center bg-black ">
+          <Card className=" flex justify-center item-center bg-black ">
             <Image
               src={pic4}
               width={450}
@@ -143,7 +138,7 @@ const HomeCardSection = () => {
               alt="Picture of the author"
             />
           </Card>
-          <Card className="hidden flex justify-center item-center bg-gray-200">
+          <Card className=" flex justify-center item-center bg-gray-200">
             <Image
               src={pic5}
               width={450}
@@ -185,7 +180,7 @@ const HomeCardSection = () => {
                     <Toggle
                       aria-label="Toggle italic"
                       variant="outline"
-                      onClick={handleBookmarkToggle}
+                      onClick={() => handleBookmarkToggle(item)}
                     >
                       <BsJournalBookmarkFill />
                     </Toggle>
@@ -219,10 +214,10 @@ const HomeCardSection = () => {
               </Card>
             ))
           ) : (
-             // change to be an empty state that shows no sesssion to show for now
-             <div className="flex justify-center items-center">
-             <EmptyBookmarkIcon />
-           </div>
+            // change to be an empty state that shows no sesssion to show for now
+            <div className="flex justify-center items-center">
+              <EmptyBookmarkIcon />
+            </div>
           )}
         </div>
       </div>
