@@ -16,7 +16,7 @@ const page = () => {
   return (
     <>
       {domLoaded && (
-        <main className="mx-2 lg:mx-5">
+        <main className=" lg:mx-5">
           <Header />
           <SessionComp />
         </main>

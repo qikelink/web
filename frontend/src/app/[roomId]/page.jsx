@@ -57,7 +57,7 @@ export default function Home({ params }) {
   };
 
   return (
-    <main className={`flex min-h-screen flex-col items-center mx-2 lg:mx-5  `}>
+    <main className={`flex min-h-screen flex-col items-center lg:mx-5  `}>
       <Header />
       <div className="z-10 max-w-5xl w-full items-center justify-center lg:justify-between font-mono text-sm flex">
         <p className=" left-0 top-0 flex w-fit justify-center border-b border-gray-300 bg-zinc-200 p-4 lg:pb-2 lg:pt-2 backdrop-blur-2xl lg:static lg:w-auto rounded-xl border lg:bg-gray-200 lg:dark:bg-zinc-800/30">

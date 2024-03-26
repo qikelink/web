@@ -41,7 +41,7 @@ const RequestSection = () => {
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div>
+          <div className="hidden md:block">
             <AlertTitle>Chika Musa Tobi</AlertTitle>
             <AlertDescription>
               CEO and President Nigeria Democratic Republic

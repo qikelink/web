@@ -92,11 +92,11 @@ const OrganizationSection = () => {
   return (
     <div className="py-2">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl">Organizations</h2>
+        <h2 className="text-sm lg:text-xl">Organizations</h2>
 
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="bg-blue">Create Organization</Button>
+            <Button className="bg-blue text-sm lg:text-base">Create Organization</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -202,7 +202,7 @@ const OrganizationSection = () => {
                 {item.org_name.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <div>
+            <div className="hidden lg:block">
               <AlertTitle>{item.org_name}</AlertTitle>
               <AlertDescription>{item.org_about}</AlertDescription>
             </div>

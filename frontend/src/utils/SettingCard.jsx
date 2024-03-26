@@ -218,7 +218,7 @@ const SettingCard = () => {
             />
           </div>
 
-          <div className="flex md:justify-start gap-3 justify-center lg:flex-row items-center mt-6 h-full space-x-5">
+          <div className="flex flex-col space-y-2 md:justify-end gap-1 lg:gap-3 justify-center lg:flex-row items-center mt-6 h-full lg:space-x-5">
             <Button
               size="xl"
               className="bg-blue hover:bg-darkblue text-lg rounded-lg"

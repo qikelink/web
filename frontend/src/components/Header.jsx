@@ -127,7 +127,7 @@ export default function Header() {
                   >
                     <FaRegBell size={20} className="text-current" />
                     <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
-                      9
+                      9+
                     </span>
                   </Badge>
                   <Avatar>
