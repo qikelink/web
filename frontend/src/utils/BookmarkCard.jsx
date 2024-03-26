@@ -115,7 +115,7 @@ const BookmarkCard = () => {
                 <Separator className="my-2 -mb-4" />
               </CardContent>
               <CardFooter className="flex justify-between ">
-                <BookModal buttonName="Request" />
+                <BookModal buttonName="Request" data={item} />
                 {item.rate != "free" ? (
                   <Badge
                     variant="outline"

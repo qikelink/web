@@ -39,14 +39,13 @@ const HomeCardSection = () => {
     }
 
     CreateBookmark(
-      mentor.fullName,
+      mentor.avatar,
       mentor.username,
-      mentor.phoneNumber,
+      mentor.rate,
       mentor.bio,
       mentor.awards,
-      mentor.businessName,
-      mentor.contact,
-      mentor.account
+      mentor.interests,
+      mentor.rating
     )
       .then(() => {
         toast({

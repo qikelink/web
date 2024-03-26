@@ -58,6 +58,7 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
     }
 
     verifyRequest(
+      userData[0].avatar,
       userData[0].fullName,
       userData[0].username,
       userData[0].phoneNumber,
@@ -65,7 +66,8 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
       userData[0].awards,
       formData.businessName,
       formData.contact,
-      formData.account
+      formData.account,
+      formData.id
     )
       .then(() => {
         toast({

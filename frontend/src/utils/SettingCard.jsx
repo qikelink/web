@@ -211,7 +211,7 @@ const SettingCard = () => {
             <Label className="text-lg">Awards/Recognitions</Label>
             <Textarea
               className="sm:h-24 bg-inputbackground"
-              placeholder="Notable awards and recognitions you want to mention"
+              placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "
               name="awards"
               value={formData.awards}
               onChange={handleChange}

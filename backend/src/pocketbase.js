@@ -8,10 +8,9 @@ client.autoCancellation(false);
 export const isUserValid =
   client.authStore.model && client.authStore.model.id !== null;
 
- export const getImageUrl = (collectionId, recordId, fileName) => {
-    return `${url}/api/files/${collectionId}/${recordId}/${fileName}`;
-  };
-  
+export const getImageUrl = (collectionId, recordId, fileName) => {
+  return `${url}/api/files/${collectionId}/${recordId}/${fileName}`;
+};
 
 export async function getUser() {
   return await client.collection("users").getFullList();
@@ -83,6 +82,7 @@ export async function updateSetting(
 }
 
 export async function verifyRequest(
+  avatar,
   fullName,
   username,
   phoneNumber,
@@ -90,9 +90,11 @@ export async function verifyRequest(
   awards,
   businessName,
   contact,
-  account
+  account,
+  validId
 ) {
   const data = {
+    avatar: avatar,
     fullName: fullName,
     username: username,
     phoneNumber: phoneNumber,
@@ -102,29 +104,28 @@ export async function verifyRequest(
     contact: contact,
     account: account,
     user: client.authStore.model.id,
+    validId: validId,
   };
   await client.collection("mentors").create(data);
 }
 
 export async function CreateBookmark(
-  fullName,
+  avatar,
   username,
-  phoneNumber,
+  rate,
   bio,
   awards,
-  businessName,
-  contact,
-  account
+  interests,
+  rating
 ) {
   const data = {
-    fullName: fullName,
+    avatar: avatar,
     username: username,
-    phoneNumber: phoneNumber,
+    rate: rate,
     bio: bio,
     awards: awards,
-    businessName: businessName,
-    contact: contact,
-    account: account,
+    interests: interests,
+    rating: rating,
     user: client.authStore.model.id,
   };
   await client.collection("bookmarks").create(data);
@@ -140,13 +141,20 @@ export async function getBookmarks(id) {
     .getFullList({ filter: `user = '${id}'` });
 }
 
-export async function createSession(title, purpose, sessionDate, participants) {
+export async function createSession(
+  rating,
+  organization,
+  sessionWith,
+  purpose,
+  sessionDate
+) {
   const data = {
-    title: title,
+    rating: rating,
+    organization: organization,
+    sessionWith: sessionWith,
     purpose: purpose,
     sessionDate: sessionDate,
     owner: client.authStore.model.id,
-    participants: participants,
   };
   await client.collection("sessions").create(data);
 }
@@ -168,11 +176,14 @@ export async function getCreatedSessions(id) {
     .getFullList({ filter: `owner = '${id}'` });
 }
 
-// using the like/cotains to fetch all sessions where user id exists
-export async function getAllSessions(id) {
+// using the like/cotains to fetch all sessions where user id exists expanding the org relation
+export async function getAllSessions(id, email) {
   return await client
     .collection("sessions")
-    .getFullList({ filter: `owner = '${id}' || participants ~ '${id}'` });
+    .getFullList({
+      filter: `owner = '${id}' || organization.members ~ '${email}'`,
+      expand: "organization ",
+    });
 }
 
 export async function createOrganization(

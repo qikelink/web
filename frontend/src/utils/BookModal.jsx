@@ -26,26 +26,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { createSession } from "../../../backend/src/pocketbase";
+import { createSession, getImageUrl } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
+import { useUser } from "@/contexts/user-context";
 
-const BookModal = ({ buttonName, blue }) => {
+const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
   const [formData, setFormData] = useState({
     purpose: "",
   });
+  const { createdOrganization } = useUser();
 
   const [selectedOption, setSelectedOption] = useState("");
 
-  const options = [
-    { value: "Individual", label: "Individual" },
-    { value: "Google DSC", label: "Google DSC" },
-    { value: "Koinonia Prayer Dept", label: "Koinonia Prayer Dept" },
-    { value: "RCCG YAYA", label: "RCCG YAYA" },
-  ];
+  const options = createdOrganization.map((org) => ({
+    value: org.id,
+    label: org.org_name,
+  }));
+
+  // to add the default one too
+  options.unshift({ value: "Individual", label: "Individual" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,7 +74,15 @@ const BookModal = ({ buttonName, blue }) => {
       return;
     }
 
-    createSession(undefined, formData.purpose, date.toISOString())
+    const orgId = selectedOption === "Individual" ? undefined : selectedOption;
+
+    createSession(
+      data.rating,
+      orgId,
+      data.username,
+      formData.purpose,
+      date.toISOString()
+    )
       .then(() => {
         toast({
           title: "Booking request sent",
@@ -88,10 +99,10 @@ const BookModal = ({ buttonName, blue }) => {
         console.error("verification error:", error);
       })
       .finally(() => {
-        setDate();
-        setFormData({
-          purpose: "",
-        });
+        setIsExpanded(false); 
+        setSelectedOption(""); 
+        setDate(null); 
+        setFormData({ purpose: "" }); 
       });
   };
 
@@ -118,16 +129,25 @@ const BookModal = ({ buttonName, blue }) => {
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Avatar>
-                      <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                      <AvatarFallback>CN</AvatarFallback>
+                      {data && data.avatar ? (
+                        <AvatarImage
+                          src={getImageUrl(
+                            data.collectionId,
+                            data.id,
+                            data.avatar
+                          )}
+                        />
+                      ) : (
+                        <AvatarFallback>CN</AvatarFallback>
+                      )}
                     </Avatar>
 
                     <div className="flex flex-col gap-1 items-start justify-center">
                       <h4 className="text-small font-semibold leading-none text-default-600">
-                        James Madison
+                        {data && data.username ? data.username : "N/A"}
                       </h4>
                       <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                        4.5/5
+                        {data && data.rating ? data.rating : "N/A"}
                         <FaStar className="ml-1" color="#FFC72C" size={16} />
                       </span>
                     </div>
@@ -145,10 +165,13 @@ const BookModal = ({ buttonName, blue }) => {
             </DialogHeader>
             <DialogDescription className="flex flex-wrap space-x-3 mt-2">
               <p>Interests:</p>
-              <Badge variant="outline">Startup</Badge>
-              <Badge variant="outline">Tech</Badge>
-              <Badge variant="outline">Business</Badge>
-              <Badge variant="outline">Health</Badge>
+              {data && data.interests
+                ? data.interests.split(",").map((interest, index) => (
+                    <Badge key={index} variant="outline">
+                      {interest.trim()}
+                    </Badge>
+                  ))
+                : "N/A"}
             </DialogDescription>
 
             <div className="space-y-3">
@@ -160,14 +183,7 @@ const BookModal = ({ buttonName, blue }) => {
                     isExpanded ? " line-clamp-none" : "line-clamp-2"
                   }`}
                 >
-                  <p>
-                    James madison is an english footballer with the english
-                    national team, eius quis atque aperiam et! Lorem ipsum,
-                    dolor sit amet consectetur adipisicing elit. Velit illum
-                    iusto, libero veritatis quis, quae veniam omnis officia
-                    debitis deleniti non exercitationem autem blanditiis
-                    architecto doloremque, reiciendis a neque dolores?
-                  </p>
+                  <p>{data && data.bio ? data.bio : "N/A"}</p>
                 </div>
                 <button
                   onClick={toggleExpand}
@@ -181,9 +197,13 @@ const BookModal = ({ buttonName, blue }) => {
               <div>
                 <Label className="font-semibold">Achievements</Label>
                 <ol className="text-sm text-darktext list-disc">
-                  <li>Winner Ballon'dor 2021 🏆</li>
-                  <li>Winner English player of the year award 🥇</li>
-                  <li>Times magazine most influencer sports personality 🌟</li>
+                  {data && data.awards
+                    ? data.awards
+                        .split(",")
+                        .map((award, index) => (
+                          <li key={index}>{award.trim()}</li>
+                        ))
+                    : "N/A"}
                 </ol>
               </div>
 
@@ -225,7 +245,7 @@ const BookModal = ({ buttonName, blue }) => {
                   onChange={(e) => setSelectedOption(e.target.value)}
                 >
                   <option value="" disabled hidden>
-                    Select Meeting Party
+                    Request meet as
                   </option>
                   {options.map((option) => (
                     <option

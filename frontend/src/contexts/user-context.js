@@ -109,7 +109,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getAllSessions(user[0].id)
+      getAllSessions(user[0].id, user[0].email)
         .then((res) => {
           setAllSessions(res);
           setIsLoadingUserData(false);

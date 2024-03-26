@@ -39,14 +39,13 @@ const HomeCardSection = () => {
     }
 
     CreateBookmark(
-      mentor.fullName,
+      mentor.avatar,
       mentor.username,
-      mentor.phoneNumber,
+      mentor.rate,
       mentor.bio,
       mentor.awards,
-      mentor.businessName,
-      mentor.contact,
-      mentor.account
+      mentor.interests,
+      mentor.rating
     )
       .then(() => {
         toast({
@@ -192,7 +191,7 @@ const HomeCardSection = () => {
                   <Separator className="my-2 -mb-4" />
                 </CardContent>
                 <CardFooter className="flex justify-between ">
-                  <BookModal buttonName="Request" />
+                  <BookModal buttonName="Request" data={item} />
                   {item.rate != "free" ? (
                     <Badge
                       variant="outline"
