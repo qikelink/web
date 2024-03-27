@@ -22,7 +22,7 @@ import pic4 from "../../images/pic4.gif";
 import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import { CreateBookmark, isUserValid } from "../../../backend/src/pocketbase";
+import { CreateBookmark, getImageUrl, isUserValid } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
@@ -161,7 +161,11 @@ const HomeCardSection = () => {
                     <div className="flex gap-2">
                       <Avatar>
                         <AvatarImage
-                          src={`https://i.pravatar.cc/150?u=${index}`}
+                          src={getImageUrl(
+                            item.collectionId,
+                            item.id,
+                            item.avatar
+                          )}
                         />
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>

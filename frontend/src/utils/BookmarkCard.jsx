@@ -20,7 +20,7 @@ import BookModal from "./BookModal";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
-import { RemoveBookmark, getBookmarks } from "../../../backend/src/pocketbase";
+import { RemoveBookmark, getBookmarks, getImageUrl } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 
 const BookmarkCard = () => {
@@ -84,7 +84,11 @@ const BookmarkCard = () => {
                   <div className="flex gap-2">
                     <Avatar>
                       <AvatarImage
-                        src={`https://i.pravatar.cc/150?u=${index}`}
+                        src={getImageUrl(
+                          item.collectionId,
+                          item.id,
+                          item.avatar
+                        )}
                       />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>

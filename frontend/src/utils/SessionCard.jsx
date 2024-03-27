@@ -129,9 +129,9 @@ const SessionCard = () => {
                       <Avatar>
                         <AvatarImage
                          src={getImageUrl(
-                          Item.collectionId,
-                          Item.id,
-                          Item.avatar
+                          item.collectionId,
+                          item.id,
+                          item.avatar
                         )}
                         />
                         <AvatarFallback>

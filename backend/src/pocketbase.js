@@ -142,18 +142,24 @@ export async function getBookmarks(id) {
 }
 
 export async function createSession(
+  avatar,
   rating,
   organization,
   sessionWith,
   purpose,
-  sessionDate
+  sessionDate,
+  host_name,
+  host_bio,
 ) {
   const data = {
+    avatar: avatar,
     rating: rating,
     organization: organization,
     sessionWith: sessionWith,
     purpose: purpose,
     sessionDate: sessionDate,
+    host_name: host_name,
+    host_bio: host_bio,
     owner: client.authStore.model.id,
   };
   await client.collection("sessions").create(data);
@@ -178,12 +184,10 @@ export async function getCreatedSessions(id) {
 
 // using the like/cotains to fetch all sessions where user id exists expanding the org relation
 export async function getAllSessions(id, email) {
-  return await client
-    .collection("sessions")
-    .getFullList({
-      filter: `owner = '${id}' || organization.members ~ '${email}'`,
-      expand: "organization ",
-    });
+  return await client.collection("sessions").getFullList({
+    filter: `owner = '${id}' || organization.members ~ '${email}'`,
+    expand: "organization ",
+  });
 }
 
 export async function createOrganization(
@@ -215,4 +219,11 @@ export async function getAllOrganizations(id, email) {
   return await client
     .collection("organization")
     .getFullList({ filter: `owner = '${id}' || members ~ '${email}'` });
+}
+
+export async function getMeetingRequests(username) {
+  return await client.collection("sessions").getFullList({
+    filter: `sessionWith = '${username}'`,
+    expand: "owner,organization"
+  });
 }

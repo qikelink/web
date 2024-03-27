@@ -38,7 +38,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [formData, setFormData] = useState({
     purpose: "",
   });
-  const { createdOrganization } = useUser();
+  const { user, createdOrganization } = useUser();
 
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -77,11 +77,14 @@ const BookModal = ({ buttonName, blue, data }) => {
     const orgId = selectedOption === "Individual" ? undefined : selectedOption;
 
     createSession(
+      undefined,
       data.rating,
       orgId,
       data.username,
       formData.purpose,
-      date.toISOString()
+      date.toISOString(),
+      user[0].username,
+      user[0].bio
     )
       .then(() => {
         toast({

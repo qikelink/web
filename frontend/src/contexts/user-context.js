@@ -12,7 +12,7 @@ import {
   getAllOrganizations,
   getCreatedSessions,
   getAllSessions,
-  
+  getMeetingRequests,
 } from "../../../backend/src/pocketbase";
 
 // Create a context for managing user data
@@ -31,6 +31,7 @@ export const UserProvider = ({ children }) => {
   const [allSessions, setAllSessions] = useState([]);
   const [createdOrganization, setCreatedOrganization] = useState([]);
   const [allOrganization, setAllOrganization] = useState([]);
+  const [meetingRequests, setMeetingRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
   const [selectedButtons, setSelectedButtons] = useState("");
@@ -112,6 +113,14 @@ export const UserProvider = ({ children }) => {
       getAllSessions(user[0].id, user[0].email)
         .then((res) => {
           setAllSessions(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+        });
+
+      getMeetingRequests(user[0].username)
+        .then((res) => {
+          setMeetingRequests(res);
           setIsLoadingUserData(false);
         })
         .catch((error) => {
@@ -138,6 +147,7 @@ export const UserProvider = ({ children }) => {
         createdOrganization,
         allOrganization,
         setAllOrganization,
+        meetingRequests,
         selectedButtons,
         setSelectedButtons,
       }}

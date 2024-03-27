@@ -27,6 +27,10 @@ import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "./ui/skeleton";
 import { getImageUrl } from "../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
+import { useUser } from "@/contexts/user-context";
+import { Skeleton } from "./ui/skeleton";
+import { getImageUrl } from "../../../backend/src/pocketbase";
+import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 
 const data = [1, 2, 3];
 
@@ -69,7 +73,7 @@ const RequestSection = () => {
                 alt="@shadcn"
               />
               <AvatarFallback>
-                {item.expand.owner.username.slice(0, 2).toUpperCase()} 
+                {item.expand.owner.username.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="hidden md:block">
@@ -120,7 +124,7 @@ const RequestSection = () => {
         </div>
       )}
 
-      <div className="flex-end hidden">
+      <div className="flex flex-end hidden">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
