@@ -25,6 +25,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 import { Item } from "@radix-ui/react-dropdown-menu";
 import { getImageUrl } from "../../../backend/src/pocketbase";
+import SessionModal from "./SessionModal";
 
 const SessionCard = () => {
   const router = useRouter();
