@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { BsFillSendArrowDownFill, BsShareFill } from "react-icons/bs";
+import { BsHeadsetVr, BsShareFill } from "react-icons/bs";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Toggle } from "@/components/ui/toggle";
 import { FaStar } from "react-icons/fa";
@@ -31,7 +31,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@/contexts/user-context";
 
-const BookModal = ({ buttonName, blue, data }) => {
+const QuickModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -116,10 +116,7 @@ const BookModal = ({ buttonName, blue, data }) => {
         <DialogTrigger asChild>
           <Button variant="outline">
             <p className={blue ? "text-blue" : ""}>{buttonName} </p>
-            <BsFillSendArrowDownFill
-              color={blue ? "#0096FF" : "#0096FF"}
-              className="ml-2 h-4 w-4"
-            />
+            <BsHeadsetVr className="ml-2 h-5 w-5 text-current hover:animate-spin" />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] rounded-md">
@@ -207,37 +204,6 @@ const BookModal = ({ buttonName, blue, data }) => {
                 </ol>
               </div>
 
-              {/* Time slot section */}
-              <div className="flex flex-col space-y-2 ">
-                <Label className="font-semibold">Schedule date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? (
-                        format(date, "MMMM dd, yyyy h:mm a")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-
               <div className="relative inline-block w-full">
                 {/* <Label className="font-semibold">Request Meeting As</Label> */}
                 <select
@@ -300,4 +266,4 @@ const BookModal = ({ buttonName, blue, data }) => {
   );
 };
 
-export default BookModal;
+export default QuickModal;

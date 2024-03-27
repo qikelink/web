@@ -16,7 +16,7 @@ export default function page() {
   return (
     <>
       {domLoaded && (
-        <main className=" lg:mx-5">
+        <main className=" lg:mx-4">
           <Header />
           <Settings />
         </main>

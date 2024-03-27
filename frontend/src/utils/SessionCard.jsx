@@ -10,7 +10,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import ModalBox from "./BookModal";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import KeywordBar from "@/utils/KeywordBar";
@@ -24,6 +23,7 @@ import { createRoom } from "./createRoom";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
+import SessionModal from "./SessionModal";
 
 const SessionCard = () => {
   const router = useRouter();
@@ -168,7 +168,7 @@ const SessionCard = () => {
                       />
                     </Button>
                   ) : (
-                    <ModalBox
+                    <SessionModal data={item}
                       buttonName="View booking details"
                       blue="text-blue"
                     />

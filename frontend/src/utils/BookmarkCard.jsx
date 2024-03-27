@@ -25,7 +25,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 const BookmarkCard = () => {
   const { user, bookmarks, setBookmarks, isLoadingUserData } = useUser();
-  const [remove, setRemove] = useState(false)
+  const [remove, setRemove] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const BookmarkCard = () => {
           description: "Removed from bookmarks successfully!",
           variant: "default",
         });
-        reloadBookmarks(); 
+        reloadBookmarks();
       })
       .catch((error) => {
         toast({
@@ -60,11 +60,10 @@ const BookmarkCard = () => {
         console.error("Bookmark removal error:", error);
       });
   };
-  
+
   const reloadBookmarks = () => {
     setRemove((prevRemove) => !prevRemove); // Invert the 'remove' state to trigger the effect
   };
-  
 
   return (
     <div className="h-screen">
@@ -110,7 +109,17 @@ const BookmarkCard = () => {
                 </div>
               </CardHeader>
               <CardContent className="text-small text-default-400">
-                <div className=" ">{item.bio}</div>
+                <div className="flex gap-2 ">
+                  <label>Interests: </label>
+                  {item && item.interests
+                    ? item.interests.split(",").map((interest, index) => (
+                        <Badge key={index} variant="outline">
+                          {interest.trim()}
+                        </Badge>
+                      ))
+                    : "N/A"}
+                </div>
+                <div className="mt-2 ">{item.bio}</div>
 
                 <Separator className="my-2 -mb-4" />
               </CardContent>

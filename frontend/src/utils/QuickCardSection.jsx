@@ -25,6 +25,8 @@ import { useUser } from "@/contexts/user-context";
 import { CreateBookmark, isUserValid } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
+import { GoDotFill } from "react-icons/go";
+import QuickModal from "./QuickModal";
 
 const HomeCardSection = () => {
   const { quickMentors, isLoading } = useUser();
@@ -62,8 +64,6 @@ const HomeCardSection = () => {
         });
         console.error("Bookmark addition error:", error);
       });
-
-   
   };
 
   return (
@@ -99,22 +99,30 @@ const HomeCardSection = () => {
                         </span>
                       </div>
                     </div>
-                    <Toggle
-                      aria-label="Toggle italic"
-                      variant="outline"
-                      onClick={() => handleBookmarkToggle(item)}
-                    >
-                      <BsJournalBookmarkFill />
+
+                    <Toggle aria-label="Toggle italic" variant="outline">
+                      <GoDotFill color="green" size={20} />
+                      <p className="py-2">Active</p>
                     </Toggle>
                   </div>
                 </CardHeader>
                 <CardContent className="text-small text-default-400">
-                  <div className=" ">{item.bio}</div>
+                  <div className="flex gap-2 ">
+                    <label>Interests: </label>
+                    {item && item.interests
+                      ? item.interests.split(",").map((interest, index) => (
+                          <Badge key={index} variant="outline">
+                            {interest.trim()}
+                          </Badge>
+                        ))
+                      : "N/A"}
+                  </div>
+                  <div className="mt-2 ">{item.bio}</div>
 
                   <Separator className="my-2 -mb-4" />
                 </CardContent>
                 <CardFooter className="flex justify-between ">
-                  <BookModal buttonName="Request" />
+                  <QuickModal buttonName="Quick Meet" data={item} />
                   {item.rate != "free" ? (
                     <Badge
                       variant="outline"

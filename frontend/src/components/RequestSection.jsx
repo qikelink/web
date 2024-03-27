@@ -54,7 +54,7 @@ const RequestSection = () => {
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogTitle>Meeting Details Info</DialogTitle>
                   <DialogDescription>
                     Make changes to your profile here. Click save when you're
                     done.

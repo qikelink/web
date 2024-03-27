@@ -186,11 +186,19 @@ const HomeCardSection = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="text-small text-default-400">
-                  <div className=" ">{item.bio}</div>
-
-                  <Separator className="my-2 -mb-4" />
+                  <div className="flex gap-2 ">
+                    <label>Interests: </label>
+                    {item && item.interests
+                      ? item.interests.split(",").map((interest, index) => (
+                          <Badge key={index} variant="outline">
+                            {interest.trim()}
+                          </Badge>
+                        ))
+                      : "N/A"}
+                  </div>
+                  <div className="mt-1 ">{item.bio}</div>
                 </CardContent>
-                <CardFooter className="flex justify-between ">
+                <CardFooter className="flex justify-between border-t py-2">
                   <BookModal buttonName="Request" data={item} />
                   {item.rate != "free" ? (
                     <Badge

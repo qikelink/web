@@ -11,13 +11,14 @@ import { useAuth } from "@/contexts/auth-context";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { IoFlashOutline } from "react-icons/io5";
 import { PiDesktopTower } from "react-icons/pi";
-import { signout } from "../../../backend/src/pocketbase";
+import { signout, isUserValid } from "../../../backend/src/pocketbase";
 import { useUser } from "@/contexts/user-context";
+
 
 const ListSection = () => {
   const pathname = usePathname();
   const { setUser } = useUser();
-  const { setIsUserValid, isUserValid , setProgress } = useAuth();
+  const { setIsUserValid , setProgress } = useAuth();
 
   const handleSignout = () => {
     setProgress(90);

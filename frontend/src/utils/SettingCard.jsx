@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { UploadIcon } from "@/icons/UploadIcon";
 import { Badge } from "@/components/ui/badge";
 import VerifyModal from "./VerifyModal";
 import {
@@ -18,8 +17,18 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { IoFlash } from "react-icons/io5";
+import { Switch } from "@/components/ui/switch";
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
@@ -175,16 +184,7 @@ const SettingCard = () => {
                 readOnly
               />
             </div>
-            <div>
-              <Label className="text-lg">Username</Label>
-              <Input
-                className="py-6 px-3 bg-inputbackground"
-                placeholder="Please enter your full name"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-              />
-            </div>
+
             <div>
               <Label className="text-lg">Phone number (optional)</Label>
               <Input
@@ -195,7 +195,22 @@ const SettingCard = () => {
                 onChange={handleChange}
               />
             </div>
+
+            <div className=" flex items-center space-x-4 rounded-md border p-4 bg-inputbackground">
+              <IoFlash />
+              <div className="flex-1 space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  Quick Service
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  This On
+                   mean that you're available for Counseling Immediately
+                </p>
+              </div>
+              <Switch />
+            </div>
           </div>
+
           <div className="mt-6">
             <Label className="text-lg">Bio</Label>
             <Textarea

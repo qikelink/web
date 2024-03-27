@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { getImageUrl, isUserValid, signout } from "../../../backend/src/pocketbase";
+import {
+  getImageUrl,
+  isUserValid,
+  signout,
+} from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "./ui/input";
@@ -34,7 +38,7 @@ export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
   const { setProgress } = useAuth();
-
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const handleSignout = () => {
     setProgress(90);
@@ -124,12 +128,56 @@ export default function Header() {
                     className={
                       "relative rounded-full p-2 hidden md:inline cursor-pointer"
                     }
+                    onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                   >
                     <FaRegBell size={20} className="text-current" />
                     <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
                       9+
                     </span>
+                    {isNotificationOpen && (
+                      <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
+                        <div className="flex items-center px-4 py-2 text-base border-b">
+                          Notification{" "}
+                        </div>
+                        {[1, 2, 3].map((item, index) => (
+                          <div
+                            className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
+                            onClick={() => router.push("/sessions")}
+                            key={index}
+                          >
+                            <div className="flex items-center">
+                              <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
+                              <div>
+                                <p className="text-base font-semibold">
+                                  Notification Title
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                  Notification Message
+                                </p>
+                              </div>
+                            </div>
+                            <p className="text-xs text-gray-500">4:45 PM</p>
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-between px-4 py-2 border-b border-gray-300">
+                          <div className="flex items-center">
+                            <div className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
+                            <div>
+                              <p className="text-base font-semibold">
+                                Another Notification
+                              </p>
+                              <p className="text-sm text-gray-600">
+                                Another message goes here
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-500">Yesterday</p>
+                        </div>
+                        {/* Add more notification items here as needed */}
+                      </div>
+                    )}
                   </Badge>
+
                   <Avatar>
                     <AvatarImage
                       src={getImageUrl(
