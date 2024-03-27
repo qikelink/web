@@ -137,7 +137,7 @@ const SessionModal = ({ buttonName, blue, data }) => {
                           )}
                         />
                       ) : (
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>{data && data.sessionWith ? data.sessionWith.slice(0, 2).toUpperCase() : 'CN'}</AvatarFallback>
                       )}
                     </Avatar>
 

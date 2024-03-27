@@ -122,7 +122,7 @@ const HomeCardSection = () => {
                   <Separator className="my-2 -mb-4" />
                 </CardContent>
                 <CardFooter className="flex justify-between ">
-                  <QuickModal buttonName="Quick Meet" data={item} />
+                  <BookModal buttonName="Request" data={item} />
                   {item.rate != "free" ? (
                     <Badge
                       variant="outline"

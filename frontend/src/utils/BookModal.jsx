@@ -138,7 +138,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                           )}
                         />
                       ) : (
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>{data && data.username ? data.username.slice(0, 2).toUpperCase() : 'CN'}</AvatarFallback>
                       )}
                     </Avatar>
 

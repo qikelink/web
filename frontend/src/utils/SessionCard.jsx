@@ -23,7 +23,8 @@ import { createRoom } from "./createRoom";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
-import SessionModal from "./SessionModal";
+import { Item } from "@radix-ui/react-dropdown-menu";
+import { getImageUrl } from "../../../backend/src/pocketbase";
 
 const SessionCard = () => {
   const router = useRouter();
@@ -78,7 +79,7 @@ const SessionCard = () => {
     } else if (selectedButtons === "Past") {
       return item.done && item.approved;
     } else {
-      // For "Now" case, return sessions with session date set to today
+     
       const sessionDate = new Date(item.sessionDate);
       return (
         sessionDate.getDate() === currentDate.getDate() &&
@@ -127,7 +128,11 @@ const SessionCard = () => {
                     <div className="flex gap-2">
                       <Avatar>
                         <AvatarImage
-                          src={`https://i.pravatar.cc/150?u=${index}`}
+                         src={getImageUrl(
+                          Item.collectionId,
+                          Item.id,
+                          Item.avatar
+                        )}
                         />
                         <AvatarFallback>
                           {/* {item.sessionWith.charAt(0)} */} CN
@@ -171,6 +176,7 @@ const SessionCard = () => {
                     <SessionModal data={item}
                       buttonName="View booking details"
                       blue="text-blue"
+                     
                     />
                   )}
                 </CardFooter>

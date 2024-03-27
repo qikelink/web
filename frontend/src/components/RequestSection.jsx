@@ -23,69 +23,104 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useUser } from "@/contexts/user-context";
+import { Skeleton } from "./ui/skeleton";
+import { getImageUrl } from "../../../backend/src/pocketbase";
+import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 
 const data = [1, 2, 3];
 
 const RequestSection = () => {
+  const { isLoadingUserData, meetingRequests } = useUser();
+
   return (
     <div className="py-2">
       <div className="flex justify-between items-center">
         <h2 className="text-base">Meeting Requests</h2>
       </div>
-      {data.map((item, index) => (
-        <Alert
-          key={index}
-          className="my-2 flex gap-3 item-center justify-between"
-        >
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="hidden md:block">
-            <AlertTitle>Chika Musa Tobi</AlertTitle>
-            <AlertDescription>
-              CEO and President Nigeria Democratic Republic
-            </AlertDescription>
-          </div>
-          <div className="flex-end">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline">Meeting Details</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Meeting Details Info</DialogTitle>
-                  <DialogDescription>
-                    Make changes to your profile here. Click save when you're
-                    done.
-                  </DialogDescription>
-                </DialogHeader>
-                <div>
-                  I hope this message finds you well. I admire your expertise in
-                  the startup realm and would greatly appreciate the opportunity
-                  to seek your guidance on some challenging questions I'm facing
-                  with my own startup project. Specifically, I'm interested in
-                  discussing strategies for sustainable growth, market trends,
-                  common pitfalls, and leveraging technology. Your insights
-                  would be invaluable, and I'm flexible to meet at your
-                  convenience, whether virtually or otherwise. Thank you for
-                  considering my request, and I look forward to the possibility
-                  of connecting with you soon.
-                </div>
-                <DialogFooter>
-                  <Button className="bg-red" type="submit">
-                    Reject
-                  </Button>
-                  <Button className="bg-green-500" type="submit">
-                    Accept
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </Alert>
-      ))}
-      <div className="flex flex-end hidden">
+      {isLoadingUserData ? (
+        <div className="grid grid-cols-1 gap-3 w-full mt-2">
+          {/* Skeleton loaders */}
+          {data.map((item, index) => (
+            <Skeleton key={index} className="h-24 w-full rounded-md" />
+          ))}
+        </div>
+      ) : meetingRequests.length > 0 ? (
+        meetingRequests.map((item, index) => (
+          <Alert
+            key={index}
+            className="my-2 flex gap-3 item-center justify-between"
+          >
+            <Avatar>
+              <AvatarImage
+                src={
+                  item.organization.length > 0
+                    ? getImageUrl(
+                        item.expand.organization.collectionId,
+                        item.expand.organization.id,
+                        item.expand.organization.avatar
+                      )
+                    : getImageUrl(
+                        item.expand.owner.collectionId,
+                        item.expand.owner.id,
+                        item.expand.owner.avatar
+                      )
+                }
+                alt="@shadcn"
+              />
+              <AvatarFallback>
+                {item.expand.owner.username.slice(0, 2).toUpperCase()} 
+              </AvatarFallback>
+            </Avatar>
+            <div className="hidden md:block">
+              <AlertTitle>
+                {item.organization.length > 0
+                  ? item.expand.organization.org_name
+                  : item.expand.owner.username}
+              </AlertTitle>
+              <AlertDescription>
+                {item.organization.length > 0
+                  ? item.expand.organization.org_about
+                  : item.expand.owner.bio}
+              </AlertDescription>
+            </div>
+            <div className="flex-end">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Meeting Details</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Meeting Request</DialogTitle>
+                    <DialogDescription>
+                      Host:{" "}
+                      {item.organization.length > 0
+                        ? item.expand.organization.org_name
+                        : item.expand.owner.username}
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div>{item.purpose}</div>
+                  <DialogFooter>
+                    <Button className="bg-red" type="submit">
+                      Reject
+                    </Button>
+                    <Button className="bg-green-500" type="submit">
+                      Accept
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </Alert>
+        ))
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          {/* Render Empty when no organization exist */}
+          <BookmarkEmpty />
+        </div>
+      )}
+
+      <div className="flex-end hidden">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
