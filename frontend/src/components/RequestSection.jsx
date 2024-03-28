@@ -11,8 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Pagination,
   PaginationContent,
@@ -22,15 +20,92 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Skeleton } from "./ui/skeleton";
-import { getImageUrl } from "../../../backend/src/pocketbase";
-import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 import { useUser } from "@/contexts/user-context";
-
-const data = [1, 2, 3];
+import { Skeleton } from "./ui/skeleton";
+import {
+  createNotification,
+  getImageUrl,
+  getMeetingRequests,
+  getNotifications,
+  updateSession,
+} from "../../../backend/src/pocketbase";
+import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
+import { useToast } from "./ui/use-toast";
 
 const RequestSection = () => {
-  const { isLoadingUserData, meetingRequests } = useUser();
+  const { user, isLoadingUserData, meetingRequests, setMeetingRequests, setNotifications } =
+    useUser();
+  const { toast } = useToast();
+
+  const acceptRequest = (item) => {
+    const successMessage = `Hello, meeting request so so and so with ${item.expand.mentor.username} has been approved!! `;
+    
+    updateSession(item.id, true)
+      .then(() => {
+        toast({
+          title: "Meeting request accepted",
+          description: "Meeting request accepted successfully! .",
+          variant: "default",
+        });
+        // Update the meeting requests state after accepting the request
+        setMeetingRequests(prevMeetingRequests => prevMeetingRequests.filter(request => request.id !== item.id));
+      })
+      .catch((error) => {
+        toast({
+          title: "Failed to accept request",
+          description: "Sorry an error just occurred! please try again.",
+          variant: "destructive",
+        });
+        console.error("updated meeting request error:", error);
+      })
+      .finally(() => {
+        createNotification('Request Accepted', successMessage, Date.now(), item.expand.owner.id);
+        getNotifications(user[0].id, user[0].email)
+        .then((res) => {
+          setNotifications(res);
+        
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications data:", error);
+        
+        });
+      });
+  };
+
+  const rejectRequest = (item) => {
+    const rejectMessage = `Sorry, meeting request so so and so with ${item.expand.mentor.username} has been rejected `;
+
+    updateSession(item.id, false, true)
+      .then(() => {
+        toast({
+          title: "Meeting request rejected",
+          description: "Meeting request rejected .",
+          variant: "default",
+        });
+        // Update the meeting requests state after rejecting the request
+        setMeetingRequests(prevMeetingRequests => prevMeetingRequests.filter(request => request.id !== item.id));
+      })
+      .catch((error) => {
+        toast({
+          title: "Failed to reject request",
+          description: "Sorry an error just occurred! please try again.",
+          variant: "destructive",
+        });
+        console.error("updated meeting request error:", error);
+      })
+      .finally(() => {
+        createNotification('Request Rejected', rejectMessage, Date.now(), item.expand.owner.id);
+        getNotifications(user[0].id, user[0].email)
+        .then((res) => {
+          setNotifications(res);
+        
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications data:", error);
+        
+        });
+      });
+  };
 
   return (
     <div className="py-2">
@@ -40,7 +115,7 @@ const RequestSection = () => {
       {isLoadingUserData ? (
         <div className="grid grid-cols-1 gap-3 w-full mt-2">
           {/* Skeleton loaders */}
-          {data.map((item, index) => (
+          {[...Array(3)].map((_, index) => (
             <Skeleton key={index} className="h-24 w-full rounded-md" />
           ))}
         </div>
@@ -94,16 +169,24 @@ const RequestSection = () => {
                     <DialogDescription>
                       Host:{" "}
                       {item.organization.length > 0
-                        ? item.expand.organization.org_name
+                        ? item.expand.organization.username
                         : item.expand.owner.username}
                     </DialogDescription>
                   </DialogHeader>
                   <div>{item.purpose}</div>
                   <DialogFooter>
-                    <Button className="bg-red" type="submit">
+                    <Button
+                      onClick={() => rejectRequest(item)}
+                      className="bg-red"
+                      type="submit"
+                    >
                       Reject
                     </Button>
-                    <Button className="bg-green-500" type="submit">
+                    <Button
+                      onClick={() => acceptRequest(item)}
+                      className="bg-green-500"
+                      type="submit"
+                    >
                       Accept
                     </Button>
                   </DialogFooter>

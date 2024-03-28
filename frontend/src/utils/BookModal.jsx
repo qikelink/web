@@ -77,10 +77,9 @@ const BookModal = ({ buttonName, blue, data }) => {
     const orgId = selectedOption === "Individual" ? undefined : selectedOption;
 
     createSession(
-      undefined,
+      data.id,
       data.rating,
       orgId,
-      data.username,
       formData.purpose,
       date.toISOString(),
       user[0].username,
@@ -141,7 +140,11 @@ const BookModal = ({ buttonName, blue, data }) => {
                           )}
                         />
                       ) : (
-                        <AvatarFallback>{data && data.username ? data.username.slice(0, 2).toUpperCase() : 'CN'}</AvatarFallback>
+                        <AvatarFallback>
+                          {data && data.username
+                            ? data.username.slice(0, 2).toUpperCase()
+                            : "CN"}
+                        </AvatarFallback>
                       )}
                     </Avatar>
 

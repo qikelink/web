@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import {
   getImageUrl,
+  getNotifications,
   isUserValid,
   signout,
 } from "../../../backend/src/pocketbase";
@@ -31,9 +32,11 @@ import { AiOutlineHome } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
 import { TiVideo } from "react-icons/ti";
+import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
 export default function Header() {
-  const { user, isLoading, setUser } = useUser();
+  const { user, isLoading, setUser, notifications, setNotifications } =
+    useUser();
   const { setIsUserValid, progress } = useAuth();
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -47,6 +50,18 @@ export default function Header() {
     signout(setIsUserValid);
     setUser([]);
   };
+
+  useEffect(() => {
+    if (notifications.length > 0) {
+      getNotifications(user[0].id, user[0].email)
+        .then((res) => {
+          setNotifications(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications data:", error);
+        });
+    }
+  }, [notifications]);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
@@ -130,44 +145,32 @@ export default function Header() {
                     </span>
                     {isNotificationOpen && (
                       <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
-                        <div className="flex items-center px-4 py-2 text-base border-b">
-                          Notification{" "}
-                        </div>
-                        {[1, 2, 3].map((item, index) => (
-                          <div
-                            className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
-                            onClick={() => router.push("/sessions")}
-                            key={index}
-                          >
-                            <div className="flex items-center">
-                              <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
-                              <div>
-                                <p className="text-base font-semibold">
-                                  Notification Title
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                  Notification Message
-                                </p>
+                        {notifications && notifications.length > 0 ? (
+                          notifications.map((item, index) => (
+                            <div
+                              className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
+                              onClick={() => router.push("/sessions")}
+                              key={index}
+                            >
+                              <div className="flex items-center">
+                                <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
+                                <div>
+                                  <p className="text-base font-semibold">
+                                    {item.title}
+                                  </p>
+                                  <p className="text-sm text-gray-600">
+                                    {item.message}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
-                            <p className="text-xs text-gray-500">4:45 PM</p>
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-between px-4 py-2 border-b border-gray-300">
-                          <div className="flex items-center">
-                            <div className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
-                            <div>
-                              <p className="text-base font-semibold">
-                                Another Notification
-                              </p>
-                              <p className="text-sm text-gray-600">
-                                Another message goes here
+                              <p className="text-xs text-gray-500">
+                                {item.time}
                               </p>
                             </div>
-                          </div>
-                          <p className="text-xs text-gray-500">Yesterday</p>
-                        </div>
-                        {/* Add more notification items here as needed */}
+                          ))
+                        ) : (
+                          <EmptyBookmarkIcon size={300} />
+                        )}
                       </div>
                     )}
                   </Badge>

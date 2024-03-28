@@ -201,11 +201,11 @@ const OrganizationSection = () => {
               />
               <AvatarFallback>
                 {" "}
-                {item.org_name ? item.org_name.slice(0, 2).toUpperCase() : "none"}
+                {item.username.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="hidden lg:block">
-              <AlertTitle>{item.org_name}</AlertTitle>
+              <AlertTitle>{item.username}</AlertTitle>
               <AlertDescription>{item.org_about}</AlertDescription>
             </div>
             <div className="flex-end">
@@ -218,7 +218,7 @@ const OrganizationSection = () => {
                     <DialogTitle>Organization Details</DialogTitle>
                   </DialogHeader>
                   <div className="bg-white shadow-md rounded-md p-6">
-                    <h2 className="text-xl font-bold mb-4">{item.org_name}</h2>
+                    <h2 className="text-xl font-bold mb-4">{item.username}</h2>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-gray-600">Members Number</p>

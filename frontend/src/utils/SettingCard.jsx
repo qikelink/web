@@ -11,6 +11,7 @@ import VerifyModal from "./VerifyModal";
 import {
   getImageUrl,
   getUser,
+  toggleQuickService,
   updateSetting,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
@@ -18,23 +19,15 @@ import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { IoFlash } from "react-icons/io5";
 import { Switch } from "@/components/ui/switch";
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
   const [profileImage, setProfileImage] = useState("");
+  const [quickService, setQuickService] = useState(false);
   const { toast } = useToast();
-  const { user, isLoading, setUser } = useUser();
+  const { user, mentor, isLoading, setUser } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
   useEffect(() => {
@@ -65,6 +58,12 @@ const SettingCard = () => {
 
     setFormData(initialFormData);
   }, [user]);
+
+  useEffect(() => {
+    if (mentor && mentor.username && mentor.username.length > 0) {
+      setQuickService(mentor.quickService || false);
+    }
+  }, [mentor]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -113,6 +112,34 @@ const SettingCard = () => {
           });
         setIsSpinning(false);
       });
+  };
+
+
+  const handleQuickServiceToggle = async () => {
+    try {
+      // Toggle the switch state
+      const newQuickService = !quickService;
+      setQuickService(newQuickService);
+
+      const id = mentor.id;
+      // Call your function to update quick service status
+      await toggleQuickService(id, newQuickService);
+
+      toast({
+        title: "Status toggled",
+        description: "Status toggled successfully! .",
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to toggle status",
+        description: "Sorry an error just occurred! please try again.",
+        variant: "destructive",
+      });
+      console.error("quick service error:", error);
+      // Revert the state back if there's an error
+      setQuickService(!quickService);
+    }
   };
 
   return (
@@ -196,18 +223,21 @@ const SettingCard = () => {
               />
             </div>
 
-            <div className=" flex items-center space-x-4 rounded-md border p-4 bg-inputbackground">
+            <div className=" flex items-center space-x-4 rounded-md border px-3 bg-inputbackground">
               <IoFlash />
-              <div className="flex-1 space-y-1">
+              <div className="flex-1 ">
                 <p className="text-sm font-medium leading-none">
                   Quick Service
                 </p>
-                <p className="text-sm text-muted-foreground">
-                  This On
-                   mean that you're available for Counseling Immediately
-                </p>
               </div>
-              <Switch />
+              {mentor && mentor.username && mentor.username.length > 0 ? (
+                <Switch
+                  checked={quickService}
+                  onCheckedChange={handleQuickServiceToggle}
+                />
+              ) : (
+                <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
+              )}
             </div>
           </div>
 

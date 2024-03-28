@@ -68,7 +68,8 @@ export async function updateSetting(
   username,
   phoneNumber,
   bio,
-  awards
+  awards,
+  quickService
 ) {
   const data = {
     avatar: avatar,
@@ -77,8 +78,16 @@ export async function updateSetting(
     phoneNumber: phoneNumber,
     bio: bio,
     awards: awards,
+    quickService: quickService,
   };
   await client.collection("users").update(id, data);
+}
+
+export async function toggleQuickService(id, quickService) {
+  const data = {
+    quickService: quickService,
+  };
+  await client.collection("mentors").update(id, data);
 }
 
 export async function verifyRequest(
@@ -142,20 +151,18 @@ export async function getBookmarks(id) {
 }
 
 export async function createSession(
-  avatar,
+  mentor,
   rating,
   organization,
-  sessionWith,
   purpose,
   sessionDate,
   host_name,
-  host_bio,
+  host_bio
 ) {
   const data = {
-    avatar: avatar,
+    mentor: mentor,
     rating: rating,
     organization: organization,
-    sessionWith: sessionWith,
     purpose: purpose,
     sessionDate: sessionDate,
     host_name: host_name,
@@ -165,10 +172,8 @@ export async function createSession(
   await client.collection("sessions").create(data);
 }
 
-export async function updateSession(id, link, time, approved, done) {
+export async function updateSession(id, approved, done) {
   const data = {
-    link: link,
-    time: time,
     approved: approved,
     done: done,
   };
@@ -186,20 +191,20 @@ export async function getCreatedSessions(id) {
 export async function getAllSessions(id, email) {
   return await client.collection("sessions").getFullList({
     filter: `owner = '${id}' || organization.members ~ '${email}'`,
-    expand: "organization ",
+    expand: "organization,mentor ",
   });
 }
 
 export async function createOrganization(
   avatar,
-  org_name,
+  username,
   org_about,
   org_info,
   members
 ) {
   const data = {
     avatar: avatar,
-    org_name: org_name,
+    username: username,
     org_about: org_about,
     org_info: org_info,
     members: members,
@@ -223,7 +228,32 @@ export async function getAllOrganizations(id, email) {
 
 export async function getMeetingRequests(username) {
   return await client.collection("sessions").getFullList({
-    filter: `sessionWith = '${username}'`,
-    expand: "owner,organization"
+    filter: `mentor.username = '${username}' && approved = False && done = False`,
+    expand: "owner,organization,mentor",
   });
+}
+
+
+export async function createNotification(title, message, time, target) {
+  const data = {
+    title: title,
+    message: message,
+    time: time,
+    target: target,
+    owner: client.authStore.model.id,
+  };
+  await client.collection("notifications").create(data);
+}
+
+
+export async function getNotifications(id, email) {
+  return await client.collection("notifications").getFullList({
+    filter: `owner = '${id}' || target.email ~ '${email}'`,
+    expand: "owner,organization",
+  });
+}
+
+
+export async function removeNotification(id) {
+  await client.collection("notifications").delete(`${id}`);
 }
