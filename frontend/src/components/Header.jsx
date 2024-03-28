@@ -117,6 +117,7 @@ export default function Header() {
                   <Badge
                     variant="outline"
                     className={"rounded-full p-2 hidden md:inline"}
+                    onClick={() => router.push("/sessions")}
                   >
                     <BsHeadsetVr
                       size={20}

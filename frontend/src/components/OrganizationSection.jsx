@@ -90,13 +90,15 @@ const OrganizationSection = () => {
   };
 
   return (
-    <div className="py-2">
+    <div className="">
       <div className="flex justify-between items-center">
         <h2 className="text-sm lg:text-xl">Organizations</h2>
 
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="bg-blue text-sm lg:text-base">Create Organization</Button>
+            <Button className="bg-blue text-sm lg:text-base">
+              Create Organization
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

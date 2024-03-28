@@ -22,7 +22,11 @@ import pic4 from "../../images/pic4.gif";
 import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import { CreateBookmark, getImageUrl, isUserValid } from "../../../backend/src/pocketbase";
+import {
+  CreateBookmark,
+  getImageUrl,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 
@@ -153,9 +157,9 @@ const HomeCardSection = () => {
             list.map((item, index) => (
               <Skeleton key={index} className="h-52 w-64 rounded-lg" />
             ))
-          ) : mentors.length > 0 ? (
+          ) : mentors.length > 0 && (
             mentors.map((item, index) => (
-              <Card key={index}>
+              <Card key={index} className="">
                 <CardHeader>
                   <div className="flex justify-between">
                     <div className="flex gap-2">
@@ -190,8 +194,7 @@ const HomeCardSection = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="text-small text-default-400">
-                  <div className="flex gap-2 ">
-                    <label>Interests: </label>
+                  <div className="flex gap-2 flex-wrap">
                     {item && item.interests
                       ? item.interests.split(",").map((interest, index) => (
                           <Badge key={index} variant="outline">
@@ -224,12 +227,7 @@ const HomeCardSection = () => {
                 </CardFooter>
               </Card>
             ))
-          ) : (
-            // change to be an empty state that shows no sesssion to show for now
-            <div className="flex justify-center items-center">
-              <EmptyBookmarkIcon />
-            </div>
-          )}
+          ) }
         </div>
       </div>
     </>

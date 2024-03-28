@@ -1,5 +1,4 @@
 import React from "react";
-import { RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
@@ -23,14 +22,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "./ui/skeleton";
 import { getImageUrl } from "../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 import { useUser } from "@/contexts/user-context";
-import { Skeleton } from "./ui/skeleton";
-import { getImageUrl } from "../../../backend/src/pocketbase";
-import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 
 const data = [1, 2, 3];
 
