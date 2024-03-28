@@ -161,7 +161,7 @@ const QuickModal = ({ buttonName, blue, data }) => {
               </DialogTitle>
             </DialogHeader>
             <DialogDescription className="flex flex-wrap space-x-3 mt-2">
-              <p>Interests:</p>
+              
               {data && data.interests
                 ? data.interests.split(",").map((interest, index) => (
                     <Badge key={index} variant="outline">

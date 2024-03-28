@@ -114,7 +114,7 @@ const BookmarkCard = () => {
               </CardHeader>
               <CardContent className="text-small text-default-400">
                 <div className="flex gap-2 ">
-                  <label>Interests: </label>
+                  
                   {item && item.interests
                     ? item.interests.split(",").map((interest, index) => (
                         <Badge key={index} variant="outline">

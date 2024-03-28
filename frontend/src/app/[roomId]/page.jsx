@@ -13,7 +13,6 @@ import {
   usePeerIds,
   useRoom,
 } from "@huddle01/react/hooks";
-import { ButtonIcon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BasicIcons } from "@/utils/BasicIcons";

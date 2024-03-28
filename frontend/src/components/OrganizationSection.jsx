@@ -201,7 +201,7 @@ const OrganizationSection = () => {
               />
               <AvatarFallback>
                 {" "}
-                {item.org_name.slice(0, 2).toUpperCase()}
+                {item.org_name ? item.org_name.slice(0, 2).toUpperCase() : "none"}
               </AvatarFallback>
             </Avatar>
             <div className="hidden lg:block">
