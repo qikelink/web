@@ -30,6 +30,7 @@ import { MdLogout, MdOutlineFeedback } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
+import { TiVideo } from "react-icons/ti";
 
 export default function Header() {
   const { user, isLoading, setUser } = useUser();
@@ -73,16 +74,8 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <Image
-            src={
-              "https://bafkreihsi2uofstr3oxu355zr3ggxyckxuguken4d6rhqgrah3kaqruo7u.ipfs.nftstorage.link/"
-            }
-            width={150}
-            height={150}
-            className="rounded-md w-28 lg:w-28"
-            onClick={() => router.push(`/`)}
-            alt="Logo"
-          />
+          <h2 className="font-bold text-blue text-2xl">
+            RAKATIS</h2>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
