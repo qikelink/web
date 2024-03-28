@@ -26,13 +26,14 @@ import {
   createNotification,
   getImageUrl,
   getMeetingRequests,
+  getNotifications,
   updateSession,
 } from "../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 import { useToast } from "./ui/use-toast";
 
 const RequestSection = () => {
-  const { user, isLoadingUserData, meetingRequests, setMeetingRequests } =
+  const { user, isLoadingUserData, meetingRequests, setMeetingRequests, setNotifications } =
     useUser();
   const { toast } = useToast();
 
@@ -58,7 +59,16 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
-        createNotification(successMessage, item.expand.owner.id);
+        createNotification('Request Accepted', successMessage, Date.now(), item.expand.owner.id);
+        getNotifications(user[0].id, user[0].email)
+        .then((res) => {
+          setNotifications(res);
+        
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications data:", error);
+        
+        });
       });
   };
 
@@ -84,7 +94,16 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
-        createNotification(rejectMessage, item.expand.owner.id);
+        createNotification('Request Rejected', rejectMessage, Date.now(), item.expand.owner.id);
+        getNotifications(user[0].id, user[0].email)
+        .then((res) => {
+          setNotifications(res);
+        
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications data:", error);
+        
+        });
       });
   };
 

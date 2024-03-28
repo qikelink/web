@@ -130,7 +130,7 @@ export const UserProvider = ({ children }) => {
           
         });
 
-      getNotifications(user[0].username)
+      getNotifications(user[0].id, user[0].email)
         .then((res) => {
           setNotifications(res);
           setIsLoadingUserData(false);

@@ -234,9 +234,11 @@ export async function getMeetingRequests(username) {
 }
 
 
-export async function createNotification(message, target) {
+export async function createNotification(title, message, time, target) {
   const data = {
+    title: title,
     message: message,
+    time: time,
     target: target,
     owner: client.authStore.model.id,
   };
