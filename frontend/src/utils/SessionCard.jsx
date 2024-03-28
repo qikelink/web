@@ -78,9 +78,8 @@ const SessionCard = () => {
     } else if (selectedButtons === "Approved") {
       return !item.done && item.approved;
     } else if (selectedButtons === "Past") {
-      return item.done && item.approved;
+      return item.done;
     } else {
-     
       const sessionDate = new Date(item.sessionDate);
       return (
         sessionDate.getDate() === currentDate.getDate() &&
@@ -91,6 +90,7 @@ const SessionCard = () => {
       );
     }
   });
+
 
   return (
     <>
@@ -129,19 +129,21 @@ const SessionCard = () => {
                     <div className="flex gap-2">
                       <Avatar>
                         <AvatarImage
-                         src={getImageUrl(
-                          item.collectionId,
-                          item.id,
-                          item.avatar
-                        )}
+                          src={getImageUrl(
+                            item.expand.mentor.collectionId,
+                            item.expand.mentor.id,
+                            item.expand.mentor.avatar
+                          )}
                         />
                         <AvatarFallback>
-                          {/* {item.sessionWith.charAt(0)} */} CN
+                          {item.expand.mentor.username
+                            .slice(0, 2)
+                            .toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col gap-1 items-start justify-center">
                         <h4 className="text-small font-semibold leading-none text-default-600">
-                          {item.sessionWith}
+                          {item.expand.mentor.username}
                         </h4>
                         <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
                           {item.rating} <FaStar color="yellow" size={18} />
@@ -174,10 +176,10 @@ const SessionCard = () => {
                       />
                     </Button>
                   ) : (
-                    <SessionModal data={item}
+                    <SessionModal
+                      data={item}
                       buttonName="View booking details"
                       blue="text-blue"
-                     
                     />
                   )}
                 </CardFooter>
