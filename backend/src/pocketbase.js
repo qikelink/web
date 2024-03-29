@@ -20,19 +20,20 @@ export async function getUser() {
 export async function getMentors() {
   return await client
     .collection("mentors")
-    .getFullList({ filter: "verified = True" });
+    .getFullList({ filter: "verified = True", expand: "users" });
 }
 
 // to get all the verified mentors available for quick service
 export async function getQuickMentors() {
-  return await client
-    .collection("mentors")
-    .getFullList({ filter: "verified = True && quickService = True" });
+  return await client.collection("mentors").getFullList({
+    filter: "verified = True && quickService = True",
+    expand: "users",
+  });
 }
 
 // to get a single mentor, for verification purposes
-export async function getMentor(id) {
-  return await client.collection("mentors").getFirstListItem(`user = '${id}'`);
+export async function getMentor() {
+  return await client.collection("mentors").getFirstListItem(`users = '${client.authStore.model.id}'`);
 }
 
 export async function Signup(email, password) {
@@ -64,7 +65,6 @@ export function signout(setIsUserValid) {
 export async function updateSetting(
   id,
   avatar,
-  fullName,
   username,
   phoneNumber,
   bio,
@@ -91,8 +91,6 @@ export async function toggleQuickService(id, quickService) {
 }
 
 export async function verifyRequest(
-  avatar,
-  fullName,
   username,
   phoneNumber,
   bio,
@@ -100,11 +98,12 @@ export async function verifyRequest(
   businessName,
   contact,
   account,
-  validId
+  validId,
+  rate,
+  interests,
+  rating
 ) {
   const data = {
-    avatar: avatar,
-    fullName: fullName,
     username: username,
     phoneNumber: phoneNumber,
     bio: bio,
@@ -112,8 +111,11 @@ export async function verifyRequest(
     businessName: businessName,
     contact: contact,
     account: account,
-    user: client.authStore.model.id,
     validId: validId,
+    rate: rate,
+    interests: interests,
+    rating: rating,
+    users: client.authStore.model.id,
   };
   await client.collection("mentors").create(data);
 }
@@ -233,12 +235,19 @@ export async function getMeetingRequests(username) {
   });
 }
 
-export async function createNotification(title, message, time, target) {
+export async function createNotification(
+  title,
+  message,
+  time,
+  target,
+  organization
+) {
   const data = {
     title: title,
     message: message,
     time: time,
     target: target,
+    organization: organization,
     owner: client.authStore.model.id,
   };
   await client.collection("notifications").create(data);
@@ -246,8 +255,8 @@ export async function createNotification(title, message, time, target) {
 
 export async function getNotifications(id, email) {
   return await client.collection("notifications").getList(1, 6, {
-    filter: `owner = '${id}' || target.email ~ '${email}'`,
-    expand: "owner,organization",
+    filter: `owner = '${id}' || target.email ~ '${email}' || organization.members ~ '${email}'`,
+    expand: "organization, target",
     sort: "-created",
   });
 }

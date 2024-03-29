@@ -57,6 +57,14 @@ export const UserProvider = ({ children }) => {
         console.error("Error fetching mentors data:", error);
       });
 
+      getMentor()
+      .then((res) => {
+        setMentor(res);
+      })
+      .catch((error) => {
+        console.error("Error fetching mentor data:", error);
+      });
+
     // get all mentors available for quick services
     getQuickMentors()
       .then((res) => {
@@ -72,14 +80,6 @@ export const UserProvider = ({ children }) => {
   // get other datas based on the specific user
   useEffect(() => {
     if (user.length > 0) {
-      getMentor(user[0].id)
-        .then((res) => {
-          setMentor(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching mentor data:", error);
-        });
-
       getBookmarks(user[0].id)
         .then((res) => {
           setBookmarks(res);
@@ -123,11 +123,9 @@ export const UserProvider = ({ children }) => {
       getMeetingRequests(user[0].username)
         .then((res) => {
           setMeetingRequests(res);
-          
         })
         .catch((error) => {
           console.error("Error fetching session data:", error);
-          
         });
 
       getNotifications(user[0].id, user[0].email)
@@ -150,6 +148,7 @@ export const UserProvider = ({ children }) => {
         isLoading,
         isLoadingUserData,
         quickMentors,
+        setQuickMentors,
         mentors,
         mentor,
         bookmarks,

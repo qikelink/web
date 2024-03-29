@@ -33,7 +33,6 @@ const SettingCard = () => {
   useEffect(() => {
     const defaultFormData = {
       avatar: profileImage,
-      fullName: "",
       email: "",
       username: "",
       phoneNumber: "",
@@ -45,14 +44,13 @@ const SettingCard = () => {
     const initialFormData =
       user.length > 0
         ? {
-            avatar: user[0].avatar || "",
-            fullName: user[0].fullName || "",
-            email: user[0].email || "",
-            username: user[0].username || "",
-            phoneNumber: user[0].phoneNumber || "",
-            bio: user[0].bio || "",
-            awards: user[0].awards || "",
-            verified: user[0].verified,
+            avatar: user[0].avatar,
+            email: user[0].email,
+            username: user[0].username,
+            phoneNumber: user[0].phoneNumber,
+            bio: user[0].bio,
+            awards: user[0].awards,
+            verified: mentor.verified,
           }
         : defaultFormData;
 
@@ -78,10 +76,11 @@ const SettingCard = () => {
     setIsSpinning(true);
     const id = user[0].id;
 
+    const imageToUpdate = profileImage ? profileImage : formData.avatar;
+
     updateSetting(
       id,
-      profileImage,
-      formData.fullName,
+      imageToUpdate,
       formData.username,
       formData.phoneNumber,
       formData.bio,
@@ -142,147 +141,141 @@ const SettingCard = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div className="min-h-screen border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
-          {/* Profile image */}
-          <Label className="text-lg">Profile image</Label>
-          {isLoading ? (
-            <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
-          ) : (
-            user.length > 0 && (
-              <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
-                <AvatarImage
-                  src={getImageUrl(
-                    user[0].collectionId,
-                    user[0].id,
-                    user[0].avatar
-                  )}
-                />
-                <AvatarFallback>
-                  {" "}
-                  {user[0].email.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            )
-          )}
-          <div className="flex justify-between items-center gap-3 mt-4">
-            <Input
-              id="picture"
-              type="file"
-              className="lg:max-w-xs w-fit bg-inputbackground "
-              onChange={(e) => setProfileImage(e.target.files[0])}
+    <div className="min-h-screen border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
+      {/* Profile image */}
+      <Label className="text-lg">Profile image</Label>
+      {isLoading ? (
+        <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
+      ) : (
+        user.length > 0 && (
+          <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
+            <AvatarImage
+              src={getImageUrl(
+                user[0].collectionId,
+                user[0].id,
+                user[0].avatar
+              )}
             />
-            {isLoading ? (
-              <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
-            ) : (
-              <Badge
-                variant="outline"
-                className={`rounded-full ${
-                  formData.verified === true ? "bg-green-600" : "bg-red"
-                } text-secondary h-8 flex justify-center font-bold text-sm text-wrap lg:mr-5 px-5`}
-              >
-                {formData.verified === true ? "Verified" : "Not Verified"}
-              </Badge>
-            )}
-          </div>
+            <AvatarFallback>
+              {" "}
+              {user[0].email.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+        )
+      )}
+      <div className="flex justify-between items-center gap-3 mt-4">
+        <Input
+          id="picture"
+          type="file"
+          className="lg:max-w-xs w-fit bg-inputbackground "
+          onChange={(e) => setProfileImage(e.target.files[0])}
+        />
+        {isLoading ? (
+          <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
+        ) : (
+          <Badge
+            variant="outline"
+            className={`rounded-full ${
+              formData.verified === true ? "bg-green-600" : "bg-red"
+            } text-secondary h-8 flex justify-center font-bold text-sm text-wrap lg:mr-5 px-5`}
+          >
+            {formData.verified === true ? "Verified" : "Not Verified"}
+          </Badge>
+        )}
+      </div>
 
-          <Separator className="my-6"></Separator>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <Label className="text-lg">Full name</Label>
-              <Input
-                className="py-6 px-3 bg-inputbackground"
-                placeholder="Please enter your full name"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <Label className="text-lg">Email</Label>
-              <Input
-                className="py-6 px-3 bg-inputbackground"
-                placeholder="Please enter your full name"
-                name="email"
-                type="email"
-                value={formData.email}
-                readOnly
-              />
-            </div>
-
-            <div>
-              <Label className="text-lg">Phone number (optional)</Label>
-              <Input
-                className="py-6 px-3 bg-inputbackground"
-                placeholder="Please enter your full name"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className=" flex items-center space-x-4 rounded-md border px-3 bg-inputbackground">
-              <IoFlash />
-              <div className="flex-1 ">
-                <p className="text-sm font-medium leading-none">
-                  Quick Service
-                </p>
-              </div>
-              {formData.verified === true ? (
-                mentor && mentor.username && mentor.username.length > 0 ? (
-                  <Switch
-                    checked={quickService}
-                    onCheckedChange={handleQuickServiceToggle}
-                  />
-                ) : (
-                  <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
-                )
-              ) : null}
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <Label className="text-lg">Bio</Label>
-            <Textarea
-              className="sm:h-40 bg-inputbackground"
-              placeholder="Write your Bio here e.g your hobbies, interests ETC"
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="mt-6">
-            <Label className="text-lg">Awards/Recognitions</Label>
-            <Textarea
-              className="sm:h-24 bg-inputbackground"
-              placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "
-              name="awards"
-              value={formData.awards}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="flex flex-col space-y-2 md:justify-end gap-1 lg:gap-3 justify-center lg:flex-row items-center mt-6 h-full lg:space-x-5">
-            <Button
-              size="xl"
-              className="bg-blue hover:bg-darkblue text-lg rounded-lg"
-              type="submit"
-            >
-              {isSpinning ? "Updating profile" : "Update profile"}
-              <AiOutlineLoading3Quarters
-                className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
-              />
-            </Button>
-            {/* <Separator orientation="vertical" className='bg-darktext'/> */}
-            {formData.verified === true ? null : !isLoading ? (
-              <VerifyModal userData={user} />
-            ) : null}
-          </div>
+      <Separator className="my-6"></Separator>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <Label className="text-lg">Full name</Label>
+          <Input
+            className="py-6 px-3 bg-inputbackground"
+            placeholder="Please enter your full name"
+            name="fullName"
+            value={formData.username}
+            onChange={handleChange}
+          />
         </div>
-      </form>
-    </>
+        <div>
+          <Label className="text-lg">Email</Label>
+          <Input
+            className="py-6 px-3 bg-inputbackground"
+            placeholder="Please enter your full name"
+            name="email"
+            type="email"
+            value={formData.email}
+            readOnly
+          />
+        </div>
+
+        <div>
+          <Label className="text-lg">Phone number (optional)</Label>
+          <Input
+            className="py-6 px-3 bg-inputbackground"
+            placeholder="Please enter your full name"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className=" flex items-center space-x-4 rounded-md border px-3 bg-inputbackground">
+          <IoFlash />
+          <div className="flex-1 ">
+            <p className="text-sm font-medium leading-none">Quick Service</p>
+          </div>
+          {formData.verified === true ? (
+            mentor && mentor.username && mentor.username.length > 0 ? (
+              <Switch
+                checked={quickService}
+                onCheckedChange={handleQuickServiceToggle}
+              />
+            ) : (
+              <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
+            )
+          ) : null}
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <Label className="text-lg">Bio</Label>
+        <Textarea
+          className="sm:h-40 bg-inputbackground"
+          placeholder="Write your Bio here e.g your hobbies, interests ETC"
+          name="bio"
+          value={formData.bio}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="mt-6">
+        <Label className="text-lg">Awards/Recognitions</Label>
+        <Textarea
+          className="sm:h-24 bg-inputbackground"
+          placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "
+          name="awards"
+          value={formData.awards}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="flex flex-col space-y-2 md:justify-end gap-1 lg:gap-3 justify-center lg:flex-row items-center mt-6 lg:space-x-5">
+        <Button
+          size="xl"
+          className="bg-blue hover:bg-darkblue text-lg rounded-lg"
+          onClick={handleSubmit}
+        >
+          {isSpinning ? "Updating profile" : "Update profile"}
+          <AiOutlineLoading3Quarters
+            className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+          />
+        </Button>
+
+        {formData.verified === true ? null : !isLoading ? (
+          <VerifyModal userData={user} />
+        ) : null}
+      </div>
+    </div>
   );
 };
 

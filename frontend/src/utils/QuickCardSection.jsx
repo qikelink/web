@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
@@ -22,14 +22,19 @@ import pic4 from "../../images/pic4.gif";
 import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import { CreateBookmark, getImageUrl, isUserValid } from "../../../backend/src/pocketbase";
+import {
+  CreateBookmark,
+  getImageUrl,
+  getQuickMentors,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
 import { GoDotFill } from "react-icons/go";
 import QuickModal from "./QuickModal";
 
 const HomeCardSection = () => {
-  const { quickMentors, isLoading } = useUser();
+  const { quickMentors, setQuickMentors, isLoading } = useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
@@ -66,6 +71,18 @@ const HomeCardSection = () => {
       });
   };
 
+  // useEffect(() => {
+  //   if (quickMentors.length > 0) {
+  //     getQuickMentors()
+  //       .then((res) => {
+  //         setQuickMentors(res);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching Quickmentors data:", error);
+  //       });
+  //   }
+  // }, [quickMentors]);
+
   return (
     <>
       <div>
@@ -85,9 +102,9 @@ const HomeCardSection = () => {
                       <Avatar>
                         <AvatarImage
                           src={getImageUrl(
-                            item.collectionId,
-                            item.id,
-                            item.avatar
+                            item.expand.users.collectionId,
+                            item.expand.users.id,
+                            item.expand.users.avatar
                           )}
                         />
                         <AvatarFallback>CN</AvatarFallback>
@@ -112,7 +129,6 @@ const HomeCardSection = () => {
                 </CardHeader>
                 <CardContent className="text-small text-default-400">
                   <div className="flex gap-2 ">
-                    
                     {item && item.interests
                       ? item.interests.split(",").map((interest, index) => (
                           <Badge key={index} variant="outline">

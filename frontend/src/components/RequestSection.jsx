@@ -38,7 +38,7 @@ const RequestSection = () => {
   const { toast } = useToast();
 
   const acceptRequest = (item) => {
-    const successMessage = `Hello, meeting request so so and so with ${item.expand.mentor.username} has been approved!! `;
+    const successMessage = `Hello, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.username} has been approved.`;
     
     updateSession(item.id, true)
       .then(() => {
@@ -59,7 +59,7 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
-        createNotification('Request Accepted', successMessage, Date.now(), item.expand.owner.id);
+        createNotification('Request Accepted', successMessage, Date.now(), item.expand.owner.id, item.expand.organization.id);
         getNotifications(user[0].id, user[0].email)
         .then((res) => {
           setNotifications(res);
@@ -71,10 +71,10 @@ const RequestSection = () => {
         });
       });
   };
-
+  
   const rejectRequest = (item) => {
-    const rejectMessage = `Sorry, meeting request so so and so with ${item.expand.mentor.username} has been rejected `;
-
+    const rejectMessage = `Sorry, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.username} has been rejected.`;
+  
     updateSession(item.id, false, true)
       .then(() => {
         toast({
@@ -94,7 +94,7 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
-        createNotification('Request Rejected', rejectMessage, Date.now(), item.expand.owner.id);
+        createNotification('Request Rejected', rejectMessage, Date.now(), item.expand.owner.id, item.expand.organization.id);
         getNotifications(user[0].id, user[0].email)
         .then((res) => {
           setNotifications(res);
@@ -106,6 +106,7 @@ const RequestSection = () => {
         });
       });
   };
+  
 
   return (
     <div className="py-2">

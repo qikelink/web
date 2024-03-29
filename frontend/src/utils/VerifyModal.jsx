@@ -15,10 +15,10 @@ import { Input } from "@/components/ui/input";
 import { verifyRequest } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 
-const VerifyModal = ({ buttonName, blue, userData }) => {
+const VerifyModal = ({ blue, userData }) => {
+  const [file, setFile] = useState("");
   const [formData, setFormData] = useState({
     businessName: "",
-    id: null,
     contact: "",
     account: "",
   });
@@ -58,7 +58,6 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
     }
 
     verifyRequest(
-      userData[0].avatar,
       userData[0].fullName,
       userData[0].username,
       userData[0].phoneNumber,
@@ -67,7 +66,10 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
       formData.businessName,
       formData.contact,
       formData.account,
-      formData.id
+      file,
+      "Free",
+      undefined,
+      "1"
     )
       .then(() => {
         toast({
@@ -87,10 +89,10 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
       .finally(() => {
         setFormData({
           businessName: "",
-          id: null,
           contact: "",
           account: "",
         });
+        setFile(null);
       });
   };
 
@@ -135,7 +137,7 @@ const VerifyModal = ({ buttonName, blue, userData }) => {
                 name="id"
                 type="file"
                 className=" bg-inputbackground mt-1 "
-                onChange={handleFileChange}
+                onChange={(e) => setFile(e.target.files[0])}
               />
             </div>
 
