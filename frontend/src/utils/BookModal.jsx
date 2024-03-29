@@ -30,6 +30,7 @@ import { createSession, getImageUrl } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@/contexts/user-context";
+import { LoaderIcon } from "react-hot-toast";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
@@ -41,6 +42,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const { user, createdOrganization } = useUser();
 
   const [selectedOption, setSelectedOption] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const options = createdOrganization.map((org) => ({
     value: org.id,
@@ -60,6 +62,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(!isLoading);
 
     const isAnyFieldEmpty = Object.values(formData).some(
       (value) => value === ""
@@ -91,6 +94,7 @@ const BookModal = ({ buttonName, blue, data }) => {
           description: "Booking request sent successfully! .",
           variant: "default",
         });
+        setIsLoading(!isLoading);
       })
       .catch((error) => {
         toast({
@@ -296,7 +300,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                 className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
                 type="submit"
               >
-                Request
+                Request {isLoading && <LoaderIcon/>}
               </Button>
             </DialogFooter>
           </form>

@@ -21,6 +21,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoFlash } from "react-icons/io5";
 import { Switch } from "@/components/ui/switch";
+import Select from "react-select";
+import { dataset } from "@/dummy_api/dataSet";
+
+const options = dataset.map((item) => ({ value: item, label: item }));
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
@@ -29,6 +33,7 @@ const SettingCard = () => {
   const { toast } = useToast();
   const { user, mentor, isLoading, setUser } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     const defaultFormData = {
@@ -141,7 +146,7 @@ const SettingCard = () => {
   };
 
   return (
-    <div className="min-h-screen border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
+    <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
       {/* Profile image */}
       <Label className="text-lg">Profile image</Label>
       {isLoading ? (
@@ -234,6 +239,22 @@ const SettingCard = () => {
               <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
             )
           ) : null}
+        </div>
+      </div>
+
+      <Separator className="my-6"></Separator>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <Label className="text-lg">Interests</Label>
+          <Select
+            className="bg-gray-100"
+            isMulti={true}
+            autoFocus={true}
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={options}
+          />
         </div>
       </div>
 

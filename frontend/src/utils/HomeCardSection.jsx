@@ -55,7 +55,7 @@ const HomeCardSection = () => {
 
   const handleBookmarkToggle = (mentor) => {
     if (!isUserValid) {
-      return <LoginDialog />
+      return <LoginDialog />;
     }
 
     CreateBookmark(
@@ -169,81 +169,84 @@ const HomeCardSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
-          {isLoading ? (
-            list.map((item, index) => (
-              <Skeleton key={index} className="h-52 w-64 rounded-lg" />
-            ))
-          ) : mentors.length > 0 && (
-            mentors.map((item, index) => (
-              <Card key={index} className="">
-                <CardHeader>
-                  <div className="flex justify-between">
-                    <div className="flex gap-2">
-                      <Avatar>
-                        <AvatarImage
-                          src={getImageUrl(
-                            item.expand.users.collectionId,
-                            item.expand.users.id,
-                            item.expand.users.avatar
-                          )}
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
+          {isLoading
+            ? list.map((item, index) => (
+                <Skeleton key={index} className="h-52 w-64 rounded-lg" />
+              ))
+            : mentors.length > 0 &&
+              mentors.map((item, index) => (
+                <Card key={index} className="">
+                  <CardHeader>
+                    <div className="flex justify-between">
+                      <div className="flex gap-2">
+                        <Avatar>
+                          <AvatarImage
+                            src={getImageUrl(
+                              item.expand.users.collectionId,
+                              item.expand.users.id,
+                              item.expand.users.avatar
+                            )}
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
 
-                      <div className="flex flex-col gap-1 items-start justify-center">
-                        <h4 className="text-small font-semibold leading-none text-default-600">
-                          {item.username}
-                        </h4>
-                        <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                          {item.rating}{" "}
-                          <FaStar className="ml-1" color="#FFC72C" size={16} />
-                        </span>
+                        <div className="flex flex-col gap-1 items-start justify-center">
+                          <p className="text-sm font-semibold leading-none text-default-600">
+                            {item.username}
+                          </p>
+                          <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
+                            {item.rating}{" "}
+                            <FaStar
+                              className="ml-1"
+                              color="#FFC72C"
+                              size={16}
+                            />
+                          </span>
+                        </div>
                       </div>
+                      <Toggle
+                        aria-label="Toggle italic"
+                        variant="outline"
+                        onClick={() => handleBookmarkToggle(item)}
+                      >
+                        <BsJournalBookmarkFill />
+                      </Toggle>
                     </div>
-                    <Toggle
-                      aria-label="Toggle italic"
-                      variant="outline"
-                      onClick={() => handleBookmarkToggle(item)}
-                    >
-                      <BsJournalBookmarkFill />
-                    </Toggle>
-                  </div>
-                </CardHeader>
-                <CardContent className="text-small text-default-400">
-                  <div className="flex gap-2 flex-wrap">
-                    {item && item.interests
-                      ? item.interests.split(",").map((interest, index) => (
-                          <Badge key={index} variant="outline">
-                            {interest.trim()}
-                          </Badge>
-                        ))
-                      : "N/A"}
-                  </div>
-                  <div className="mt-1 ">{item.bio}</div>
-                </CardContent>
-                <CardFooter className="flex justify-between border-t py-2">
-                  <BookModal buttonName="Request" data={item} />
-                  {item.rate != "free" ? (
-                    <Badge
-                      variant="outline"
-                      className="flex gap-1 rounded-full bg-green-200"
-                    >
-                      <p className="font-semibold  text-green-700">
-                        {item.rate}
-                      </p>
-                    </Badge>
-                  ) : (
-                    <Badge
-                      variant="outline"
-                      className="flex gap-1 rounded-full bg-red-100"
-                    >
-                      <p className="font-semibold  text-red-500">Free</p>
-                    </Badge>
-                  )}
-                </CardFooter>
-              </Card>
-            ))
-          ) }
+                  </CardHeader>
+                  <CardContent className="text-small text-default-400">
+                    <div className="flex gap-2 flex-wrap">
+                      {item && item.interests
+                        ? item.interests.split(",").map((interest, index) => (
+                            <Badge key={index} variant="outline">
+                              {interest.trim()}
+                            </Badge>
+                          ))
+                        : "N/A"}
+                    </div>
+                    <div className="mt-1 ">{item.bio}</div>
+                  </CardContent>
+                  <CardFooter className="flex justify-between border-t py-2">
+                    <BookModal buttonName="Request" data={item} />
+                    {item.rate != "free" ? (
+                      <Badge
+                        variant="outline"
+                        className="flex gap-1 rounded-full bg-green-200"
+                      >
+                        <p className="font-semibold  text-green-700">
+                          {item.rate}
+                        </p>
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="outline"
+                        className="flex gap-1 rounded-full bg-red-100"
+                      >
+                        <p className="font-semibold  text-red-500">Free</p>
+                      </Badge>
+                    )}
+                  </CardFooter>
+                </Card>
+              ))}
         </div>
       </div>
     </>
@@ -251,7 +254,6 @@ const HomeCardSection = () => {
 };
 
 export default HomeCardSection;
-
 
 const LoginDialog = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -355,7 +357,7 @@ const LoginDialog = () => {
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
   return (
-    <Dialog >
+    <Dialog>
       <DialogTrigger>
         <Button
           size="sm"
