@@ -48,6 +48,7 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #888; 
   border-radius: 20em;
+  cursor: pointer;
 }
 
 .custom-scrollbar::-webkit-scrollbar:horizontal{

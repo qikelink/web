@@ -89,7 +89,7 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <h2 className="font-bold text-blue text-2xl">RAKATIS</h2>
+          <h2 onClick={() => router.push(`/`)} className="font-bold text-blue text-2xl cursor-pointer">RAKATIS</h2>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
