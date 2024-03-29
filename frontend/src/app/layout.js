@@ -24,9 +24,10 @@ export default function RootLayout({ children }) {
       <head />
       <body
         className={cn(
-          " bg-background font-poppins text-foreground",
+          " bg-background font-poppins text-foreground invisible-scrollbar",
           fontSans.variable
-        )}>
+        )}
+      >
         <AuthProvider>
           <UserProvider>
             <HuddleContextProvider>{children}</HuddleContextProvider>

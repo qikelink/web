@@ -35,11 +35,26 @@
 
     --radius: 0.5rem;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+.custom-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 0.2em;
+  background-color: inherit;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 20em;
+}
+
+.custom-scrollbar::-webkit-scrollbar:horizontal{
   display: none;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
+.invisible-scrollbar::-webkit-scrollbar {
   display: none;
 }
 

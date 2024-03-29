@@ -89,8 +89,7 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <h2 className="font-bold text-blue text-2xl">
-            RAKATIS</h2>
+          <h2 className="font-bold text-blue text-2xl">RAKATIS</h2>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
@@ -140,11 +139,14 @@ export default function Header() {
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                   >
                     <FaRegBell size={20} className="text-current" />
-                    <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
-                      {notifications.items && notifications.items.length > 0
-                        ? `${notifications.items.length}+`
-                        : ""}
-                    </span>
+                    
+                      {notifications.items && notifications.items.length > 0 && (
+                        <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
+                          {" "}
+                          {`${notifications.items.length}+`}
+                        </span>
+                      ) }
+                   
                     {isNotificationOpen && (
                       <>
                         <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
