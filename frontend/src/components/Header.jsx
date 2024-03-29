@@ -141,37 +141,40 @@ export default function Header() {
                   >
                     <FaRegBell size={20} className="text-current" />
                     <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
-                      9+
+                      {notifications.items && notifications.items.length > 0
+                        ? `${notifications.items.length}+`
+                        : ""}
                     </span>
                     {isNotificationOpen && (
-                      <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
-                        {notifications && notifications.length > 0 ? (
-                          notifications.map((item, index) => (
-                            <div
-                              className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
-                              onClick={() => router.push("/sessions")}
-                              key={index}
-                            >
-                              <div className="flex items-center">
-                                <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
-                                <div>
-                                  <p className="text-base font-semibold">
-                                    {item.title}
-                                  </p>
-                                  <p className="text-sm text-gray-600">
-                                    {item.message}
-                                  </p>
+                      <>
+                        <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
+                          {notifications && notifications.items.length > 0 ? (
+                            notifications.items.map((item, index) => (
+                              <div
+                                className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
+                                onClick={() => router.push("/sessions")}
+                                key={index}
+                              >
+                                <div className="flex items-center">
+                                  <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
+                                  <div>
+                                    <p className="text-base font-semibold">
+                                      {item.title}
+                                    </p>
+                                    <p className="text-sm text-gray-600">
+                                      {item.message}
+                                    </p>
+                                  </div>
                                 </div>
+
+                                {/* <Badge variant='secondary' >Clear</Badge> */}
                               </div>
-                              <p className="text-xs text-gray-500">
-                                {item.time}
-                              </p>
-                            </div>
-                          ))
-                        ) : (
-                          <EmptyBookmarkIcon size={300} />
-                        )}
-                      </div>
+                            ))
+                          ) : (
+                            <EmptyBookmarkIcon size={300} />
+                          )}
+                        </div>
+                      </>
                     )}
                   </Badge>
 

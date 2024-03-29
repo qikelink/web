@@ -77,8 +77,10 @@ const SessionCard = () => {
       return !item.approved && !item.done;
     } else if (selectedButtons === "Approved") {
       return !item.done && item.approved;
+    } else if (selectedButtons === "Canceled") {
+      return item.done && !item.approved;
     } else if (selectedButtons === "Past") {
-      return item.done;
+      return item.done && item.approved;
     } else {
       const sessionDate = new Date(item.sessionDate);
       return (
@@ -90,7 +92,6 @@ const SessionCard = () => {
       );
     }
   });
-
 
   return (
     <>
@@ -152,8 +153,10 @@ const SessionCard = () => {
                     </div>
                   </div>
                   <div className="py-2 flex items-center ">
-                    <IoBook color="#0096FF" className="mr-2" size={20} />{" "}
-                    Purpose: {item.purpose}
+                    <IoBook color="#0096FF" className="mr-2" size={20} /> Host:{" "}
+                    {item.expand.organization
+                      ? item.expand.organization.username
+                      : item.expand.owner.username}
                   </div>
                   <span className="py-2 flex items-center">
                     <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}

@@ -233,7 +233,6 @@ export async function getMeetingRequests(username) {
   });
 }
 
-
 export async function createNotification(title, message, time, target) {
   const data = {
     title: title,
@@ -245,15 +244,22 @@ export async function createNotification(title, message, time, target) {
   await client.collection("notifications").create(data);
 }
 
-
 export async function getNotifications(id, email) {
-  return await client.collection("notifications").getFullList({
+  return await client.collection("notifications").getList(1, 6, {
     filter: `owner = '${id}' || target.email ~ '${email}'`,
     expand: "owner,organization",
+    sort: "-created",
   });
 }
 
-
 export async function removeNotification(id) {
   await client.collection("notifications").delete(`${id}`);
+}
+
+export async function sendFeedback(feedback) {
+  const data = {
+    feedback: feedback,
+    user: client.authStore.model.id,
+  };
+  await client.collection("feedback").create(data);
 }

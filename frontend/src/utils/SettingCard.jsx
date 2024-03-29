@@ -114,7 +114,6 @@ const SettingCard = () => {
       });
   };
 
-
   const handleQuickServiceToggle = async () => {
     try {
       // Toggle the switch state
@@ -230,14 +229,16 @@ const SettingCard = () => {
                   Quick Service
                 </p>
               </div>
-              {mentor && mentor.username && mentor.username.length > 0 ? (
-                <Switch
-                  checked={quickService}
-                  onCheckedChange={handleQuickServiceToggle}
-                />
-              ) : (
-                <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
-              )}
+              {formData.verified === true ? (
+                mentor && mentor.username && mentor.username.length > 0 ? (
+                  <Switch
+                    checked={quickService}
+                    onCheckedChange={handleQuickServiceToggle}
+                  />
+                ) : (
+                  <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
+                )
+              ) : null}
             </div>
           </div>
 
