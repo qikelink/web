@@ -9,6 +9,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { isUserValid } from "../../../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
 import { Button } from "@/components/ui/button";
+import { EmptyIcon } from "@/icons/EmptyIcon";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
@@ -39,9 +40,11 @@ export default function page() {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-center items-center h-full">
-                  {/* Render BookmarkEmpty when no bookmarks exist */}
-                  <BookmarkEmpty />
+                <div className="flex flex-col  items-center w-full h-full mt-32">
+                  <EmptyIcon size={150} />
+                  <p className="text-center text-xl font-medium text-darktext">
+                    No organizations to show, please sign in.
+                  </p>
                 </div>
               )}
             </div>

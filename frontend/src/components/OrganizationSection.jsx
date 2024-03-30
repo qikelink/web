@@ -31,6 +31,7 @@ import {
 } from "../../../backend/src/pocketbase";
 import { useToast } from "./ui/use-toast";
 import { Label } from "./ui/label";
+import { EmptyIcon } from "@/icons/EmptyIcon";
 
 const data = [1, 2, 3];
 
@@ -246,10 +247,12 @@ const OrganizationSection = () => {
           </Alert>
         ))
       ) : (
-        <div className="flex justify-center items-center h-full">
-          {/* Render Empty when no organization exist */}
-          <BookmarkEmpty />
-        </div>
+        <div className="flex flex-col  items-center w-full h-full mt-32">
+        <EmptyIcon size={150} />
+        <p className="text-center text-xl font-medium text-darktext">
+          No organization created yet.
+        </p>
+      </div>
       )}
 
       <div className="flex flex-end hidden">

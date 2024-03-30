@@ -11,27 +11,20 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import BookModal from "./BookModal";
-import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
-import Image from "next/image";
-import pic4 from "../../images/pic4.gif";
-import pic5 from "../../images/pic6.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import {
-  CreateBookmark,
   getImageUrl,
   getQuickMentors,
-  isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { EmptyBookmarkIcon, EmptyIcon } from "@/icons/EmptyIcon";
+import { EmptyIcon } from "@/icons/EmptyIcon";
 import { GoDotFill } from "react-icons/go";
-import QuickModal from "./QuickModal";
 
 const HomeCardSection = () => {
   const { quickMentors, setQuickMentors, isLoading } = useUser();

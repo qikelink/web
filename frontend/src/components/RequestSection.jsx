@@ -31,6 +31,7 @@ import {
 } from "../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 import { useToast } from "./ui/use-toast";
+import { EmptyIcon } from "@/icons/EmptyIcon";
 
 const RequestSection = () => {
   const { user, isLoadingUserData, meetingRequests, setMeetingRequests, setNotifications } =
@@ -197,10 +198,12 @@ const RequestSection = () => {
           </Alert>
         ))
       ) : (
-        <div className="flex justify-center items-center h-full">
-          {/* Render Empty when no organization exist */}
-          <BookmarkEmpty />
-        </div>
+        <div className="flex flex-col  items-center w-full h-full mt-32">
+            <EmptyIcon size={150} />
+            <p className="text-center text-xl font-medium text-darktext">
+              No request to show for now.
+            </p>
+          </div>
       )}
 
       <div className="flex flex-end hidden">

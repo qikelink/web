@@ -144,7 +144,7 @@ const VerifyModal = ({ blue, userData }) => {
 
             {/* Time slot section */}
             <div>
-              <Label className="font-semibold ">Social contact</Label>
+              <Label className="font-semibold ">Social handle (X, facebook etc.)</Label>
               <Input
                 name="contact"
                 type="text"

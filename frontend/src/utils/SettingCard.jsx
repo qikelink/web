@@ -58,7 +58,10 @@ const SettingCard = () => {
   }, [user]);
 
   useEffect(() => {
-    if (mentor && mentor.username && mentor.username.length > 0) {
+    const savedQuickService = localStorage.getItem("quickService");
+    if (savedQuickService !== null) {
+      setQuickService(savedQuickService === "true");
+    } else if (mentor && mentor.username && mentor.username.length > 0) {
       setQuickService(mentor.quickService || false);
     }
   }, [mentor]);
@@ -115,13 +118,14 @@ const SettingCard = () => {
 
   const handleQuickServiceToggle = async () => {
     try {
-      // Toggle the switch state
       const newQuickService = !quickService;
       setQuickService(newQuickService);
 
       const id = mentor.id;
-      // Call your function to update quick service status
+
       await toggleQuickService(id, newQuickService);
+
+      localStorage.setItem("quickService", newQuickService);
 
       toast({
         title: "Status toggled",
@@ -135,7 +139,7 @@ const SettingCard = () => {
         variant: "destructive",
       });
       console.error("quick service error:", error);
-      // Revert the state back if there's an error
+    
       setQuickService(!quickService);
     }
   };
@@ -225,7 +229,7 @@ const SettingCard = () => {
             <p className="text-sm font-medium leading-none">Quick Service</p>
           </div>
           {formData.verified === true ? (
-            mentor && mentor.contact && mentor.contact.length > 0 ? (
+            mentor && mentor.username && mentor.username.length > 0 ? (
               <Switch
                 checked={quickService}
                 onCheckedChange={handleQuickServiceToggle}
