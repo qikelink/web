@@ -70,7 +70,7 @@ export async function updateSetting(
   name,
   phoneNumber,
   bio,
-  awards,
+  awards
 ) {
   const data = {
     avatar: avatar,
@@ -89,13 +89,11 @@ export async function toggleQuickService(id, quickService) {
   await client.collection("mentors").update(id, data);
 }
 
-
 export async function verifyRequest(
   username,
   phoneNumber,
   bio,
   awards,
-  businessName,
   contact,
   account,
   validId,
@@ -108,7 +106,6 @@ export async function verifyRequest(
     phoneNumber: phoneNumber,
     bio: bio,
     awards: awards,
-    businessName: businessName,
     contact: contact,
     account: account,
     validId: validId,

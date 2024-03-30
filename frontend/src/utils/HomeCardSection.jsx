@@ -45,7 +45,7 @@ import {
   SignupGoogle,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
+import { EmptyBookmarkIcon } from "@/icons/EmptyIcon";
 
 const HomeCardSection = () => {
   const { mentors, isLoading } = useUser();

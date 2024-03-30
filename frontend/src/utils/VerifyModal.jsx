@@ -14,14 +14,18 @@ import { BsFillSendArrowDownFill } from "react-icons/bs";
 import { Input } from "@/components/ui/input";
 import { verifyRequest } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import Select from "react-select";
+import { dataset } from "@/dummy_api/dataSet";
+
+const options = dataset.map((item) => ({ value: item, label: item }));
 
 const VerifyModal = ({ blue, userData }) => {
   const [file, setFile] = useState("");
   const [formData, setFormData] = useState({
-    businessName: "",
     contact: "",
     account: "",
   });
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const { toast } = useToast();
 
@@ -32,7 +36,6 @@ const VerifyModal = ({ blue, userData }) => {
       [name]: value,
     });
   };
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,18 +53,21 @@ const VerifyModal = ({ blue, userData }) => {
       return;
     }
 
+    const interests = selectedOption
+      ? selectedOption.map((option) => option.label).join(", ")
+      : "";
+
     verifyRequest(
       userData[0].name,
       userData[0].phoneNumber,
       userData[0].bio,
       userData[0].awards,
-      formData.businessName,
       formData.contact,
       formData.account,
       file,
       "Free",
-      '',
-      "1"
+      interests,
+      "1.0/5.0"
     )
       .then(() => {
         toast({
@@ -111,15 +117,19 @@ const VerifyModal = ({ blue, userData }) => {
           <form className="space-y-3" onSubmit={handleSubmit}>
             {/* personal details */}
             <div>
-              <Label className="font-semibold ">Business name</Label>
-              <Input
-                name="businessName"
-                type="text"
-                placeholder="Business name"
-                className=" bg-inputbackground mt-1 "
-                value={formData.businessName}
-                onChange={handleChange}
-              />
+              <div className="">
+                <div>
+                  <Label className="font-semibold ">Interests</Label>
+                  <Select
+                    className="bg-inputbackground active:bg-inputbackground mt-1"
+                    isMulti={true}
+                    autoFocus={true}
+                    defaultValue={selectedOption}
+                    onChange={setSelectedOption}
+                    options={options}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Achievements section */}
@@ -161,7 +171,7 @@ const VerifyModal = ({ blue, userData }) => {
             <DialogFooter>
               <Button
                 size="xl"
-                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full"
+                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
                 type="submit"
               >
                 Submit

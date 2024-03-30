@@ -15,7 +15,6 @@ import { BsHeadsetVr } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa6";
 import { Badge } from "@/components/ui/badge";
 import { TiMicrophoneOutline } from "react-icons/ti";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
@@ -31,8 +30,8 @@ import { MdLogout, MdOutlineFeedback } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
-import { TiVideo } from "react-icons/ti";
-import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
+import { EmptyIcon } from "@/icons/EmptyIcon";
+import { IoFlashOutline } from "react-icons/io5";
 
 export default function Header() {
   const { user, isLoading, setUser, notifications, setNotifications } =
@@ -89,7 +88,12 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <h2 onClick={() => router.push(`/`)} className="font-bold text-blue text-2xl cursor-pointer">RAKATIS</h2>
+          <h2
+            onClick={() => router.push(`/`)}
+            className="font-bold text-blue text-2xl cursor-pointer"
+          >
+            RAKATIS
+          </h2>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
@@ -139,14 +143,14 @@ export default function Header() {
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                   >
                     <FaRegBell size={20} className="text-current" />
-                    
-                      {notifications.items && notifications.items.length > 0 && (
-                        <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
-                          {" "}
-                          {`${notifications.items.length}+`}
-                        </span>
-                      ) }
-                   
+
+                    {notifications.items && notifications.items.length > 0 && (
+                      <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
+                        {" "}
+                        {`${notifications.items.length}+`}
+                      </span>
+                    )}
+
                     {isNotificationOpen && (
                       <>
                         <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
@@ -173,7 +177,12 @@ export default function Header() {
                               </div>
                             ))
                           ) : (
-                            <EmptyBookmarkIcon size={300} />
+                            <div className="flex flex-col  items-center w-full h-full my-16">
+                              <EmptyIcon size={120} />
+                              <p className="text-center text-lg font-medium text-darktext">
+                                No notification to show for now.
+                              </p>
+                            </div>
                           )}
                         </div>
                       </>
@@ -214,6 +223,20 @@ export default function Header() {
                 >
                   <AiOutlineHome size={24} className="ml-2" />
                   <p>Home</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/quickService"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/quickService"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}
+                >
+                  <IoFlashOutline size={22} className="ml-2" />
+                  <p>Quick Service</p>
                 </Link>
               </li>
               <li>

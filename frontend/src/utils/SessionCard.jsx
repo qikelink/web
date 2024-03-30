@@ -22,7 +22,7 @@ import { BsHeadsetVr } from "react-icons/bs";
 import { createRoom } from "./createRoom";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
-import { EmptyBookmarkIcon } from "@/icons/EmptyBookmarkIcon";
+import { EmptyIcon } from "@/icons/EmptyIcon";
 import { Item } from "@radix-ui/react-dropdown-menu";
 import { getImageUrl } from "../../../backend/src/pocketbase";
 import SessionModal from "./SessionModal";
@@ -95,106 +95,112 @@ const SessionCard = () => {
 
   return (
     <>
-      <div>
+      <div className="min-h-screen flex flex-col items-center ">
         <KeywordBar data={status} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
-          {isLoadingUserData ? (
-            list.map((item, index) => (
-              <Skeleton className="h-60 w-80 rounded-lg" key={index}></Skeleton>
-            ))
-          ) : filteredSessions.length > 0 ? (
-            filteredSessions.map((item, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex flex-row justify-between text-sm">
-                    <span>Session Status</span>
-                    <Badge
-                      variant="outline"
-                      className={`rounded-full ${
-                        selectedButtons === "Pending"
-                          ? "bg-yellow-100"
-                          : selectedButtons === "Approved"
-                          ? "bg-green-100 text-green-700"
-                          : selectedButtons === "Past"
-                          ? "bg-red text-white"
-                          : "bg-green-700 text-green-200"
-                      }`}
-                    >
-                      {selectedButtons}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="text-small text-default-400">
-                  <div className="flex justify-between">
-                    <div className="flex gap-2">
-                      <Avatar>
-                        <AvatarImage
-                          src={getImageUrl(
-                            item.expand.mentor.collectionId,
-                            item.expand.mentor.id,
-                            item.expand.mentor.avatar
-                          )}
-                        />
-                        <AvatarFallback>
-                          {item.expand.mentor.username
-                            .slice(0, 2)
-                            .toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col gap-1 items-start justify-center">
-                        <h4 className="text-small font-semibold leading-none text-default-600">
-                          {item.expand.mentor.username}
-                        </h4>
-                        <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                          {item.rating} <FaStar color="yellow" size={18} />
-                        </span>
+          {isLoadingUserData && filteredSessions.length === 0
+            ? list.map((item, index) => (
+                <Skeleton
+                  className="h-60 w-80 rounded-lg"
+                  key={index}
+                ></Skeleton>
+              ))
+            : filteredSessions.map((item, index) => (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex flex-row justify-between text-sm">
+                      <span>Session Status</span>
+                      <Badge
+                        variant="outline"
+                        className={`rounded-full ${
+                          selectedButtons === "Pending"
+                            ? "bg-yellow-100"
+                            : selectedButtons === "Approved"
+                            ? "bg-green-100 text-green-700"
+                            : selectedButtons === "Past"
+                            ? "bg-red text-white"
+                            : "bg-green-700 text-green-200"
+                        }`}
+                      >
+                        {selectedButtons}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="text-small text-default-400">
+                    <div className="flex justify-between">
+                      <div className="flex gap-2">
+                        <Avatar>
+                          <AvatarImage
+                            src={getImageUrl(
+                              item.expand.mentor.collectionId,
+                              item.expand.mentor.id,
+                              item.expand.mentor.avatar
+                            )}
+                          />
+                          <AvatarFallback>
+                            {item.expand.mentor.username
+                              .slice(0, 2)
+                              .toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col gap-1 items-start justify-center">
+                          <h4 className="text-small font-semibold leading-none text-default-600">
+                            {item.expand.mentor.username}
+                          </h4>
+                          <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
+                            {item.rating} <FaStar color="yellow" size={18} />
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="py-2 flex items-center ">
-                    <IoBook color="#0096FF" className="mr-2" size={20} /> Host:{" "}
-                    {item.expand.organization.length > 0
-                      ? item.expand.organization.username
-                      : item.expand.owner.name}
-                  </div>
-                  <span className="py-2 flex items-center">
-                    <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}
-                    SessionDate: {item.sessionDate}
-                  </span>
-                  <Separator className="my-2 -mb-4" />
-                </CardContent>
-                <CardFooter className="flex justify-between ">
-                  {selectedButtons === "Now" ? (
-                    <Button
-                      onClick={() => createMeet()}
-                      className="bg-blue flex justify-around gap-2 item-center"
-                    >
-                      Join Meeting{" "}
-                      <BsHeadsetVr
-                        size={20}
-                        className={`text-current ${
-                          isSpinning ? "animate-spin" : ""
-                        }`}
+                    <div className="py-2 flex items-center ">
+                      <IoBook color="#0096FF" className="mr-2" size={20} />{" "}
+                      Host:{" "}
+                      {item.expand.organization.length > 0
+                        ? item.expand.organization.username
+                        : item.expand.owner.name}
+                    </div>
+                    <span className="py-2 flex items-center">
+                      <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}
+                      SessionDate: {item.sessionDate}
+                    </span>
+                    <Separator className="my-2 -mb-4" />
+                  </CardContent>
+                  <CardFooter className="flex justify-between ">
+                    {selectedButtons === "Now" ? (
+                      <Button
+                        onClick={() => createMeet()}
+                        className="bg-blue flex justify-around gap-2 item-center"
+                      >
+                        Join Meeting{" "}
+                        <BsHeadsetVr
+                          size={20}
+                          className={`text-current ${
+                            isSpinning ? "animate-spin" : ""
+                          }`}
+                        />
+                      </Button>
+                    ) : (
+                      <SessionModal
+                        data={item}
+                        buttonName="View booking details"
+                        blue="text-blue"
                       />
-                    </Button>
-                  ) : (
-                    <SessionModal
-                      data={item}
-                      buttonName="View booking details"
-                      blue="text-blue"
-                    />
-                  )}
-                </CardFooter>
-              </Card>
-            ))
-          ) : (
-            // change to be an empty state that shows no sesssion to show for now
-            <div className="flex justify-center items-center">
-              <EmptyBookmarkIcon />
-            </div>
-          )}
+                    )}
+                  </CardFooter>
+                </Card>
+              ))}
         </div>
+
+        {!isLoadingUserData && filteredSessions.length === 0 && (
+          <div className="flex flex-col  items-center w-full h-full mt-32">
+            <EmptyIcon size={150} />
+            <p className="text-center text-xl font-medium text-darktext">
+              No sessions to show for now.
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

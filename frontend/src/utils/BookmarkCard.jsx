@@ -10,7 +10,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import ModalBox from "./BookModal";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
@@ -19,9 +18,13 @@ import { list } from "@/dummy_api/dataSet";
 import BookModal from "./BookModal";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
-import { RemoveBookmark, getBookmarks, getImageUrl } from "../../../backend/src/pocketbase";
+import {
+  RemoveBookmark,
+  getBookmarks,
+  getImageUrl,
+} from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { EmptyIcon } from "@/icons/EmptyIcon";
 
 const BookmarkCard = () => {
   const { user, bookmarks, setBookmarks, isLoadingUserData } = useUser();
@@ -66,15 +69,15 @@ const BookmarkCard = () => {
   };
 
   return (
-    <div className="h-screen">
-      {isLoadingUserData ? (
+    <div className="min-h-screen flex flex-col items-center ">
+      {isLoadingUserData && bookmarks.length === 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {/* Skeleton loaders */}
           {list.map((item, index) => (
             <Skeleton key={index} className="h-52 w-64 rounded-lg" />
           ))}
         </div>
-      ) : bookmarks.length > 0 ? (
+      ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {/* Render bookmark cards */}
           {bookmarks.map((item, index) => (
@@ -114,7 +117,6 @@ const BookmarkCard = () => {
               </CardHeader>
               <CardContent className="text-small text-default-400">
                 <div className="flex gap-2 ">
-                  
                   {item && item.interests
                     ? item.interests.split(",").map((interest, index) => (
                         <Badge key={index} variant="outline">
@@ -148,10 +150,14 @@ const BookmarkCard = () => {
             </Card>
           ))}
         </div>
-      ) : (
-        <div className="flex justify-center items-center h-full">
-          {/* Render BookmarkEmpty when no bookmarks exist */}
-          <BookmarkEmpty />
+      )}
+
+      {!isLoadingUserData && bookmarks.length === 0 && (
+        <div className="flex flex-col  items-center w-full h-full mt-32">
+          <EmptyIcon size={150} />
+          <p className="text-center text-xl font-medium text-darktext">
+            No bookmarks to show for now.
+          </p>
         </div>
       )}
     </div>
