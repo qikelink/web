@@ -86,7 +86,6 @@ const VerifyModal = ({ blue, userData }) => {
       })
       .finally(() => {
         setFormData({
-          businessName: "",
           contact: "",
           account: "",
         });
