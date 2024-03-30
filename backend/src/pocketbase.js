@@ -1,6 +1,6 @@
 import PocketBase from "pocketbase";
 
-const url = "https://offrep.pockethost.io/";
+const url = "https://one-or.pockethost.io/";
 
 export const client = new PocketBase(url);
 client.autoCancellation(false);

@@ -5,7 +5,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "@/components/ui/toaster";
 import { UserProvider } from "@/contexts/user-context";
-
+import HuddleContextProvider from "@/contexts/HuddleContextProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -14,8 +14,8 @@ const fontSans = FontSans({
 });
 
 export const metadata = {
-  title: "Wissh",
-  description: "Recieve message and presents from your friends anonymously ",
+  title: "Y project",
+  description: "YC batch 24 july-august",
 };
 
 export default function RootLayout({ children }) {
@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           <UserProvider>
-            {children}
+            <HuddleContextProvider>{children}</HuddleContextProvider>
           </UserProvider>
         </AuthProvider>
 
