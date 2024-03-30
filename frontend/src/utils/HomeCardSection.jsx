@@ -192,7 +192,7 @@ const HomeCardSection = () => {
 
                         <div className="flex flex-col gap-1 items-start justify-center">
                           <p className="text-sm font-semibold leading-none text-default-600">
-                            {item.contact}
+                            {item.username}
                           </p>
                           <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
                             {item.rating}{" "}
