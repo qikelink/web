@@ -33,13 +33,6 @@ const VerifyModal = ({ blue, userData }) => {
     });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      id: file,
-    });
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,8 +51,7 @@ const VerifyModal = ({ blue, userData }) => {
     }
 
     verifyRequest(
-      userData[0].fullName,
-      userData[0].username,
+      userData[0].name,
       userData[0].phoneNumber,
       userData[0].bio,
       userData[0].awards,
@@ -68,7 +60,7 @@ const VerifyModal = ({ blue, userData }) => {
       formData.account,
       file,
       "Free",
-      undefined,
+      '',
       "1"
     )
       .then(() => {

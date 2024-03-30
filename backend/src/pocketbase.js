@@ -33,7 +33,9 @@ export async function getQuickMentors() {
 
 // to get a single mentor, for verification purposes
 export async function getMentor() {
-  return await client.collection("mentors").getFirstListItem(`users = '${client.authStore.model.id}'`);
+  return await client
+    .collection("mentors")
+    .getFirstListItem(`users = '${client.authStore.model.id}'`);
 }
 
 export async function Signup(email, password) {
@@ -65,20 +67,17 @@ export function signout(setIsUserValid) {
 export async function updateSetting(
   id,
   avatar,
-  username,
+  name,
   phoneNumber,
   bio,
   awards,
-  quickService
 ) {
   const data = {
     avatar: avatar,
-    fullName: fullName,
-    username: username,
+    name: name,
     phoneNumber: phoneNumber,
     bio: bio,
     awards: awards,
-    quickService: quickService,
   };
   await client.collection("users").update(id, data);
 }
@@ -89,6 +88,7 @@ export async function toggleQuickService(id, quickService) {
   };
   await client.collection("mentors").update(id, data);
 }
+
 
 export async function verifyRequest(
   username,

@@ -38,7 +38,7 @@ const RequestSection = () => {
   const { toast } = useToast();
 
   const acceptRequest = (item) => {
-    const successMessage = `Hello, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.username} has been approved.`;
+    const successMessage = `Hello, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.name} has been approved.`;
     
     updateSession(item.id, true)
       .then(() => {
@@ -73,7 +73,7 @@ const RequestSection = () => {
   };
   
   const rejectRequest = (item) => {
-    const rejectMessage = `Sorry, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.username} has been rejected.`;
+    const rejectMessage = `Sorry, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.name} has been rejected.`;
   
     updateSession(item.id, false, true)
       .then(() => {
@@ -144,14 +144,14 @@ const RequestSection = () => {
                 alt="@shadcn"
               />
               <AvatarFallback>
-                {item.expand.owner.username.slice(0, 2).toUpperCase()}
+                {item.expand.owner.name.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="hidden md:block">
               <AlertTitle>
                 {item.organization.length > 0
                   ? item.expand.organization.org_name
-                  : item.expand.owner.username}
+                  : item.expand.owner.name}
               </AlertTitle>
               <AlertDescription>
                 {item.organization.length > 0
@@ -171,7 +171,7 @@ const RequestSection = () => {
                       Host:{" "}
                       {item.organization.length > 0
                         ? item.expand.organization.username
-                        : item.expand.owner.username}
+                        : item.expand.owner.name}
                     </DialogDescription>
                   </DialogHeader>
                   <div>{item.purpose}</div>

@@ -153,12 +153,10 @@ const SessionCard = () => {
                     </div>
                   </div>
                   <div className="py-2 flex items-center ">
-                    <IoBook color="#0096FF" className="mr-2" size={20} />{" "}
-                    Purpose:{" "}
-                    {item.expand.organization
+                    <IoBook color="#0096FF" className="mr-2" size={20} /> Host:{" "}
+                    {item.expand.organization.length > 0
                       ? item.expand.organization.username
-                      : item.purpose}
-                    {console.log({ item })}
+                      : item.expand.owner.name}
                   </div>
                   <span className="py-2 flex items-center">
                     <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}

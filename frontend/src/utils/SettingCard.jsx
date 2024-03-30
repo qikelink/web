@@ -51,7 +51,7 @@ const SettingCard = () => {
         ? {
             avatar: user[0].avatar,
             email: user[0].email,
-            username: user[0].username,
+            username: user[0].name,
             phoneNumber: user[0].phoneNumber,
             bio: user[0].bio,
             awards: user[0].awards,
@@ -148,7 +148,7 @@ const SettingCard = () => {
   return (
     <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
       {/* Profile image */}
-      <Label className="text-lg">Profile image</Label>
+      <Label className="text-lg">Profile Image</Label>
       {isLoading ? (
         <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
       ) : (
@@ -196,7 +196,8 @@ const SettingCard = () => {
           <Input
             className="py-6 px-3 bg-inputbackground"
             placeholder="Please enter your full name"
-            name="fullName"
+            name="username"
+            type='text'
             value={formData.username}
             onChange={handleChange}
           />
