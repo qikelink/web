@@ -29,7 +29,6 @@ const SettingCard = () => {
   const { toast } = useToast();
   const { user, mentor, isLoading, setUser } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
- 
 
   useEffect(() => {
     const defaultFormData = {
@@ -185,7 +184,6 @@ const SettingCard = () => {
         )}
       </div>
 
-      
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
         <div>
           <Label className="text-lg">Full name</Label>
@@ -227,7 +225,7 @@ const SettingCard = () => {
             <p className="text-sm font-medium leading-none">Quick Service</p>
           </div>
           {formData.verified === true ? (
-            mentor && mentor.username && mentor.username.length > 0 ? (
+            mentor && mentor.contact && mentor.contact.length > 0 ? (
               <Switch
                 checked={quickService}
                 onCheckedChange={handleQuickServiceToggle}

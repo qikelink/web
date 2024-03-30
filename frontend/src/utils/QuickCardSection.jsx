@@ -78,9 +78,9 @@ const HomeCardSection = () => {
                         </Avatar>
 
                         <div className="flex flex-col gap-1 items-start justify-center">
-                          <h4 className="text-small font-semibold leading-none text-default-600">
-                            {item.username}
-                          </h4>
+                          <p className="text-sm font-semibold leading-none text-default-600">
+                            {item.contact}
+                          </p>
                           <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
                             {item.rating}{" "}
                             <FaStar
@@ -139,7 +139,9 @@ const HomeCardSection = () => {
         {!isLoading && quickMentors.length === 0 && (
           <div className="flex flex-col  items-center w-full h-full mt-32">
             <EmptyIcon size={150} />
-            <p className="text-center text-xl font-medium text-darktext">No available mentor to show for now.</p>
+            <p className="text-center text-xl font-medium text-darktext">
+              No available mentor to show for now.
+            </p>
           </div>
         )}
       </div>

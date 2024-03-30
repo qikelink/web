@@ -21,7 +21,6 @@ const MetricSection = () => {
   return (
     <div>
       <Chart options={options} series={series} type="bar" width="500" />
-      <Chart options={options} series={series} type="donut" width="380" />
     </div>
   );
 };

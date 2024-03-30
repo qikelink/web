@@ -157,7 +157,7 @@ const OrganizationSection = () => {
                   </Button>
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-2 h-32 overflow-y-auto border p-1">
+              <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
                 {members.map((email, index) => (
                   <div
                     key={index}
