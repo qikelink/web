@@ -66,7 +66,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
-      <div className="font-poppins flex justify-between items-center py-3">
+      <div className="font-poppins flex justify-between items-center pb-3">
         <div className="flex items-center justify-between gap-1 hover:cursor">
           {isDropdownOpen ? (
             <Badge
@@ -96,7 +96,12 @@ export default function Header() {
           >
             RAKATIS
           </h2> */}
-          <Image src={logo} width={150} height={150} />
+          <Image
+            onClick={() => router.push(`/`)}
+            src={logo}
+            width={150}
+            height={150}
+          />
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
