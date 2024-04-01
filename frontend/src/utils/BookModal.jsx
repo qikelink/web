@@ -30,10 +30,23 @@ import {
   CreateBookmark,
   createSession,
   getImageUrl,
+  isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import { LoaderIcon } from "react-hot-toast";
+import LoginDialog from "@/components/dialog/login";
+import { usePathname } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
@@ -43,10 +56,10 @@ const BookModal = ({ buttonName, blue, data }) => {
     purpose: "",
   });
   const { user, createdOrganization } = useUser();
-
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const pathname = usePathname();
 
   const options = createdOrganization.map((org) => ({
     value: org.id,
@@ -100,7 +113,7 @@ const BookModal = ({ buttonName, blue, data }) => {
           variant: "default",
         });
         setIsLoading(!isLoading);
-        setIsClicked(!isClicked);
+        setIsClicked(false);
       })
       .catch((error) => {
         toast({
@@ -255,35 +268,48 @@ const BookModal = ({ buttonName, blue, data }) => {
               </div>
 
               {/* Time slot section */}
-              <div className="flex flex-col space-y-2 ">
-                <Label className="font-semibold">Schedule date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? (
-                        format(date, "MMMM dd, yyyy h:mm a")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+              {pathname === "/quickService" ? (
+                <Input
+                  className=" w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                  type="time"
+                  placeholder="Pick Time In This Format 9:00pm"
+                />
+              ) : (
+                <div className="flex flex-col space-y-2 ">
+                  <Label className="font-semibold">Schedule Date/Time</Label>
+                  <Input
+                    className=" w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    type="time"
+                    placeholder="Pick Time In This Format 9:00pm"
+                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? (
+                          format(date, "MMMM dd, yyyy h:mm a")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )}
 
               <div className="relative inline-block w-full">
                 {/* <Label className="font-semibold">Request Meeting As</Label> */}
@@ -332,21 +358,30 @@ const BookModal = ({ buttonName, blue, data }) => {
               </div>
             </div>
             <DialogFooter>
-             {isClicked ? <Button
-                disabled
-                size="xl"
-                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
-                type="submit"
-              >
-                Request 
-              </Button>: <Button
-                size="xl"
-                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
-                type="submit"
-              >
-                Request
-              </Button>
-              }
+              {isUserValid ? (
+                isClicked ? (
+                  <Button
+                    disabled
+                    size="xl"
+                    className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                    type="submit"
+                  >
+                    Request
+                  </Button>
+                ) : (
+                  <Button
+                    size="xl"
+                    className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                    type="submit"
+                  >
+                    Request
+                  </Button>
+                )
+              ) : (
+                <div className="flex mt-2">
+                  <LoginDialog />
+                </div>
+              )}
             </DialogFooter>
           </form>
         </DialogContent>
