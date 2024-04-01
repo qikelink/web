@@ -32,6 +32,8 @@ import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { IoFlashOutline } from "react-icons/io5";
+import Image from "next/image";
+import logo from "../../images/logorm.png";
 
 export default function Header() {
   const { user, isLoading, setUser, notifications, setNotifications } =
@@ -88,12 +90,13 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <h2
+          {/* <h2
             onClick={() => router.push(`/`)}
             className="font-bold text-blue text-xl md:text-2xl  cursor-pointer"
           >
             RAKATIS
-          </h2>
+          </h2> */}
+          <Image src={logo} width={150} height={150} />
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
