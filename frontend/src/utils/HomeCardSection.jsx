@@ -18,17 +18,15 @@ import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
 import Image from "next/image";
 import pic4 from "../../images/pic4.gif";
-import pic5 from "../../images/pic6.jpg";
+import pic5 from "../../images/value.jpg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import {
   CreateBookmark,
   getImageUrl,
-  isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { EmptyBookmarkIcon } from "@/icons/EmptyIcon";
-import LoginDialog from "@/components/dialog/login";
+
 
 const HomeCardSection = () => {
   const { mentors, isLoading } = useUser();
