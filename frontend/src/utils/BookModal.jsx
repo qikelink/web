@@ -34,18 +34,8 @@ import {
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
-import { LoaderIcon } from "react-hot-toast";
 import LoginDialog from "@/components/dialog/login";
 import { usePathname } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
 const BookModal = ({ buttonName, blue, data }) => {
@@ -293,7 +283,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {date ? (
-                          format(date, "MMMM dd, yyyy h:mm a")
+                          format(date, "MMMM dd, yyyy ")
                         ) : (
                           <span>Pick a date</span>
                         )}
