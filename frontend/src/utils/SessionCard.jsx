@@ -38,6 +38,8 @@ const SessionCard = () => {
     router.push(`/${roomId}`);
   };
 
+  console.log(allSessions)
+
   const list = [
     {
       status: "Now",
@@ -130,9 +132,9 @@ const SessionCard = () => {
                         <Avatar>
                           <AvatarImage
                             src={getImageUrl(
-                              item.expand.mentor.collectionId,
-                              item.expand.mentor.id,
-                              item.expand.mentor.avatar
+                              item.expand.mentor.expand.users.collectionId,
+                              item.expand.mentor.expand.users.id,
+                              item.expand.mentor.expand.users.avatar
                             )}
                           />
                           <AvatarFallback>

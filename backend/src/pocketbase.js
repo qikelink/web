@@ -188,7 +188,7 @@ export async function getCreatedSessions(id) {
 export async function getAllSessions(id, email) {
   return await client.collection("sessions").getFullList({
     filter: `owner = '${id}' || organization.members ~ '${email}'`,
-    expand: "organization,mentor,owner ",
+    expand: "organization,mentor.users,owner ",
   });
 }
 
