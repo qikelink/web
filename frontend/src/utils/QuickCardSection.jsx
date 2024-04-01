@@ -26,7 +26,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { GoDotFill } from "react-icons/go";
 
-const HomeCardSection = () => {
+const QuickCardSection = () => {
   const { quickMentors, setQuickMentors, isLoading } = useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -142,4 +142,4 @@ const HomeCardSection = () => {
   );
 };
 
-export default HomeCardSection;
+export default QuickCardSection;

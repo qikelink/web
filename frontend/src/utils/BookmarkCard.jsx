@@ -88,9 +88,9 @@ const BookmarkCard = () => {
                     <Avatar>
                       <AvatarImage
                         src={getImageUrl(
-                          item.collectionId,
-                          item.id,
-                          item.avatar
+                          item.expand.users.collectionId,
+                          item.expand.users.id,
+                          item.expand.users.avatar
                         )}
                       />
                       <AvatarFallback>CN</AvatarFallback>
