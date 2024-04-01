@@ -38,6 +38,8 @@ const SessionCard = () => {
     router.push(`/${roomId}`);
   };
 
+  console.log(allSessions)
+
   const list = [
     {
       status: "Now",
@@ -70,26 +72,23 @@ const SessionCard = () => {
     },
   ];
 
-  const currentDate = new Date();
+  const isNowSession = (sessionDate) => {
+    const sessionDateTime = new Date(sessionDate).getTime();
+    const currentDateTime = new Date().getTime();
+    return sessionDateTime >= currentDateTime;
+  };
 
   const filteredSessions = allSessions.filter((item) => {
     if (selectedButtons === "Pending") {
       return !item.approved && !item.done;
     } else if (selectedButtons === "Approved") {
-      return !item.done && item.approved;
+      return !item.done && item.approved && !isNowSession(item.sessionDate);
     } else if (selectedButtons === "Canceled") {
       return item.done && !item.approved;
     } else if (selectedButtons === "Past") {
       return item.done && item.approved;
     } else {
-      const sessionDate = new Date(item.sessionDate);
-      return (
-        sessionDate.getDate() === currentDate.getDate() &&
-        sessionDate.getMonth() === currentDate.getMonth() &&
-        sessionDate.getFullYear() === currentDate.getFullYear() &&
-        item.approved &&
-        !item.done
-      );
+      return isNowSession(item.sessionDate) && item.approved && !item.done;
     }
   });
 
@@ -133,9 +132,9 @@ const SessionCard = () => {
                         <Avatar>
                           <AvatarImage
                             src={getImageUrl(
-                              item.expand.mentor.collectionId,
-                              item.expand.mentor.id,
-                              item.expand.mentor.avatar
+                              item.expand.mentor.expand.users.collectionId,
+                              item.expand.mentor.expand.users.id,
+                              item.expand.mentor.expand.users.avatar
                             )}
                           />
                           <AvatarFallback>
@@ -157,9 +156,10 @@ const SessionCard = () => {
                     <div className="py-2 flex items-center ">
                       <IoBook color="#0096FF" className="mr-2" size={20} />{" "}
                       Host:{" "}
-                      {/* {item.expand.organization.length > 0
+                      {item.expand.organization &&
+                      item.expand.organization.length > 0
                         ? item.expand.organization.username
-                        : item.expand.owner.name} */}
+                        : item.expand.owner.name}
                     </div>
                     <span className="py-2 flex items-center">
                       <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}

@@ -26,9 +26,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { createSession, getImageUrl } from "../../../backend/src/pocketbase";
+import {
+  CreateBookmark,
+  createSession,
+  getImageUrl,
+} from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { Input } from "@/components/ui/input";
 import { useUser } from "@/contexts/user-context";
 import { LoaderIcon } from "react-hot-toast";
 
@@ -113,11 +116,38 @@ const BookModal = ({ buttonName, blue, data }) => {
         setSelectedOption("");
         setDate(null);
         setFormData({ purpose: "" });
+        setIsLoading(false);
       });
   };
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleBookmarkToggle = (mentor) => {
+    CreateBookmark(
+      mentor.username,
+      mentor.rate,
+      mentor.bio,
+      mentor.awards,
+      mentor.interests,
+      mentor.rating
+    )
+      .then(() => {
+        toast({
+          title: "Added to bookmarks",
+          description: "Added to bookmarks successfully!",
+          variant: "default",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Failed to add to bookmarks",
+          description: "An error occurred while adding to bookmarks.",
+          variant: "destructive",
+        });
+        console.error("Bookmark addition error:", error);
+      });
   };
 
   return (
@@ -139,12 +169,12 @@ const BookModal = ({ buttonName, blue, data }) => {
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Avatar>
-                      {data && data.avatar ? (
+                      {data && data.expand.users ? (
                         <AvatarImage
                           src={getImageUrl(
-                            data.collectionId,
-                            data.id,
-                            data.avatar
+                            data.expand.users.collectionId,
+                            data.expand.users.id,
+                            data.expand.users.avatar
                           )}
                         />
                       ) : (
@@ -167,10 +197,14 @@ const BookModal = ({ buttonName, blue, data }) => {
                     </div>
                   </div>
                   <div className="flex space-x-2 items-center">
-                    <Toggle variant="outline" aria-label="Toggle italic">
+                    <Toggle
+                      variant="outline"
+                      aria-label="Toggle italic"
+                      onClick={() => handleBookmarkToggle(data)}
+                    >
                       <BsJournalBookmarkFill />
                     </Toggle>
-                    <Button size="icon" variant="outline">
+                    <Button size="icon" variant="outline" type="button">
                       <BsShareFill />
                     </Button>
                   </div>

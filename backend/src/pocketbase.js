@@ -118,7 +118,6 @@ export async function verifyRequest(
 }
 
 export async function CreateBookmark(
-  avatar,
   username,
   rate,
   bio,
@@ -127,14 +126,13 @@ export async function CreateBookmark(
   rating
 ) {
   const data = {
-    avatar: avatar,
     username: username,
     rate: rate,
     bio: bio,
     awards: awards,
     interests: interests,
     rating: rating,
-    user: client.authStore.model.id,
+    users: client.authStore.model.id,
   };
   await client.collection("bookmarks").create(data);
 }
@@ -146,7 +144,7 @@ export async function RemoveBookmark(id) {
 export async function getBookmarks(id) {
   return await client
     .collection("bookmarks")
-    .getFullList({ filter: `user = '${id}'` });
+    .getFullList({ filter: `users = '${id}'`, expand: "users" });
 }
 
 export async function createSession(
@@ -190,7 +188,7 @@ export async function getCreatedSessions(id) {
 export async function getAllSessions(id, email) {
   return await client.collection("sessions").getFullList({
     filter: `owner = '${id}' || organization.members ~ '${email}'`,
-    expand: "organization,mentor ",
+    expand: "organization,mentor.users,owner ",
   });
 }
 
