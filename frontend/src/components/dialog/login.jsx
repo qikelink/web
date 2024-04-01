@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -21,6 +22,7 @@ import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
+import { ImCross } from "react-icons/im";
 
 const LoginDialog = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -124,7 +126,7 @@ const LoginDialog = () => {
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
   return (
-    <Dialog >
+    <Dialog>
       <DialogTrigger>
         <Button
           size="sm"
@@ -135,10 +137,13 @@ const LoginDialog = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm rounded-md">
-        <DialogHeader className="mt-4 mb-2">
-          <DialogTitle className="text-left">
+        <DialogHeader className="mt-2 mb-2">
+          <DialogTitle className="flex justify-between">
             {" "}
             {isSignIn ? "Log in" : "Sign up"}{" "}
+            <DialogClose asChild>
+              <ImCross size={12} />
+            </DialogClose>
           </DialogTitle>
           <DialogDescription className="text-left">
             Get started and book a mentor of your choice

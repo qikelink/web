@@ -43,6 +43,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const options = createdOrganization.map((org) => ({
     value: org.id,
@@ -63,6 +64,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(!isLoading);
+    setIsClicked(!isClicked);
 
     const isAnyFieldEmpty = Object.values(formData).some(
       (value) => value === ""
@@ -95,6 +97,7 @@ const BookModal = ({ buttonName, blue, data }) => {
           variant: "default",
         });
         setIsLoading(!isLoading);
+        setIsClicked(!isClicked);
       })
       .catch((error) => {
         toast({
@@ -106,6 +109,7 @@ const BookModal = ({ buttonName, blue, data }) => {
       })
       .finally(() => {
         setIsExpanded(false);
+
         setSelectedOption("");
         setDate(null);
         setFormData({ purpose: "" });
@@ -174,7 +178,6 @@ const BookModal = ({ buttonName, blue, data }) => {
               </DialogTitle>
             </DialogHeader>
             <DialogDescription className="flex flex-wrap space-x-3 mt-2">
-              
               {data && data.interests
                 ? data.interests.split(",").map((interest, index) => (
                     <Badge key={index} variant="outline">
@@ -295,13 +298,21 @@ const BookModal = ({ buttonName, blue, data }) => {
               </div>
             </div>
             <DialogFooter>
-              <Button
+             {isClicked ? <Button
+                disabled
                 size="xl"
                 className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
                 type="submit"
               >
-                Request {isLoading && <LoaderIcon/>}
+                Request 
+              </Button>: <Button
+                size="xl"
+                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                type="submit"
+              >
+                Request
               </Button>
+              }
             </DialogFooter>
           </form>
         </DialogContent>

@@ -90,7 +90,7 @@ export default function Header() {
 
           <h2
             onClick={() => router.push(`/`)}
-            className="font-bold text-blue text-2xl cursor-pointer"
+            className="font-bold text-blue text-xl md:text-2xl  cursor-pointer"
           >
             RAKATIS
           </h2>

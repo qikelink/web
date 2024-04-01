@@ -157,9 +157,9 @@ const SessionCard = () => {
                     <div className="py-2 flex items-center ">
                       <IoBook color="#0096FF" className="mr-2" size={20} />{" "}
                       Host:{" "}
-                      {item.expand.organization.length > 0
+                      {/* {item.expand.organization.length > 0
                         ? item.expand.organization.username
-                        : item.expand.owner.name}
+                        : item.expand.owner.name} */}
                     </div>
                     <span className="py-2 flex items-center">
                       <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}
