@@ -70,23 +70,75 @@ const SessionCard = () => {
     },
   ];
 
-  const isNowSession = (sessionDate) => {
-    const sessionDateTime = new Date(sessionDate).getTime();
-    const currentDateTime = new Date().getTime();
-    return sessionDateTime >= currentDateTime;
+  const isNowSession = (sessionDate, sessionTime) => {
+    const currentDate = new Date();
+    const currentDateTime = currentDate.getTime();
+    const [currentHour, currentMinute] = [
+      currentDate.getHours(),
+      currentDate.getMinutes(),
+    ];
+
+    const [hour, minute] = sessionTime.split(":").map(Number);
+
+    // Convert sessionDate to local date object
+    const sessionDateTimeUTC = new Date(sessionDate); // Parse sessionDate as UTC
+    const sessionDateTime = new Date(
+      sessionDateTimeUTC.getTime() +
+        sessionDateTimeUTC.getTimezoneOffset() * 60000
+    ); // Convert UTC to local timezone
+    sessionDateTime.setHours(hour, minute, 0, 0);
+
+    // Check if the session date matches the current date
+    const isSameDate =
+      currentDate.toDateString() === sessionDateTime.toDateString();
+
+    const sessionEndTime = sessionDateTime.getTime() + 30 * 60 * 1000;
+
+    return (
+      isSameDate &&
+      currentDateTime >= sessionDateTime.getTime() &&
+      currentDateTime <= sessionEndTime
+    );
+  };
+
+  const isPastSession = (sessionDate, sessionTime) => {
+    const currentDate = new Date();
+    const currentDateTime = currentDate.getTime();
+
+    const [hour, minute] = sessionTime.split(":").map(Number);
+
+    const sessionDateTimeUTC = new Date(sessionDate);
+    const sessionDateTime = new Date(
+      sessionDateTimeUTC.getTime() +
+        sessionDateTimeUTC.getTimezoneOffset() * 60000
+    ); // Convert UTC to local timezone
+    sessionDateTime.setHours(hour, minute, 0, 0);
+
+    const pastSessionStartTime = currentDateTime + 30 * 60 * 1000;
+
+    return sessionDateTime.getTime() < pastSessionStartTime;
   };
 
   const filteredSessions = allSessions.filter((item) => {
     if (selectedButtons === "Pending") {
       return !item.approved && !item.done;
     } else if (selectedButtons === "Approved") {
-      return !item.done && item.approved && !isNowSession(item.sessionDate);
+      return (
+        !item.done &&
+        item.approved &&
+        !isNowSession(item.sessionDate, item.sessionTime) &&
+        !isPastSession(item.sessionDate, item.sessionTime)
+      );
     } else if (selectedButtons === "Canceled") {
       return item.done && !item.approved;
     } else if (selectedButtons === "Past") {
-      return item.done && item.approved;
+      return isPastSession(item.sessionDate, item.sessionTime);
     } else {
-      return isNowSession(item.sessionDate) && item.approved && !item.done;
+      return (
+        isNowSession(item.sessionDate, item.sessionTime) &&
+        item.approved &&
+        !item.done
+      );
     }
   });
 
@@ -186,6 +238,8 @@ const SessionCard = () => {
                         blue="text-blue"
                       />
                     )}
+
+                    {console.log(filteredSessions)}
                   </CardFooter>
                 </Card>
               ))}

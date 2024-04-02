@@ -152,6 +152,7 @@ export async function createSession(
   rating,
   organization,
   purpose,
+  sessionTime,
   sessionDate,
   host_name,
   host_bio
@@ -161,6 +162,7 @@ export async function createSession(
     rating: rating,
     organization: organization,
     purpose: purpose,
+    sessionTime: sessionTime,
     sessionDate: sessionDate,
     host_name: host_name,
     host_bio: host_bio,

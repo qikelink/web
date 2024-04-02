@@ -42,6 +42,8 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [sessionTime, setSessionTime] = useState("");
+
   const [formData, setFormData] = useState({
     purpose: "",
   });
@@ -86,13 +88,15 @@ const BookModal = ({ buttonName, blue, data }) => {
     }
 
     const orgId = selectedOption === "Individual" ? undefined : selectedOption;
+    const sessionDate = date ? date.toISOString() : new Date().toISOString();
 
     createSession(
       data.id,
       data.rating,
       orgId,
       formData.purpose,
-      date.toISOString(),
+      sessionTime,
+      sessionDate,
       user[0].username,
       user[0].bio
     )
@@ -260,18 +264,23 @@ const BookModal = ({ buttonName, blue, data }) => {
               {/* Time slot section */}
               {pathname === "/quickService" ? (
                 <Input
-                  className=" w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                  className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                   type="time"
                   placeholder="Pick Time In This Format 9:00pm"
+                  value={sessionTime}
+                  onChange={(e) => setSessionTime(e.target.value)}
                 />
               ) : (
                 <div className="flex flex-col space-y-2 ">
                   <Label className="font-semibold">Schedule Date/Time</Label>
                   <Input
-                    className=" w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     type="time"
                     placeholder="Pick Time In This Format 9:00pm"
+                    value={sessionTime}
+                    onChange={(e) => setSessionTime(e.target.value)}
                   />
+
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
