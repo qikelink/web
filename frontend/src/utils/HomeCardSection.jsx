@@ -17,8 +17,8 @@ import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
 import Image from "next/image";
-import pic4 from "../../images/pic4.gif";
-import pic5 from "../../images/value.jpg";
+import pic4 from "../../images/banner.png";
+import pic5 from "../../images/banner2.png";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import {
