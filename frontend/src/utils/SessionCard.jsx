@@ -238,8 +238,6 @@ const SessionCard = () => {
                         blue="text-blue"
                       />
                     )}
-
-                    {console.log(filteredSessions)}
                   </CardFooter>
                 </Card>
               ))}
