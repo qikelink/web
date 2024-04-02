@@ -146,7 +146,7 @@ export default function Header() {
                   <Badge
                     variant="outline"
                     className={
-                      "relative rounded-full p-2 hidden md:inline cursor-pointer"
+                      "relative rounded-full p-2 md:inline cursor-pointer"
                     }
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                   >
@@ -161,7 +161,7 @@ export default function Header() {
 
                     {isNotificationOpen && (
                       <>
-                        <div className="absolute top-0 right-9 w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
+                        <div className="absolute top-10 md:top-0 md:right-9 right-0 w-64 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
                           {notifications && notifications.items.length > 0 ? (
                             notifications.items.map((item, index) => (
                               <div
@@ -188,7 +188,7 @@ export default function Header() {
                             <div className="flex flex-col  items-center w-full h-full my-16">
                               <EmptyIcon size={120} />
                               <p className="text-center text-lg font-medium text-darktext">
-                                No notification to show for now.
+                                No notification to show.
                               </p>
                             </div>
                           )}
