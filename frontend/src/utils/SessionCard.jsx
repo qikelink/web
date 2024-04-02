@@ -38,8 +38,6 @@ const SessionCard = () => {
     router.push(`/${roomId}`);
   };
 
-  console.log(allSessions)
-
   const list = [
     {
       status: "Now",
