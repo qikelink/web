@@ -198,7 +198,7 @@ const LoginDialog = () => {
           </form>
           <Button
             size="xl"
-            className="bg-indigo hover:bg-darkblue text-lg rounded-lg w-full mt-3"
+            className="hidden bg-indigo hover:bg-darkblue text-lg rounded-lg w-full mt-3"
             onClick={handleGoogle}
           >
             {isloadingGoogle ? "Signing in.." : googleText}
