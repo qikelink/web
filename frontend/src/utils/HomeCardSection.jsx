@@ -29,10 +29,11 @@ import { useToast } from "@/components/ui/use-toast";
 
 
 const HomeCardSection = () => {
-  const { mentors, isLoading } = useUser();
+  const { mentors, user, isLoading } = useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
+
 
   const handleBookmarkToggle = (mentor) => {
     CreateBookmark(

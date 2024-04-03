@@ -23,7 +23,7 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [mentors, setMentors] = useState([]);
   const [quickMentors, setQuickMentors] = useState([]);
   const [mentor, setMentor] = useState([]);
@@ -40,13 +40,23 @@ export const UserProvider = ({ children }) => {
 
   // Fetch user and mentor data on initial load
   useEffect(() => {
-    getUser()
-      .then((res) => {
-        setUser(res);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
+    if (isUserValid) {
+      getUser()
+        .then((res) => {
+          setUser(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+
+      getMentor()
+        .then((res) => {
+          setMentor(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching mentor data:", error);
+        });
+    }
 
     // get all mentors for the profile card
     getMentors()
@@ -55,14 +65,6 @@ export const UserProvider = ({ children }) => {
       })
       .catch((error) => {
         console.error("Error fetching mentors data:", error);
-      });
-
-      getMentor()
-      .then((res) => {
-        setMentor(res);
-      })
-      .catch((error) => {
-        console.error("Error fetching mentor data:", error);
       });
 
     // get all mentors available for quick services
@@ -80,7 +82,7 @@ export const UserProvider = ({ children }) => {
   // get other datas based on the specific user
   useEffect(() => {
     if (user.length > 0) {
-      getBookmarks(user[0].id)
+      getBookmarks(user.id)
         .then((res) => {
           setBookmarks(res);
         })
@@ -88,7 +90,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching bookmarks data:", error);
         });
 
-      getCreatedOrganizations(user[0].id)
+      getCreatedOrganizations(user.id)
         .then((res) => {
           setCreatedOrganization(res);
         })
@@ -96,7 +98,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getAllOrganizations(user[0].id, user[0].email)
+      getAllOrganizations(user.id, user.email)
         .then((res) => {
           setAllOrganization(res);
         })
@@ -104,7 +106,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getCreatedSessions(user[0].id)
+      getCreatedSessions(user.id)
         .then((res) => {
           setCreatedSessions(res);
         })
@@ -112,7 +114,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getAllSessions(user[0].id, user[0].email)
+      getAllSessions(user.id, user.email)
         .then((res) => {
           setAllSessions(res);
         })
@@ -120,7 +122,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getMeetingRequests(user[0].username)
+      getMeetingRequests(user.username)
         .then((res) => {
           setMeetingRequests(res);
         })
@@ -128,7 +130,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getNotifications(user[0].id, user[0].email)
+      getNotifications(user.id, user.email)
         .then((res) => {
           setNotifications(res);
           setIsLoadingUserData(false);
@@ -138,6 +140,7 @@ export const UserProvider = ({ children }) => {
           setIsLoadingUserData(false);
         });
     }
+    setIsLoadingUserData(false); // set to false to avoid infinite loading
   }, [user]);
 
   return (

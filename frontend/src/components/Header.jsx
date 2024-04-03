@@ -54,7 +54,7 @@ export default function Header() {
 
   useEffect(() => {
     if (notifications.length > 0) {
-      getNotifications(user[0].id, user[0].email)
+      getNotifications(user.id, user.email)
         .then((res) => {
           setNotifications(res);
         })
@@ -63,6 +63,8 @@ export default function Header() {
         });
     }
   }, [notifications]);
+
+
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
@@ -127,90 +129,81 @@ export default function Header() {
                 <Skeleton className="h-8 w-8 rounded-full" />
                 <Skeleton className="h-8 w-8 rounded-full" />
               </div>
-            ) : user.length > 0 ? (
-              user.map((userInfo, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-5 justify-center"
+            ) : isUserValid && user ? (
+              <div className="flex items-center space-x-5 justify-center">
+                <Badge
+                  variant="outline"
+                  className={"rounded-full p-2 hidden md:inline"}
+                  onClick={() => router.push("/sessions")}
                 >
-                  <Badge
-                    variant="outline"
-                    className={"rounded-full p-2 hidden md:inline"}
-                    onClick={() => router.push("/sessions")}
-                  >
-                    <BsHeadsetVr
-                      size={20}
-                      className="text-current hover:animate-spin cursor-pointer"
-                    />
-                  </Badge>
-                  <Badge
-                    variant="outline"
-                    className={
-                      "relative rounded-full p-2 md:inline cursor-pointer"
-                    }
-                    onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                  >
-                    <FaRegBell size={20} className="text-current" />
+                  <BsHeadsetVr
+                    size={20}
+                    className="text-current hover:animate-spin cursor-pointer"
+                  />
+                </Badge>
+                <Badge
+                  variant="outline"
+                  className={
+                    "relative rounded-full p-2 md:inline cursor-pointer"
+                  }
+                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                >
+                  <FaRegBell size={20} className="text-current" />
 
-                    {notifications.items && notifications.items.length > 0 && (
-                      <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
-                        {" "}
-                        {`${notifications.items.length}+`}
-                      </span>
-                    )}
+                  {notifications.items && notifications.items.length > 0 && (
+                    <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
+                      {" "}
+                      {`${notifications.items.length}+`}
+                    </span>
+                  )}
 
-                    {isNotificationOpen && (
-                      <>
-                        <div className="absolute top-10 md:top-0 md:right-9 right-0 w-64 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
-                          {notifications && notifications.items.length > 0 ? (
-                            notifications.items.map((item, index) => (
-                              <div
-                                className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
-                                onClick={() => router.push("/sessions")}
-                                key={index}
-                              >
-                                <div className="flex items-center">
-                                  <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
-                                  <div>
-                                    <p className="text-base font-semibold">
-                                      {item.title}
-                                    </p>
-                                    <p className="text-sm text-gray-600">
-                                      {item.message}
-                                    </p>
-                                  </div>
+                  {isNotificationOpen && (
+                    <>
+                      <div className="absolute top-10 md:top-0 md:right-9 right-0 w-64 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
+                        {notifications && notifications.items.length > 0 ? (
+                          notifications.items.map((item, index) => (
+                            <div
+                              className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
+                              onClick={() => router.push("/sessions")}
+                              key={index}
+                            >
+                              <div className="flex items-center">
+                                <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
+                                <div>
+                                  <p className="text-base font-semibold">
+                                    {item.title}
+                                  </p>
+                                  <p className="text-sm text-gray-600">
+                                    {item.message}
+                                  </p>
                                 </div>
-
-                                {/* <Badge variant='secondary' >Clear</Badge> */}
                               </div>
-                            ))
-                          ) : (
-                            <div className="flex flex-col  items-center w-full h-full my-16">
-                              <EmptyIcon size={120} />
-                              <p className="text-center text-lg font-medium text-darktext">
-                                No notification to show.
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      </>
-                    )}
-                  </Badge>
 
-                  <Avatar>
-                    <AvatarImage
-                      src={getImageUrl(
-                        userInfo.collectionId,
-                        userInfo.id,
-                        userInfo.avatar
-                      )}
-                    />
-                    <AvatarFallback>
-                      {userInfo.email.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-              ))
+                              {/* <Badge variant='secondary' >Clear</Badge> */}
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex flex-col  items-center w-full h-full my-16">
+                            <EmptyIcon size={120} />
+                            <p className="text-center text-lg font-medium text-darktext">
+                              No notification to show.
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </Badge>
+
+                <Avatar>
+                  <AvatarImage
+                    src={getImageUrl(user.collectionId, user.id, user.avatar)}
+                  />
+                  <AvatarFallback>
+                    {user.email.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
             ) : (
               <LoginDialog />
             )}

@@ -61,7 +61,7 @@ const RequestSection = () => {
       })
       .finally(() => {
         createNotification('Request Accepted', successMessage, Date.now(), item.expand.owner.id, item.expand.organization.id);
-        getNotifications(user[0].id, user[0].email)
+        getNotifications(user.id, user.email)
         .then((res) => {
           setNotifications(res);
         
@@ -96,7 +96,7 @@ const RequestSection = () => {
       })
       .finally(() => {
         createNotification('Request Rejected', rejectMessage, Date.now(), item.expand.owner.id, item.expand.organization.id);
-        getNotifications(user[0].id, user[0].email)
+        getNotifications(user.id, user.email)
         .then((res) => {
           setNotifications(res);
         

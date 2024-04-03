@@ -97,8 +97,8 @@ const BookModal = ({ buttonName, blue, data }) => {
       formData.purpose,
       sessionTime,
       sessionDate,
-      user[0].username,
-      user[0].bio
+      user.username,
+      user.bio
     )
       .then(() => {
         toast({

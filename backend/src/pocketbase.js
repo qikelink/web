@@ -3,6 +3,7 @@ import PocketBase from "pocketbase";
 const url = "https://one-or.pockethost.io/";
 
 export const client = new PocketBase(url);
+
 client.autoCancellation(false);
 
 export const isUserValid =
@@ -13,7 +14,13 @@ export const getImageUrl = (collectionId, recordId, fileName) => {
 };
 
 export async function getUser() {
-  return await client.collection("users").getFullList();
+  return await client
+    .collection("users")
+    .getOne(`${client.authStore.model.id}`, {});
+}
+
+export async function getExistingUsers() {
+  return await client.collection("users").getFullList({});
 }
 
 // to get all the verified mentors for the home card

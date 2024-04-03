@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import {
+  getExistingUsers,
   login,
   Signup,
   SignupGoogle,
@@ -23,6 +24,8 @@ import { CgProfile } from "react-icons/cg";
 import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
 import { ImCross } from "react-icons/im";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useSessionContext } from "@/contexts/session-context";
 
 const LoginDialog = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -33,6 +36,8 @@ const LoginDialog = () => {
   const history = useRouter();
   const { toast } = useToast();
   const { setIsUserValid } = useAuth();
+  // const { data: session } = useSession();
+  // const { session, status } = useSessionContext();
 
   const toggleMode = () => {
     setIsSignIn(!isSignIn);
@@ -71,7 +76,7 @@ const LoginDialog = () => {
             title: "Invalid credentials",
             description:
               "Invalid login credentials! please enter correct details.",
-            variant: "default",
+            variant: "destructive",
           });
           console.error("Login error:", error);
           // Handle login error here, such as displaying an error message to the user
@@ -84,38 +89,61 @@ const LoginDialog = () => {
           }, 3000);
         });
     } else {
-      Signup(email, password)
-        .then(() => {
-          toggleMode();
-          toast({
-            title: "Account created",
-            description:
-              "Account created successfully! Login with new credentials.",
-            variant: "default",
-          });
-        })
-        .catch((error) => {
-          toast({
-            title: "Failed to create account",
-            description: "Sorry an error just occurred! please try again.",
-            variant: "destructive",
-          });
-          console.error("Signup error:", error);
-          // Handle signup error here, such as displaying an error message to the user
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setIsLoading(false);
+      getExistingUsers()
+        .then((existingUsers) => {
+          const emailExists = existingUsers.some(
+            (user) => user.email === email
+          );
+          if (emailExists) {
+            toast({
+              title: "Email already exists",
+              description:
+                "The email you provided already exists, Sign into your account instead.",
+              variant: "default",
+            });
+            toggleMode();
             setEmail("");
             setPassword("");
-          }, 2000);
+            setIsLoading(false);
+          } else {
+            Signup(email, password)
+              .then(() => {
+                toggleMode();
+                toast({
+                  title: "Account created",
+                  description:
+                    "Account created successfully! Login with new credentials.",
+                  variant: "default",
+                });
+              })
+              .catch((error) => {
+                toast({
+                  title: "Failed to create account",
+                  description:
+                    "An error occurred while creating the account. Please try again.",
+                  variant: "destructive",
+                });
+                console.error("Signup error:", error);
+              })
+              .finally(() => {
+                // Reset form fields and loading state
+                setTimeout(() => {
+                  setIsLoading(false);
+                  setEmail("");
+                  setPassword("");
+                }, 2000);
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
         });
     }
   };
 
   const handleGoogle = () => {
     setIsLoadingGoogle(true);
-    SignupGoogle();
+    signIn();
     setTimeout(() => {
       setIsLoadingGoogle(false);
     }, 3000);

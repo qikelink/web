@@ -33,7 +33,7 @@ const BookmarkCard = () => {
 
   useEffect(() => {
     if (user.length > 0) {
-      getBookmarks(user[0].id)
+      getBookmarks(user.id)
         .then((res) => {
           setBookmarks(res);
         })

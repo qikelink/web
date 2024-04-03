@@ -44,12 +44,12 @@ const SettingCard = () => {
     const initialFormData =
       user.length > 0
         ? {
-            avatar: user[0].avatar,
-            email: user[0].email,
-            username: user[0].name,
-            phoneNumber: user[0].phoneNumber,
-            bio: user[0].bio,
-            awards: user[0].awards,
+            avatar: user.avatar,
+            email: user.email,
+            username: user.name,
+            phoneNumber: user.phoneNumber,
+            bio: user.bio,
+            awards: user.awards,
             verified: mentor.verified,
           }
         : defaultFormData;
@@ -77,7 +77,7 @@ const SettingCard = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsSpinning(true);
-    const id = user[0].id;
+    const id = user.id;
 
     const imageToUpdate = profileImage ? profileImage : formData.avatar;
 
@@ -139,7 +139,7 @@ const SettingCard = () => {
         variant: "destructive",
       });
       console.error("quick service error:", error);
-    
+
       setQuickService(!quickService);
     }
   };
@@ -154,15 +154,11 @@ const SettingCard = () => {
         user.length > 0 && (
           <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
             <AvatarImage
-              src={getImageUrl(
-                user[0].collectionId,
-                user[0].id,
-                user[0].avatar
-              )}
+              src={getImageUrl(user.collectionId, user.id, user.avatar)}
             />
             <AvatarFallback>
               {" "}
-              {user[0].email.slice(0, 2).toUpperCase()}
+              {user.email.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
         )
@@ -275,7 +271,11 @@ const SettingCard = () => {
           />
         </Button>
 
-        {formData.verified === true ? null : !isLoading ? (
+        {formData.verified === true ? null : !isLoading &&
+           formData.username.trim() !== "" &&
+           formData.phoneNumber.trim() !== "" &&
+           formData.bio.trim() !== "" &&
+           formData.awards.trim() !== "" ? (
           <VerifyModal userData={user} />
         ) : null}
       </div>

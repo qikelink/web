@@ -75,7 +75,7 @@ const OrganizationSection = () => {
         console.error("Organization creation error:", error);
       })
       .finally(() => {
-        getAllOrganizations(user[0].id, user[0].email)
+        getAllOrganizations(user.id, user.email)
           .then((res) => {
             setAllOrganization(res);
           })
