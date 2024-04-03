@@ -14,8 +14,8 @@ const fontSans = FontSans({
 });
 
 export const metadata = {
-  title: "Y project",
-  description: "YC batch 24 july-august",
+  title: "Qikelink.com",
+  description: "Connecting You To Your Next Level Growth",
 };
 
 export default function RootLayout({ children }) {

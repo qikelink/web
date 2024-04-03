@@ -1,16 +1,27 @@
 export const dataset = [
   "All",
-  "Tech",
-  "Youtuber",
+  "software Dev",
   "StartUps",
-  "Personal Development",
-  "Education",
-  "Psychology",
-  "Business",
-  "Career",
-  "Design",
-  "Lifestyle",
-  "Music",
+  "DevOps",
+  "Product Management",
+  "UI/UX Design",
+  "Graphic Design",
+  "Cloud Computing",
+  "Cybersecurity",
+  "Data Science",
+  "Machine Learning",
+  "Artificial Intelligence",
+  "Database Management",
+  "Software Testing",
+  "Game Dev",
+  "(AR/VR)",
+  "Blockchain Dev",
+  "Internet of Things (IoT)",
+  "Robotics",
+  "Network Engineering",
+  "Information Security",
+  "Cryptography",
+  "Data Engineering",
 ];
 
 export const sessions = [
@@ -90,5 +101,4 @@ export const list = [
     field: ["finance", "investment", "analysis"],
     rate: "$65.00 /30min",
   },
-
 ];
