@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { BasicIcons } from "@/utils/BasicIcons";
 import { Button } from "@/components/ui/button";
 
+export const runtime = 'edge';
+
 export default function Home({ params }) {
   const { setProgress } = useAuth();
   const router = useRouter();
