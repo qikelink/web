@@ -41,18 +41,17 @@ const SettingCard = () => {
       verified: false,
     };
 
-    const initialFormData =
-      user
-        ? {
-            avatar: user.avatar,
-            email: user.email,
-            username: user.name,
-            phoneNumber: user.phoneNumber,
-            bio: user.bio,
-            awards: user.awards,
-            verified: mentor.verified,
-          }
-        : defaultFormData;
+    const initialFormData = user
+      ? {
+          avatar: user.avatar,
+          email: user.email,
+          username: user.name,
+          phoneNumber: user.phoneNumber,
+          bio: user.bio,
+          awards: user.awards,
+          verified: mentor.verified,
+        }
+      : defaultFormData;
 
     setFormData(initialFormData);
   }, [user]);
@@ -272,10 +271,10 @@ const SettingCard = () => {
         </Button>
 
         {formData.verified === true ? null : !isLoading &&
-           formData.username.trim() !== "" &&
-           formData.phoneNumber.trim() !== "" &&
-           formData.bio.trim() !== "" &&
-           formData.awards.trim() !== "" ? (
+          formData.username !== "" &&
+          formData.phoneNumber !== "" &&
+          formData.bio !== "" &&
+          formData.awards !== "" ? (
           <VerifyModal userData={user} />
         ) : null}
       </div>
