@@ -28,6 +28,7 @@ import {
   isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { MdPerson } from "react-icons/md";
 
 const HomeCardSection = () => {
   const { mentor, mentors, setMentors, user, isLoading } = useUser();
@@ -174,7 +175,7 @@ const HomeCardSection = () => {
               ))
             : mentors.length > 0 &&
               mentors.map((item, index) => (
-                <Card key={index} className="">
+                <Card key={index} className="flex flex-col item-center">
                   <CardHeader>
                     <div className="flex justify-between">
                       <div className="flex gap-2">
@@ -212,8 +213,8 @@ const HomeCardSection = () => {
                       </Toggle>
                     </div>
                   </CardHeader>
-                  <CardContent className="text-small text-default-400">
-                    <div className="flex gap-2 flex-wrap">
+                  <CardContent className="text-small text-default-400 ">
+                    <div className="flex gap-2 flex-wrap item-center">
                       {item && item.interests
                         ? item.interests.split(",").map((interest, index) => (
                             <Badge key={index} variant="outline">
@@ -225,7 +226,7 @@ const HomeCardSection = () => {
                     <div className="mt-1 line-clamp-4 ">{item.bio}</div>
                   </CardContent>
                   <CardFooter className="flex justify-between border-t py-2">
-                    <BookModal buttonName="Request" data={item} />
+                    <BookModal buttonName="LinkUp" data={item} />
                     {item.rate != "free" ? (
                       <Badge
                         variant="outline"
