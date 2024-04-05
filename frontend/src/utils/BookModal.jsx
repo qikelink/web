@@ -242,12 +242,13 @@ const BookModal = ({ buttonName, blue, data }) => {
                 <Label className="font-semibold">Personal details</Label>
                 <div
                   className={`text-sm text-darktext max-w-[380px] mx-auto ${
-                    isExpanded ? " line-clamp-none" : "line-clamp-2"
+                    isExpanded ? " line-clamp-none" : "line-clamp-3"
                   }`}
                 >
                   <p>{data && data.bio ? data.bio : "N/A"}</p>
                 </div>
                 <button
+                  type="button"
                   onClick={toggleExpand}
                   className="text-blue-600 hover:underline focus:outline-none text-sm"
                 >
