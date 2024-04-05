@@ -29,7 +29,7 @@ import SessionModal from "./SessionModal";
 
 const SessionCard = () => {
   const router = useRouter();
-  const { selectedButtons, allSessions, isLoadingUserData } = useUser();
+  const { user, selectedButtons, allSessions, isLoadingUserData } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
   const createMeet = async () => {

@@ -10,8 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import VerifyModal from "./VerifyModal";
 import {
   getImageUrl,
+  getMentor,
   getUser,
   toggleQuickService,
+  updateMentor,
   updateSetting,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
@@ -27,7 +29,7 @@ const SettingCard = () => {
   const [profileImage, setProfileImage] = useState("");
   const [quickService, setQuickService] = useState(false);
   const { toast } = useToast();
-  const { user, mentor, isLoading, setUser } = useUser();
+  const { user, mentor, setMentor, isLoading, setUser } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
   useEffect(() => {
@@ -77,8 +79,27 @@ const SettingCard = () => {
     event.preventDefault();
     setIsSpinning(true);
     const id = user.id;
+    const mentorId = mentor.id;
 
     const imageToUpdate = profileImage ? profileImage : formData.avatar;
+
+    if (mentorId.length > 0) {
+      updateMentor(
+        mentorId,
+        formData.username,
+        formData.phoneNumber,
+        formData.bio,
+        formData.awards
+      ).then(() => {
+        getMentor()
+        .then((res) => {
+          setMentor(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching mentor updated data:", error);
+        });
+      });
+    }
 
     updateSetting(
       id,
@@ -111,6 +132,7 @@ const SettingCard = () => {
           .catch((error) => {
             console.error("Error fetching user data:", error);
           });
+
         setIsSpinning(false);
       });
   };
