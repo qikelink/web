@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
@@ -24,25 +24,47 @@ import { useUser } from "@/contexts/user-context";
 import {
   CreateBookmark,
   getImageUrl,
+  getMentors,
+  isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 
-
 const HomeCardSection = () => {
-  const { mentors, user, isLoading } = useUser();
+  const { mentor, mentors, setMentors, user, isLoading } = useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
 
+  useEffect(() => {
+    if (mentor) {
+      getMentors()
+        .then((res) => {
+          setMentors(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching mentors data:", error);
+        });
+    }
+  }, [mentor]);
 
   const handleBookmarkToggle = (mentor) => {
+    if (!isUserValid) {
+      toast({
+        title: "Sign in to save bookmark",
+        description: "Please Sign in or create account to save bookmark!",
+        variant: "default",
+      });
+      return;
+    }
+
     CreateBookmark(
       mentor.username,
       mentor.rate,
       mentor.bio,
       mentor.awards,
       mentor.interests,
-      mentor.rating
+      mentor.rating,
+      mentor.id
     )
       .then(() => {
         toast({
@@ -200,7 +222,7 @@ const HomeCardSection = () => {
                           ))
                         : "N/A"}
                     </div>
-                    <div className="mt-1 ">{item.bio}</div>
+                    <div className="mt-1 line-clamp-4 ">{item.bio}</div>
                   </CardContent>
                   <CardFooter className="flex justify-between border-t py-2">
                     <BookModal buttonName="Request" data={item} />
@@ -231,4 +253,3 @@ const HomeCardSection = () => {
 };
 
 export default HomeCardSection;
-

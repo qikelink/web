@@ -45,9 +45,11 @@ export async function getMentor() {
     .getFirstListItem(`users = '${client.authStore.model.id}'`);
 }
 
-export async function Signup(email, password) {
+export async function Signup(superEmail, email, superPassword, password) {
   const data = {
+    superEmail: superEmail,
     email: email,
+    superPassword: superPassword,
     password: password,
     passwordConfirm: password,
   };
@@ -124,13 +126,24 @@ export async function verifyRequest(
   await client.collection("mentors").create(data);
 }
 
+export async function updateMentor(id, username, phoneNumber, bio, awards) {
+  const data = {
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+  };
+  await client.collection("mentors").update(id, data);
+}
+
 export async function CreateBookmark(
   username,
   rate,
   bio,
   awards,
   interests,
-  rating
+  rating,
+  mentor
 ) {
   const data = {
     username: username,
@@ -139,6 +152,7 @@ export async function CreateBookmark(
     awards: awards,
     interests: interests,
     rating: rating,
+    mentor: mentor,
     users: client.authStore.model.id,
   };
   await client.collection("bookmarks").create(data);
@@ -151,7 +165,7 @@ export async function RemoveBookmark(id) {
 export async function getBookmarks(id) {
   return await client
     .collection("bookmarks")
-    .getFullList({ filter: `users = '${id}'`, expand: "users" });
+    .getFullList({ filter: `users = '${id}'`, expand: "users, mentor.users" });
 }
 
 export async function createSession(

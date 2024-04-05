@@ -31,6 +31,7 @@ const BookmarkCard = () => {
   const [remove, setRemove] = useState(false);
   const { toast } = useToast();
 
+
   useEffect(() => {
     if (user.length > 0) {
       getBookmarks(user.id)
@@ -85,12 +86,13 @@ const BookmarkCard = () => {
               <CardHeader>
                 <div className="flex justify-between">
                   <div className="flex gap-2">
+                    
                     <Avatar>
                       <AvatarImage
                         src={getImageUrl(
-                          item.expand.users.collectionId,
-                          item.expand.users.id,
-                          item.expand.users.avatar
+                          item.expand.mentor.expand.users.collectionId,
+                          item.expand.mentor.expand.users.id,
+                          item.expand.mentor.expand.users.avatar
                         )}
                       />
                       <AvatarFallback>CN</AvatarFallback>
@@ -125,12 +127,12 @@ const BookmarkCard = () => {
                       ))
                     : "N/A"}
                 </div>
-                <div className="mt-2 ">{item.bio}</div>
+                <div className="mt-2 line-clamp-4">{item.bio}</div>
 
                 <Separator className="my-2 -mb-4" />
               </CardContent>
               <CardFooter className="flex justify-between ">
-                <BookModal buttonName="Request" data={item} />
+                <BookModal buttonName="Request" data={item.expand.mentor} />
                 {item.rate != "free" ? (
                   <Badge
                     variant="outline"

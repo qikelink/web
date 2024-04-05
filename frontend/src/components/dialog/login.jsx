@@ -92,7 +92,7 @@ const LoginDialog = () => {
       getExistingUsers()
         .then((existingUsers) => {
           const emailExists = existingUsers.some(
-            (user) => user.email === email
+            (user) => user.superEmail === email
           );
           if (emailExists) {
             toast({
@@ -106,7 +106,7 @@ const LoginDialog = () => {
             setPassword("");
             setIsLoading(false);
           } else {
-            Signup(email, password)
+            Signup(email, email, password, password)
               .then(() => {
                 toggleMode();
                 toast({
@@ -157,6 +157,7 @@ const LoginDialog = () => {
     <Dialog>
       <DialogTrigger>
         <Button
+          type="button"
           size="sm"
           className="w-full bg-blue text-secondary hover:text-primary hover:bg-lightblue2 rounded-md text-lg"
         >

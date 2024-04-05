@@ -81,7 +81,7 @@ export const UserProvider = ({ children }) => {
 
   // get other datas based on the specific user
   useEffect(() => {
-    if (user.length > 0) {
+    if (user && Object.keys(user).length > 0) {
       getBookmarks(user.id)
         .then((res) => {
           setBookmarks(res);
@@ -153,7 +153,9 @@ export const UserProvider = ({ children }) => {
         quickMentors,
         setQuickMentors,
         mentors,
+        setMentors,
         mentor,
+        setMentor,
         bookmarks,
         setBookmarks,
         createdSessions,

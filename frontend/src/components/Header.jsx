@@ -44,6 +44,7 @@ export default function Header() {
   const pathname = usePathname();
   const { setProgress } = useAuth();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  
 
   const handleSignout = () => {
     setProgress(90);

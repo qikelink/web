@@ -138,7 +138,8 @@ const BookModal = ({ buttonName, blue, data }) => {
       mentor.bio,
       mentor.awards,
       mentor.interests,
-      mentor.rating
+      mentor.rating,
+      mentor.id
     )
       .then(() => {
         toast({
@@ -175,8 +176,8 @@ const BookModal = ({ buttonName, blue, data }) => {
               <DialogTitle>
                 <div className="flex justify-between">
                   <div className="flex gap-2">
-                    <Avatar>
-                      {data && data.expand.users ? (
+                    {data && data.expand.users ? (
+                      <Avatar>
                         <AvatarImage
                           src={getImageUrl(
                             data.expand.users.collectionId,
@@ -184,14 +185,21 @@ const BookModal = ({ buttonName, blue, data }) => {
                             data.expand.users.avatar
                           )}
                         />
-                      ) : (
                         <AvatarFallback>
                           {data && data.username
                             ? data.username.slice(0, 2).toUpperCase()
                             : "CN"}
                         </AvatarFallback>
-                      )}
-                    </Avatar>
+                      </Avatar>
+                    ) : (
+                      <Avatar>
+                        <AvatarFallback>
+                          {data && data.username
+                            ? data.username.slice(0, 2).toUpperCase()
+                            : "CN"}
+                        </AvatarFallback>
+                      </Avatar>
+                    )}
 
                     <div className="flex flex-col gap-1 items-start justify-center">
                       <h4 className="text-small font-semibold leading-none text-default-600">
@@ -234,12 +242,13 @@ const BookModal = ({ buttonName, blue, data }) => {
                 <Label className="font-semibold">Personal details</Label>
                 <div
                   className={`text-sm text-darktext max-w-[380px] mx-auto ${
-                    isExpanded ? " line-clamp-none" : "line-clamp-2"
+                    isExpanded ? " line-clamp-none" : "line-clamp-3"
                   }`}
                 >
                   <p>{data && data.bio ? data.bio : "N/A"}</p>
                 </div>
                 <button
+                  type="button"
                   onClick={toggleExpand}
                   className="text-blue-600 hover:underline focus:outline-none text-sm"
                 >
