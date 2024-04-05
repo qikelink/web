@@ -157,6 +157,7 @@ const LoginDialog = () => {
     <Dialog>
       <DialogTrigger>
         <Button
+          type="button"
           size="sm"
           className="w-full bg-blue text-secondary hover:text-primary hover:bg-lightblue2 rounded-md text-lg"
         >

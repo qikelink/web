@@ -25,6 +25,7 @@ import {
   CreateBookmark,
   getImageUrl,
   getMentors,
+  isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -47,6 +48,15 @@ const HomeCardSection = () => {
   }, [mentor]);
 
   const handleBookmarkToggle = (mentor) => {
+    if (!isUserValid) {
+      toast({
+        title: "Sign in to save bookmark",
+        description: "Please Sign in or create account to save bookmark!",
+        variant: "default",
+      });
+      return;
+    }
+
     CreateBookmark(
       mentor.username,
       mentor.rate,

@@ -40,11 +40,9 @@ export default function page() {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col  items-center w-full h-full mt-32">
-                  <EmptyIcon size={150} />
-                  <p className="text-center text-xl font-medium text-darktext">
-                    No organizations to show, please sign in.
-                  </p>
+                <div className="flex justify-center items-center h-full">
+                  {/* Render BookmarkEmpty when no bookmarks exist */}
+                  <BookmarkEmpty />
                 </div>
               )}
             </div>
