@@ -200,7 +200,7 @@ export default function Header() {
                     src={getImageUrl(user.collectionId, user.id, user.avatar)}
                   />
                   <AvatarFallback>
-                    {user.email.slice(0, 2).toUpperCase()}
+                    {"QK"}
                   </AvatarFallback>
                 </Avatar>
               </div>
