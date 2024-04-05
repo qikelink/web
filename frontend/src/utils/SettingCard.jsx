@@ -42,7 +42,7 @@ const SettingCard = () => {
     };
 
     const initialFormData =
-      user.length > 0
+      user
         ? {
             avatar: user.avatar,
             email: user.email,
