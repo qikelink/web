@@ -210,7 +210,7 @@ const HomeCardSection = () => {
                           variant="outline"
                           onClick={() => handleBookmarkToggle(item)}
                         >
-                          <BsShareFill />
+                          <BsJournalBookmarkFill />
                         </Toggle>
                       </div>
                     </div>

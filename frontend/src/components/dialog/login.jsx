@@ -22,8 +22,8 @@ import { CgProfile } from "react-icons/cg";
 import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
 import { ImCross } from "react-icons/im";
-import { getSession, signIn, useSession } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { signIn, getSession, useSession } from "next-auth/react";
 import Image from "next/image";
 import googleLogo from "../../../public/google.png";
 
@@ -33,6 +33,9 @@ const LoginDialog = () => {
   const [comfirmPass, setComfirmPass] = useState("");
   const [email, setEmail] = useState("");
   const [isloading, setIsLoading] = useState(false);
+  const [googleClicked, setGoogleClicked] = useState(() => {
+    return localStorage.getItem("googleClicked") === "true";
+  });
   const [isloadingGoogle, setIsLoadingGoogle] = useState(false);
   const history = useRouter();
   const { toast } = useToast();
@@ -118,7 +121,7 @@ const LoginDialog = () => {
       return;
     }
 
-    setIsLoading(true); // Set loading state when the form is submitted
+    setIsLoading(true);
 
     if (isSignIn) {
       login(email, password, setIsUserValid)
@@ -232,7 +235,41 @@ const LoginDialog = () => {
     } catch (error) {
       console.error("Error handling Google sign-in:", error);
     } finally {
-      setIsLoadingGoogle(false);
+      let session = await getSession();
+
+      try {
+        if (!session) {
+          await signIn("google");
+          localStorage.setItem("googleClicked", "true");
+          setGoogleClicked(true);
+          session = await getSession();
+        }
+
+        if (session) {
+          const existingUsers = await getExistingUsers();
+          const emailExists = existingUsers.some(
+            (user) => user.superEmail === session.user.email
+          );
+
+          if (emailExists) {
+            await login(session.user.email, session.user.email, setIsUserValid);
+          } else {
+            await Signup(
+              session.user.email,
+              session.user.email,
+              session.user.email,
+              session.user.email
+            );
+            await login(session.user.email, session.user.email, setIsUserValid);
+          }
+
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Error handling Google sign-in:", error);
+      } finally {
+        setIsLoadingGoogle(false);
+      }
     }
   };
 
@@ -246,6 +283,7 @@ const LoginDialog = () => {
   const googleText = isSignIn
     ? "Continue with google "
     : "Continue with google";
+
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
   return (
@@ -371,7 +409,7 @@ const LoginDialog = () => {
           </form>
           <Button
             size="xl"
-            className=" bg-indigo hover:bg-darkblue text-lg rounded-lg w-full mt-3"
+            className=" bg-indigo hover:bg-gray-600 text-lg rounded-lg w-full mt-3"
             onClick={handleGoogle}
           >
             <Image src={googleLogo} alt="Google Logo" width={20} height={20} />
