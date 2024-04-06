@@ -33,9 +33,7 @@ const LoginDialog = () => {
   const [comfirmPass, setComfirmPass] = useState("");
   const [email, setEmail] = useState("");
   const [isloading, setIsLoading] = useState(false);
-  const [googleClicked, setGoogleClicked] = useState(() => {
-    return localStorage.getItem("googleClicked") === "true" || false
-  });
+  // const [googleClicked, setGoogleClicked] = useState(false);
   const [isloadingGoogle, setIsLoadingGoogle] = useState(false);
   const history = useRouter();
   const { toast } = useToast();
@@ -208,7 +206,7 @@ const LoginDialog = () => {
       if (!session) {
         await signIn("google");
         localStorage.setItem("googleClicked", "true");
-        setGoogleClicked(true);
+        // setGoogleClicked(true);
         session = await getSession();
       }
 
@@ -235,46 +233,13 @@ const LoginDialog = () => {
     } catch (error) {
       console.error("Error handling Google sign-in:", error);
     } finally {
-      let session = await getSession();
-
-      try {
-        if (!session) {
-          await signIn("google");
-          localStorage.setItem("googleClicked", "true");
-          setGoogleClicked(true);
-          session = await getSession();
-        }
-
-        if (session) {
-          const existingUsers = await getExistingUsers();
-          const emailExists = existingUsers.some(
-            (user) => user.superEmail === session.user.email
-          );
-
-          if (emailExists) {
-            await login(session.user.email, session.user.email, setIsUserValid);
-          } else {
-            await Signup(
-              session.user.email,
-              session.user.email,
-              session.user.email,
-              session.user.email
-            );
-            await login(session.user.email, session.user.email, setIsUserValid);
-          }
-
-          window.location.reload();
-        }
-      } catch (error) {
-        console.error("Error handling Google sign-in:", error);
-      } finally {
-        setIsLoadingGoogle(false);
-      }
+      setIsLoadingGoogle(false);
     }
   };
 
   useEffect(() => {
-    if (googleClicked && session) {
+    const savedGoogle = localStorage.getItem("googleClicked");
+    if (savedGoogle === "true" && session) {
       handleGoogle();
     }
   }, [session]);
