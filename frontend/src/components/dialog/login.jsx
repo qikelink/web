@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogClose,
@@ -15,18 +15,17 @@ import {
   getExistingUsers,
   login,
   Signup,
-  SignupGoogle,
 } from "../../../../backend/src/pocketbase";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
-import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
 import { ImCross } from "react-icons/im";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useSessionContext } from "@/contexts/session-context";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Image from "next/image";
+import googleLogo from "../../../public/google.png";
 
 const LoginDialog = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -38,10 +37,10 @@ const LoginDialog = () => {
   const history = useRouter();
   const { toast } = useToast();
   const { setIsUserValid } = useAuth();
-  // const { data: session } = useSession();
-  // const { session, status } = useSessionContext();
+  const { data: session } = useSession();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("");
   const [showComfirmPass, setShowComfirmPass] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -56,24 +55,56 @@ const LoginDialog = () => {
     setIsSignIn(!isSignIn);
   };
 
+  const evaluatePasswordStrength = (value) => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    if (regex.test(value)) {
+      setPasswordStrength("Strong");
+    } else if (value.length >= 8) {
+      setPasswordStrength(
+        "Weak - Must contain at least one uppercase letter, one lowercase letter, and one number."
+      );
+    } else if (value.length > 0) {
+      setPasswordStrength(
+        "Weak - Must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number."
+      );
+    } else {
+      setPasswordStrength("");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    evaluatePasswordStrength(e.target.value);
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
     if (password !== comfirmPass) {
-      // Check if passwords don't match
       toast({
         title: "Passwords do not match",
         description: "Password and confirm password must match",
         variant: "destructive",
       });
-      return; // Exit the function if passwords don't match
+      return;
     }
 
-    if (!isSignIn && password.length < 8) {
+    if (password !== comfirmPass) {
+      toast({
+        title: "Passwords do not match",
+        description: "Password and confirm password must match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    if (!isSignIn && !passwordRegex.test(password)) {
       toast({
         title: "Weak Password",
-        description: "Password must be at least 8 characters long",
-        variant: "destructive",
+        description:
+          "Weak password, please ensure password meets the requirements",
       });
       return;
     }
@@ -102,7 +133,6 @@ const LoginDialog = () => {
             variant: "destructive",
           });
           console.error("Login error:", error);
-          // Handle login error here, such as displaying an error message to the user
         })
         .finally(() => {
           setTimeout(() => {
@@ -167,16 +197,55 @@ const LoginDialog = () => {
     }
   };
 
-  const handleGoogle = () => {
+  const handleGoogle = async () => {
     setIsLoadingGoogle(true);
-    signIn();
-    setTimeout(() => {
+    let session = await getSession();
+
+    try {
+      if (!session) {
+        await signIn("google");
+        localStorage.setItem("googleClicked", "true");
+        setGoogleClicked(true);
+        session = await getSession();
+      }
+
+      if (session) {
+        const existingUsers = await getExistingUsers();
+        const emailExists = existingUsers.some(
+          (user) => user.superEmail === session.user.email
+        );
+
+        if (emailExists) {
+          await login(session.user.email, session.user.email, setIsUserValid);
+        } else {
+          await Signup(
+            session.user.email,
+            session.user.email,
+            session.user.email,
+            session.user.email
+          );
+          await login(session.user.email, session.user.email, setIsUserValid);
+        }
+
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error handling Google sign-in:", error);
+    } finally {
       setIsLoadingGoogle(false);
-    }, 3000);
+    }
   };
 
+  useEffect(() => {
+    if (googleClicked && session) {
+      handleGoogle();
+    }
+  }, [session]);
+
   const buttonText = isSignIn ? "Sign In" : "Sign Up";
-  const googleText = isSignIn ? "Sign in with google " : "Sign up with google";
+  const googleText = isSignIn
+    ? "Continue with google "
+    : "Continue with google";
   const linkText = isSignIn ? "Create an account" : "Sign In";
 
   return (
@@ -226,7 +295,7 @@ const LoginDialog = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
                 />
                 <button
                   type="button"
@@ -246,7 +315,7 @@ const LoginDialog = () => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                   />
                   <button
                     type="button"
@@ -275,6 +344,7 @@ const LoginDialog = () => {
                     {showComfirmPass ? <FaEyeSlash /> : <FaEye color="gray" />}
                   </button>
                 </div>
+                {/* <p className="text-sm text-darktext">{ passwordStrength}</p> */}
               </div>
             )}
 
@@ -301,10 +371,13 @@ const LoginDialog = () => {
           </form>
           <Button
             size="xl"
-            className="hidden bg-indigo hover:bg-darkblue text-lg rounded-lg w-full mt-3"
+            className=" bg-indigo hover:bg-darkblue text-lg rounded-lg w-full mt-3"
             onClick={handleGoogle}
           >
-            {isloadingGoogle ? "Signing in.." : googleText}
+            <Image src={googleLogo} alt="Google Logo" width={20} height={20} />
+            <span className="ml-4">
+              {isloadingGoogle ? "Signing in.." : googleText}
+            </span>
           </Button>
         </div>
       </DialogContent>
