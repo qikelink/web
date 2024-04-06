@@ -34,7 +34,7 @@ const LoginDialog = () => {
   const [email, setEmail] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [googleClicked, setGoogleClicked] = useState(() => {
-    return localStorage.getItem("googleClicked") === "true";
+    return localStorage.getItem("googleClicked") === "true" || false
   });
   const [isloadingGoogle, setIsLoadingGoogle] = useState(false);
   const history = useRouter();
