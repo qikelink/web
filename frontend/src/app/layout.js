@@ -18,8 +18,10 @@ const fontSans = FontSans({
 });
 
 export const metadata = {
-  title: "Qikelink.com",
+  title: "Qikelink.com || AirBnb for consulting",
   description: "Connecting You To Your Next Level Growth",
+  icons:
+    "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
 };
 
 export default function RootLayout({ children }) {

@@ -26,6 +26,7 @@ import { useToast } from "../ui/use-toast";
 import { ImCross } from "react-icons/im";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useSessionContext } from "@/contexts/session-context";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginDialog = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -38,6 +39,12 @@ const LoginDialog = () => {
   const { setIsUserValid } = useAuth();
   // const { data: session } = useSession();
   // const { session, status } = useSessionContext();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const toggleMode = () => {
     setIsSignIn(!isSignIn);
@@ -191,18 +198,24 @@ const LoginDialog = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <Label htmlFor="password" className="mt-2">
-              Password
-            </Label>
-            <Input
-              className="p-6"
-              isRequired
-              placeholder="Enter password"
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative">
+              <Input
+                className="p-6 pr-12"
+                isRequired
+                placeholder="Enter password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
 
             <Button
               size="xl"
