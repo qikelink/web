@@ -28,7 +28,7 @@ import {
   isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { MdPerson } from "react-icons/md";
+import { AiOutlineFire } from "react-icons/ai";
 
 const HomeCardSection = () => {
   const { mentor, mentors, setMentors, user, isLoading } = useUser();
@@ -227,21 +227,24 @@ const HomeCardSection = () => {
                   </CardContent>
                   <CardFooter className="flex justify-between border-t py-2">
                     <BookModal buttonName="LinkUp" data={item} />
-                    {item.rate != "free" ? (
+                    {item.rate != "Free" ? (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-green-200"
+                        className=" gap-1  text-white rounded-full bg-[#FFC72C]"
                       >
-                        <p className="font-semibold  text-green-700">
-                          {item.rate}
+                        <p className="flex ">
+                          20 <AiOutlineFire size={14} /> || {item.rate}
                         </p>
                       </Badge>
                     ) : (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-red-100"
+                        className="flex gap-1 rounded-full bg-green-200"
                       >
-                        <p className="font-semibold  text-red-500">Free</p>
+                        <p className="flex text-green-600">
+                          {" "}
+                          2 <AiOutlineFire size={14} /> || Free
+                        </p>
                       </Badge>
                     )}
                   </CardFooter>

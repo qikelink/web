@@ -108,6 +108,9 @@ const BookModal = ({ buttonName, blue, data }) => {
         });
         setIsLoading(!isLoading);
         setIsClicked(false);
+        setTimeout(() => {
+          window.location.reload(); // Reload the page after 3 seconds
+        }, 2000);
       })
       .catch((error) => {
         toast({
@@ -155,6 +158,9 @@ const BookModal = ({ buttonName, blue, data }) => {
           variant: "destructive",
         });
         console.error("Bookmark addition error:", error);
+        setTimeout(() => {
+          window.location.reload(); // Reload the page after 3 seconds
+        }, 2000);
       });
   };
 
