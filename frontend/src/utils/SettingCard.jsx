@@ -83,7 +83,7 @@ const SettingCard = () => {
 
     const imageToUpdate = profileImage ? profileImage : formData.avatar;
 
-    if (mentorId.length > 0) {
+    if (mentorId && mentorId.length > 0) {
       updateMentor(
         mentorId,
         formData.username,
@@ -92,12 +92,12 @@ const SettingCard = () => {
         formData.awards
       ).then(() => {
         getMentor()
-        .then((res) => {
-          setMentor(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching mentor updated data:", error);
-        });
+          .then((res) => {
+            setMentor(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching mentor updated data:", error);
+          });
       });
     }
 
@@ -110,6 +110,7 @@ const SettingCard = () => {
       formData.awards
     )
       .then(() => {
+        setIsSpinning(!isSpinning);
         toast({
           title: "settings updated",
           description: "Settings updated successfully! .",
