@@ -51,6 +51,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const pathname = usePathname();
 
   const options = createdOrganization.map((org) => ({
@@ -164,11 +165,17 @@ const BookModal = ({ buttonName, blue, data }) => {
       });
   };
 
+  const handleClick = () => {
+    if (!isUserValid) {
+      setIsLoginDialogOpen(true);
+    }
+  };
+
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleClick}>
             <p className={blue ? "text-blue" : ""}>{buttonName} </p>
             <BsFillSendArrowDownFill
               color={blue ? "#0096FF" : "#0096FF"}
@@ -176,8 +183,9 @@ const BookModal = ({ buttonName, blue, data }) => {
             />
           </Button>
         </DialogTrigger>
+
         <DialogContent className="sm:max-w-[425px] rounded-md">
-          <form onSubmit={handleSubmit}>
+         { isUserValid && <form onSubmit={handleSubmit}>
             <DialogHeader>
               <DialogTitle>
                 <div className="flex justify-between">
@@ -372,32 +380,17 @@ const BookModal = ({ buttonName, blue, data }) => {
               </div>
             </div>
             <DialogFooter>
-              {isUserValid ? (
-                isClicked ? (
-                  <Button
-                    disabled
-                    size="xl"
-                    className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
-                    type="submit"
-                  >
-                    Request
-                  </Button>
-                ) : (
-                  <Button
-                    size="xl"
-                    className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
-                    type="submit"
-                  >
-                    Request
-                  </Button>
-                )
-              ) : (
-                <div className="flex mt-2">
-                  <LoginDialog />
-                </div>
-              )}
+              <Button
+                size="xl"
+                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                type="submit"
+              >
+                Request
+              </Button>
             </DialogFooter>
-          </form>
+          </form>}
+
+          {isLoginDialogOpen && <LoginDialog />}
         </DialogContent>
       </Dialog>
     </div>
