@@ -264,7 +264,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
               {/* Achievements section */}
               <div className="flex flex-col space-y-2 ">
-                <Label className="font-semibold">Achievements</Label>
+                <Label className="font-semibold">Work Experiences</Label>
                 <ol className="text-sm text-darktext list-disc ml-4">
                   {data && data.awards
                     ? data.awards

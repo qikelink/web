@@ -31,6 +31,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 const LoginDialog = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [password, setPassword] = useState("");
+  const [comfirmPass, setComfirmPass] = useState("");
   const [email, setEmail] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [isloadingGoogle, setIsLoadingGoogle] = useState(false);
@@ -41,9 +42,14 @@ const LoginDialog = () => {
   // const { session, status } = useSessionContext();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showComfirmPass, setShowComfirmPass] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const toggleComfirmPasswordVisibility = () => {
+    setShowComfirmPass(!showComfirmPass);
   };
 
   const toggleMode = () => {
@@ -52,6 +58,16 @@ const LoginDialog = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+
+    if (password !== comfirmPass) {
+      // Check if passwords don't match
+      toast({
+        title: "Passwords do not match",
+        description: "Password and confirm password must match",
+        variant: "destructive",
+      });
+      return; // Exit the function if passwords don't match
+    }
 
     if (!isSignIn && password.length < 8) {
       toast({
@@ -122,6 +138,9 @@ const LoginDialog = () => {
                     "Account created successfully! Login with new credentials.",
                   variant: "default",
                 });
+                login(email, password, setIsUserValid).then(() => {
+                  window.location.reload();
+                });
               })
               .catch((error) => {
                 toast({
@@ -182,7 +201,7 @@ const LoginDialog = () => {
             </DialogClose>
           </DialogTitle>
           <DialogDescription className="text-left">
-            Get started and book a mentor of your choice
+            Get Started With Airbnb For Consulting.
           </DialogDescription>
         </DialogHeader>
         <div>
@@ -198,24 +217,66 @@ const LoginDialog = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <div className="relative">
-              <Input
-                className="p-6 pr-12"
-                isRequired
-                placeholder="Enter password"
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 flex items-center pr-3"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
+            {isSignIn ? (
+              <div className="relative">
+                <Input
+                  className="p-6 pr-12"
+                  isRequired
+                  placeholder="Enter password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <div className="relative">
+                  <Input
+                    className="p-6 pr-12"
+                    isRequired
+                    placeholder="Enter your password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye color="gray" />}
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <Input
+                    className="p-6 pr-12"
+                    isRequired
+                    placeholder="Please Confirm password"
+                    type={showComfirmPass ? "text" : "password"}
+                    name="password"
+                    value={comfirmPass}
+                    onChange={(e) => setComfirmPass(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleComfirmPasswordVisibility}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    {showComfirmPass ? <FaEyeSlash /> : <FaEye color="gray" />}
+                  </button>
+                </div>
+              </div>
+            )}
 
             <Button
               size="xl"
