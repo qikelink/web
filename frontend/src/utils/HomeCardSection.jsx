@@ -29,9 +29,11 @@ import {
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { AiOutlineFire } from "react-icons/ai";
+import { GrTag } from "react-icons/gr";
 
 const HomeCardSection = () => {
-  const { mentor, mentors, setMentors, user, isLoading } = useUser();
+  const { mentor, mentors, setMentors, user, isLoading, selectedButtons } =
+    useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
@@ -82,66 +84,17 @@ const HomeCardSection = () => {
         });
         console.error("Bookmark addition error:", error);
       });
-
-    // toggle functionality incase  we need it
-    // if (isBookmarked && bookmark.length > 0) {
-    //   // Check if bookmark is not empty
-    //   RemoveBookmark(bookmark[0].id)
-    //     .then(() => {
-    //       toast({
-    //         title: "Removed from bookmarks",
-    //         description: "Removed from bookmarks successfully!",
-    //         variant: "default",
-    //       });
-    //       setIsBookmarked(false); // Update state to reflect removal
-    //     })
-    //     .catch((error) => {
-    //       toast({
-    //         title: "Failed to remove from bookmarks",
-    //         description: "An error occurred while removing from bookmarks.",
-    //         variant: "destructive",
-    //       });
-    //       console.error("Bookmark removal error:", error);
-    //     });
-    // } else {
-    //   CreateBookmark(
-    //     mentors[0].fullName,
-    //     mentors[0].username,
-    //     mentors[0].phoneNumber,
-    //     mentors[0].bio,
-    //     mentors[0].awards,
-    //     mentors[0].businessName,
-    //     mentors[0].contact,
-    //     mentors[0].account
-    //   )
-    //     .then(() => {
-    //       toast({
-    //         title: "Added to bookmarks",
-    //         description: "Added to bookmarks successfully!",
-    //         variant: "default",
-    //       });
-    //       setIsBookmarked(true);
-    //     })
-    //     .catch((error) => {
-    //       toast({
-    //         title: "Failed to add to bookmarks",
-    //         description: "An error occurred while adding to bookmarks.",
-    //         variant: "destructive",
-    //       });
-    //       console.error("Bookmark addition error:", error);
-    //     })
-    //     .finally(() => {
-    //       getBookmarks()
-    //         .then((res) => {
-    //           setBookmark(res);
-    //         })
-    //         .catch((error) => {
-    //           console.error("Error fetching bookmarks data:", error);
-    //           setBookmark([]); // Set bookmark state to empty array in case of error
-    //         });
-    //     });
-    // }
   };
+
+  function trimToSevenCharacters(str) {
+    if (str.length <= 6) {
+      return str; // If the string length is 6 or less, return the original string
+    } else {
+      return str.substring(0, 6) + ".."; // Otherwise, return the substring of the first 6 characters
+    }
+  }
+
+  console.log(selectedButtons)
 
   return (
     <>
@@ -215,10 +168,13 @@ const HomeCardSection = () => {
                   </CardHeader>
                   <CardContent className="text-small text-default-400 ">
                     <div className="flex gap-2 flex-wrap item-center">
+                      <Badge variant="outline">
+                        <GrTag color="green" />
+                      </Badge>{" "}
                       {item && item.interests
                         ? item.interests.split(",").map((interest, index) => (
                             <Badge key={index} variant="outline">
-                              {interest.trim()}
+                              {trimToSevenCharacters(interest.trim())}
                             </Badge>
                           ))
                         : "N/A"}
