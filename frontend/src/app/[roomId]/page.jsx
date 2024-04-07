@@ -18,7 +18,9 @@ import { useRouter } from "next/navigation";
 import { BasicIcons } from "@/utils/BasicIcons";
 import { Button } from "@/components/ui/button";
 
-export const runtime = 'edge';
+const isCloudflarePages = process.env.VERCEL === "1";
+
+export const runtime = isCloudflarePages ? "edge" : undefined;
 
 export default function Home({ params }) {
   const { setProgress } = useAuth();

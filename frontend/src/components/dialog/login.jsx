@@ -205,7 +205,7 @@ const LoginDialog = () => {
       if (!session) {
         await signIn("google");
         localStorage.setItem("googleClicked", "true");
-       
+
         session = await getSession();
       }
 

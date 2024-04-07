@@ -1,6 +1,8 @@
 import { AccessToken, Role } from "@huddle01/server-sdk/auth";
 
-export const runtime = 'edge';
+const isCloudflarePages = process.env.VERCEL === '1';
+
+export const runtime = isCloudflarePages ? 'edge' : undefined;
 
 export const dynamic = "force-dynamic";
 
