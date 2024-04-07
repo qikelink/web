@@ -38,6 +38,8 @@ import LoginDialog from "@/components/dialog/login";
 import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { EmptyIcon } from "@/icons/EmptyIcon";
+import { GrTag } from "react-icons/gr";
+
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
@@ -243,6 +245,9 @@ const BookModal = ({ buttonName, blue, data }) => {
                 </DialogTitle>
               </DialogHeader>
               <DialogDescription className="flex flex-wrap space-x-3 mt-2">
+                <Badge variant="outline">
+                  <GrTag color="green" />
+                </Badge>{" "}
                 {data && data.interests
                   ? data.interests.split(",").map((interest, index) => (
                       <Badge key={index} variant="outline">
