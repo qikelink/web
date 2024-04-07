@@ -18,11 +18,7 @@ import { useRouter } from "next/navigation";
 import { BasicIcons } from "@/utils/BasicIcons";
 import { Button } from "@/components/ui/button";
 
-export let runtime = "edge";
-
-if (process.env.NODE_ENV === "development") {
-  runtime = undefined;
-}
+export const runtime = process.env.AUTH_RUNTIME || "edge";
 
 export default function Home({ params }) {
   const { setProgress } = useAuth();

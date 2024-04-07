@@ -1,10 +1,6 @@
 import { AccessToken, Role } from "@huddle01/server-sdk/auth";
 
-export let runtime = "edge";
-
-if (process.env.NODE_ENV === "development") {
-  runtime = undefined;
-}
+export const runtime = process.env.AUTH_RUNTIME || "edge";
 
 export const dynamic = "force-dynamic";
 
