@@ -33,7 +33,6 @@ const LoginDialog = () => {
   const [comfirmPass, setComfirmPass] = useState("");
   const [email, setEmail] = useState("");
   const [isloading, setIsLoading] = useState(false);
-  // const [googleClicked, setGoogleClicked] = useState(false);
   const [isloadingGoogle, setIsLoadingGoogle] = useState(false);
   const history = useRouter();
   const { toast } = useToast();
@@ -206,7 +205,7 @@ const LoginDialog = () => {
       if (!session) {
         await signIn("google");
         localStorage.setItem("googleClicked", "true");
-        // setGoogleClicked(true);
+       
         session = await getSession();
       }
 
