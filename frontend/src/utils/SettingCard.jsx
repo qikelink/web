@@ -270,7 +270,7 @@ const SettingCard = () => {
       </div>
 
       <div className="mt-6">
-        <Label className="text-lg">Awards/Recognitions</Label>
+        <Label className="text-lg">Work Experience</Label>
         <Textarea
           className="sm:h-24 bg-inputbackground"
           placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "
