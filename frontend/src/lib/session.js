@@ -18,39 +18,39 @@ export const authConfig = {
       clientSecret: GOOGLE_CLIENT_SECRET,
     }),
   ],
-  callbacks: {
-    async signIn({ account, profile }) {
-      if (!profile?.email) {
-        throw new Error("No profile");
-      }
+  // callbacks: {
+  //   async signIn({ account, profile }) {
+  //     if (!profile?.email) {
+  //       throw new Error("No profile");
+  //     }
 
-      try {
-        const existingUsers = await getExistingUsers();
-        const emailExists = existingUsers.some(
-          (user) => user.superEmail === session.user.email
-        );
+  //     try {
+  //       const existingUsers = await getExistingUsers();
+  //       const emailExists = existingUsers.some(
+  //         (user) => user.superEmail === session.user.email
+  //       );
 
-        if (emailExists) {
-          await login(session.user.email, session.user.email, setIsUserValid);
-        } else {
-          await Signup(
-            session.user.email,
-            session.user.email,
-            session.user.email,
-            session.user.email
-          );
-          await login(session.user.email, session.user.email, setIsUserValid);
-        }
+  //       if (emailExists) {
+  //         await login(session.user.email, session.user.email, setIsUserValid);
+  //       } else {
+  //         await Signup(
+  //           session.user.email,
+  //           session.user.email,
+  //           session.user.email,
+  //           session.user.email
+  //         );
+  //         await login(session.user.email, session.user.email, setIsUserValid);
+  //       }
 
-        window.location.reload();
-      } catch (error) {
-        console.error("Error handling Google sign-in:", error);
-        // Handle errors here, such as displaying an error message to the user
-      }
+  //       window.location.reload();
+  //     } catch (error) {
+  //       console.error("Error handling Google sign-in:", error);
+  //       // Handle errors here, such as displaying an error message to the user
+  //     }
 
-      return true;
-    },
-  },
+  //     return true;
+  //   },
+  // },
 };
 
 export async function loginIsRequiredServer() {
