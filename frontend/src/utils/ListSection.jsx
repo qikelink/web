@@ -11,8 +11,12 @@ import { useAuth } from "@/contexts/auth-context";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { IoFlashOutline } from "react-icons/io5";
 import { PiDesktopTower } from "react-icons/pi";
-import { signout, isUserValid } from "../../../backend/src/pocketbase";
+import {
+  signout,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
 import { useUser } from "@/contexts/user-context";
+import { signOut } from "next-auth/react";
 
 const ListSection = () => {
   const pathname = usePathname();
@@ -21,8 +25,10 @@ const ListSection = () => {
 
   const handleSignout = () => {
     setProgress(90);
-    window.location.reload();
     signout(setIsUserValid);
+    localStorage.setItem('googleClicked', 'false');
+    signOut();
+    window.location.reload();
     setUser([]);
   };
 

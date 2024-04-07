@@ -11,7 +11,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import BookModal from "./BookModal";
-import { BsJournalBookmarkFill } from "react-icons/bs";
+import { BsJournalBookmarkFill, BsShareFill } from "react-icons/bs";
 import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
@@ -157,13 +157,15 @@ const HomeCardSection = () => {
                           </span>
                         </div>
                       </div>
-                      <Toggle
-                        aria-label="Toggle italic"
-                        variant="outline"
-                        onClick={() => handleBookmarkToggle(item)}
-                      >
-                        <BsJournalBookmarkFill />
-                      </Toggle>
+                      <div className="flex space-x-2 items-center">
+                        <Toggle
+                          aria-label="Toggle italic"
+                          variant="outline"
+                          onClick={() => handleBookmarkToggle(item)}
+                        >
+                          <BsJournalBookmarkFill />
+                        </Toggle>
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent className="text-small text-default-400 ">
