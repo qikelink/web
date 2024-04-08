@@ -150,7 +150,7 @@ const ListSection = () => {
           <li>
             <button
               onClick={handleSignout}
-              className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red rounded-md"
+              className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red-500 rounded-md"
             >
               <MdLogout size={22} className="ml-2" />
               <p>Sign Out</p>

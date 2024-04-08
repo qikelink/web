@@ -80,16 +80,7 @@ const LoginDialog = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    if (password !== comfirmPass) {
-      toast({
-        title: "Passwords do not match",
-        description: "Password and confirm password must match",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (password !== comfirmPass) {
+    if (!isSignIn && password !== comfirmPass) {
       toast({
         title: "Passwords do not match",
         description: "Password and confirm password must match",
