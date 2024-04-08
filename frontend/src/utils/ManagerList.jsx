@@ -22,7 +22,7 @@ const ManagerList = () => {
       />
 
       <ul className="flex flex-row lg:flex-col grow justify-evenly ">
-        <li>
+        {/* <li>
           <Link
             href="/manager/Settings"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
@@ -32,7 +32,7 @@ const ManagerList = () => {
             <IoMdSettings size={20} />
             <p className="hidden lg:block">Profile Settings</p>
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             href="/manager/Organization"
