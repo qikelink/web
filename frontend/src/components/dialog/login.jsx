@@ -191,14 +191,14 @@ const LoginDialog = () => {
 
   const handleGoogle = async () => {
     setIsLoadingGoogle(true);
-    // let session = await auth();
+    
 
     try {
       if (!session) {
         await signIn("google");
         localStorage.setItem("googleClicked", "true");
 
-        // session = await auth();
+       
       }
 
       if (session) {

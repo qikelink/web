@@ -26,7 +26,7 @@ const ListSection = () => {
   const handleSignout = () => {
     setProgress(90);
     signout(setIsUserValid);
-    localStorage.setItem('googleClicked', 'false');
+    localStorage.clear();
     signOut();
     window.location.reload();
     setUser([]);
