@@ -23,7 +23,7 @@ import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
 import { ImCross } from "react-icons/im";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { auth } from "../../../auth";
+import { auth } from "../../lib/auth";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import googleLogo from "../../../public/google.png";
