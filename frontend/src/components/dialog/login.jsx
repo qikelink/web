@@ -13,8 +13,11 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import {
   getExistingUsers,
+  getGoogle,
+  isUserValid,
   login,
   Signup,
+  toggleGoogle,
 } from "../../../../backend/src/pocketbase";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
@@ -59,7 +62,7 @@ const LoginDialog = () => {
   const evaluatePasswordStrength = (value) => {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     if (regex.test(value)) {
-      setPasswordStrength("Strong");
+      setPasswordStrength("Stong - Passsword strength is okay ✅");
     } else if (value.length >= 8) {
       setPasswordStrength(
         "Weak - Must contain at least one uppercase letter, one lowercase letter, and one number."
@@ -130,6 +133,7 @@ const LoginDialog = () => {
           setTimeout(() => {
             setEmail("");
             setPassword("");
+            setComfirmPass("");
             setIsLoading(false);
           }, 3000);
         });
@@ -149,6 +153,7 @@ const LoginDialog = () => {
             toggleMode();
             setEmail("");
             setPassword("");
+            setComfirmPass("");
             setIsLoading(false);
           } else {
             Signup(email, email, password, password)
@@ -159,9 +164,6 @@ const LoginDialog = () => {
                   description:
                     "Account created successfully! Login with new credentials.",
                   variant: "default",
-                });
-                login(email, password, setIsUserValid).then(() => {
-                  window.location.reload();
                 });
               })
               .catch((error) => {
@@ -179,6 +181,7 @@ const LoginDialog = () => {
                   setIsLoading(false);
                   setEmail("");
                   setPassword("");
+                  setComfirmPass("")
                 }, 2000);
               });
           }
@@ -191,14 +194,11 @@ const LoginDialog = () => {
 
   const handleGoogle = async () => {
     setIsLoadingGoogle(true);
-    
 
     try {
       if (!session) {
-        await signIn("google");
-        localStorage.setItem("googleClicked", "true");
-
-       
+        await toggleGoogle(true);
+        signIn("google");
       }
 
       if (session) {
@@ -229,9 +229,16 @@ const LoginDialog = () => {
   };
 
   useEffect(() => {
-    const savedGoogle = localStorage.getItem("googleClicked");
-    if (savedGoogle === "true" && session) {
-      handleGoogle();
+    if (session) {
+      getGoogle()
+        .then((res) => {
+          if (res.signIn === true) {
+            handleGoogle();
+          }
+        })
+        .catch((error) => {
+          console.error("Google auto sign in error:", error);
+        });
     }
   }, [session]);
 
@@ -338,13 +345,13 @@ const LoginDialog = () => {
                     {showComfirmPass ? <FaEyeSlash /> : <FaEye color="gray" />}
                   </button>
                 </div>
-                {/* <p className="text-sm text-darktext">{ passwordStrength}</p> */}
+                <p className="text-sm text-darktext">{passwordStrength}</p>
               </div>
             )}
 
             <Button
               size="xl"
-              className="bg-blue hover:bg-darkblue text-lg rounded-lg mt-3"
+              className="bg-blue hover:bg-darkblue text-lg rounded-lg"
               type="submit"
             >
               {isloading ? "Signing In..." : buttonText}

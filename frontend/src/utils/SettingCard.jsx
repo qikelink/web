@@ -188,7 +188,7 @@ const SettingCard = () => {
         <Input
           id="picture"
           type="file"
-          className="lg:max-w-xs w-fit bg-inputbackground "
+          className="sm:w-52 w-24 bg-inputbackground "
           onChange={(e) => setProfileImage(e.target.files[0])}
         />
         {isLoading ? (
@@ -197,10 +197,10 @@ const SettingCard = () => {
           <Badge
             variant="outline"
             className={`rounded-full ${
-              formData.verified === true ? "bg-green-600" : "bg-red"
-            } text-secondary h-8 flex justify-center font-bold text-sm text-wrap lg:mr-5 px-5`}
+              formData.verified === true ? "bg-green-600" : "bg-red-500"
+            } text-secondary h-8 flex justify-center font-bold text-xs sm:text-sm text-wrap lg:mr-5 sm:px-6 px-3`}
           >
-            {formData.verified === true ? "Verified" : "Not Verified"}
+            {formData.verified === true ? "Verified" : "Not verified"}
           </Badge>
         )}
       </div>
@@ -240,28 +240,31 @@ const SettingCard = () => {
           />
         </div>
 
-        <div className=" flex items-center space-x-4 rounded-md border px-3 bg-inputbackground">
-          <IoFlash />
-          <div className="flex-1 ">
-            <p className="text-sm font-medium leading-none">Quick Service</p>
+        <div>
+          <Label className="text-lg">Availablity for Instant <span className="text-blue font-medium">Linkup</span></Label>
+          <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
+            <IoFlash />
+            <div className="flex-1 ">
+              <p className="text-sm font-medium leading-none">Quick Service</p>
+            </div>
+            {formData.verified === true ? (
+              mentor && mentor.username && mentor.username.length > 0 ? (
+                <Switch
+                  checked={quickService}
+                  onCheckedChange={handleQuickServiceToggle}
+                />
+              ) : (
+                <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
+              )
+            ) : null}
           </div>
-          {formData.verified === true ? (
-            mentor && mentor.username && mentor.username.length > 0 ? (
-              <Switch
-                checked={quickService}
-                onCheckedChange={handleQuickServiceToggle}
-              />
-            ) : (
-              <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
-            )
-          ) : null}
         </div>
       </div>
 
       <div className="mt-6">
         <Label className="text-lg">Bio</Label>
         <Textarea
-          className="sm:h-40 bg-inputbackground"
+          className="h-24 sm:h-36 bg-inputbackground"
           placeholder="Write your Bio here e.g your hobbies, interests ETC"
           name="bio"
           value={formData.bio}
@@ -272,7 +275,7 @@ const SettingCard = () => {
       <div className="mt-6">
         <Label className="text-lg">Work Experience</Label>
         <Textarea
-          className="sm:h-24 bg-inputbackground"
+          className="h-24 sm:h-36 bg-inputbackground"
           placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "
           name="awards"
           value={formData.awards}
@@ -292,7 +295,7 @@ const SettingCard = () => {
           />
         </Button>
 
-        {formData.verified === true ? null : !isLoading &&
+        {formData.verified === true || mentor.length > 0 ? null : !isLoading &&
           formData.username !== "" &&
           formData.phoneNumber !== "" &&
           formData.bio !== "" &&

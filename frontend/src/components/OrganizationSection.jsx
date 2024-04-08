@@ -92,95 +92,96 @@ const OrganizationSection = () => {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center">
-        <h2 className="text-sm lg:text-xl">Organizations</h2>
-
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="bg-blue text-sm lg:text-base">
-              Create Organization
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Create Organization</DialogTitle>
-              <DialogDescription>
-                You can Create an Organization in sec, include a profile image
-                to increase chances of request Success.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-3">
-              <div className="flex flex-col space-y-1">
-                <Label className="text-lg">Organization logo</Label>
-                <input
-                  id="image"
-                  type="file"
-                  placeholder="Image"
-                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
-                  onChange={(e) => setProfileImage(e.target.files[0])}
-                />
-              </div>
-              <div className="flex flex-col space-y-1">
-                <Label className="text-lg">Organization name</Label>
-                <input
-                  id="name"
-                  value={name}
-                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1">
-                <Label className="text-lg">About organization</Label>
-                <input
-                  id="tagLine"
-                  value={tagline}
-                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                  onChange={(e) => setTagline(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1">
-                <Label className="text-lg">Add members</Label>
-                <div className="flex justify-between w-full items-center space-x-3">
+      {allOrganization.length > 0 && (
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg lg:text-xl">Organizations</h2>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="bg-blue text-sm lg:text-base mt-3">
+                Create Organization
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Create Organization</DialogTitle>
+                <DialogDescription>
+                  You can Create an Organization in sec, include a profile image
+                  to increase chances of request Success.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-3">
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">Organization logo</Label>
                   <input
-                    id="members"
-                    value={newMember}
-                    type="email"
-                    placeholder="Enter Members email"
-                    className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                    onChange={(e) => setNewMember(e.target.value)}
+                    id="image"
+                    type="file"
+                    placeholder="Image"
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setProfileImage(e.target.files[0])}
                   />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">Organization name</Label>
+                  <input
+                    id="name"
+                    value={name}
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">About organization</Label>
+                  <input
+                    id="tagLine"
+                    value={tagline}
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setTagline(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">Add members</Label>
+                  <div className="flex justify-between w-full items-center space-x-3">
+                    <input
+                      id="members"
+                      value={newMember}
+                      type="email"
+                      placeholder="Enter Members email"
+                      className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                      onChange={(e) => setNewMember(e.target.value)}
+                    />
 
-                  <Button
-                    className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                    onClick={handleAddMember}
-                  >
-                    Add
-                  </Button>
+                    <Button
+                      className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                      onClick={handleAddMember}
+                    >
+                      Add
+                    </Button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
+                  {members.map((email, index) => (
+                    <div
+                      key={index}
+                      className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                    >
+                      {email}
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
-                {members.map((email, index) => (
-                  <div
-                    key={index}
-                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
-                  >
-                    {email}
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            <DialogFooter>
-              <Button onClick={() => handleClick()}>
-                {isSpinning ? "Creating" : "Create"}
-                <AiOutlineLoading3Quarters
-                  className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
-                />
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
+              <DialogFooter>
+                <Button onClick={() => handleClick()}>
+                  {isSpinning ? "Creating" : "Create"}
+                  <AiOutlineLoading3Quarters
+                    className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+                  />
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      )}
 
       {isLoadingUserData ? (
         <div className="grid grid-cols-1 gap-3 w-full mt-2">
@@ -248,11 +249,96 @@ const OrganizationSection = () => {
         ))
       ) : (
         <div className="flex flex-col  items-center w-full h-full mt-32">
-        <EmptyIcon size={150} />
-        <p className="text-center text-xl font-medium text-darktext">
-          No organization created yet.
-        </p>
-      </div>
+          <EmptyIcon size={150} />
+          <p className="text-center text-xl font-medium text-darktext">
+            No organization created yet.
+          </p>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="bg-blue text-sm lg:text-base mt-3">
+                Create Organization
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Create Organization</DialogTitle>
+                <DialogDescription>
+                  You can Create an Organization in sec, include a profile image
+                  to increase chances of request Success.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-3">
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">Organization logo</Label>
+                  <input
+                    id="image"
+                    type="file"
+                    placeholder="Image"
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setProfileImage(e.target.files[0])}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">Organization name</Label>
+                  <input
+                    id="name"
+                    value={name}
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">About organization</Label>
+                  <input
+                    id="tagLine"
+                    value={tagline}
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    onChange={(e) => setTagline(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <Label className="text-lg">Add members</Label>
+                  <div className="flex justify-between w-full items-center space-x-3">
+                    <input
+                      id="members"
+                      value={newMember}
+                      type="email"
+                      placeholder="Enter Members email"
+                      className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                      onChange={(e) => setNewMember(e.target.value)}
+                    />
+
+                    <Button
+                      className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                      onClick={handleAddMember}
+                    >
+                      Add
+                    </Button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
+                  {members.map((email, index) => (
+                    <div
+                      key={index}
+                      className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                    >
+                      {email}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <DialogFooter>
+                <Button onClick={() => handleClick()}>
+                  {isSpinning ? "Creating" : "Create"}
+                  <AiOutlineLoading3Quarters
+                    className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+                  />
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       )}
 
       <div className="flex flex-end hidden">

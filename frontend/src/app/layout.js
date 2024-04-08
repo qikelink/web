@@ -30,6 +30,7 @@ export default function RootLayout({ children }) {
           " bg-background font-poppins text-foreground invisible-scrollbar",
           fontSans.variable
         )}
+        
       >
         <NextAuthProvider>
           <AuthProvider>

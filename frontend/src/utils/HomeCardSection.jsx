@@ -124,7 +124,7 @@ const HomeCardSection = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {isLoading
             ? list.map((item, index) => (
-                <Skeleton key={index} className="h-52 w-64 rounded-lg" />
+                <Skeleton key={index} className="h-52 w-full rounded-lg" />
               ))
             : mentors.length > 0 &&
               mentors.map((item, index) => (

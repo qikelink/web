@@ -259,7 +259,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
               <div className="space-y-3">
                 {/* personal details */}
-                <div>
+                <div className="mt-3">
                   <Label className="font-semibold">Personal details</Label>
                   <div
                     className={`text-sm text-darktext max-w-[380px] mx-auto ${

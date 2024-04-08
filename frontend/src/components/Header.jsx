@@ -31,7 +31,11 @@ import { AiOutlineHome } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
 import { EmptyIcon } from "@/icons/EmptyIcon";
-import { IoFlashOutline } from "react-icons/io5";
+import {
+  IoChatboxEllipsesOutline,
+  IoChatboxOutline,
+  IoFlashOutline,
+} from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../images/logorm.png";
 
@@ -44,7 +48,6 @@ export default function Header() {
   const pathname = usePathname();
   const { setProgress } = useAuth();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  
 
   const handleSignout = () => {
     setProgress(90);
@@ -65,12 +68,10 @@ export default function Header() {
     }
   }, [notifications]);
 
-
-
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       <div className="font-poppins flex justify-between items-center pb-3">
-        <div className="flex items-center justify-between gap-1 hover:cursor">
+        <div className="flex items-center justify-between space-x-2 hover:cursor">
           {isDropdownOpen ? (
             <Badge
               variant={"outline"}
@@ -93,17 +94,12 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          {/* <h2
-            onClick={() => router.push(`/`)}
-            className="font-bold text-blue text-xl md:text-2xl  cursor-pointer"
-          >
-            RAKATIS
-          </h2> */}
           <Image
             onClick={() => router.push(`/`)}
             src={logo}
             width={150}
             height={150}
+            layout="fixed"
           />
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
@@ -126,8 +122,8 @@ export default function Header() {
           <div>
             {isLoading && isUserValid ? (
               <div className="flex items-center space-x-5 justify-center">
-                <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="hidden md:inline h-8 w-8 rounded-full" />
+                <Skeleton className="hidden md:inline h-8 w-8 rounded-full" />
                 <Skeleton className="h-8 w-8 rounded-full" />
               </div>
             ) : isUserValid && user ? (
@@ -145,7 +141,7 @@ export default function Header() {
                 <Badge
                   variant="outline"
                   className={
-                    "relative rounded-full p-2 md:inline cursor-pointer"
+                    "relative rounded-full p-2 hidden md:inline cursor-pointer"
                   }
                   onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                 >
@@ -160,7 +156,7 @@ export default function Header() {
 
                   {isNotificationOpen && (
                     <>
-                      <div className="absolute top-10 md:top-0 md:right-9 right-0 w-64 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
+                      <div className="absolute  md:top-0 md:right-9 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
                         {notifications && notifications.items.length > 0 ? (
                           notifications.items.map((item, index) => (
                             <div
@@ -187,7 +183,7 @@ export default function Header() {
                           <div className="flex flex-col  items-center w-full h-full my-16">
                             <EmptyIcon size={120} />
                             <p className="text-center text-lg font-medium text-darktext">
-                              No notification to show.
+                              No message received yet.
                             </p>
                           </div>
                         )}
@@ -200,9 +196,7 @@ export default function Header() {
                   <AvatarImage
                     src={getImageUrl(user.collectionId, user.id, user.avatar)}
                   />
-                  <AvatarFallback>
-                    {"QK"}
-                  </AvatarFallback>
+                  <AvatarFallback>{"QK"}</AvatarFallback>
                 </Avatar>
               </div>
             ) : (
@@ -239,6 +233,28 @@ export default function Header() {
                 >
                   <IoFlashOutline size={22} className="ml-2" />
                   <p>Quick Service</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/notification"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-between items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/notification"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}
+                >
+                  <div className="flex justify-start space-x-4">
+                    <IoChatboxEllipsesOutline size={22} className="ml-2" />
+                    <p>Messages</p>
+                  </div>
+                  {notifications.items && notifications.items.length > 0 && (
+                    <span className=" bg-red text-white border rounded-full px-1">
+                      {" "}
+                      {`${notifications.items.length}+`}
+                    </span>
+                  )}
                 </Link>
               </li>
               <li>
@@ -331,7 +347,7 @@ export default function Header() {
                 <li>
                   <button
                     onClick={handleSignout}
-                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red rounded-md"
+                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md"
                   >
                     <MdLogout size={22} className="ml-2" />
                     <p>Sign Out</p>

@@ -57,7 +57,7 @@ const QuickCardSection = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {isLoading && quickMentors.length === 0
             ? list.map((item, index) => (
-                <Skeleton key={index} className="h-52 w-64 rounded-lg" />
+                <Skeleton key={index} className="h-52 w-full rounded-lg" />
               ))
             : quickMentors.map((item, index) => (
                 <Card key={index}>

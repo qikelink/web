@@ -34,13 +34,26 @@ import { useToast } from "./ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 
 const RequestSection = () => {
-  const { user, isLoadingUserData, meetingRequests, setMeetingRequests, setNotifications } =
-    useUser();
+  const {
+    user,
+    isLoadingUserData,
+    meetingRequests,
+    setMeetingRequests,
+    setNotifications,
+  } = useUser();
   const { toast } = useToast();
 
   const acceptRequest = (item) => {
-    const successMessage = `Hello, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.name} has been approved.`;
-    
+    const successMessage = `Hello, your meeting with ${
+      item.expand.mentor.length > 0
+        ? item.expand.mentor.username
+        : item.expand.mentor.username
+    } requested as ${
+      item.expand.organization.length > 0
+        ? item.expand.organization.username
+        : item.expand.owner.name
+    } has been approved.`;
+
     updateSession(item.id, true)
       .then(() => {
         toast({
@@ -49,7 +62,9 @@ const RequestSection = () => {
           variant: "default",
         });
         // Update the meeting requests state after accepting the request
-        setMeetingRequests(prevMeetingRequests => prevMeetingRequests.filter(request => request.id !== item.id));
+        setMeetingRequests((prevMeetingRequests) =>
+          prevMeetingRequests.filter((request) => request.id !== item.id)
+        );
       })
       .catch((error) => {
         toast({
@@ -60,22 +75,34 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
-        createNotification('Request Accepted', successMessage, Date.now(), item.expand.owner.id, item.expand.organization.id);
+        createNotification(
+          "Request Accepted",
+          successMessage,
+          Date.now(),
+          item.expand.owner.id,
+          item.expand.organization.id
+        );
         getNotifications(user.id, user.email)
-        .then((res) => {
-          setNotifications(res);
-        
-        })
-        .catch((error) => {
-          console.error("Error fetching notifications data:", error);
-        
-        });
+          .then((res) => {
+            setNotifications(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching notifications data:", error);
+          });
       });
   };
-  
+
   const rejectRequest = (item) => {
-    const rejectMessage = `Sorry, your meeting with ${item.expand.mentor.length > 0 ? item.expand.mentor.username : item.expand.mentor.username} requested as ${item.expand.organization.length > 0 ? item.expand.organization.username : item.expand.owner.name} has been rejected.`;
-  
+    const rejectMessage = `Sorry, your meeting with ${
+      item.expand.mentor.length > 0
+        ? item.expand.mentor.username
+        : item.expand.mentor.username
+    } requested as ${
+      item.expand.organization.length > 0
+        ? item.expand.organization.username
+        : item.expand.owner.name
+    } has been rejected.`;
+
     updateSession(item.id, false, true)
       .then(() => {
         toast({
@@ -84,7 +111,9 @@ const RequestSection = () => {
           variant: "default",
         });
         // Update the meeting requests state after rejecting the request
-        setMeetingRequests(prevMeetingRequests => prevMeetingRequests.filter(request => request.id !== item.id));
+        setMeetingRequests((prevMeetingRequests) =>
+          prevMeetingRequests.filter((request) => request.id !== item.id)
+        );
       })
       .catch((error) => {
         toast({
@@ -95,25 +124,30 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
-        createNotification('Request Rejected', rejectMessage, Date.now(), item.expand.owner.id, item.expand.organization.id);
+        createNotification(
+          "Request Rejected",
+          rejectMessage,
+          Date.now(),
+          item.expand.owner.id,
+          item.expand.organization.id
+        );
         getNotifications(user.id, user.email)
-        .then((res) => {
-          setNotifications(res);
-        
-        })
-        .catch((error) => {
-          console.error("Error fetching notifications data:", error);
-        
-        });
+          .then((res) => {
+            setNotifications(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching notifications data:", error);
+          });
       });
   };
-  
 
   return (
     <div className="py-2">
-      <div className="flex justify-between items-center">
-        <h2 className="text-base">Meeting Requests</h2>
-      </div>
+      {meetingRequests.length > 0 && (
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg lg:text-xl">Meeting Requests</h2>
+        </div>
+      )}
       {isLoadingUserData ? (
         <div className="grid grid-cols-1 gap-3 w-full mt-2">
           {/* Skeleton loaders */}
@@ -199,11 +233,11 @@ const RequestSection = () => {
         ))
       ) : (
         <div className="flex flex-col  items-center w-full h-full mt-32">
-            <EmptyIcon size={150} />
-            <p className="text-center text-xl font-medium text-darktext">
-              No request to show for now.
-            </p>
-          </div>
+          <EmptyIcon size={150} />
+          <p className="text-center text-xl font-medium text-darktext">
+            No request to show for now.
+          </p>
+        </div>
       )}
 
       <div className="flex flex-end hidden">

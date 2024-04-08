@@ -14,14 +14,14 @@ const ManagerList = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between lg:h-screen w-full border lg:border-0">
+    <div className="flex flex-row justify-between lg:h-screen w-full border rounded-md lg:border-0">
       {/* menu items */}
       <Separator
         orientation="vertical"
         className="grow-0 mx-2 hidden lg:block"
       />
 
-      <ul className="flex flex-row lg:flex-col grow ">
+      <ul className="flex flex-row lg:flex-col grow justify-evenly ">
         <li>
           <Link
             href="/manager/Settings"
@@ -43,7 +43,7 @@ const ManagerList = () => {
             }`}
           >
             <VscOrganization size={20} />
-            <p className="hidden lg:block">Organization</p>
+            <p className=" lg:block">Organizations</p>
           </Link>
         </li>
         <li>
@@ -54,11 +54,11 @@ const ManagerList = () => {
             } hover:text-blue`}
           >
             <MdOutlineGroupAdd size={20} />
-            <p className="hidden lg:block">Request</p>
+            <p className=" lg:block">Session requests</p>
           </Link>
         </li>
 
-        <li>
+        {/* <li>
           <Link
             href="/manager/Metrics"
             className={`flex gap-2 items-center rounded-md cursor-pointer py-5 px-4 hover:text-blue ${
@@ -93,7 +93,7 @@ const ManagerList = () => {
             <MdOutlineFeedback size={20} />
             <p className="hidden lg:block">Send FeedBack</p>
           </Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

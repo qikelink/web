@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
@@ -11,7 +11,11 @@ import { useAuth } from "@/contexts/auth-context";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { IoFlashOutline } from "react-icons/io5";
 import { PiDesktopTower } from "react-icons/pi";
-import { signout, isUserValid } from "../../../backend/src/pocketbase";
+import {
+  signout,
+  isUserValid,
+  toggleGoogle,
+} from "../../../backend/src/pocketbase";
 import { useUser } from "@/contexts/user-context";
 import { signOut } from "next-auth/react";
 
@@ -20,10 +24,10 @@ const ListSection = () => {
   const { setUser } = useUser();
   const { setIsUserValid, setProgress } = useAuth();
 
-  const handleSignout = () => {
+  const handleSignout = async () => {
     setProgress(90);
+    await toggleGoogle(false);
     signout(setIsUserValid);
-    localStorage.clear();
     signOut();
     window.location.reload();
     setUser([]);
