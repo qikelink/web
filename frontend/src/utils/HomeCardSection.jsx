@@ -94,7 +94,7 @@ const HomeCardSection = () => {
     }
   }
 
-  console.log(selectedButtons)
+ 
 
   return (
     <>

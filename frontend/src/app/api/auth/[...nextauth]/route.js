@@ -1,8 +1,5 @@
-import { authConfig } from "@/lib/session";
-import NextAuth from "next-auth/next";
+import { handlers } from "../../../../../auth";
 
-export const runtime =  "edge";
+export const { GET, POST } = handlers;
 
-const handler = NextAuth(authConfig);
-
-export { handler as GET, handler as POST };
+export const runtime = "edge";

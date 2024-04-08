@@ -23,7 +23,8 @@ import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
 import { ImCross } from "react-icons/im";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { signIn, getSession, useSession } from "next-auth/react";
+import { auth } from "../../../auth";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import googleLogo from "../../../public/google.png";
 
@@ -199,14 +200,14 @@ const LoginDialog = () => {
 
   const handleGoogle = async () => {
     setIsLoadingGoogle(true);
-    let session = await getSession();
+    // let session = await auth();
 
     try {
       if (!session) {
         await signIn("google");
         localStorage.setItem("googleClicked", "true");
 
-        session = await getSession();
+        // session = await auth();
       }
 
       if (session) {
