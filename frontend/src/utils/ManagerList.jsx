@@ -24,6 +24,17 @@ const ManagerList = () => {
       <ul className="flex flex-row lg:flex-col grow ">
         <li>
           <Link
+            href="/manager/Settings"
+            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
+              pathname === "/manager/Settings" ? "bg-[#f7fafc] text-blue" : ""
+            }`}
+          >
+            <IoMdSettings size={20} />
+            <p className="hidden lg:block">Profile Settings</p>
+          </Link>
+        </li>
+        <li>
+          <Link
             href="/manager/Organization"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/manager/Organization"
@@ -59,17 +70,6 @@ const ManagerList = () => {
           </Link>
         </li>
 
-        <li>
-          <Link
-            href="/setting"
-            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
-              pathname === "/setting" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
-            <IoMdSettings size={20} />
-            <p className="hidden lg:block">Settings</p>
-          </Link>
-        </li>
         <Separator orientation="horizontal" className="hidden lg:block" />
 
         <li>
