@@ -18,10 +18,7 @@ import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import {
-  getImageUrl,
-  getQuickMentors,
-} from "../../../backend/src/pocketbase";
+import { getImageUrl, getQuickMentors } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { GoDotFill } from "react-icons/go";
@@ -31,6 +28,14 @@ const QuickCardSection = () => {
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
+
+  function trimToSevenCharacters(str) {
+    if (str.length <= 8) {
+      return str; // If the string length is 8 or less, return the original string
+    } else {
+      return str.substring(0, 8) + ".."; // Otherwise, return the substring of the first 8 characters
+    }
+  }
 
   useEffect(() => {
     if (quickMentors.length > 0) {
@@ -96,7 +101,7 @@ const QuickCardSection = () => {
                       {item && item.interests
                         ? item.interests.split(",").map((interest, index) => (
                             <Badge key={index} variant="outline">
-                              {interest.trim()}
+                              {trimToSevenCharacters(interest.trim())}
                             </Badge>
                           ))
                         : "N/A"}

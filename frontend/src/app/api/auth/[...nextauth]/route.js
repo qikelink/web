@@ -1,5 +1,5 @@
-import { handlers } from "../../../../../auth";
+import { handlers } from "@/lib/auth";
 
 export const { GET, POST } = handlers;
 
-// export const runtime = "edge";
+export const runtime = "edge";
