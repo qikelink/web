@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -83,7 +82,7 @@ const SettingCard = () => {
 
     const imageToUpdate = profileImage ? profileImage : formData.avatar;
 
-    if (mentorId.length > 0) {
+    if (mentorId && mentorId.length > 0) {
       updateMentor(
         mentorId,
         formData.username,
@@ -92,12 +91,12 @@ const SettingCard = () => {
         formData.awards
       ).then(() => {
         getMentor()
-        .then((res) => {
-          setMentor(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching mentor updated data:", error);
-        });
+          .then((res) => {
+            setMentor(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching mentor updated data:", error);
+          });
       });
     }
 
@@ -110,6 +109,7 @@ const SettingCard = () => {
       formData.awards
     )
       .then(() => {
+        setIsSpinning(!isSpinning);
         toast({
           title: "settings updated",
           description: "Settings updated successfully! .",
@@ -270,7 +270,7 @@ const SettingCard = () => {
       </div>
 
       <div className="mt-6">
-        <Label className="text-lg">Awards/Recognitions</Label>
+        <Label className="text-lg">Work Experience</Label>
         <Textarea
           className="sm:h-24 bg-inputbackground"
           placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "

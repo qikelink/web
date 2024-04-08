@@ -11,19 +11,24 @@ import { useAuth } from "@/contexts/auth-context";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { IoFlashOutline } from "react-icons/io5";
 import { PiDesktopTower } from "react-icons/pi";
-import { signout, isUserValid } from "../../../backend/src/pocketbase";
+import {
+  signout,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
 import { useUser } from "@/contexts/user-context";
-
+import { signOut } from "next-auth/react";
 
 const ListSection = () => {
   const pathname = usePathname();
   const { setUser } = useUser();
-  const { setIsUserValid , setProgress } = useAuth();
+  const { setIsUserValid, setProgress } = useAuth();
 
   const handleSignout = () => {
     setProgress(90);
-    window.location.reload();
     signout(setIsUserValid);
+    localStorage.setItem('googleClicked', 'false');
+    signOut();
+    window.location.reload();
     setUser([]);
   };
 
@@ -96,7 +101,7 @@ const ListSection = () => {
             }`}
           >
             <RiUserSettingsLine size={22} className="ml-2" />
-            <p>Settings</p>
+            <p>Profile Setting</p>
           </Link>
         </li>
         <Separator orientation="horizontal" className="my-1" />
@@ -141,15 +146,17 @@ const ListSection = () => {
             <p>Send FeedBack</p>
           </Link>
         </li>
-        { isUserValid ? <li>
-          <button
-            onClick={handleSignout}
-            className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red rounded-md"
-          >
-            <MdLogout size={22} className="ml-2" />
-            <p>Sign Out</p>
-          </button>
-        </li> : null }
+        {isUserValid ? (
+          <li>
+            <button
+              onClick={handleSignout}
+              className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red-500 rounded-md"
+            >
+              <MdLogout size={22} className="ml-2" />
+              <p>Sign Out</p>
+            </button>
+          </li>
+        ) : null}
       </ul>
 
       <Separator orientation="vertical" className="grow-0 mx-2" />

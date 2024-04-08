@@ -58,10 +58,10 @@ const VerifyModal = ({ blue, userData }) => {
       : "";
 
     verifyRequest(
-      userData[0].name,
-      userData[0].phoneNumber,
-      userData[0].bio,
-      userData[0].awards,
+      userData.name,
+      userData.phoneNumber,
+      userData.bio,
+      userData.awards,
       formData.contact,
       formData.account,
       file,
@@ -71,18 +71,21 @@ const VerifyModal = ({ blue, userData }) => {
     )
       .then(() => {
         toast({
-          title: "verification request sent",
-          description: "verification request sent successfully! .",
+          title: "Verification Request Sent",
+          description: "Your verification request has been sent successfully!",
           variant: "default",
         });
+        setTimeout(() => {
+          window.location.reload(); // Reload the page after 3 seconds
+        }, 2000);
       })
       .catch((error) => {
         toast({
-          title: "Failed to send verification request",
-          description: "Sorry an error just occurred! please try again.",
+          title: "Failed to Send Verification Request",
+          description: "Sorry, an error occurred. Please try again.",
           variant: "destructive",
         });
-        console.error("verification error:", error);
+        console.error("Verification Error:", error);
       })
       .finally(() => {
         setFormData({
@@ -144,7 +147,9 @@ const VerifyModal = ({ blue, userData }) => {
 
             {/* Time slot section */}
             <div>
-              <Label className="font-semibold ">Social handle (X, facebook etc.)</Label>
+              <Label className="font-semibold ">
+                Social handle (X, facebook etc.)
+              </Label>
               <Input
                 name="contact"
                 type="text"

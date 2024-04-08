@@ -31,7 +31,6 @@ module.exports = {
         lightblue2: '#F0F8FF',
         inputbackground: '#7676801F',
         white: "#fff",
-        red: "#EC5252",
         indigo: '#6C5ECF',
 
         border: "hsl(var(--border))",

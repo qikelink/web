@@ -11,7 +11,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import BookModal from "./BookModal";
-import { BsJournalBookmarkFill } from "react-icons/bs";
+import { BsJournalBookmarkFill, BsShareFill } from "react-icons/bs";
 import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
@@ -28,9 +28,12 @@ import {
   isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { AiOutlineFire } from "react-icons/ai";
+import { GrTag } from "react-icons/gr";
 
 const HomeCardSection = () => {
-  const { mentor, mentors, setMentors, user, isLoading } = useUser();
+  const { mentor, mentors, setMentors, user, isLoading, selectedButtons } =
+    useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmark, setBookmark] = useState([]);
@@ -81,66 +84,17 @@ const HomeCardSection = () => {
         });
         console.error("Bookmark addition error:", error);
       });
-
-    // toggle functionality incase  we need it
-    // if (isBookmarked && bookmark.length > 0) {
-    //   // Check if bookmark is not empty
-    //   RemoveBookmark(bookmark[0].id)
-    //     .then(() => {
-    //       toast({
-    //         title: "Removed from bookmarks",
-    //         description: "Removed from bookmarks successfully!",
-    //         variant: "default",
-    //       });
-    //       setIsBookmarked(false); // Update state to reflect removal
-    //     })
-    //     .catch((error) => {
-    //       toast({
-    //         title: "Failed to remove from bookmarks",
-    //         description: "An error occurred while removing from bookmarks.",
-    //         variant: "destructive",
-    //       });
-    //       console.error("Bookmark removal error:", error);
-    //     });
-    // } else {
-    //   CreateBookmark(
-    //     mentors[0].fullName,
-    //     mentors[0].username,
-    //     mentors[0].phoneNumber,
-    //     mentors[0].bio,
-    //     mentors[0].awards,
-    //     mentors[0].businessName,
-    //     mentors[0].contact,
-    //     mentors[0].account
-    //   )
-    //     .then(() => {
-    //       toast({
-    //         title: "Added to bookmarks",
-    //         description: "Added to bookmarks successfully!",
-    //         variant: "default",
-    //       });
-    //       setIsBookmarked(true);
-    //     })
-    //     .catch((error) => {
-    //       toast({
-    //         title: "Failed to add to bookmarks",
-    //         description: "An error occurred while adding to bookmarks.",
-    //         variant: "destructive",
-    //       });
-    //       console.error("Bookmark addition error:", error);
-    //     })
-    //     .finally(() => {
-    //       getBookmarks()
-    //         .then((res) => {
-    //           setBookmark(res);
-    //         })
-    //         .catch((error) => {
-    //           console.error("Error fetching bookmarks data:", error);
-    //           setBookmark([]); // Set bookmark state to empty array in case of error
-    //         });
-    //     });
-    // }
   };
+
+  function trimToSevenCharacters(str) {
+    if (str.length <= 6) {
+      return str; // If the string length is 6 or less, return the original string
+    } else {
+      return str.substring(0, 6) + ".."; // Otherwise, return the substring of the first 6 characters
+    }
+  }
+
+ 
 
   return (
     <>
@@ -174,7 +128,7 @@ const HomeCardSection = () => {
               ))
             : mentors.length > 0 &&
               mentors.map((item, index) => (
-                <Card key={index} className="">
+                <Card key={index} className="flex flex-col item-center">
                   <CardHeader>
                     <div className="flex justify-between">
                       <div className="flex gap-2">
@@ -203,21 +157,26 @@ const HomeCardSection = () => {
                           </span>
                         </div>
                       </div>
-                      <Toggle
-                        aria-label="Toggle italic"
-                        variant="outline"
-                        onClick={() => handleBookmarkToggle(item)}
-                      >
-                        <BsJournalBookmarkFill />
-                      </Toggle>
+                      <div className="flex space-x-2 items-center">
+                        <Toggle
+                          aria-label="Toggle italic"
+                          variant="outline"
+                          onClick={() => handleBookmarkToggle(item)}
+                        >
+                          <BsJournalBookmarkFill />
+                        </Toggle>
+                      </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="text-small text-default-400">
-                    <div className="flex gap-2 flex-wrap">
+                  <CardContent className="text-small text-default-400 ">
+                    <div className="flex gap-2 flex-wrap item-center">
+                      <Badge variant="outline">
+                        <GrTag color="green" />
+                      </Badge>{" "}
                       {item && item.interests
                         ? item.interests.split(",").map((interest, index) => (
                             <Badge key={index} variant="outline">
-                              {interest.trim()}
+                              {trimToSevenCharacters(interest.trim())}
                             </Badge>
                           ))
                         : "N/A"}
@@ -225,22 +184,25 @@ const HomeCardSection = () => {
                     <div className="mt-1 line-clamp-4 ">{item.bio}</div>
                   </CardContent>
                   <CardFooter className="flex justify-between border-t py-2">
-                    <BookModal buttonName="Request" data={item} />
-                    {item.rate != "free" ? (
+                    <BookModal buttonName="LinkUp" data={item} />
+                    {item.rate != "Free" ? (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-green-200"
+                        className=" gap-1  text-white rounded-full bg-[#FFC72C]"
                       >
-                        <p className="font-semibold  text-green-700">
-                          {item.rate}
+                        <p className="flex ">
+                          20 <AiOutlineFire size={14} /> || {item.rate}
                         </p>
                       </Badge>
                     ) : (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-red-100"
+                        className="flex gap-1 rounded-full bg-green-200"
                       >
-                        <p className="font-semibold  text-red-500">Free</p>
+                        <p className="flex text-green-600">
+                          {" "}
+                          2 <AiOutlineFire size={14} /> || Free
+                        </p>
                       </Badge>
                     )}
                   </CardFooter>

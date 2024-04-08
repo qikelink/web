@@ -38,38 +38,6 @@ const SessionCard = () => {
     router.push(`/${roomId}`);
   };
 
-  const list = [
-    {
-      status: "Now",
-      sessionWith: "Zoey Lang",
-      rating: "4.3/5.0",
-      purpose: "Enterprise Consulting",
-      sessionDate: "4th July, 2024 - 4pm WAT",
-    },
-    {
-      status: "Approved",
-      sessionWith: "John Doe",
-      rating: "4.8/5.0",
-      purpose: "Financial Planning",
-      sessionDate: "5th July, 2024 - 3pm WAT",
-    },
-    {
-      status: "Pending",
-      sessionWith: "Jane Smith",
-      rating: "4.5/5.0",
-      purpose: "Marketing Strategy",
-      sessionDate: "6th July, 2024 - 10am WAT",
-    },
-
-    {
-      status: "Past",
-      sessionWith: "Alice Johnson",
-      rating: "4.6/5.0",
-      purpose: "Software Development",
-      sessionDate: "7th July, 2024 - 2pm WAT",
-    },
-  ];
-
   const isNowSession = (sessionDate, sessionTime) => {
     const currentDate = new Date();
     const currentDateTime = currentDate.getTime();
@@ -149,7 +117,7 @@ const SessionCard = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
           {isLoadingUserData && filteredSessions.length === 0
-            ? list.map((item, index) => (
+            ? [1, 2, 3, 4].map((item, index) => (
                 <Skeleton
                   className="h-60 w-80 rounded-lg"
                   key={index}
