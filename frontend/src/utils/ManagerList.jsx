@@ -14,7 +14,7 @@ const ManagerList = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between lg:h-screen w-full border rounded-md lg:border-0">
+    <div className="flex flex-row justify-between w-full border rounded-md lg:border-0">
       {/* menu items */}
       <Separator
         orientation="vertical"
@@ -22,7 +22,7 @@ const ManagerList = () => {
       />
 
       <ul className="flex flex-row lg:flex-col grow justify-evenly ">
-        {/* <li>
+        <li className="hidden lg:block">
           <Link
             href="/manager/Settings"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
@@ -30,9 +30,9 @@ const ManagerList = () => {
             }`}
           >
             <IoMdSettings size={20} />
-            <p className="hidden lg:block">Profile Settings</p>
+            <p>Profile Settings</p>
           </Link>
-        </li> */}
+        </li>
         <li>
           <Link
             href="/manager/Organization"
@@ -43,7 +43,7 @@ const ManagerList = () => {
             }`}
           >
             <VscOrganization size={20} />
-            <p className=" lg:block">Organizations</p>
+            <p className="  lg:block">Organizations</p>
           </Link>
         </li>
         <li>
@@ -58,7 +58,7 @@ const ManagerList = () => {
           </Link>
         </li>
 
-        {/* <li>
+        <li className="hidden lg:block">
           <Link
             href="/manager/Metrics"
             className={`flex gap-2 items-center rounded-md cursor-pointer py-5 px-4 hover:text-blue ${
@@ -66,13 +66,13 @@ const ManagerList = () => {
             }`}
           >
             <VscGraphLine size={20} />
-            <p className="hidden lg:block">Metrics</p>
+            <p>Metrics</p>
           </Link>
         </li>
 
         <Separator orientation="horizontal" className="hidden lg:block" />
 
-        <li>
+        <li className="hidden lg:block">
           <Link
             href="/Profile"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
@@ -80,10 +80,10 @@ const ManagerList = () => {
             }`}
           >
             <CgProfile size={20} />
-            <p className="hidden lg:block">Profile</p>
+            <p>Profile</p>
           </Link>
         </li>
-        <li>
+        <li className="hidden lg:block">
           <Link
             href="/FeedBack"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
@@ -91,9 +91,9 @@ const ManagerList = () => {
             }`}
           >
             <MdOutlineFeedback size={20} />
-            <p className="hidden lg:block">Send FeedBack</p>
+            <p>Send FeedBack</p>
           </Link>
-        </li> */}
+        </li>
       </ul>
     </div>
   );

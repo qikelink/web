@@ -23,9 +23,7 @@ import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { getImageUrl } from "../../../backend/src/pocketbase";
 
 const SessionModal = ({ buttonName, blue, data }) => {
-
   const [isExpanded, setIsExpanded] = useState(false);
- 
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -50,12 +48,12 @@ const SessionModal = ({ buttonName, blue, data }) => {
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Avatar>
-                      {data && data.expand.mentor.avatar ? (
+                      {data && data.expand.mentor.username ? (
                         <AvatarImage
                           src={getImageUrl(
-                            data.expand.mentor.collectionId,
-                            data.expand.mentor.id,
-                            data.expand.mentor.avatar
+                            data.expand.mentor.expand.users.collectionId,
+                            data.expand.mentor.expand.users.id,
+                            data.expand.mentor.expand.users.avatar
                           )}
                         />
                       ) : (
@@ -105,6 +103,7 @@ const SessionModal = ({ buttonName, blue, data }) => {
                   <p>{data && data.purpose ? data.purpose : "N/A"}</p>
                 </div>
                 <button
+                  type="button"
                   onClick={toggleExpand}
                   className="text-blue-600 hover:underline focus:outline-none text-sm"
                 >

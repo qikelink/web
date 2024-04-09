@@ -122,7 +122,7 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching session data:", error);
         });
 
-      getMeetingRequests(user.username)
+      getMeetingRequests(user.id)
         .then((res) => {
           setMeetingRequests(res);
         })

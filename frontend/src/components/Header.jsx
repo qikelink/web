@@ -285,6 +285,8 @@ export default function Header() {
                   <p>Sessions</p>
                 </Link>
               </li>
+
+              <Separator orientation="horizontal" />
               <li>
                 <Link
                   href="/settings"
@@ -299,7 +301,6 @@ export default function Header() {
                   <p>Settings</p>
                 </Link>
               </li>
-              <Separator orientation="horizontal" />
 
               <li>
                 <Link

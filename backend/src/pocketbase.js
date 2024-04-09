@@ -264,9 +264,9 @@ export async function getAllOrganizations(id, email) {
     .getFullList({ filter: `owner = '${id}' || members ~ '${email}'` });
 }
 
-export async function getMeetingRequests(username) {
+export async function getMeetingRequests(id) {
   return await client.collection("sessions").getFullList({
-    filter: `mentor.username = '${username}' && approved = False && done = False`,
+    filter: `mentor.users = '${id}' && approved = False && done = False`,
     expand: "owner,organization,mentor",
   });
 }

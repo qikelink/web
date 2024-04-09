@@ -93,11 +93,11 @@ const OrganizationSection = () => {
   return (
     <div className="">
       {allOrganization.length > 0 && (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mt-3">
           <h2 className="text-lg lg:text-xl">Organizations</h2>
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="bg-blue text-sm lg:text-base mt-3">
+              <Button className="bg-blue hidden lg:block text-sm lg:text-base mt-3">
                 Create Organization
               </Button>
             </DialogTrigger>
@@ -159,14 +159,15 @@ const OrganizationSection = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
-                  {members.map((email, index) => (
-                    <div
-                      key={index}
-                      className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
-                    >
-                      {email}
-                    </div>
-                  ))}
+                  {members &&
+                    members.map((email, index) => (
+                      <div
+                        key={index}
+                        className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                      >
+                        {email}
+                      </div>
+                    ))}
                 </div>
               </div>
 
@@ -183,163 +184,266 @@ const OrganizationSection = () => {
         </div>
       )}
 
-      {isLoadingUserData ? (
-        <div className="grid grid-cols-1 gap-3 w-full mt-2">
-          {/* Skeleton loaders */}
-          {data.map((item, index) => (
-            <Skeleton key={index} className="h-24 w-full rounded-md" />
-          ))}
-        </div>
-      ) : allOrganization.length > 0 ? (
-        allOrganization.map((item, index) => (
-          <Alert
-            key={index}
-            className="my-2 flex gap-3 item-center justify-between"
-          >
-            <Avatar>
-              <AvatarImage
-                src={getImageUrl(item.collectionId, item.id, item.avatar)}
-                alt="profile image"
-              />
-              <AvatarFallback>
-                {" "}
-                {item.username.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="hidden lg:block">
-              <AlertTitle>{item.username}</AlertTitle>
-              <AlertDescription>{item.org_about}</AlertDescription>
-            </div>
-            <div className="flex-end">
+      <>
+        {isLoadingUserData ? (
+          <div className="grid grid-cols-1 gap-3 w-full mt-2">
+            {/* Skeleton loaders */}
+            {data.map((item, index) => (
+              <Skeleton key={index} className="h-24 w-full rounded-md" />
+            ))}
+          </div>
+        ) : (
+          <>
+            {allOrganization.length > 0 ? (
+              allOrganization.map((item, index) => (
+                <Alert
+                  key={index}
+                  className="my-2 flex gap-3 item-center justify-between"
+                >
+                  <Avatar>
+                    <AvatarImage
+                      src={getImageUrl(item.collectionId, item.id, item.avatar)}
+                      alt="profile image"
+                    />
+                    <AvatarFallback>
+                      {item.username.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <AlertTitle>{item.username}</AlertTitle>
+                    <AlertDescription className="hidden lg:block">
+                      {item.org_about}
+                    </AlertDescription>
+                  </div>
+                  <div className="flex-end">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline">Details</Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Organization Details</DialogTitle>
+                        </DialogHeader>
+                        <div className="bg-white shadow-md rounded-md p-6">
+                          <h2 className="text-xl font-bold mb-4">
+                            {item.username}
+                          </h2>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-gray-600">Members Number</p>
+                              <p className="font-semibold">
+                                {
+                                  item.members
+                                    .split(",")
+                                    .filter((email) => email.trim() !== "")
+                                    .length
+                                }
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Meetings Held</p>
+                              <p className="font-semibold">
+                                {item.sessions.length}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="mt-4">
+                            <p className="text-gray-600">About Organization</p>
+                            <p className="">{item.org_about}</p>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </Alert>
+              ))
+            ) : (
+              <div className="flex flex-col items-center w-full h-full mt-32">
+                <EmptyIcon size={150} />
+                <p className="text-center text-xl font-medium text-darktext">
+                  No organization created yet.
+                </p>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-blue lg:hidden text-sm lg:text-base mt-3">
+                      Create Organization
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Create Organization</DialogTitle>
+                      <DialogDescription>
+                        You can Create an Organization in sec, include a profile
+                        image to increase chances of request Success.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-3">
+                      <div className="flex flex-col space-y-1">
+                        <Label className="text-lg">Organization logo</Label>
+                        <input
+                          id="image"
+                          type="file"
+                          placeholder="Image"
+                          className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+                          onChange={(e) => setProfileImage(e.target.files[0])}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <Label className="text-lg">Organization name</Label>
+                        <input
+                          id="name"
+                          value={name}
+                          className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <Label className="text-lg">About organization</Label>
+                        <input
+                          id="tagLine"
+                          value={tagline}
+                          className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                          onChange={(e) => setTagline(e.target.value)}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <Label className="text-lg">Add members</Label>
+                        <div className="flex justify-between w-full items-center space-x-3">
+                          <input
+                            id="members"
+                            value={newMember}
+                            type="email"
+                            placeholder="Enter Members email"
+                            className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                            onChange={(e) => setNewMember(e.target.value)}
+                          />
+                          <Button
+                            className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                            onClick={handleAddMember}
+                          >
+                            Add
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
+                        {members &&
+                          members.map((email, index) => (
+                            <div
+                              key={index}
+                              className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                            >
+                              {email}
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button onClick={() => handleClick()}>
+                        {isSpinning ? "Creating" : "Create"}
+                        <AiOutlineLoading3Quarters
+                          className={`${
+                            isSpinning ? "ml-3 animate-spin" : "hidden"
+                          }`}
+                        />
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+
+            {/* Dialog for creating an organization */}
+            {allOrganization.length > 0 && (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline">Details</Button>
+                  <Button className="bg-blue lg:hidden text-sm lg:text-base mt-3">
+                    Create Organization
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Organization Details</DialogTitle>
+                    <DialogTitle>Create Organization</DialogTitle>
+                    <DialogDescription>
+                      You can Create an Organization in sec, include a profile
+                      image to increase chances of request Success.
+                    </DialogDescription>
                   </DialogHeader>
-                  <div className="bg-white shadow-md rounded-md p-6">
-                    <h2 className="text-xl font-bold mb-4">{item.username}</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-gray-600">Members Number</p>
-                        <p className="font-semibold">
-                          {
-                            item.members
-                              .split(",")
-                              .filter((email) => email.trim() !== "").length
-                          }
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Meetings Held</p>
-                        <p className="font-semibold">{item.sessions.length}</p>
+                  <div className="grid gap-4 py-3">
+                    <div className="flex flex-col space-y-1">
+                      <Label className="text-lg">Organization logo</Label>
+                      <input
+                        id="image"
+                        type="file"
+                        placeholder="Image"
+                        className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+                        onChange={(e) => setProfileImage(e.target.files[0])}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <Label className="text-lg">Organization name</Label>
+                      <input
+                        id="name"
+                        value={name}
+                        className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <Label className="text-lg">About organization</Label>
+                      <input
+                        id="tagLine"
+                        value={tagline}
+                        className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                        onChange={(e) => setTagline(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <Label className="text-lg">Add members</Label>
+                      <div className="flex justify-between w-full items-center space-x-3">
+                        <input
+                          id="members"
+                          value={newMember}
+                          type="email"
+                          placeholder="Enter Members email"
+                          className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                          onChange={(e) => setNewMember(e.target.value)}
+                        />
+                        <Button
+                          className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                          onClick={handleAddMember}
+                        >
+                          Add
+                        </Button>
                       </div>
                     </div>
-                    <div className="mt-4">
-                      <p className="text-gray-600">About Organiation</p>
-                      <p className="">{item.org_about}</p>
+                    <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
+                      {members &&
+                        members.map((email, index) => (
+                          <div
+                            key={index}
+                            className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                          >
+                            {email}
+                          </div>
+                        ))}
                     </div>
                   </div>
+                  <DialogFooter>
+                    <Button onClick={() => handleClick()}>
+                      {isSpinning ? "Creating" : "Create"}
+                      <AiOutlineLoading3Quarters
+                        className={`${
+                          isSpinning ? "ml-3 animate-spin" : "hidden"
+                        }`}
+                      />
+                    </Button>
+                  </DialogFooter>
                 </DialogContent>
               </Dialog>
-            </div>
-          </Alert>
-        ))
-      ) : (
-        <div className="flex flex-col  items-center w-full h-full mt-32">
-          <EmptyIcon size={150} />
-          <p className="text-center text-xl font-medium text-darktext">
-            No organization created yet.
-          </p>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="bg-blue text-sm lg:text-base mt-3">
-                Create Organization
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Create Organization</DialogTitle>
-                <DialogDescription>
-                  You can Create an Organization in sec, include a profile image
-                  to increase chances of request Success.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-3">
-                <div className="flex flex-col space-y-1">
-                  <Label className="text-lg">Organization logo</Label>
-                  <input
-                    id="image"
-                    type="file"
-                    placeholder="Image"
-                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
-                    onChange={(e) => setProfileImage(e.target.files[0])}
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <Label className="text-lg">Organization name</Label>
-                  <input
-                    id="name"
-                    value={name}
-                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <Label className="text-lg">About organization</Label>
-                  <input
-                    id="tagLine"
-                    value={tagline}
-                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                    onChange={(e) => setTagline(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <Label className="text-lg">Add members</Label>
-                  <div className="flex justify-between w-full items-center space-x-3">
-                    <input
-                      id="members"
-                      value={newMember}
-                      type="email"
-                      placeholder="Enter Members email"
-                      className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                      onChange={(e) => setNewMember(e.target.value)}
-                    />
-
-                    <Button
-                      className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                      onClick={handleAddMember}
-                    >
-                      Add
-                    </Button>
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
-                  {members.map((email, index) => (
-                    <div
-                      key={index}
-                      className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
-                    >
-                      {email}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <DialogFooter>
-                <Button onClick={() => handleClick()}>
-                  {isSpinning ? "Creating" : "Create"}
-                  <AiOutlineLoading3Quarters
-                    className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
-                  />
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      )}
+            )}
+          </>
+        )}
+      </>
 
       <div className="flex flex-end hidden">
         <Pagination>
