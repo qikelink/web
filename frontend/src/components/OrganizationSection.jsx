@@ -90,6 +90,8 @@ const OrganizationSection = () => {
       });
   };
 
+  console.log(allOrganization);
+
   return (
     <div className="">
       {allOrganization.length > 0 && (

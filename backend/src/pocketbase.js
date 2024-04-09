@@ -261,7 +261,7 @@ export async function getCreatedOrganizations(id) {
 export async function getAllOrganizations(id, email) {
   return await client
     .collection("organization")
-    .getFullList({ filter: `owner = '${id}' || members ~ '${email}'` });
+    .getFullList({ filter: `owner = '${id}' || members ~ '${email}' || public = True` });
 }
 
 export async function getMeetingRequests(id) {
