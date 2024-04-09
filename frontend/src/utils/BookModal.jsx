@@ -40,7 +40,6 @@ import { Input } from "@/components/ui/input";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { GrTag } from "react-icons/gr";
 
-
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
   const { toast } = useToast();
@@ -53,7 +52,6 @@ const BookModal = ({ buttonName, blue, data }) => {
   const { user, createdOrganization } = useUser();
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const pathname = usePathname();
 
@@ -75,8 +73,8 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     setIsLoading(!isLoading);
-    setIsClicked(!isClicked);
 
     const isAnyFieldEmpty = Object.values(formData).some(
       (value) => value === ""
@@ -92,7 +90,11 @@ const BookModal = ({ buttonName, blue, data }) => {
     }
 
     const orgId = selectedOption === "Individual" ? undefined : selectedOption;
-    const sessionDate = date ? date.toISOString() : new Date().toISOString();
+    let sessionDate = date
+      ? new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        ).toISOString()
+      : new Date().toISOString();
 
     createSession(
       data.id,
@@ -111,10 +113,6 @@ const BookModal = ({ buttonName, blue, data }) => {
           variant: "default",
         });
         setIsLoading(!isLoading);
-        setIsClicked(false);
-        setTimeout(() => {
-          window.location.reload(); // Reload the page after 3 seconds
-        }, 2000);
       })
       .catch((error) => {
         toast({
@@ -162,9 +160,6 @@ const BookModal = ({ buttonName, blue, data }) => {
           variant: "destructive",
         });
         console.error("Bookmark addition error:", error);
-        setTimeout(() => {
-          window.location.reload(); // Reload the page after 3 seconds
-        }, 2000);
       });
   };
 

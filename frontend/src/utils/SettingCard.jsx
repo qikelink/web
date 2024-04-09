@@ -172,7 +172,7 @@ const SettingCard = () => {
       {isLoading ? (
         <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
       ) : (
-        user.length > 0 && (
+        user && (
           <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
             <AvatarImage
               src={getImageUrl(user.collectionId, user.id, user.avatar)}

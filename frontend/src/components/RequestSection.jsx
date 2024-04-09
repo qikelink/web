@@ -43,6 +43,7 @@ const RequestSection = () => {
   } = useUser();
   const { toast } = useToast();
 
+
   const acceptRequest = (item) => {
     const successMessage = `Hello, your meeting with ${
       item.expand.mentor.length > 0
@@ -213,7 +214,7 @@ const RequestSection = () => {
                   <DialogFooter>
                     <Button
                       onClick={() => rejectRequest(item)}
-                      className="bg-red"
+                      className="bg-red-500"
                       type="submit"
                     >
                       Reject

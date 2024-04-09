@@ -261,12 +261,12 @@ export async function getCreatedOrganizations(id) {
 export async function getAllOrganizations(id, email) {
   return await client
     .collection("organization")
-    .getFullList({ filter: `owner = '${id}' || members ~ '${email}'` });
+    .getFullList({ filter: `owner = '${id}' || members ~ '${email}' || public = True` });
 }
 
-export async function getMeetingRequests(username) {
+export async function getMeetingRequests(id) {
   return await client.collection("sessions").getFullList({
-    filter: `mentor.username = '${username}' && approved = False && done = False`,
+    filter: `mentor.users = '${id}' && approved = False && done = False`,
     expand: "owner,organization,mentor",
   });
 }

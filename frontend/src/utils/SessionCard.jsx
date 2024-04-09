@@ -69,6 +69,7 @@ const SessionCard = () => {
     );
   };
 
+  
   const isPastSession = (sessionDate, sessionTime) => {
     const currentDate = new Date();
     const currentDateTime = currentDate.getTime();
@@ -77,19 +78,24 @@ const SessionCard = () => {
 
     const sessionDateTimeUTC = new Date(sessionDate);
     const sessionDateTime = new Date(
-      sessionDateTimeUTC.getTime() +
+        sessionDateTimeUTC.getTime() +
         sessionDateTimeUTC.getTimezoneOffset() * 60000
     ); // Convert UTC to local timezone
     sessionDateTime.setHours(hour, minute, 0, 0);
 
-    const pastSessionStartTime = currentDateTime + 30 * 60 * 1000;
+    const sessionEndTime = sessionDateTime.getTime() + 30 * 60 * 1000;
 
-    return sessionDateTime.getTime() < pastSessionStartTime;
-  };
+    return currentDateTime > sessionEndTime;
+};
+
 
   const filteredSessions = allSessions.filter((item) => {
     if (selectedButtons === "Pending") {
-      return !item.approved && !item.done;
+      return (
+        !item.approved &&
+        !item.done &&
+        !isPastSession(item.sessionDate, item.sessionTime)
+      );
     } else if (selectedButtons === "Approved") {
       return (
         !item.done &&
@@ -98,9 +104,13 @@ const SessionCard = () => {
         !isPastSession(item.sessionDate, item.sessionTime)
       );
     } else if (selectedButtons === "Canceled") {
-      return item.done && !item.approved;
+      return (
+        item.done &&
+        !item.approved &&
+        isPastSession(item.sessionDate, item.sessionTime)
+      );
     } else if (selectedButtons === "Past") {
-      return isPastSession(item.sessionDate, item.sessionTime);
+      return item.done || isPastSession(item.sessionDate, item.sessionTime)
     } else {
       return (
         isNowSession(item.sessionDate, item.sessionTime) &&
@@ -136,7 +146,7 @@ const SessionCard = () => {
                             : selectedButtons === "Approved"
                             ? "bg-green-100 text-green-700"
                             : selectedButtons === "Past"
-                            ? "bg-red text-white"
+                            ? "bg-red-500 text-white"
                             : "bg-green-700 text-green-200"
                         }`}
                       >
