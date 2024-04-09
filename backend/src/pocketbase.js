@@ -45,6 +45,12 @@ export async function getMentor() {
     .getFirstListItem(`users = '${client.authStore.model.id}'`);
 }
 
+export async function getGoogle() {
+  return await client
+    .collection("google")
+    .getFirstListItem(`id = "9tazh4uvxf8pcxr"`);
+}
+
 export async function Signup(superEmail, email, superPassword, password) {
   const data = {
     superEmail: superEmail,
@@ -53,6 +59,11 @@ export async function Signup(superEmail, email, superPassword, password) {
     password: password,
     passwordConfirm: password,
   };
+  await createWelcome(
+    "Welcome to Qikelink",
+    "Quick link is the go to platform to recieved one on one mentorship with experts across any field",
+    email
+  );
   await client.collection("users").create(data);
 }
 
@@ -96,6 +107,13 @@ export async function toggleQuickService(id, quickService) {
     quickService: quickService,
   };
   await client.collection("mentors").update(id, data);
+}
+
+export async function toggleGoogle(signIn) {
+  const data = {
+    signIn: signIn,
+  };
+  await client.collection("google").update("9tazh4uvxf8pcxr", data);
 }
 
 export async function verifyRequest(
@@ -256,14 +274,14 @@ export async function getMeetingRequests(username) {
 export async function createNotification(
   title,
   message,
-  time,
+  email,
   target,
   organization
 ) {
   const data = {
     title: title,
     message: message,
-    time: time,
+    email: email,
     target: target,
     organization: organization,
     owner: client.authStore.model.id,
@@ -271,10 +289,19 @@ export async function createNotification(
   await client.collection("notifications").create(data);
 }
 
+export async function createWelcome(title, message, email) {
+  const data = {
+    title: title,
+    message: message,
+    email: email,
+  };
+  await client.collection("welcome").create(data);
+}
+
 export async function getNotifications(id, email) {
   return await client.collection("notifications").getList(1, 6, {
-    filter: `owner = '${id}' || target.email ~ '${email}' || organization.members ~ '${email}'`,
-    expand: "organization, target",
+    filter: `owner = '${id}' || welcome.email ~ '${email}' || target.email ~ '${email}' || organization.members ~ '${email}'`,
+    expand: "organization, target, welcome",
     sort: "-created",
   });
 }

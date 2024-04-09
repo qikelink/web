@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
 import { BsJournalBookmarkFill } from "react-icons/bs";
@@ -14,6 +14,7 @@ import { PiDesktopTower } from "react-icons/pi";
 import {
   signout,
   isUserValid,
+  toggleGoogle,
 } from "../../../backend/src/pocketbase";
 import { useUser } from "@/contexts/user-context";
 import { signOut } from "next-auth/react";
@@ -23,10 +24,10 @@ const ListSection = () => {
   const { setUser } = useUser();
   const { setIsUserValid, setProgress } = useAuth();
 
-  const handleSignout = () => {
+  const handleSignout = async () => {
     setProgress(90);
+    await toggleGoogle(false);
     signout(setIsUserValid);
-    localStorage.setItem('googleClicked', 'false');
     signOut();
     window.location.reload();
     setUser([]);
@@ -92,34 +93,20 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/settings"
+            href="/manager/Settings"
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
-              pathname === "/settings"
-                ? "bg-[#e2eff8] text-blue rounded-md"
-                : ""
-            }`}
-          >
-            <RiUserSettingsLine size={22} className="ml-2" />
-            <p>Profile Setting</p>
-          </Link>
-        </li>
-        <Separator orientation="horizontal" className="my-1" />
-
-        <li>
-          <Link
-            href="/manager/Organization"
-            onClick={() => setProgress(90)}
-            className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
-              pathname === "/manager/Organization"
+              pathname === "/manager/Settings"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
             }`}
           >
             <PiDesktopTower size={22} className="ml-2 font-semibold" />
-            <p>Manager</p>
+            <p>Profile</p>
           </Link>
         </li>
+        <Separator orientation="horizontal" className="my-1" />
+
         <li>
           <Link
             href="/help"

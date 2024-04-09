@@ -119,7 +119,7 @@ const SessionCard = () => {
           {isLoadingUserData && filteredSessions.length === 0
             ? [1, 2, 3, 4].map((item, index) => (
                 <Skeleton
-                  className="h-60 w-80 rounded-lg"
+                  className="h-52 w-full rounded-lg"
                   key={index}
                 ></Skeleton>
               ))
