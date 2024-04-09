@@ -31,7 +31,7 @@ export default function page() {
             </div>
             <div className="w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
               {isUserValid ? (
-                <div className="w-full flex flex-col lg:flex-row flex-col-reverse">
+                <div className="w-full flex flex-col md:flex-row flex-col-reverse">
                   <div className="w-full md:w-2/3">
                     <RequestSection />
                   </div>

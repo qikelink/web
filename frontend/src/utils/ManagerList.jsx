@@ -14,15 +14,15 @@ const ManagerList = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between w-full border rounded-md lg:border-0">
+    <div className="flex flex-row justify-between w-full border rounded-md md:border-0">
       {/* menu items */}
       <Separator
         orientation="vertical"
-        className="grow-0 mx-2 hidden lg:block"
+        className="grow-0 mx-2 hidden md:block"
       />
 
-      <ul className="flex flex-row lg:flex-col grow justify-evenly ">
-        <li className="hidden lg:block">
+      <ul className="flex flex-row md:flex-col grow justify-evenly ">
+        <li className="hidden md:block">
           <Link
             href="/manager/Settings"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
@@ -58,7 +58,7 @@ const ManagerList = () => {
           </Link>
         </li>
 
-        <li className="hidden lg:block">
+        <li className="hidden md:block">
           <Link
             href="/manager/Metrics"
             className={`flex gap-2 items-center rounded-md cursor-pointer py-5 px-4 hover:text-blue ${
@@ -70,9 +70,9 @@ const ManagerList = () => {
           </Link>
         </li>
 
-        <Separator orientation="horizontal" className="hidden lg:block" />
+        <Separator orientation="horizontal" className="hidden md:block" />
 
-        <li className="hidden lg:block">
+        <li className="hidden md:block">
           <Link
             href="/Profile"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
@@ -83,7 +83,7 @@ const ManagerList = () => {
             <p>Profile</p>
           </Link>
         </li>
-        <li className="hidden lg:block">
+        <li className="hidden md:block">
           <Link
             href="/FeedBack"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${

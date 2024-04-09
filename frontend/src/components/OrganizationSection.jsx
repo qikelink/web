@@ -265,7 +265,7 @@ const OrganizationSection = () => {
                 </p>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="bg-blue lg:hidden text-sm lg:text-base mt-3">
+                    <Button className="bg-blue text-sm lg:text-base mt-3">
                       Create Organization
                     </Button>
                   </DialogTrigger>

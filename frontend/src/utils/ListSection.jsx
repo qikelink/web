@@ -93,10 +93,10 @@ const ListSection = () => {
         </li>
         <li>
           <Link
-            href="/manager/Settings"
+            href="/manager/Organization"
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
-              pathname === "/manager/Settings"
+              pathname === "/manager/Organization"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
             }`}
