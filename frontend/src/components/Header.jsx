@@ -174,9 +174,7 @@ export default function Header() {
                                     {
                                       (user.id = item.owner
                                         ? item.messageSender
-                                        : user.id != item.owner
-                                        ? item.messageReceiver
-                                        : null)
+                                        : item.messageReceiver)
                                     }
                                   </p>
                                 </div>

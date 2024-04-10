@@ -45,7 +45,7 @@ const RequestSection = () => {
 
   const acceptRequest = (item) => {
     const successMessageSender = `You've approved a session with ${
-      item.expand.organization.id.length > 0
+      item.expand.organization != undefined
         ? item.expand.organization.username
         : item.expand.owner.name
     }.`;
@@ -55,7 +55,7 @@ const RequestSection = () => {
         ? item.expand.mentor.username
         : item.expand.mentor.username
     } requested as ${
-      item.expand.organization.id.length > 0
+      item.expand.organization != undefined
         ? item.expand.organization.username
         : item.expand.owner.name
     } has been approved.`;
@@ -81,13 +81,17 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
+        const orgId =
+          item.expand.organization != undefined
+            ? item.expand.organization.id
+            : undefined;
         createNotification(
           "Request Approved",
           successMessageSender,
           successMessageReceiver,
           undefined,
           item.expand.owner.id,
-          item.expand.organization.id
+          orgId
         );
         getNotifications(user.id, user.email)
           .then((res) => {
