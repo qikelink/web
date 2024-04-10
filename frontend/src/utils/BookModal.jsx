@@ -39,8 +39,8 @@ import { useUser } from "@/contexts/user-context";
 import LoginDialog from "@/components/dialog/login";
 import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { EmptyIcon } from "@/icons/EmptyIcon";
 import { GrTag } from "react-icons/gr";
+import { SignInIcon } from "@/icons/SignInIcon";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
@@ -415,7 +415,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
           {isLoginDialogOpen && (
             <div className="flex flex-col items-center gap-3 ">
-              <EmptyIcon size={120} />
+              <SignInIcon size={120} />
               <p className="text-darktext text-lg text-center ">
                 Create account or sign in to continue
               </p>

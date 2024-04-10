@@ -21,7 +21,7 @@ const ManagerList = () => {
         className="grow-0 mx-2 hidden md:block"
       />
 
-      <ul className="flex flex-row md:flex-col grow justify-evenly ">
+      <ul className="flex flex-row md:flex-col grow justify-between w-full ">
         <li className="hidden md:block">
           <Link
             href="/manager/Settings"
@@ -36,7 +36,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/manager/Organization"
-            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
+            className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer hover:text-blue ${
               pathname === "/manager/Organization"
                 ? "bg-[#f7fafc] text-blue"
                 : ""
@@ -49,7 +49,7 @@ const ManagerList = () => {
         <li>
           <Link
             href="/manager/Request"
-            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer ${
+            className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer ${
               pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
             } hover:text-blue`}
           >

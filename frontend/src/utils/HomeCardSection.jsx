@@ -32,7 +32,7 @@ import { AiOutlineFire } from "react-icons/ai";
 import { GrTag } from "react-icons/gr";
 
 const HomeCardSection = () => {
-  const { mentor, mentors, setMentors, user, isLoading, selectedButtons } =
+  const { mentor, mentors, setMentors, isLoading } =
     useUser();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);

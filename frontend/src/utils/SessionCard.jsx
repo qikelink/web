@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
@@ -24,13 +24,31 @@ import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { Item } from "@radix-ui/react-dropdown-menu";
-import { getImageUrl } from "../../../backend/src/pocketbase";
+import { getAllSessions, getImageUrl } from "../../../backend/src/pocketbase";
 import SessionModal from "./SessionModal";
 
 const SessionCard = () => {
   const router = useRouter();
-  const { user, selectedButtons, allSessions, isLoadingUserData } = useUser();
+  const {
+    user,
+    selectedButtons,
+    allSessions,
+    setAllSessions,
+    isLoadingUserData,
+  } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
+
+  useEffect(() => {
+    if (user != undefined) {
+      getAllSessions(user.id, user.email)
+        .then((res) => {
+          setAllSessions(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching updated session data:", error);
+        });
+    }
+  }, [allSessions]);
 
   const createMeet = async () => {
     setIsSpinning(true);
@@ -69,7 +87,6 @@ const SessionCard = () => {
     );
   };
 
-  
   const isPastSession = (sessionDate, sessionTime) => {
     const currentDate = new Date();
     const currentDateTime = currentDate.getTime();
@@ -78,7 +95,7 @@ const SessionCard = () => {
 
     const sessionDateTimeUTC = new Date(sessionDate);
     const sessionDateTime = new Date(
-        sessionDateTimeUTC.getTime() +
+      sessionDateTimeUTC.getTime() +
         sessionDateTimeUTC.getTimezoneOffset() * 60000
     ); // Convert UTC to local timezone
     sessionDateTime.setHours(hour, minute, 0, 0);
@@ -86,8 +103,7 @@ const SessionCard = () => {
     const sessionEndTime = sessionDateTime.getTime() + 30 * 60 * 1000;
 
     return currentDateTime > sessionEndTime;
-};
-
+  };
 
   const filteredSessions = allSessions.filter((item) => {
     if (selectedButtons === "Pending") {
@@ -100,17 +116,16 @@ const SessionCard = () => {
       return (
         !item.done &&
         item.approved &&
-        !isNowSession(item.sessionDate, item.sessionTime) &&
         !isPastSession(item.sessionDate, item.sessionTime)
       );
     } else if (selectedButtons === "Canceled") {
       return (
         item.done &&
         !item.approved &&
-        isPastSession(item.sessionDate, item.sessionTime)
+        !isPastSession(item.sessionDate, item.sessionTime)
       );
     } else if (selectedButtons === "Past") {
-      return item.done || isPastSession(item.sessionDate, item.sessionTime)
+      return isPastSession(item.sessionDate, item.sessionTime);
     } else {
       return (
         isNowSession(item.sessionDate, item.sessionTime) &&
@@ -145,8 +160,10 @@ const SessionCard = () => {
                             ? "bg-yellow-100"
                             : selectedButtons === "Approved"
                             ? "bg-green-100 text-green-700"
-                            : selectedButtons === "Past"
+                            : selectedButtons === "Canceled"
                             ? "bg-red-500 text-white"
+                            : selectedButtons === "Past"
+                            ? "bg-orange-800 text-white"
                             : "bg-green-700 text-green-200"
                         }`}
                       >
@@ -191,7 +208,7 @@ const SessionCard = () => {
                     </div>
                     <span className="py-2 flex items-center">
                       <FaBookmark color="#0096FF" className="mr-2" size={20} />{" "}
-                      SessionDate: {item.sessionDate}
+                      SessionDate: {item.sessionDate.split("T")[0]}
                     </span>
                     <Separator className="my-2 -mb-4" />
                   </CardContent>

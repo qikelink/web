@@ -199,7 +199,7 @@ const OrganizationSection = () => {
               allOrganization.map((item, index) => (
                 <Alert
                   key={index}
-                  className="my-2 flex gap-3 item-center justify-between"
+                  className="my-2 flex gap-3 items-center justify-between"
                 >
                   <Avatar>
                     <AvatarImage
@@ -358,7 +358,7 @@ const OrganizationSection = () => {
               <Dialog>
                 <DialogTrigger asChild>
                   <Button className="bg-blue lg:hidden text-sm lg:text-base mt-3">
-                    Create Organization
+                    Create new organization
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">

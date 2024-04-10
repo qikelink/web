@@ -25,15 +25,15 @@ import {
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
+import { GrTag } from "react-icons/gr";
 
 const BookmarkCard = () => {
   const { user, bookmarks, setBookmarks, isLoadingUserData } = useUser();
   const [remove, setRemove] = useState(false);
   const { toast } = useToast();
 
-
   useEffect(() => {
-    if (user.length > 0) {
+    if (user != undefined) {
       getBookmarks(user.id)
         .then((res) => {
           setBookmarks(res);
@@ -69,6 +69,14 @@ const BookmarkCard = () => {
     setRemove((prevRemove) => !prevRemove); // Invert the 'remove' state to trigger the effect
   };
 
+  function trimToSevenCharacters(str) {
+    if (str.length <= 6) {
+      return str; // If the string length is 6 or less, return the original string
+    } else {
+      return str.substring(0, 6) + ".."; // Otherwise, return the substring of the first 6 characters
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center ">
       {isLoadingUserData && bookmarks.length === 0 ? (
@@ -86,7 +94,6 @@ const BookmarkCard = () => {
               <CardHeader>
                 <div className="flex justify-between">
                   <div className="flex gap-2">
-                    
                     <Avatar>
                       <AvatarImage
                         src={getImageUrl(
@@ -118,11 +125,14 @@ const BookmarkCard = () => {
                 </div>
               </CardHeader>
               <CardContent className="text-small text-default-400">
-                <div className="flex gap-2 ">
+                <div className="flex gap-2 flex-wrap item-center">
+                  <Badge variant="outline">
+                    <GrTag color="green" />
+                  </Badge>{" "}
                   {item && item.interests
                     ? item.interests.split(",").map((interest, index) => (
                         <Badge key={index} variant="outline">
-                          {interest.trim()}
+                          {trimToSevenCharacters(interest.trim())}
                         </Badge>
                       ))
                     : "N/A"}

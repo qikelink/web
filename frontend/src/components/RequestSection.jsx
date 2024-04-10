@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
@@ -29,7 +29,6 @@ import {
   getNotifications,
   updateSession,
 } from "../../../backend/src/pocketbase";
-import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 import { useToast } from "./ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 
@@ -42,6 +41,18 @@ const RequestSection = () => {
     setNotifications,
   } = useUser();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (user != undefined) {
+      getMeetingRequests(user.id)
+        .then((res) => {
+          setMeetingRequests(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching updated meeting request data:", error);
+        });
+    }
+  }, [meetingRequests]);
 
   const acceptRequest = (item) => {
     const successMessageSender = `You've approved a session with ${
@@ -86,20 +97,14 @@ const RequestSection = () => {
             ? item.expand.organization.id
             : undefined;
         createNotification(
-          "Request Approved",
+          "Session Approved",
           successMessageSender,
           successMessageReceiver,
           undefined,
           item.expand.owner.id,
           orgId
         );
-        getNotifications(user.id, user.email)
-          .then((res) => {
-            setNotifications(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching notifications data:", error);
-          });
+     
       });
   };
 
@@ -148,20 +153,14 @@ const RequestSection = () => {
             : undefined;
 
         createNotification(
-          "Request Rejected",
+          "Session Rejected",
           rejectMessageSender,
           rejectMessageReceiver,
           undefined,
           item.expand.owner.id,
           orgId
         );
-        getNotifications(user.id, user.email)
-          .then((res) => {
-            setNotifications(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching notifications data:", error);
-          });
+      
       });
   };
 
@@ -183,7 +182,7 @@ const RequestSection = () => {
         meetingRequests.map((item, index) => (
           <Alert
             key={index}
-            className="my-2 flex gap-3 item-center justify-between"
+            className="my-2 flex gap-3 items-center justify-between"
           >
             <Avatar>
               <AvatarImage
@@ -206,13 +205,13 @@ const RequestSection = () => {
                 {item.expand.owner.name.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <div className="hidden md:block">
+            <div >
               <AlertTitle>
                 {item.organization.length > 0
-                  ? item.expand.organization.org_name
+                  ? item.expand.organization.username
                   : item.expand.owner.name}
               </AlertTitle>
-              <AlertDescription>
+              <AlertDescription className='line-clamp-2 hidden md:block'>
                 {item.organization.length > 0
                   ? item.expand.organization.org_about
                   : item.expand.owner.bio}

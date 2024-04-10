@@ -160,6 +160,7 @@ export const UserProvider = ({ children }) => {
         setBookmarks,
         createdSessions,
         allSessions,
+        setAllSessions,
         createdOrganization,
         allOrganization,
         setAllOrganization,
