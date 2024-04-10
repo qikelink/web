@@ -90,7 +90,6 @@ const OrganizationSection = () => {
       });
   };
 
-  console.log(allOrganization);
 
   return (
     <div className="">

@@ -148,7 +148,7 @@ export default function Header() {
                   <FaRegBell size={20} className="text-current" />
 
                   {notifications.items && notifications.items.length > 0 && (
-                    <span className="absolute -top-1 right-0 bg-red -mt-1 text-white border rounded-full px-1">
+                    <span className="absolute -top-1 right-0 bg-red-500 -mt-1 text-white border rounded-full px-1">
                       {" "}
                       {`${notifications.items.length}+`}
                     </span>
@@ -171,7 +171,11 @@ export default function Header() {
                                     {item.title}
                                   </p>
                                   <p className="text-sm text-gray-600">
-                                    {item.message}
+                                    {
+                                      (user.id = item.owner
+                                        ? item.messageSender
+                                        : item.messageReceiver)
+                                    }
                                   </p>
                                 </div>
                               </div>
