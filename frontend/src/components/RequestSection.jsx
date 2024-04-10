@@ -43,14 +43,19 @@ const RequestSection = () => {
   } = useUser();
   const { toast } = useToast();
 
-
   const acceptRequest = (item) => {
-    const successMessage = `Hello, your meeting with ${
-      item.expand.mentor.length > 0
+    const successMessageSender = `You've approved a session with ${
+      item.expand.organization.id.length > 0
+        ? item.expand.organization.username
+        : item.expand.owner.name
+    }.`;
+
+    const successMessageReceiver = `Hello, your session with ${
+      item.expand.mentor.id.length > 0
         ? item.expand.mentor.username
         : item.expand.mentor.username
     } requested as ${
-      item.expand.organization.length > 0
+      item.expand.organization.id.length > 0
         ? item.expand.organization.username
         : item.expand.owner.name
     } has been approved.`;
@@ -77,9 +82,10 @@ const RequestSection = () => {
       })
       .finally(() => {
         createNotification(
-          "Request Accepted",
-          successMessage,
-          Date.now(),
+          "Request Approved",
+          successMessageSender,
+          successMessageReceiver,
+          undefined,
           item.expand.owner.id,
           item.expand.organization.id
         );
@@ -94,12 +100,19 @@ const RequestSection = () => {
   };
 
   const rejectRequest = (item) => {
-    const rejectMessage = `Sorry, your meeting with ${
-      item.expand.mentor.length > 0
+    const rejectMessageSender = `You rejected a session with 
+      ${
+        item.expand.organization != undefined
+          ? item.expand.organization.username
+          : item.expand.owner.name
+      }.`;
+
+    const rejectMessageReceiver = `Sorry, your session with ${
+      item.expand.mentor.id.length > 0
         ? item.expand.mentor.username
         : item.expand.mentor.username
     } requested as ${
-      item.expand.organization.length > 0
+      item.expand.organization != undefined
         ? item.expand.organization.username
         : item.expand.owner.name
     } has been rejected.`;
@@ -125,12 +138,18 @@ const RequestSection = () => {
         console.error("updated meeting request error:", error);
       })
       .finally(() => {
+        const orgId =
+          item.expand.organization != undefined
+            ? item.expand.organization.id
+            : undefined;
+
         createNotification(
           "Request Rejected",
-          rejectMessage,
-          Date.now(),
+          rejectMessageSender,
+          rejectMessageReceiver,
+          undefined,
           item.expand.owner.id,
-          item.expand.organization.id
+          orgId
         );
         getNotifications(user.id, user.email)
           .then((res) => {

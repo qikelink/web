@@ -28,8 +28,10 @@ import {
 } from "@/components/ui/popover";
 import {
   CreateBookmark,
+  createNotification,
   createSession,
   getImageUrl,
+  getNotifications,
   isUserValid,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
@@ -49,7 +51,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [formData, setFormData] = useState({
     purpose: "",
   });
-  const { user, createdOrganization } = useUser();
+  const { user, createdOrganization, setNotifications } = useUser();
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
@@ -57,7 +59,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const options = createdOrganization.map((org) => ({
     value: org.id,
-    label: org.org_name,
+    label: org.username,
   }));
 
   // to add the default one too
@@ -96,6 +98,9 @@ const BookModal = ({ buttonName, blue, data }) => {
         ).toISOString()
       : new Date().toISOString();
 
+    const requestMessageReceiver = `Hello you have received a session request from, accept or reject request from session requests under manager section.`;
+    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
+
     createSession(
       data.id,
       data.rating,
@@ -123,8 +128,23 @@ const BookModal = ({ buttonName, blue, data }) => {
         console.error("verification error:", error);
       })
       .finally(() => {
-        setIsExpanded(false);
+        createNotification(
+          "Session Request",
+          requestMessageSender,
+          requestMessageReceiver,
+          undefined,
+          data.id,
+          orgId
+        );
+        getNotifications(user.id, user.email)
+          .then((res) => {
+            setNotifications(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching notifications data:", error);
+          });
 
+        setIsExpanded(false);
         setSelectedOption("");
         setDate(null);
         setFormData({ purpose: "" });

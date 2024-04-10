@@ -273,15 +273,17 @@ export async function getMeetingRequests(id) {
 
 export async function createNotification(
   title,
-  message,
+  messageSender,
+  messageReceiver,
   email,
   target,
   organization
 ) {
   const data = {
     title: title,
-    message: message,
-    email: email,
+    messageSender: messageSender,
+    messageReceiver: messageReceiver,
+    email: email, // for welcome message email is accessed for unauthenticated users
     target: target,
     organization: organization,
     owner: client.authStore.model.id,
@@ -300,7 +302,7 @@ export async function createWelcome(title, message, email) {
 
 export async function getNotifications(id, email) {
   return await client.collection("notifications").getList(1, 6, {
-    filter: `owner = '${id}' || welcome.email ~ '${email}' || target.email ~ '${email}' || organization.members ~ '${email}'`,
+    filter: `owner = '${id}' || welcome.email ~ '${email}' || target ~ '${id}' || organization.members ~ '${email}'`,
     expand: "organization, target, welcome",
     sort: "-created",
   });
