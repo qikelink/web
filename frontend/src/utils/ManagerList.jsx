@@ -16,10 +16,12 @@ const ManagerList = () => {
   return (
     <div className="flex flex-row justify-between w-full border rounded-md md:border-0">
       {/* menu items */}
-      <Separator
-        orientation="vertical"
-        className="grow-0 mx-2 hidden md:block"
-      />
+      <div>
+        <Separator
+          orientation="vertical"
+          className="grow-0 mx-2 hidden md:block "
+        />
+      </div>
 
       <ul className="flex flex-row md:flex-col grow justify-between w-full ">
         <li className="hidden md:block">

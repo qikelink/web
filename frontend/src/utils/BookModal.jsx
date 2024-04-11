@@ -118,6 +118,9 @@ const BookModal = ({ buttonName, blue, data }) => {
           variant: "default",
         });
         setIsLoading(!isLoading);
+        setTimeout(() => {
+          window.location.reload(); // Reload the page after 3 seconds
+        }, 2000);
       })
       .catch((error) => {
         toast({

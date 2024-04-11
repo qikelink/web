@@ -8,10 +8,13 @@ import { isUserValid } from "../../../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import SettingCard from "@/utils/SettingCard";
 import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useUser } from "@/contexts/user-context";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
   const { setProgress } = useAuth();
+  const { mentor } = useUser();
 
   useEffect(() => {
     setDomLoaded(true);
@@ -31,7 +34,17 @@ export default function page() {
             <div className="w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
               {isUserValid ? (
                 <div className="w-full flex flex-col md:flex-row flex-col-reverse">
-                  <div className="w-full md:w-2/3">
+                  <div className="w-full md:w-2/3 flex flex-col space-y-2">
+                    {!mentor.verified && (
+                      <Alert variant="destructive">
+                        <AlertTitle>Note</AlertTitle>
+                        <AlertDescription>
+                          Filling your details and verifying qualifies you to
+                          become a mentor.
+                        </AlertDescription>
+                      </Alert>
+                    )}
+
                     <SettingCard />
                   </div>
                   <div className=" md:w-1/3 w-full">

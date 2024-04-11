@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/pagination";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useUser } from "@/contexts/user-context";
-import { BookmarkEmpty } from "./emptystate/bookmarkEmpty";
 import { Skeleton } from "./ui/skeleton";
 import {
   createOrganization,
@@ -32,6 +31,8 @@ import {
 import { useToast } from "./ui/use-toast";
 import { Label } from "./ui/label";
 import { EmptyIcon } from "@/icons/EmptyIcon";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { Badge } from "@/components/ui/badge";
 
 const data = [1, 2, 3];
 
@@ -89,7 +90,6 @@ const OrganizationSection = () => {
         setIsSpinning(false);
       });
   };
-
 
   return (
     <div className="">
@@ -216,7 +216,11 @@ const OrganizationSection = () => {
                       {item.org_about}
                     </AlertDescription>
                   </div>
-                  <div className="flex-end">
+                  <div className="flex-end flex gap-2">
+                    <Badge variant="outline" className={"cursor-pointer "}>
+                      <RiDeleteBin5Line size={15} color="red" />
+                    </Badge>
+
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button variant="outline">Details</Button>
@@ -253,6 +257,9 @@ const OrganizationSection = () => {
                             <p className="">{item.org_about}</p>
                           </div>
                         </div>
+                        <DialogFooter>
+                          <Button variant="outline">Edit</Button>
+                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
                   </div>

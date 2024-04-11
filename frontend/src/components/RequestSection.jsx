@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
@@ -41,6 +41,14 @@ const RequestSection = () => {
     setNotifications,
   } = useUser();
   const { toast } = useToast();
+
+  function trimToCharacters(str) {
+    if (str.length <= 70) {
+      return str; // If the string length is 70 or less, return the original string
+    } else {
+      return str.substring(0, 70) + ".."; // Otherwise, return the substring of the first 70 characters
+    }
+  }
 
   useEffect(() => {
     if (user != undefined) {
@@ -104,7 +112,6 @@ const RequestSection = () => {
           item.expand.owner.id,
           orgId
         );
-     
       });
   };
 
@@ -160,7 +167,6 @@ const RequestSection = () => {
           item.expand.owner.id,
           orgId
         );
-      
       });
   };
 
@@ -205,16 +211,16 @@ const RequestSection = () => {
                 {item.expand.owner.name.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <div >
+            <div>
               <AlertTitle>
                 {item.organization.length > 0
                   ? item.expand.organization.username
                   : item.expand.owner.name}
               </AlertTitle>
-              <AlertDescription className='line-clamp-2 hidden md:block'>
+              <AlertDescription className="line-clamp-2 hidden md:block">
                 {item.organization.length > 0
-                  ? item.expand.organization.org_about
-                  : item.expand.owner.bio}
+                  ? trimToCharacters(item.expand.organization.org_about)
+                  : trimToCharacters(item.expand.owner.bio)}
               </AlertDescription>
             </div>
             <div className="flex-end">
