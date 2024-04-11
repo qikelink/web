@@ -261,7 +261,34 @@ export async function getCreatedOrganizations(id) {
 export async function getAllOrganizations(id, email) {
   return await client
     .collection("organization")
-    .getFullList({ filter: `owner = '${id}' || members ~ '${email}' || public = True` });
+    .getFullList({
+      filter: `owner = '${id}' || members ~ '${email}' || public = True`,
+    });
+}
+
+export async function updateOrganization(
+  id,
+  avatar,
+  username,
+  org_about,
+  org_info,
+  members, 
+  questions
+) {
+  const data = {
+    avatar: avatar,
+    username: username,
+    org_about: org_about,
+    org_info: org_info,
+    members: members,
+    questions: questions,
+    owner: client.authStore.model.id,
+  };
+  await client.collection("organization").update(id, data);
+}
+
+export async function removeOrganization(id) {
+  await client.collection("organization").delete(`${id}`);
 }
 
 export async function getMeetingRequests(id) {

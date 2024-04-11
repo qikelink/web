@@ -57,7 +57,7 @@ export default function Header() {
   };
 
   useEffect(() => {
-    if (notifications.length > 0) {
+    if (user != undefined) {
       getNotifications(user.id, user.email)
         .then((res) => {
           setNotifications(res);
@@ -67,6 +67,8 @@ export default function Header() {
         });
     }
   }, [notifications]);
+
+ 
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
@@ -171,11 +173,9 @@ export default function Header() {
                                     {item.title}
                                   </p>
                                   <p className="text-sm text-gray-600">
-                                    {
-                                      (user.id = item.owner
-                                        ? item.messageSender
-                                        : item.messageReceiver)
-                                    }
+                                    {user.id === item.owner
+                                      ? item.messageSender
+                                      : item.messageReceiver}
                                   </p>
                                 </div>
                               </div>
