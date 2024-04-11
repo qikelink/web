@@ -47,7 +47,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
   const [sessionTime, setSessionTime] = useState("");
-
+  const [characterCount, setCharacterCount] = useState(800);
   const [formData, setFormData] = useState({
     purpose: "",
   });
@@ -67,6 +67,8 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const remainingCharacters = 800 - value.length; // Calculate remaining characters
+    setCharacterCount(remainingCharacters); // Update character count state
     setFormData({
       ...formData,
       [name]: value,
@@ -394,14 +396,16 @@ const BookModal = ({ buttonName, blue, data }) => {
 
                 {/* Questions section */}
                 <div>
-                  <Label className="font-semibold">Meeting details</Label>
+                  <Label className="font-semibold">Session details</Label>
                   <Textarea
-                    className="w-full mt-2"
+                    className="w-full mt-2 h-24"
                     placeholder="Why do you want to request a session?"
                     value={formData.purpose}
                     onChange={handleChange}
                     name="purpose"
+                    maxLength={800} // Adding the maxLength attribute
                   />
+                  <span className="ml-1 text-sm text-darktext">{characterCount} characters remaining</span>
                 </div>
               </div>
               <DialogFooter>

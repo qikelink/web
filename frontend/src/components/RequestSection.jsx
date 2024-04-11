@@ -31,6 +31,7 @@ import {
 } from "../../../backend/src/pocketbase";
 import { useToast } from "./ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
+import { Label } from "./ui/label";
 
 const RequestSection = () => {
   const {
@@ -63,7 +64,7 @@ const RequestSection = () => {
   }, [meetingRequests]);
 
   const acceptRequest = (item) => {
-    const successMessageSender = `You've approved a session with ${
+    const successMessageSender = `🎉 You've approved a session with ${
       item.expand.organization != undefined
         ? item.expand.organization.username
         : item.expand.owner.name
@@ -77,12 +78,12 @@ const RequestSection = () => {
       item.expand.organization != undefined
         ? item.expand.organization.username
         : item.expand.owner.name
-    } has been approved.`;
+    } has been approved. 🥳`;
 
     updateSession(item.id, true)
       .then(() => {
         toast({
-          title: "Meeting request accepted",
+          title: "🥳 Meeting request accepted",
           description: "Meeting request accepted successfully! .",
           variant: "default",
         });
@@ -116,7 +117,7 @@ const RequestSection = () => {
   };
 
   const rejectRequest = (item) => {
-    const rejectMessageSender = `You rejected a session with 
+    const rejectMessageSender = `😔 You rejected a session with 
       ${
         item.expand.organization != undefined
           ? item.expand.organization.username
@@ -131,12 +132,12 @@ const RequestSection = () => {
       item.expand.organization != undefined
         ? item.expand.organization.username
         : item.expand.owner.name
-    } has been rejected.`;
+    } has been rejected. 😔`;
 
     updateSession(item.id, false, true)
       .then(() => {
         toast({
-          title: "Meeting request rejected",
+          title: "😔 Meeting request rejected",
           description: "Meeting request rejected .",
           variant: "default",
         });
@@ -228,32 +229,54 @@ const RequestSection = () => {
                 <DialogTrigger asChild>
                   <Button variant="outline">Meeting Details</Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] rounded-md">
                   <DialogHeader>
-                    <DialogTitle>Meeting Request</DialogTitle>
+                    <DialogTitle className="text-xl">
+                      Session Request
+                    </DialogTitle>
                     <DialogDescription>
-                      Host:{" "}
+                      🎉{""} Hello, you have received a session request!
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="text-darktext font-medium">
+                    <Label className="text-lg font-semibold">
+                      Session Details
+                    </Label>
+                    <p>
+                      {" "}
+                      Session host:{" "}
                       {item.organization.length > 0
                         ? item.expand.organization.username
                         : item.expand.owner.name}
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div>{item.purpose}</div>
+                    </p>
+                    {}
+                    <p>
+                      {" "}
+                      Session date: {item.sessionDate.split("T")[0]} -{" "}
+                      {item.sessionTime}{" "}
+                      {item.sessionTime.split(":")[0] < 12 ? "AM" : "PM"}
+                    </p>
+
+                    <p className="font-semibold text-lg mt-3 "> Message</p>
+                    <p className="text-lg "> {item.purpose}</p>
+                  </div>
                   <DialogFooter>
-                    <Button
-                      onClick={() => rejectRequest(item)}
-                      className="bg-red-500"
-                      type="submit"
-                    >
-                      Reject
-                    </Button>
-                    <Button
-                      onClick={() => acceptRequest(item)}
-                      className="bg-green-500"
-                      type="submit"
-                    >
-                      Accept
-                    </Button>
+                    <div className="flex justify-center space-x-3 ">
+                      <Button
+                        onClick={() => rejectRequest(item)}
+                        className="bg-red-500 w-full"
+                        type="submit"
+                      >
+                        Reject
+                      </Button>
+                      <Button
+                        onClick={() => acceptRequest(item)}
+                        className="bg-green-500 w-full"
+                        type="submit"
+                      >
+                        Accept
+                      </Button>
+                    </div>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
