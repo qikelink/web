@@ -31,7 +31,7 @@ export default function Home({ params }) {
   const [displayName, setDisplayName] = useState("");
   const [isRecording, setIsRecording] = useState(false);
 
-  const { joinRoom, state } = useRoom({
+  const { joinRoom, closeRoom, state } = useRoom({
     onJoin: (room) => {
       console.log("onJoin", room);
       updateMetadata({ displayName });
@@ -62,6 +62,18 @@ export default function Home({ params }) {
 
     initializeVideo();
   }, []);
+
+  useEffect(() => {
+    if (state === "connected") {
+      const closeRoomAfterDelay = setTimeout(() => {
+        closeRoom();
+      }, 450000); // 7 Mins delay
+
+      return () => {
+        clearTimeout(closeRoomAfterDelay);
+      };
+    }
+  }, [state]);
 
   console.log({ user });
 
