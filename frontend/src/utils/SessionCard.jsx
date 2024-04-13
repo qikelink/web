@@ -38,6 +38,7 @@ const SessionCard = () => {
   } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
+
   useEffect(() => {
     if (user != undefined) {
       getAllSessions(user.id, user.email)
