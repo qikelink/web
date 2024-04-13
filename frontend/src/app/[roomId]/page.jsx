@@ -21,6 +21,8 @@ import { useUser } from "@/contexts/user-context";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 
+export const runtime = "edge";
+
 export default function Home({ params }) {
   const { setProgress } = useAuth();
   const router = useRouter();
