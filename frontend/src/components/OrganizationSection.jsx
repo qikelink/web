@@ -49,51 +49,19 @@ const OrganizationSection = () => {
   const [tagline, setTagline] = useState("");
   const [members, setMembers] = useState([]);
   const [newMember, setNewMember] = useState("");
-
-  useEffect(() => {
-    if (user != undefined) {
-      getAllOrganizations(user.id, user.email)
-        .then((res) => {
-          setAllOrganization(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching bookmarks data:", error);
-          setAllOrganization(bookmarks);
-        });
-    }
-  }, [allOrganization]);
+  const [formData, setFormData] = useState({});
 
   // useEffect(() => {
-  //   const defaultFormData = {
-  //     avatar: profileImage,
-  //     name: "",
-  //     tagline: "",
-  //     newMember: "",
-  //     members: [],
-     
-  //   };
-
-  //   const initialFormData = allOrganization
-  //     ? {
-  //         avatar: allOrganization.avatar,
-  //         name: allOrganization.name,
-  //         tagline: allOrganization.name,
-  //         newMember: allOrganization.newMember,
-  //         members: allOrganization.members,
-          
-  //       }
-  //     : defaultFormData;
-
-  //   setFormData(initialFormData);
+  //   if (user != undefined) {
+  //     getAllOrganizations(user.id, user.email)
+  //       .then((res) => {
+  //         setAllOrganization(res);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching bookmarks data:", error);
+  //       });
+  //   }
   // }, [allOrganization]);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
 
   const handleAddMember = () => {
     if (newMember.trim() !== "") {
@@ -118,6 +86,15 @@ const OrganizationSection = () => {
           variant: "destructive",
         });
         console.error("Organization delete error:", error);
+      })
+      .finally(() => {
+        getAllOrganizations(user.id, user.email)
+          .then((res) => {
+            setAllOrganization(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching session data:", error);
+          });
       });
   };
 
@@ -158,13 +135,23 @@ const OrganizationSection = () => {
       });
   };
 
-
   const handleUpdate = (item) => {
     setIsSpinning(true);
 
-    const membersString = members.join(", ");
+    const existingMembers = item.members;
+    const allMembers = [...existingMembers.split(","), ...members];
+    const membersString = allMembers.join(", ");
 
-    updateOrganization(item.id, profileImage, name, tagline, undefined, membersString)
+    setProfileImage(profileImage !== "" ? profileImage : item.avatar || "");
+
+    updateOrganization(
+      item.id,
+      profileImage,
+      formData.name,
+      formData.tagline,
+      undefined,
+      membersString
+    )
       .then(() => {
         toast({
           title: "Organization updated",
@@ -188,21 +175,24 @@ const OrganizationSection = () => {
           .catch((error) => {
             console.error("Error fetching session data:", error);
           });
-        setName("");
-        setTagline("");
         setMembers("");
-        setProfileImage("");
         setIsSpinning(false);
       });
   };
-
 
   const handleQuestions = (item) => {
     setIsSpinning(true);
 
     const membersString = members.join(", ");
 
-    updateOrganization(item.id, profileImage, name, tagline, undefined, membersString)
+    updateOrganization(
+      item.id,
+      profileImage,
+      name,
+      tagline,
+      undefined,
+      membersString
+    )
       .then(() => {
         toast({
           title: "Organization updated",
@@ -238,7 +228,14 @@ const OrganizationSection = () => {
 
     const membersString = members.join(", ");
 
-    updateOrganization(item.id, profileImage, name, tagline, undefined, membersString)
+    updateOrganization(
+      item.id,
+      profileImage,
+      name,
+      tagline,
+      undefined,
+      membersString
+    )
       .then(() => {
         toast({
           title: "Organization updated",
@@ -273,182 +270,198 @@ const OrganizationSection = () => {
   const organizationDialog = (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-blue text-sm lg:text-base mt-3">
+        <Button size="xl" className="bg-blue text-sm lg:text-base mt-3">
           Create Organization
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Create Organization</DialogTitle>
-          <DialogDescription>
-            You can Create an Organization in sec, include a profile image to
-            increase chances of request Success.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-3">
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">Organization logo</Label>
-            <input
-              id="image"
-              type="file"
-              placeholder="Image"
-              className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
-              onChange={(e) => setProfileImage(e.target.files[0])}
-            />
-          </div>
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">Organization name</Label>
-            <input
-              id="name"
-              value={name}
-              className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">About organization</Label>
-            <input
-              id="tagLine"
-              value={tagline}
-              className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-              onChange={(e) => setTagline(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">Add members</Label>
-            <div className="flex justify-between w-full items-center space-x-3">
+      <DialogContent className="sm:max-w-[425px] rounded-md">
+        <div className="max-h-[500px] w-full overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Create Organization</DialogTitle>
+            <DialogDescription>
+              You can Create an Organization in sec, include a profile image to
+              increase chances of request Success.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-3">
+            <div className="flex flex-col space-y-1">
+              <Label className="text-lg">Organization logo</Label>
               <input
-                id="members"
-                value={newMember}
-                type="email"
-                placeholder="Enter Members email"
-                className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                onChange={(e) => setNewMember(e.target.value)}
+                id="image"
+                type="file"
+                placeholder="Image"
+                className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+                onChange={(e) => setProfileImage(e.target.files[0])}
               />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <Label className="text-lg">Organization name</Label>
+              <input
+                id="name"
+                value={name}
+                className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <Label className="text-lg">About organization</Label>
+              <input
+                id="tagLine"
+                value={tagline}
+                className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                onChange={(e) => setTagline(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <Label className="text-lg">Add members</Label>
+              <div className="flex justify-between w-full items-center space-x-3">
+                <input
+                  id="members"
+                  value={newMember}
+                  type="email"
+                  placeholder="Enter Members email"
+                  className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                  onChange={(e) => setNewMember(e.target.value)}
+                />
 
-              <Button
-                className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                onClick={handleAddMember}
-              >
-                Add
-              </Button>
+                <Button
+                  className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  onClick={handleAddMember}
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
+              {members &&
+                members.map((email, index) => (
+                  <div
+                    key={index}
+                    className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+                  >
+                    {email}
+                  </div>
+                ))}
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
-            {members &&
-              members.map((email, index) => (
-                <div
-                  key={index}
-                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
-                >
-                  {email}
-                </div>
-              ))}
-          </div>
+          <DialogFooter>
+            <Button size="xl" onClick={() => handleClick()}>
+              {isSpinning ? "Creating" : "Create"}
+              <AiOutlineLoading3Quarters
+                className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+              />
+            </Button>
+          </DialogFooter>
         </div>
-
-        <DialogFooter>
-          <Button onClick={() => handleClick()}>
-            {isSpinning ? "Creating" : "Create"}
-            <AiOutlineLoading3Quarters
-              className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
-            />
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 
+  // const editDialog = (item) => {
+  //   const defaultFormData = {
+  //     name: "",
+  //     tagline: "",
+  //   };
 
-  const editDialog = (item) => (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-blue text-sm lg:text-base mt-3">
-          Edit Community 
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit Organization</DialogTitle>
-          <DialogDescription>
-            You can Create an Organization in sec, include a profile image to
-            increase chances of request Success.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-3">
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">Organization logo</Label>
-            <input
-              id="image"
-              type="file"
-              placeholder="Image"
-              className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
-              onChange={(e) => setProfileImage(e.target.files[0])}
-            />
-          </div>
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">Organization name</Label>
-            <input
-              id="name"
-              value={item.username}
-              className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">About organization</Label>
-            <input
-              id="tagLine"
-              value={item.org_about}
-              className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-              onChange={(e) => setTagline(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col space-y-1">
-            <Label className="text-lg">Add members</Label>
-            <div className="flex justify-between w-full items-center space-x-3">
-              <input
-                id="members"
-                value={newMember}
-                type="email"
-                placeholder="Enter Members email"
-                className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                onChange={(e) => setNewMember(e.target.value)}
-              />
-  
-              <Button
-                className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                onClick={handleAddMember}
-              >
-                Add
-              </Button>
-            </div>
-          </div>
-          <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
-            {members &&
-              members.map((email, index) => (
-                <div
-                  key={index}
-                  className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
-                >
-                  {email}
-                </div>
-              ))}
-          </div>
-        </div>
-  
-        <DialogFooter>
-          <Button onClick={() => handleUpdate(item)}>
-            {isSpinning ? "Creating" : "Create"}
-            <AiOutlineLoading3Quarters
-              className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
-            />
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-  
+  //   const initialFormData = item
+  //     ? {
+  //         name: item.usernane,
+  //         tagline: item.org_about,
+  //       }
+  //     : defaultFormData;
+
+  //   setFormData(initialFormData);
+
+  //   return (
+  //     <Dialog>
+  //       <DialogTrigger asChild>
+  //         <Button size="xl" className="bg-blue text-sm lg:text-base mt-3">
+  //           Edit Community
+  //         </Button>
+  //       </DialogTrigger>
+  //       <DialogContent className="sm:max-w-[425px] rounded-md">
+  //         <div className="max-h-[500px] w-full overflow-y-auto">
+  //           <DialogHeader>
+  //             <DialogTitle>Edit Organization</DialogTitle>
+  //             <DialogDescription>
+  //               You can Create an Organization in sec, include a profile image
+  //               to increase chances of request Success.
+  //             </DialogDescription>
+  //           </DialogHeader>
+  //           <div className="grid gap-4 py-3">
+  //             <div className="flex flex-col space-y-1">
+  //               <Label className="text-lg">Organization logo</Label>
+  //               <input
+  //                 id="image"
+  //                 type="file"
+  //                 placeholder="Image"
+  //                 className="col-span-4 border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500"
+  //                 onChange={(e) => setProfileImage(e.target.files[0])}
+  //               />
+  //             </div>
+  //             <div className="flex flex-col space-y-1">
+  //               <Label className="text-lg">Organization name</Label>
+  //               <input
+  //                 id="editName"
+  //                 value={formData.name}
+  //                 className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+  //                 onChange={(e) => setEditName(e.target.value)}
+  //               />
+  //             </div>
+  //             <div className="flex flex-col space-y-1">
+  //               <Label className="text-lg">About organization</Label>
+  //               <input
+  //                 id="editTagLine"
+  //                 value={formData.tagline}
+  //                 className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+  //                 onChange={(e) => setEditTagline(e.target.value)}
+  //               />
+  //             </div>
+  //             <div className="flex flex-col space-y-1">
+  //               <Label className="text-lg">Add members</Label>
+  //               <div className="flex justify-between w-full items-center space-x-3">
+  //                 <input
+  //                   id="members"
+  //                   value={newMember}
+  //                   type="email"
+  //                   placeholder="Enter Members email"
+  //                   className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+  //                   onChange={(e) => setNewMember(e.target.value)}
+  //                 />
+
+  //                 <Button
+  //                   className="col-span-1 bg-primary text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+  //                   onClick={handleAddMember}
+  //                 >
+  //                   Add
+  //                 </Button>
+  //               </div>
+  //             </div>
+  //             <div className="grid grid-cols-4 gap-2 h-auto overflow-y-auto border p-1">
+  //               {members &&
+  //                 members.map((email, index) => (
+  //                   <div
+  //                     key={index}
+  //                     className="col-span-4 border border-gray-300 rounded-md py-2 px-4"
+  //                   >
+  //                     {email}
+  //                   </div>
+  //                 ))}
+  //             </div>
+  //           </div>
+  //           <DialogFooter>
+  //             <Button size="xl" onClick={() => handleUpdate(item)}>
+  //               {isSpinning ? "Saving" : "Save"}
+  //               <AiOutlineLoading3Quarters
+  //                 className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+  //               />
+  //             </Button>
+  //           </DialogFooter>
+  //         </div>
+  //       </DialogContent>
+  //     </Dialog>
+  //   );
+  // };
 
   return (
     <div className="">
@@ -505,15 +518,15 @@ const OrganizationSection = () => {
                       <DialogTrigger asChild>
                         <Button variant="outline">Details</Button>
                       </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
+                      <DialogContent className="sm:max-w-[425px] rounded-md">
                         <DialogHeader>
                           <DialogTitle>Organization Details</DialogTitle>
                         </DialogHeader>
-                        <div className="bg-white shadow-md rounded-md p-6">
-                          <h2 className="text-xl font-bold mb-4">
+                        <div className=" rounded-md p-3">
+                          <h2 className="text-xl font-bold mb-2">
                             {item.username}
                           </h2>
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-2">
                             <div>
                               <p className="text-gray-600">Members Number</p>
                               <p className="font-semibold">
@@ -532,23 +545,53 @@ const OrganizationSection = () => {
                               </p>
                             </div>
                           </div>
-                          <div className="mt-4">
+                          <div className="mt-2">
+                            <p className="text-gray-600">Interests</p>
+                            <p className="">{item.org_about}</p>
+                          </div>
+                          <div className="mt-2">
                             <p className="text-gray-600">About Organization</p>
                             <p className="">{item.org_about}</p>
                           </div>
-                        </div>
-                        <DialogFooter>
-                          {item.public === true ? (
+                          <h2 className="text-xl font-bold mt-4 mb-2">
+                            Upcoming session
+                          </h2>
+                          <div className="grid grid-cols-2 gap-2">
                             <div>
-                              <Textarea />
-                              <Button variant="outline">Submit Question</Button>
+                              <p className="text-gray-600">Mentor</p>
+                              <p className="font-semibold">
+                                Winner
+                              </p>
                             </div>
-                          ) : user.id === item.owner ? (
-                            editDialog(item)
-                          ) : (
-                            <Button variant="outline">Leave Community</Button>
-                          )}
-                        </DialogFooter>
+                            <div>
+                              <p className="text-gray-600">Mentor session link</p>
+                              <p className="font-semibold">
+                                {item.sessions.length}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="mt-4">
+                            <p className="text-gray-600">About Mentor</p>
+                            <p className="">{item.org_about}</p>
+                          </div>
+                          {
+                            user.id === item.owner ? (
+                              <div className="space-y-2 mt-4">
+                                <Textarea
+                                placeholder='Enter question you have for mentor or click link to request a private session with mentor.' />
+                                <Button variant="outline">
+                                  Submit Question
+                                </Button>
+                              </div>
+                            ) : null
+                            // user.id === item.owner ? (
+                            //   editDialog(item)
+                            // ) : (
+                            //   <Button variant="outline">Leave Community</Button>
+                            // )
+                          }
+                        </div>
+                        
                       </DialogContent>
                     </Dialog>
                   </div>
