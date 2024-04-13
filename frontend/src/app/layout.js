@@ -19,6 +19,14 @@ export const metadata = {
   description: "Connecting You To Your Next Level Growth",
   icons:
     "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
+  twitter: {
+    card: "summary_large_image",
+    title: "Qikelink.com || AirBnb for consulting",
+    description: "Connecting You To Your Next Level Growth",
+    images: [
+      "https://bafkreiailcbfm4poqwk4zvz7674touusomkykk42cgmcdot4ninu4czk34.ipfs.nftstorage.link/",
+    ], // Must be an absolute URL
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -30,7 +38,6 @@ export default function RootLayout({ children }) {
           " bg-background font-poppins text-foreground invisible-scrollbar",
           fontSans.variable
         )}
-        
       >
         <NextAuthProvider>
           <AuthProvider>

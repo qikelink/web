@@ -228,7 +228,7 @@ export async function getCreatedSessions(id) {
 // using the like/cotains to fetch all sessions where user id exists expanding the org relation
 export async function getAllSessions(id, email) {
   return await client.collection("sessions").getFullList({
-    filter: `owner = '${id}' || organization.members ~ '${email}'`,
+    filter: `owner = '${id}' || mentor.users = '${id}' || organization.members ~ '${email}'`,
     expand: "organization,mentor.users,owner ",
   });
 }
