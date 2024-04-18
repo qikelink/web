@@ -28,6 +28,8 @@ import {
   getAllOrganizations,
   getImageUrl,
   removeOrganization,
+  sendQuestion,
+  getOrgSessions,
   updateOrganization,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "./ui/use-toast";
@@ -36,6 +38,10 @@ import { EmptyIcon } from "@/icons/EmptyIcon";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "./ui/textarea";
+import Select from "react-select";
+import { dataset } from "@/dummy_api/dataSet";
+import Link from "next/link";
+import { GrTag } from "react-icons/gr";
 
 const data = [1, 2, 3];
 
@@ -45,11 +51,22 @@ const OrganizationSection = () => {
   const { toast } = useToast();
   const [isSpinning, setIsSpinning] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const [question, setQuestion] = useState("");
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
   const [members, setMembers] = useState([]);
   const [newMember, setNewMember] = useState("");
   const [formData, setFormData] = useState({});
+  const [session, setSession] = useState({});
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showSessions, setShowSessions] = useState(false);
+
+  const toggleSessions = () => {
+    setShowSessions(!showSessions);
+  };
+
+  const options = dataset.map((item) => ({ value: item, label: item }));
 
   // useEffect(() => {
   //   if (user != undefined) {
@@ -62,6 +79,25 @@ const OrganizationSection = () => {
   //       });
   //   }
   // }, [allOrganization]);
+
+  useEffect(() => {
+    if (allOrganization.length > 0) {
+      const fetchSessions = async () => {
+        const sessionData = [];
+        for (const organization of allOrganization) {
+          const orgSession = await getOrgSessions(organization.id);
+          sessionData.push(orgSession);
+        }
+        setSession(sessionData);
+      };
+
+      fetchSessions();
+    }
+  }, [isModalOpen, user, allOrganization]);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
 
   const handleAddMember = () => {
     if (newMember.trim() !== "") {
@@ -101,9 +137,13 @@ const OrganizationSection = () => {
   const handleClick = () => {
     setIsSpinning(true);
 
+    const interests = selectedOption
+      ? selectedOption.map((option) => option.label).join(", ")
+      : "";
+
     const membersString = members.join(", ");
 
-    createOrganization(profileImage, name, tagline, undefined, membersString)
+    createOrganization(profileImage, name, tagline, membersString, interests)
       .then(() => {
         toast({
           title: "Organization created",
@@ -131,6 +171,7 @@ const OrganizationSection = () => {
         setTagline("");
         setMembers("");
         setProfileImage("");
+        setSelectedOption(null);
         setIsSpinning(false);
       });
   };
@@ -183,46 +224,27 @@ const OrganizationSection = () => {
   const handleQuestions = (item) => {
     setIsSpinning(true);
 
-    const membersString = members.join(", ");
-
-    updateOrganization(
-      item.id,
-      profileImage,
-      name,
-      tagline,
-      undefined,
-      membersString
-    )
+    sendQuestion(question, item.id)
       .then(() => {
         toast({
-          title: "Organization updated",
-          description: "Organization updated successfully!",
+          title: "Question sent",
+          description: "Question sent successfully!",
           variant: "default",
         });
       })
       .catch((error) => {
         toast({
-          title: "Failed to update organization",
+          title: "Failed to send question",
           description: "Sorry, an error occurred! Please try again.",
           variant: "destructive",
         });
-        console.error("Organization update error:", error);
+        console.error("Question sending error:", error);
       })
       .finally(() => {
-        getAllOrganizations(user.id, user.email)
-          .then((res) => {
-            setAllOrganization(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching session data:", error);
-          });
-        setName("");
-        setTagline("");
-        setMembers("");
-        setProfileImage("");
-        setIsSpinning(false);
+        setQuestion("");
       });
   };
+
   const handleLeave = (item) => {
     setIsSpinning(true);
 
@@ -301,6 +323,17 @@ const OrganizationSection = () => {
                 value={name}
                 className="col-span-4 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <Label className="text-lg ">Interests</Label>
+              <Select
+                className="bg-inputbackground active:bg-inputbackground rounded-md "
+                isMulti={true}
+                autoFocus={true}
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                options={options}
               />
             </div>
             <div className="flex flex-col space-y-1">
@@ -463,6 +496,14 @@ const OrganizationSection = () => {
   //   );
   // };
 
+  function trimToTenCharacters(str) {
+    if (str.length <= 9) {
+      return str;
+    } else {
+      return str.substring(0, 9) + "..";
+    }
+  }
+
   return (
     <div className="">
       {allOrganization.length > 0 && (
@@ -516,82 +557,108 @@ const OrganizationSection = () => {
 
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">Details</Button>
+                        <Button onClick={handleModalOpen} variant="outline">
+                          Details
+                        </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px] rounded-md">
-                        <DialogHeader>
-                          <DialogTitle>Organization Details</DialogTitle>
-                        </DialogHeader>
-                        <div className=" rounded-md p-3">
+                        <div className="rounded-md p-3">
                           <h2 className="text-xl font-bold mb-2">
                             {item.username}
                           </h2>
-                          <div className="grid grid-cols-2 gap-2">
-                            <div>
-                              <p className="text-gray-600">Members Number</p>
-                              <p className="font-semibold">
-                                {
-                                  item.members
-                                    .split(",")
-                                    .filter((email) => email.trim() !== "")
-                                    .length
-                                }
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-gray-600">Meetings Held</p>
-                              <p className="font-semibold">
-                                {item.sessions.length}
-                              </p>
-                            </div>
-                          </div>
                           <div className="mt-2">
                             <p className="text-gray-600">Interests</p>
-                            <p className="">{item.org_about}</p>
+                            <div className="flex gap-2 flex-wrap item-center">
+                              <Badge variant="outline">
+                                <GrTag color="green" />
+                              </Badge>{" "}
+                              {item && item.interests
+                                ? item.interests
+                                    .split(",")
+                                    .map((interest, index) => (
+                                      <Badge key={index} variant="outline">
+                                        {trimToTenCharacters(interest.trim())}
+                                      </Badge>
+                                    ))
+                                : "N/A"}
+                            </div>
                           </div>
                           <div className="mt-2">
                             <p className="text-gray-600">About Organization</p>
-                            <p className="">{item.org_about}</p>
+                            <p className="line-clamp-3">{item.org_about}</p>
                           </div>
-                          <h2 className="text-xl font-bold mt-4 mb-2">
-                            Upcoming session
-                          </h2>
-                          <div className="grid grid-cols-2 gap-2">
-                            <div>
-                              <p className="text-gray-600">Mentor</p>
-                              <p className="font-semibold">
-                                Winner
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-gray-600">Mentor session link</p>
-                              <p className="font-semibold">
-                                {item.sessions.length}
-                              </p>
-                            </div>
+
+                          <div>
+                            {/* Button to toggle display of upcoming sessions */}
+                            <p className="mt-2" onClick={toggleSessions}>
+                              {showSessions
+                                ? "Show Upcoming Sessions"
+                                : " Upcoming Sessions"}
+                            </p>
+
+                            {/* Fetch the matching session */}
+                            {session && session.length > 0 && showSessions && (
+                              <>
+                                <h2 className="text-xl font-bold mt-4 mb-2">
+                                  Upcoming session
+                                </h2>
+                                {/* Map through sessions and display details */}
+                                {session.map((org) => {
+                                  if (org.organization === item.id) {
+                                    return (
+                                      <div>
+                                        <div
+                                          key={org.id}
+                                          className="grid grid-cols-2 gap-2"
+                                        >
+                                          <div>
+                                            <p className="text-gray-600">
+                                              Mentor
+                                            </p>
+                                            <p className="font-semibold">
+                                              {org.expand.mentor.username}
+                                            </p>
+                                          </div>
+                                          <div>
+                                            <p className="text-gray-600">
+                                              Mentor session link
+                                            </p>
+                                            <Link
+                                              className="underline cursor-pointer"
+                                              href="/"
+                                            >
+                                              {org.expand.mentor.username}
+                                            </Link>
+                                          </div>
+                                        </div>
+                                        <div className="mt-2">
+                                          <p className="text-gray-600">
+                                            About Mentor
+                                          </p>
+                                          <p className="line-clamp-3">
+                                            {org.expand.mentor.bio}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+                                })}
+                              </>
+                            )}
+
+                            {/* If there are no upcoming sessions */}
+                            {session &&
+                              session.length === 0 &&
+                              showSessions && (
+                                <div className="flex flex-col  items-center w-full h-full my-16">
+                                  <EmptyIcon size={120} />
+                                  <p className="text-center text-lg font-medium text-darktext">
+                                    No upcoming session.
+                                  </p>
+                                </div>
+                              )}
                           </div>
-                          <div className="mt-4">
-                            <p className="text-gray-600">About Mentor</p>
-                            <p className="">{item.org_about}</p>
-                          </div>
-                          {
-                            user.id === item.owner ? (
-                              <div className="space-y-2 mt-4">
-                                <Textarea
-                                placeholder='Enter question you have for mentor or click link to request a private session with mentor.' />
-                                <Button variant="outline">
-                                  Submit Question
-                                </Button>
-                              </div>
-                            ) : null
-                            // user.id === item.owner ? (
-                            //   editDialog(item)
-                            // ) : (
-                            //   <Button variant="outline">Leave Community</Button>
-                            // )
-                          }
                         </div>
-                        
                       </DialogContent>
                     </Dialog>
                   </div>

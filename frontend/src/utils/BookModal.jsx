@@ -41,9 +41,12 @@ import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { GrTag } from "react-icons/gr";
 import { SignInIcon } from "@/icons/SignInIcon";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import PaystackPop from "@paystack/inline-js";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
+  const [isSpinning, setIsSpinning] = useState(false);
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
   const [sessionTime, setSessionTime] = useState("");
@@ -65,6 +68,10 @@ const BookModal = ({ buttonName, blue, data }) => {
   // to add the default one too
   options.unshift({ value: "Individual", label: "Individual" });
 
+  const PAYSTACK_KEY =
+    process.env.PAYSTACK_KEY ||
+    "pk_test_5625e87690fa343ff6ec90871ef1fbaf2b9f5992";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     const remainingCharacters = 800 - value.length; // Calculate remaining characters
@@ -75,7 +82,7 @@ const BookModal = ({ buttonName, blue, data }) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     setIsLoading(!isLoading);
@@ -93,6 +100,8 @@ const BookModal = ({ buttonName, blue, data }) => {
       return;
     }
 
+    setIsSpinning(true);
+
     const orgId = selectedOption === "Individual" ? undefined : selectedOption;
     let sessionDate = date
       ? new Date(
@@ -103,36 +112,117 @@ const BookModal = ({ buttonName, blue, data }) => {
     const requestMessageReceiver = `Hello you have received a session request from, accept or reject request from session requests under manager section.`;
     const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
 
-    createSession(
-      data.id,
-      data.rating,
-      orgId,
-      formData.purpose,
-      sessionTime,
-      sessionDate,
-      user.username,
-      user.bio
-    )
-      .then(() => {
+    if (data.rate !== "free") {
+      try {
+        const paystack = new PaystackPop();
+        paystack.newTransaction({
+          key: PAYSTACK_KEY,
+          reference: new Date().getTime().toString(),
+          email: user.email,
+          currency: "NGN",
+          amount: data.rate * 100,
+          onSuccess(transaction) {
+            const requestMessageReceiver = `Hello you have received a session request from, accept or reject request from session requests under manager section.`;
+            const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
+            try {
+              const orgId =
+                selectedOption === "Individual" ? undefined : selectedOption;
+              let sessionDate = date
+                ? new Date(
+                    date.getTime() - date.getTimezoneOffset() * 60000
+                  ).toISOString()
+                : new Date().toISOString();
+
+              createSession(
+                data.id,
+                data.rating,
+                orgId,
+                formData.purpose,
+                sessionTime,
+                sessionDate,
+                user.username,
+                user.bio
+              );
+
+              toast({
+                title: "Booking request sent",
+                description: "Booking request sent successfully! .",
+                variant: "default",
+              });
+            } catch (error) {
+              toast({
+                title: "Failed to send Booking request",
+                description: "Sorry an error just occurred! please try again.",
+                variant: "destructive",
+              });
+              console.error("Verification error:", error);
+            } finally {
+              createNotification(
+                "Session Request",
+                requestMessageSender,
+                requestMessageReceiver,
+                undefined,
+                data.id,
+                orgId
+              );
+
+              setIsSpinning(false);
+              setIsExpanded(false);
+              setSelectedOption("");
+              setDate(null);
+              setFormData({ purpose: "" });
+            }
+          },
+          onCancel() {
+            toast({
+              title: "Payment canceled",
+              description:
+                "Please complete payment to be able to request a session.",
+              variant: "destructive",
+            });
+          },
+        });
+      } catch (error) {
+        toast({
+          title: "Payment initialization failed",
+          description: "An error occurred during payment initialization.",
+          variant: "destructive",
+        });
+        console.error("Payment initialization error:", error);
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    if (data.rate === "free") {
+      try {
+        await createSession(
+          data.id,
+          data.rating,
+          orgId,
+          formData.purpose,
+          sessionTime,
+          sessionDate,
+          user.username,
+          user.bio
+        );
+
         toast({
           title: "Booking request sent",
           description: "Booking request sent successfully! .",
           variant: "default",
         });
-        setIsLoading(!isLoading);
-        setTimeout(() => {
-          window.location.reload(); // Reload the page after 3 seconds
-        }, 2000);
-      })
-      .catch((error) => {
+        setIsLoading(false);
+      } catch (error) {
         toast({
           title: "Failed to send Booking request",
           description: "Sorry an error just occurred! please try again.",
           variant: "destructive",
         });
-        console.error("verification error:", error);
-      })
-      .finally(() => {
+        console.error("Verification error:", error);
+        setIsLoading(false);
+        return;
+      } finally {
         createNotification(
           "Session Request",
           requestMessageSender,
@@ -141,20 +231,20 @@ const BookModal = ({ buttonName, blue, data }) => {
           data.id,
           orgId
         );
-        getNotifications(user.id, user.email)
-          .then((res) => {
-            setNotifications(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching notifications data:", error);
-          });
+        // try {
+        //   const notificationsData = await getNotifications(user.id, user.email);
+        //   setNotifications(notificationsData);
+        // } catch (error) {
+        //   console.error("Error fetching notifications data:", error);
+        // }
 
+        setIsSpinning(false);
         setIsExpanded(false);
         setSelectedOption("");
         setDate(null);
         setFormData({ purpose: "" });
-        setIsLoading(false);
-      });
+      }
+    }
   };
 
   const toggleExpand = () => {
@@ -423,7 +513,12 @@ const BookModal = ({ buttonName, blue, data }) => {
                     className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
                     type="submit"
                   >
-                    Request
+                    {isSpinning ? "Requesting" : "Request"}
+                    <AiOutlineLoading3Quarters
+                      className={`${
+                        isSpinning ? "ml-3 animate-spin" : "hidden"
+                      }`}
+                    />
                   </Button>
                 </DialogFooter>
               </form>
