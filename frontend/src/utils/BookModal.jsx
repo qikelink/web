@@ -85,8 +85,6 @@ const BookModal = ({ buttonName, blue, data }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    setIsLoading(!isLoading);
-
     const isAnyFieldEmpty = Object.values(formData).some(
       (value) => value === ""
     );
@@ -99,151 +97,102 @@ const BookModal = ({ buttonName, blue, data }) => {
       });
       return;
     }
-
+    setIsLoading(!isLoading);
     setIsSpinning(true);
 
-    const orgId = selectedOption === "Individual" ? undefined : selectedOption;
-    let sessionDate = date
-      ? new Date(
-          date.getTime() - date.getTimezoneOffset() * 60000
-        ).toISOString()
-      : new Date().toISOString();
-
-    const requestMessageReceiver = `Hello you have received a session request from, accept or reject request from session requests under manager section.`;
+    const requestMessageReceiver = `Hello you have received a session request from ${user.name}, accept or reject request from session requests under manager section.`;
     const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
 
-    if (data.rate !== "free") {
-      try {
-        const paystack = new PaystackPop();
-        paystack.newTransaction({
-          key: PAYSTACK_KEY,
-          reference: new Date().getTime().toString(),
-          email: user.email,
-          currency: "NGN",
-          amount: data.rate * 100,
-          onSuccess(transaction) {
-            const requestMessageReceiver = `Hello you have received a session request from, accept or reject request from session requests under manager section.`;
-            const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
-            try {
-              const orgId =
-                selectedOption === "Individual" ? undefined : selectedOption;
-              let sessionDate = date
-                ? new Date(
-                    date.getTime() - date.getTimezoneOffset() * 60000
-                  ).toISOString()
-                : new Date().toISOString();
+    const handlePaymentSuccess = () => {
+      const orgId =
+        selectedOption === "Individual" ? undefined : selectedOption;
+      let sessionDate = date
+        ? new Date(
+            date.getTime() - date.getTimezoneOffset() * 60000
+          ).toISOString()
+        : new Date().toISOString();
 
-              createSession(
-                data.id,
-                data.rating,
-                orgId,
-                formData.purpose,
-                sessionTime,
-                sessionDate,
-                user.username,
-                user.bio
-              );
-
-              toast({
-                title: "Booking request sent",
-                description: "Booking request sent successfully! .",
-                variant: "default",
+      createSession(
+        data.id,
+        data.rating,
+        orgId,
+        formData.purpose,
+        sessionTime,
+        sessionDate,
+        user.username,
+        user.bio
+      )
+        .then(() => {
+          toast({
+            title: "Booking request sent",
+            description: "Booking request sent successfully!",
+            variant: "default",
+          });
+        })
+        .finally(() => {
+          createNotification(
+            "Session Request",
+            requestMessageSender,
+            requestMessageReceiver,
+            undefined,
+            data.expand.users.id,
+            orgId
+          ).then(() => {
+            getNotifications(user.id, user.email)
+              .then((res) => {
+                setNotifications(res);
+              })
+              .catch((error) => {
+                console.error("Error fetching notifications data:", error);
               });
-            } catch (error) {
-              toast({
-                title: "Failed to send Booking request",
-                description: "Sorry an error just occurred! please try again.",
-                variant: "destructive",
-              });
-              console.error("Verification error:", error);
-            } finally {
-              createNotification(
-                "Session Request",
-                requestMessageSender,
-                requestMessageReceiver,
-                undefined,
-                data.id,
-                orgId
-              );
-
-              setIsSpinning(false);
-              setIsExpanded(false);
-              setSelectedOption("");
-              setDate(null);
-              setFormData({ purpose: "" });
-            }
-          },
-          onCancel() {
-            toast({
-              title: "Payment canceled",
-              description:
-                "Please complete payment to be able to request a session.",
-              variant: "destructive",
-            });
-          },
+          });
         });
-      } catch (error) {
-        toast({
-          title: "Payment initialization failed",
-          description: "An error occurred during payment initialization.",
-          variant: "destructive",
-        });
-        console.error("Payment initialization error:", error);
-        setIsLoading(false);
-        return;
-      }
-    }
 
-    if (data.rate === "free") {
-      try {
-        await createSession(
-          data.id,
-          data.rating,
-          orgId,
-          formData.purpose,
-          sessionTime,
-          sessionDate,
-          user.username,
-          user.bio
-        );
+      setIsSpinning(false);
+      setIsLoading(false);
+      setIsExpanded(false);
+      setSelectedOption("");
+      setDate(null);
+      setFormData({ purpose: "" });
+    };
 
-        toast({
-          title: "Booking request sent",
-          description: "Booking request sent successfully! .",
-          variant: "default",
-        });
-        setIsLoading(false);
-      } catch (error) {
-        toast({
-          title: "Failed to send Booking request",
-          description: "Sorry an error just occurred! please try again.",
-          variant: "destructive",
-        });
-        console.error("Verification error:", error);
-        setIsLoading(false);
-        return;
-      } finally {
-        createNotification(
-          "Session Request",
-          requestMessageSender,
-          requestMessageReceiver,
-          undefined,
-          data.id,
-          orgId
-        );
-        // try {
-        //   const notificationsData = await getNotifications(user.id, user.email);
-        //   setNotifications(notificationsData);
-        // } catch (error) {
-        //   console.error("Error fetching notifications data:", error);
-        // }
+    const handlePaymentCancel = () => {
+      toast({
+        title: "Payment canceled",
+        description: "Please complete payment to be able to request a session.",
+        variant: "destructive",
+      });
 
-        setIsSpinning(false);
-        setIsExpanded(false);
-        setSelectedOption("");
-        setDate(null);
-        setFormData({ purpose: "" });
-      }
+      setIsLoading(false);
+      setIsSpinning(false);
+    };
+
+    const handlePaymentError = (error) => {
+      toast({
+        title: "Payment initialization failed",
+        description: "An error occurred during payment initialization.",
+        variant: "destructive",
+      });
+      console.error("Payment initialization error:", error);
+
+      setIsLoading(false);
+      setIsSpinning(false);
+    };
+
+    if (data.rate !== "Free") {
+      const paystack = new PaystackPop();
+      paystack.newTransaction({
+        key: PAYSTACK_KEY,
+        reference: new Date().getTime().toString(),
+        email: user.email,
+        currency: "NGN",
+        amount: data.rate * 100,
+        onSuccess: handlePaymentSuccess,
+        onCancel: handlePaymentCancel,
+        onError: handlePaymentError,
+      });
+    } else {
+      handlePaymentSuccess();
     }
   };
 

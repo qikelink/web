@@ -329,7 +329,7 @@ export async function createNotification(
     message: message,
     owner: client.authStore.model.id,
   };
-  await client.collection('notifications').create(data);
+  await client.collection("notifications").create(data);
 }
 
 export async function getNotifications(id, email) {
