@@ -68,8 +68,6 @@ export default function Header() {
     }
   }, [notifications]);
 
- 
-
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       <div className="font-poppins flex justify-between items-center pb-3">

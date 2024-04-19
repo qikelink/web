@@ -15,6 +15,7 @@ import {
   getMeetingRequests,
   getNotifications,
 } from "../../../backend/src/pocketbase";
+import { usePathname } from "next/navigation";
 
 // Create a context for managing user data
 const UserContext = createContext();
@@ -23,6 +24,7 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
+  const pathname = usePathname();
   const [user, setUser] = useState({});
   const [mentors, setMentors] = useState([]);
   const [quickMentors, setQuickMentors] = useState([]);
@@ -38,110 +40,144 @@ export const UserProvider = ({ children }) => {
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
   const [selectedButtons, setSelectedButtons] = useState("");
 
+  // Function to fetch data and cache it
+  const fetchDataAndCache = async (
+    fetchFunction,
+    cacheSetter,
+    cacheKey,
+    expirationTime = 3600,
+    ...args
+  ) => {
+    try {
+      // Check if data is already cached and not expired
+      const cachedData = localStorage.getItem(cacheKey);
+      const cachedTimestamp = localStorage.getItem(`${cacheKey}_timestamp`);
+      if (
+        cachedData &&
+        cachedTimestamp &&
+        Date.now() - parseInt(cachedTimestamp) < expirationTime * 1000
+      ) {
+        cacheSetter(JSON.parse(cachedData));
+        return;
+      }
+
+      // If not cached or expired, fetch data and cache it
+      const data = await fetchFunction(...args);
+      cacheSetter(data);
+      localStorage.setItem(cacheKey, JSON.stringify(data));
+      localStorage.setItem(`${cacheKey}_timestamp`, Date.now());
+    } catch (error) {
+      console.error("Error fetching or caching data:", error);
+    }
+  };
+
   // Fetch user and mentor data on initial load
   useEffect(() => {
-    if (isUserValid) {
-      getUser()
-        .then((res) => {
-          setUser(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
+    const fetchData = async () => {
+      try {
+        if (isUserValid) {
+          const userData = await getUser();
+          setUser(userData);
+          localStorage.setItem("user_cache", JSON.stringify(userData));
+          localStorage.setItem("user_cache_timestamp", Date.now());
 
-      getMentor()
-        .then((res) => {
-          setMentor(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching mentor data:", error);
-        });
-    }
+          const mentorData = await getMentor();
+          setMentor(mentorData);
+          localStorage.setItem("mentor_cache", JSON.stringify(mentorData));
+          localStorage.setItem("mentor_cache_timestamp", Date.now());
+        }
 
-    // get all mentors for the profile card
-    getMentors()
-      .then((res) => {
-        setMentors(res);
-      })
-      .catch((error) => {
-        console.error("Error fetching mentors data:", error);
-      });
-
-    // get all mentors available for quick services
-    getQuickMentors()
-      .then((res) => {
-        setQuickMentors(res);
+        fetchDataAndCache(getMentors, setMentors, "mentors_cache", 3600); // Cache for 1 hour
+        fetchDataAndCache(
+          getQuickMentors,
+          setQuickMentors,
+          "quick_mentors_cache",
+          3600
+        ); // Cache for 1 hour
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
         setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching Quickmentors data:", error);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [isUserValid]);
 
-  // get other datas based on the specific user
+  // Fetch other data based on the specific user
   useEffect(() => {
-    if (user && Object.keys(user).length > 0) {
-      getBookmarks(user.id)
-        .then((res) => {
-          setBookmarks(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching bookmarks data:", error);
-        });
+    const fetchData = async () => {
+      try {
+        if (pathname === "/bookmark") {
+          fetchDataAndCache(
+            getBookmarks,
+            setBookmarks,
+            "bookmarks_cache",
+            3600,
+            user.id
+          ); // Cache for 1 hour
+        } else if (
+          pathname === "/manager/Settings" ||
+          pathname === "/manager/Organization" ||
+          pathname === "/manager/Request"
+        ) {
+          fetchDataAndCache(
+            getCreatedOrganizations,
+            setCreatedOrganization,
+            "created_org_cache",
+            3600,
+            user.id
+          ); // Cache for 1 hour
+          fetchDataAndCache(
+            getAllOrganizations,
+            setAllOrganization,
+            "all_org_cache",
+            3600,
+            user.id,
+            user.email
+          ); // Cache for 1 hour
+          fetchDataAndCache(
+            getMeetingRequests,
+            setMeetingRequests,
+            "meeting_requests_cache",
+            3600,
+            user.id
+          ); // Cache for 1 hour
+        } else if (pathname === "/sessions") {
+          fetchDataAndCache(
+            getCreatedSessions,
+            setCreatedSessions,
+            "created_sessions_cache",
+            3600,
+            user.id
+          ); // Cache for 1 hour
+          fetchDataAndCache(
+            getAllSessions,
+            setAllSessions,
+            "all_sessions_cache",
+            3600,
+            user.id,
+            user.email
+          ); // Cache for 1 hour
+        } else if (pathname === "/") {
+          fetchDataAndCache(
+            getNotifications,
+            setNotifications,
+            "notifications_cache",
+            3600,
+            user.id,
+            user.email
+          ); // Cache for 1 hour
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoadingUserData(false);
+      }
+    };
 
-      getCreatedOrganizations(user.id)
-        .then((res) => {
-          setCreatedOrganization(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching session data:", error);
-        });
-
-      getAllOrganizations(user.id, user.email)
-        .then((res) => {
-          setAllOrganization(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching session data:", error);
-        });
-
-      getCreatedSessions(user.id)
-        .then((res) => {
-          setCreatedSessions(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching session data:", error);
-        });
-
-      getAllSessions(user.id, user.email)
-        .then((res) => {
-          setAllSessions(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching session data:", error);
-        });
-
-      getMeetingRequests(user.id)
-        .then((res) => {
-          setMeetingRequests(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching session data:", error);
-        });
-
-      getNotifications(user.id, user.email)
-        .then((res) => {
-          setNotifications(res);
-          setIsLoadingUserData(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching notifications data:", error);
-          setIsLoadingUserData(false);
-        });
-    }
-    setIsLoadingUserData(false); // set to false to avoid infinite loading
-  }, [user]);
+    fetchData();
+  }, [pathname, user]);
 
   return (
     <UserContext.Provider

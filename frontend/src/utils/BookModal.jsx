@@ -41,9 +41,12 @@ import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { GrTag } from "react-icons/gr";
 import { SignInIcon } from "@/icons/SignInIcon";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { usePaystackPayment } from "react-paystack";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
+  const [isSpinning, setIsSpinning] = useState(false);
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
   const [sessionTime, setSessionTime] = useState("");
@@ -56,6 +59,101 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const pathname = usePathname();
+
+  const PAYSTACK_KEY =
+    process.env.PAYSTACK_KEY ||
+    "pk_live_7783d09436e5356ced8146ba3de4cacdcd614645";
+
+  const handlePaymentSuccess = () => {
+    const orgId = selectedOption === "Individual" ? undefined : selectedOption;
+    let sessionDate = date
+      ? new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        ).toISOString()
+      : new Date().toISOString();
+
+    const requestMessageReceiver = `Hello you have received a session request from ${user.name}, accept or reject request from session requests under manager section.`;
+    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
+
+    createSession(
+      data.id,
+      data.rating,
+      orgId,
+      formData.purpose,
+      sessionTime,
+      sessionDate,
+      user.username,
+      user.bio
+    )
+      .then(() => {
+        toast({
+          title: "Booking request sent",
+          description: "Booking request sent successfully!",
+          variant: "default",
+        });
+      })
+      .finally(() => {
+        createNotification(
+          "Session Request",
+          requestMessageSender,
+          requestMessageReceiver,
+          undefined,
+          data.expand.users.id,
+          orgId
+        ).then(() => {
+          getNotifications(user.id, user.email)
+            .then((res) => {
+              setNotifications(res);
+            })
+            .catch((error) => {
+              console.error("Error fetching notifications data:", error);
+            });
+        });
+      });
+
+    setIsSpinning(false);
+    setIsLoading(false);
+    setIsExpanded(false);
+    setSelectedOption("");
+    setDate(null);
+    setFormData({ purpose: "" });
+  };
+
+  const handlePaymentCancel = () => {
+    toast({
+      title: "Payment canceled",
+      description: "Please complete payment to be able to request a session.",
+      variant: "destructive",
+    });
+
+    setIsLoading(false);
+    setIsSpinning(false);
+  };
+
+  const handlePaymentError = (error) => {
+    toast({
+      title: "Payment initialization failed",
+      description: "An error occurred during payment initialization.",
+      variant: "destructive",
+    });
+    console.error("Payment initialization error:", error);
+
+    setIsLoading(false);
+    setIsSpinning(false);
+  };
+
+  const config = {
+    publicKey: PAYSTACK_KEY,
+    reference: new Date().getTime().toString(),
+    email: user.email,
+    currency: "NGN",
+    amount: data.rate * 100,
+    onSuccess: handlePaymentSuccess,
+    onCancel: handlePaymentCancel,
+    onError: handlePaymentError,
+  };
+
+  const initializePayment = usePaystackPayment(config);
 
   const options = createdOrganization.map((org) => ({
     value: org.id,
@@ -75,10 +173,8 @@ const BookModal = ({ buttonName, blue, data }) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    setIsLoading(!isLoading);
 
     const isAnyFieldEmpty = Object.values(formData).some(
       (value) => value === ""
@@ -92,69 +188,17 @@ const BookModal = ({ buttonName, blue, data }) => {
       });
       return;
     }
+    setIsLoading(!isLoading);
+    setIsSpinning(true);
 
-    const orgId = selectedOption === "Individual" ? undefined : selectedOption;
-    let sessionDate = date
-      ? new Date(
-          date.getTime() - date.getTimezoneOffset() * 60000
-        ).toISOString()
-      : new Date().toISOString();
-
-    const requestMessageReceiver = `Hello you have received a session request from, accept or reject request from session requests under manager section.`;
-    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
-
-    createSession(
-      data.id,
-      data.rating,
-      orgId,
-      formData.purpose,
-      sessionTime,
-      sessionDate,
-      user.username,
-      user.bio
-    )
-      .then(() => {
-        toast({
-          title: "Booking request sent",
-          description: "Booking request sent successfully! .",
-          variant: "default",
-        });
-        setIsLoading(!isLoading);
-        setTimeout(() => {
-          window.location.reload(); // Reload the page after 3 seconds
-        }, 2000);
-      })
-      .catch((error) => {
-        toast({
-          title: "Failed to send Booking request",
-          description: "Sorry an error just occurred! please try again.",
-          variant: "destructive",
-        });
-        console.error("verification error:", error);
-      })
-      .finally(() => {
-        createNotification(
-          "Session Request",
-          requestMessageSender,
-          requestMessageReceiver,
-          undefined,
-          data.id,
-          orgId
-        );
-        getNotifications(user.id, user.email)
-          .then((res) => {
-            setNotifications(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching notifications data:", error);
-          });
-
-        setIsExpanded(false);
-        setSelectedOption("");
-        setDate(null);
-        setFormData({ purpose: "" });
-        setIsLoading(false);
+    if (data.rate !== "Free") {
+      initializePayment({
+        onSuccess: handlePaymentSuccess,
+        onClose: handlePaymentCancel,
       });
+    } else {
+      handlePaymentSuccess();
+    }
   };
 
   const toggleExpand = () => {
@@ -423,7 +467,12 @@ const BookModal = ({ buttonName, blue, data }) => {
                     className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
                     type="submit"
                   >
-                    Request
+                    {isSpinning ? "Requesting" : "Request"}
+                    <AiOutlineLoading3Quarters
+                      className={`${
+                        isSpinning ? "ml-3 animate-spin" : "hidden"
+                      }`}
+                    />
                   </Button>
                 </DialogFooter>
               </form>

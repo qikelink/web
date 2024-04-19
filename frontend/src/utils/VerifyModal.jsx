@@ -75,9 +75,6 @@ const VerifyModal = ({ blue, userData }) => {
           description: "Your verification request has been sent successfully!",
           variant: "default",
         });
-        setTimeout(() => {
-          window.location.reload(); // Reload the page after 3 seconds
-        }, 2000);
       })
       .catch((error) => {
         toast({

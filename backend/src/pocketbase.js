@@ -59,10 +59,14 @@ export async function Signup(superEmail, email, superPassword, password) {
     password: password,
     passwordConfirm: password,
   };
-  await createWelcome(
+  await createNotification(
     "Welcome to Qikelink",
-    "Quick link is the go to platform to recieved one on one mentorship with experts across any field",
-    email
+    undefined,
+    undefined,
+    email,
+    undefined,
+    undefined,
+    "Quick link is the go to platform to recieved one on one mentorship with experts across any field"
   );
   await client.collection("users").create(data);
 }
@@ -225,6 +229,16 @@ export async function getCreatedSessions(id) {
     .getFullList({ filter: `owner = '${id}'` });
 }
 
+// org upcoming session
+export async function getOrgSessions(id) {
+  return await client
+    .collection("sessions")
+    .getFirstListItem(`organization = '${id}'`, {
+      expand: "organization,mentor.users,owner ",
+      sort: "created",
+    });
+}
+
 // using the like/cotains to fetch all sessions where user id exists expanding the org relation
 export async function getAllSessions(id, email) {
   return await client.collection("sessions").getFullList({
@@ -237,15 +251,15 @@ export async function createOrganization(
   avatar,
   username,
   org_about,
-  org_info,
-  members
+  members,
+  interests
 ) {
   const data = {
     avatar: avatar,
     username: username,
     org_about: org_about,
-    org_info: org_info,
     members: members,
+    interests: interests,
     owner: client.authStore.model.id,
   };
   await client.collection("organization").create(data);
@@ -259,11 +273,9 @@ export async function getCreatedOrganizations(id) {
 
 // using the like/cotains to fetch all organizations where user id exists
 export async function getAllOrganizations(id, email) {
-  return await client
-    .collection("organization")
-    .getFullList({
-      filter: `owner = '${id}' || members ~ '${email}' || public = True`,
-    });
+  return await client.collection("organization").getFullList({
+    filter: `owner = '${id}' || members ~ '${email}' || public = True`,
+  });
 }
 
 export async function updateOrganization(
@@ -272,7 +284,7 @@ export async function updateOrganization(
   username,
   org_about,
   org_info,
-  members, 
+  members,
   questions
 ) {
   const data = {
@@ -304,32 +316,25 @@ export async function createNotification(
   messageReceiver,
   email,
   target,
-  organization
+  organization,
+  message
 ) {
   const data = {
     title: title,
     messageSender: messageSender,
     messageReceiver: messageReceiver,
-    email: email, // for welcome message email is accessed for unauthenticated users
+    email: email, 
     target: target,
     organization: organization,
+    message: message,
     owner: client.authStore.model.id,
   };
   await client.collection("notifications").create(data);
 }
 
-export async function createWelcome(title, message, email) {
-  const data = {
-    title: title,
-    message: message,
-    email: email,
-  };
-  await client.collection("welcome").create(data);
-}
-
 export async function getNotifications(id, email) {
   return await client.collection("notifications").getList(1, 6, {
-    filter: `owner = '${id}' || welcome.email ~ '${email}' || target ~ '${id}' || organization.members ~ '${email}'`,
+    filter: `owner = '${id}' || email ~ '${email}' || target ~ '${id}' || organization.members ~ '${email}'`,
     expand: "organization, target, welcome",
     sort: "-created",
   });
@@ -345,4 +350,13 @@ export async function sendFeedback(feedback) {
     user: client.authStore.model.id,
   };
   await client.collection("feedback").create(data);
+}
+
+export async function sendQuestion(question, organization) {
+  const data = {
+    question: question,
+    organization: organization,
+    user: client.authStore.model.id,
+  };
+  await client.collection("questions").create(data);
 }
