@@ -50,10 +50,12 @@ export default function Header() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const handleSignout = () => {
-    setProgress(90);
-    window.location.reload();
-    signout(setIsUserValid);
-    setUser([]);
+    if (typeof window !== "undefined") {
+      setProgress(90);
+      window.location.reload();
+      signout(setIsUserValid);
+      setUser([]);
+    }
   };
 
   useEffect(() => {
@@ -67,8 +69,6 @@ export default function Header() {
         });
     }
   }, [notifications]);
-
- 
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
