@@ -27,13 +27,16 @@ const ListSection = () => {
   const { setIsUserValid, setProgress } = useAuth();
 
   const handleSignout = async () => {
-    setProgress(90);
-    await toggleGoogle(false);
-    signout(setIsUserValid);
-    signOut();
-    window.location.reload();
-    setUser([]);
+    if (typeof window !== "undefined") {
+      setProgress(90);
+      await toggleGoogle(false);
+      signout(setIsUserValid);
+      signOut();
+      window.location.reload();
+      setUser([]);
+    }
   };
+ 
 
   return (
     <div className="flex flex-row justify-between h-full w-full ">
