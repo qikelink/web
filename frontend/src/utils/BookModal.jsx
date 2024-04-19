@@ -238,6 +238,22 @@ const BookModal = ({ buttonName, blue, data }) => {
     }
   };
 
+  async function copyPageUrl() {
+    try {
+      // Get the current page URL
+      const pageUrl = window.location.href;
+
+      // Copy the URL to the clipboard
+      await navigator.clipboard.writeText(pageUrl);
+
+      // Optional: Show a success message to the user
+      alert("Page URL copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy page URL: ", err);
+    }
+  }
+
+
   return (
     <div>
       <Dialog>
@@ -252,7 +268,7 @@ const BookModal = ({ buttonName, blue, data }) => {
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px] rounded-md">
-          <div className="max-h-[500px] w-full overflow-y-auto">
+          <div className="max-h-[500px] w-full p-2 bookmark-scrollbar overflow-y-auto">
             {isUserValid && (
               <form onSubmit={handleSubmit}>
                 <DialogHeader>
@@ -306,7 +322,12 @@ const BookModal = ({ buttonName, blue, data }) => {
                         >
                           <BsJournalBookmarkFill />
                         </Toggle>
-                        <Button size="icon" variant="outline" type="button">
+                        <Button
+                          onClick={() => copyPageUrl()}
+                          size="icon"
+                          variant="outline"
+                          type="button"
+                        >
                           <BsShareFill />
                         </Button>
                       </div>
