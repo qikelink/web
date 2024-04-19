@@ -11,7 +11,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import BookModal from "./BookModal";
-import { BsJournalBookmarkFill, BsShareFill } from "react-icons/bs";
+import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import KeywordBar from "@/utils/KeywordBar";
