@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogOverlay,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -239,7 +241,10 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const handleClick = () => {
     if (!isUserValid) {
+      setIsDialogOpen(true);
       setIsLoginDialogOpen(true);
+    } else {
+      setIsDialogOpen(true);
     }
   };
 
@@ -257,7 +262,6 @@ const BookModal = ({ buttonName, blue, data }) => {
       console.error("Failed to copy page URL: ", err);
     }
   }
-
 
   return (
     <div>
