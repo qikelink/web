@@ -42,7 +42,7 @@ import { Input } from "@/components/ui/input";
 import { GrTag } from "react-icons/gr";
 import { SignInIcon } from "@/icons/SignInIcon";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import PaystackPop from "@paystack/inline-js";
+import { usePaystackPayment } from "react-paystack";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
@@ -60,6 +60,101 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const pathname = usePathname();
 
+  const PAYSTACK_KEY =
+    process.env.PAYSTACK_KEY ||
+    "pk_live_7783d09436e5356ced8146ba3de4cacdcd614645";
+
+  const handlePaymentSuccess = () => {
+    const orgId = selectedOption === "Individual" ? undefined : selectedOption;
+    let sessionDate = date
+      ? new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        ).toISOString()
+      : new Date().toISOString();
+
+    const requestMessageReceiver = `Hello you have received a session request from ${user.name}, accept or reject request from session requests under manager section.`;
+    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
+
+    createSession(
+      data.id,
+      data.rating,
+      orgId,
+      formData.purpose,
+      sessionTime,
+      sessionDate,
+      user.username,
+      user.bio
+    )
+      .then(() => {
+        toast({
+          title: "Booking request sent",
+          description: "Booking request sent successfully!",
+          variant: "default",
+        });
+      })
+      .finally(() => {
+        createNotification(
+          "Session Request",
+          requestMessageSender,
+          requestMessageReceiver,
+          undefined,
+          data.expand.users.id,
+          orgId
+        ).then(() => {
+          getNotifications(user.id, user.email)
+            .then((res) => {
+              setNotifications(res);
+            })
+            .catch((error) => {
+              console.error("Error fetching notifications data:", error);
+            });
+        });
+      });
+
+    setIsSpinning(false);
+    setIsLoading(false);
+    setIsExpanded(false);
+    setSelectedOption("");
+    setDate(null);
+    setFormData({ purpose: "" });
+  };
+
+  const handlePaymentCancel = () => {
+    toast({
+      title: "Payment canceled",
+      description: "Please complete payment to be able to request a session.",
+      variant: "destructive",
+    });
+
+    setIsLoading(false);
+    setIsSpinning(false);
+  };
+
+  const handlePaymentError = (error) => {
+    toast({
+      title: "Payment initialization failed",
+      description: "An error occurred during payment initialization.",
+      variant: "destructive",
+    });
+    console.error("Payment initialization error:", error);
+
+    setIsLoading(false);
+    setIsSpinning(false);
+  };
+
+  const config = {
+    publicKey: PAYSTACK_KEY,
+    reference: new Date().getTime().toString(),
+    email: user.email,
+    currency: "NGN",
+    amount: data.rate * 100,
+    onSuccess: handlePaymentSuccess,
+    onCancel: handlePaymentCancel,
+    onError: handlePaymentError,
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
   const options = createdOrganization.map((org) => ({
     value: org.id,
     label: org.username,
@@ -67,10 +162,6 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   // to add the default one too
   options.unshift({ value: "Individual", label: "Individual" });
-
-  const PAYSTACK_KEY =
-    process.env.PAYSTACK_KEY ||
-    "pk_test_5625e87690fa343ff6ec90871ef1fbaf2b9f5992";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,96 +191,10 @@ const BookModal = ({ buttonName, blue, data }) => {
     setIsLoading(!isLoading);
     setIsSpinning(true);
 
-    const requestMessageReceiver = `Hello you have received a session request from ${user.name}, accept or reject request from session requests under manager section.`;
-    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
-
-    const handlePaymentSuccess = () => {
-      const orgId =
-        selectedOption === "Individual" ? undefined : selectedOption;
-      let sessionDate = date
-        ? new Date(
-            date.getTime() - date.getTimezoneOffset() * 60000
-          ).toISOString()
-        : new Date().toISOString();
-
-      createSession(
-        data.id,
-        data.rating,
-        orgId,
-        formData.purpose,
-        sessionTime,
-        sessionDate,
-        user.username,
-        user.bio
-      )
-        .then(() => {
-          toast({
-            title: "Booking request sent",
-            description: "Booking request sent successfully!",
-            variant: "default",
-          });
-        })
-        .finally(() => {
-          createNotification(
-            "Session Request",
-            requestMessageSender,
-            requestMessageReceiver,
-            undefined,
-            data.expand.users.id,
-            orgId
-          ).then(() => {
-            getNotifications(user.id, user.email)
-              .then((res) => {
-                setNotifications(res);
-              })
-              .catch((error) => {
-                console.error("Error fetching notifications data:", error);
-              });
-          });
-        });
-
-      setIsSpinning(false);
-      setIsLoading(false);
-      setIsExpanded(false);
-      setSelectedOption("");
-      setDate(null);
-      setFormData({ purpose: "" });
-    };
-
-    const handlePaymentCancel = () => {
-      toast({
-        title: "Payment canceled",
-        description: "Please complete payment to be able to request a session.",
-        variant: "destructive",
-      });
-
-      setIsLoading(false);
-      setIsSpinning(false);
-    };
-
-    const handlePaymentError = (error) => {
-      toast({
-        title: "Payment initialization failed",
-        description: "An error occurred during payment initialization.",
-        variant: "destructive",
-      });
-      console.error("Payment initialization error:", error);
-
-      setIsLoading(false);
-      setIsSpinning(false);
-    };
-
-    if (data.rate !== "Free" && typeof window !== "undefined") {
-      const paystack = new PaystackPop();
-      paystack.newTransaction({
-        key: PAYSTACK_KEY,
-        reference: new Date().getTime().toString(),
-        email: user.email,
-        currency: "NGN",
-        amount: data.rate * 100,
+    if (data.rate !== "Free") {
+      initializePayment({
         onSuccess: handlePaymentSuccess,
-        onCancel: handlePaymentCancel,
-        onError: handlePaymentError,
+        onClose: handlePaymentCancel,
       });
     } else {
       handlePaymentSuccess();
