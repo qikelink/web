@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { PiBookBookmarkDuotone } from "react-icons/pi";
