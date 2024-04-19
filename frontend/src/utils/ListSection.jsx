@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
@@ -27,16 +27,13 @@ const ListSection = () => {
   const { setIsUserValid, setProgress } = useAuth();
 
   const handleSignout = async () => {
-    if (typeof window !== "undefined") {
-      setProgress(90);
-      await toggleGoogle(false);
-      signout(setIsUserValid);
-      signOut();
-      window.location.reload();
-      setUser([]);
-    }
+    setProgress(90);
+    await toggleGoogle(false);
+    signout(setIsUserValid);
+    signOut();
+    window.location.reload();
+    setUser([]);
   };
- 
 
   return (
     <div className="flex flex-row justify-between h-full w-full ">

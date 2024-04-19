@@ -179,7 +179,7 @@ const BookModal = ({ buttonName, blue, data }) => {
       setIsSpinning(false);
     };
 
-    if (data.rate !== "Free") {
+    if (data.rate !== "Free" && typeof window !== "undefined") {
       const paystack = new PaystackPop();
       paystack.newTransaction({
         key: PAYSTACK_KEY,

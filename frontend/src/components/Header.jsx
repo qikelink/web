@@ -50,12 +50,10 @@ export default function Header() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const handleSignout = () => {
-    if (typeof window !== "undefined") {
-      setProgress(90);
-      window.location.reload();
-      signout(setIsUserValid);
-      setUser([]);
-    }
+    setProgress(90);
+    window.location.reload();
+    signout(setIsUserValid);
+    setUser([]);
   };
 
   useEffect(() => {
