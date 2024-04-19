@@ -18,7 +18,7 @@ import KeywordBar from "@/utils/KeywordBar";
 import { dataset, list } from "@/dummy_api/dataSet";
 import Image from "next/image";
 import pic4 from "../../images/banner.png";
-import pic5 from "../../images/qikel.jpeg";
+import pic5 from "../../images/banner2.png";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
 import {
