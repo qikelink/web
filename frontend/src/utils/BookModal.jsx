@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,6 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogOverlay,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { BsFillSendArrowDownFill, BsShareFill } from "react-icons/bs";
@@ -59,6 +61,18 @@ const BookModal = ({ buttonName, blue, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const pathname = usePathname();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleClick = () => {
+    if (!isUserValid) {
+      setIsDialogOpen(true);
+      setIsLoginDialogOpen(true);
+    } else {
+      setIsDialogOpen(true);
+    }
+  };
+
+  const closeDialog = () => setIsDialogOpen(false);
 
   const PAYSTACK_KEY =
     process.env.PAYSTACK_KEY ||
@@ -91,6 +105,7 @@ const BookModal = ({ buttonName, blue, data }) => {
           description: "Booking request sent successfully!",
           variant: "default",
         });
+        closeDialog();
       })
       .finally(() => {
         createNotification(
@@ -192,6 +207,7 @@ const BookModal = ({ buttonName, blue, data }) => {
     setIsSpinning(true);
 
     if (data.rate !== "Free") {
+      setIsDialogOpen(false);
       initializePayment({
         onSuccess: handlePaymentSuccess,
         onClose: handlePaymentCancel,
@@ -232,15 +248,9 @@ const BookModal = ({ buttonName, blue, data }) => {
       });
   };
 
-  const handleClick = () => {
-    if (!isUserValid) {
-      setIsLoginDialogOpen(true);
-    }
-  };
-
   return (
     <div>
-      <Dialog>
+      <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTrigger asChild>
           <Button variant="outline" onClick={handleClick}>
             <p className={blue ? "text-blue" : ""}>{buttonName} </p>
@@ -461,7 +471,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                     </span>
                   </div>
                 </div>
-                <DialogFooter>
+                <div className="flex flex-col space-y-3">
                   <Button
                     size="xl"
                     className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
@@ -474,7 +484,18 @@ const BookModal = ({ buttonName, blue, data }) => {
                       }`}
                     />
                   </Button>
-                </DialogFooter>
+                  <DialogClose asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="xl"
+                      className=" rounded-lg text-lg w-full mt-3"
+                      onClick={closeDialog}
+                    >
+                      Close
+                    </Button>
+                  </DialogClose>
+                </div>
               </form>
             )}
 
