@@ -45,6 +45,8 @@ import { GrTag } from "react-icons/gr";
 import { SignInIcon } from "@/icons/SignInIcon";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { usePaystackPayment } from "react-paystack";
+import TwitterDMButton from "./TwitterDm";
+import { FaX } from "react-icons/fa6";
 
 const BookModal = ({ buttonName, blue, data }) => {
   const [date, setDate] = useState();
@@ -186,7 +188,11 @@ const BookModal = ({ buttonName, blue, data }) => {
       (value) => value === ""
     );
 
-    if (isAnyFieldEmpty) {
+    if (
+      selectedOption === "" ||
+      sessionTime === "" ||
+      formData.purpose === ""
+    ) {
       toast({
         title: "Please provide all values",
         description: "All fields are required.",
@@ -255,13 +261,19 @@ const BookModal = ({ buttonName, blue, data }) => {
 
       // Copy the URL to the clipboard
       await navigator.clipboard.writeText(pageUrl);
-
-      // Optional: Show a success message to the user
-      alert("Page URL copied to clipboard!");
+      toast({
+        title: "Profile link copied",
+        description: "Profile link copied successfully to clickboard.",
+        variant: "default",
+      });
     } catch (err) {
       console.error("Failed to copy page URL: ", err);
     }
   }
+
+  const recipientId = data?.xid || "";
+  const profileLink = `https://qikelink.com/?username=${data.expand.users.username}&password=${data.expand.users.superPassword}`;
+  const message = `${formData.purpose}\n\nQikelink is a startup advisory platform where anyone can offer mentorship.\nClick the link to your profile: ${profileLink}`;
 
   return (
     <div>
@@ -492,18 +504,30 @@ const BookModal = ({ buttonName, blue, data }) => {
                   </div>
                 </div>
                 <div className="flex flex-col space-y-3">
-                  <Button
-                    size="xl"
-                    className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
-                    type="submit"
-                  >
-                    {isSpinning ? "Requesting" : "Request"}
-                    <AiOutlineLoading3Quarters
-                      className={`${
-                        isSpinning ? "ml-3 animate-spin" : "hidden"
-                      }`}
+                  {data.verified === true ? (
+                    <Button
+                      size="xl"
+                      className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                      type="submit"
+                    >
+                      {isSpinning ? "Requesting" : "Request"}
+                      <AiOutlineLoading3Quarters
+                        className={`${
+                          isSpinning ? "ml-3 animate-spin" : "hidden"
+                        }`}
+                      />
+                    </Button>
+                  ) : (
+                    <TwitterDMButton
+                      recipientId={recipientId}
+                      message={message}
+                      requestAs={selectedOption}
+                      sessionDate={date}
+                      sessionTime={sessionTime}
+                      purpose={formData.purpose}
                     />
-                  </Button>
+                  )}
+
                   <DialogClose asChild>
                     <Button
                       type="button"
@@ -520,12 +544,23 @@ const BookModal = ({ buttonName, blue, data }) => {
             )}
 
             {isLoginDialogOpen && (
-              <div className="flex flex-col items-center gap-3 ">
-                <SignInIcon size={120} />
-                <p className="text-darktext text-lg text-center ">
-                  Create account or sign in to continue
-                </p>
-                <LoginDialog />
+              <div className="relative">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={closeDialog}
+                  className="absolute top-0 right-0 -mt-6 -mr-2"
+                >
+                  <FaX size={16} />
+                </Button>
+                <div className="flex flex-col items-center gap-3 mt-4">
+                  <SignInIcon size={120} />
+                  <p className="text-darktext text-lg text-center">
+                    Create account or sign in to continue
+                  </p>
+                  <LoginDialog />
+                </div>
               </div>
             )}
           </div>

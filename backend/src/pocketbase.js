@@ -27,13 +27,13 @@ export async function getExistingUsers() {
 export async function getMentors() {
   return await client
     .collection("mentors")
-    .getFullList({ filter: "verified = True", expand: "users" });
+    .getFullList({ filter: "display = True", expand: "users" });
 }
 
 // to get all the verified mentors available for quick service
 export async function getQuickMentors() {
   return await client.collection("mentors").getFullList({
-    filter: "verified = True && quickService = True",
+    filter: "display = True && quickService = True",
     expand: "users",
   });
 }
@@ -80,6 +80,11 @@ export async function SignupGoogle() {
 
 export async function login(email, password, setIsUserValid) {
   await client.collection("users").authWithPassword(email, password);
+  setIsUserValid(true);
+}
+
+export async function Xlogin(username, password, setIsUserValid) {
+  await client.collection("users").authWithPassword(username, password);
   setIsUserValid(true);
 }
 
