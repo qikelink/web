@@ -4,7 +4,6 @@ import {
   getImageUrl,
   getNotifications,
   isUserValid,
-  
   signout,
 } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
@@ -120,7 +119,7 @@ export default function Header() {
             {isLoading && isUserValid ? (
               <div className="flex items-center space-x-5 justify-center">
                 <Skeleton className="hidden md:inline h-8 w-8 rounded-full" />
-                <Skeleton className="hidden md:inline h-8 w-8 rounded-full" />
+                {/* <Skeleton className="hidden md:inline h-8 w-8 rounded-full" /> */}
                 <Skeleton className="h-8 w-8 rounded-full" />
               </div>
             ) : isUserValid && user ? (
@@ -135,61 +134,64 @@ export default function Header() {
                     className="text-current hover:animate-spin cursor-pointer"
                   />
                 </Badge>
-                <Badge
-                  variant="outline"
-                  className={
-                    "relative rounded-full p-2 hidden md:inline cursor-pointer"
-                  }
-                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                >
-                  <FaRegBell size={20} className="text-current" />
 
-                  {notifications.items && notifications.items.length > 0 && (
-                    <span className="absolute -top-1 right-0 bg-red-500 -mt-1 text-white border rounded-full px-1">
-                      {" "}
-                      {`${notifications.items.length}+`}
-                    </span>
-                  )}
+                {/* 
+<Badge
+  variant="outline"
+  className={
+    "relative rounded-full p-2 hidden md:inline cursor-pointer"
+  }
+  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+>
+  <FaRegBell size={20} className="text-current" />
 
-                  {isNotificationOpen && (
-                    <>
-                      <div className="absolute  md:top-0 md:right-9 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
-                        {notifications && notifications.items.length > 0 ? (
-                          notifications.items.map((item, index) => (
-                            <div
-                              className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
-                              onClick={() => router.push("/sessions")}
-                              key={index}
-                            >
-                              <div className="flex items-center">
-                                <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
-                                <div>
-                                  <p className="text-base font-semibold">
-                                    {item.title}
-                                  </p>
-                                  <p className="text-sm text-gray-600">
-                                    {user.id === item.owner
-                                      ? item.messageSender
-                                      : item.messageReceiver}
-                                  </p>
-                                </div>
-                              </div>
+  {notifications.items && notifications.items.length > 0 && (
+    <span className="absolute -top-1 right-0 bg-red-500 -mt-1 text-white border rounded-full px-1">
+      {" "}
+      {`${notifications.items.length}+`}
+    </span>
+  )}
 
-                              {/* <Badge variant='secondary' >Clear</Badge> */}
-                            </div>
-                          ))
-                        ) : (
-                          <div className="flex flex-col  items-center w-full h-full my-16">
-                            <EmptyIcon size={120} />
-                            <p className="text-center text-lg font-medium text-darktext">
-                              No message received yet.
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </Badge>
+  {isNotificationOpen && (
+    <>
+      <div className="absolute  md:top-0 md:right-9 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
+        {notifications && notifications.items.length > 0 ? (
+          notifications.items.map((item, index) => (
+            <div
+              className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
+              onClick={() => router.push("/sessions")}
+              key={index}
+            >
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
+                <div>
+                  <p className="text-base font-semibold">
+                    {item.title}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {user.id === item.owner
+                      ? item.messageSender
+                      : item.messageReceiver}
+                  </p>
+                </div>
+              </div>
+
+             
+              </div>
+            ))
+          ) : (
+            <div className="flex flex-col  items-center w-full h-full my-16">
+              <EmptyIcon size={120} />
+              <p className="text-center text-lg font-medium text-darktext">
+                No message received yet.
+              </p>
+            </div>
+          )}
+        </div>
+      </>
+    )}
+  </Badge> 
+  */}
 
                 <Avatar>
                   <AvatarImage
