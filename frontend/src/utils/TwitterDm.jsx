@@ -50,7 +50,7 @@ const TwitterDMButton = ({
       className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
       onClick={handleButtonClick}
     >
-      Send DM on Twitter
+      Request
     </Button>
   );
 };

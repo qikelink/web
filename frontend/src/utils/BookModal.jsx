@@ -270,8 +270,8 @@ const BookModal = ({ buttonName, blue, data }) => {
       console.error("Failed to copy page URL: ", err);
     }
   }
- console.log(data)
-  const recipientId = data.xId;
+
+  const recipientId = `${data.xId}`; //God i love you
   const profileLink = `https://qikelink.com/?username=${data.expand.users.username}&password=${data.expand.users.superPassword}`;
   const message = `${formData.purpose}\n\nQikelink is a startup advisory platform where anyone can offer mentorship.\nClick the link to your profile: ${profileLink}`;
 
