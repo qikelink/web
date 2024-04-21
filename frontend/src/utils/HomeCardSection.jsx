@@ -185,10 +185,10 @@ const HomeCardSection = () => {
                     {item.rate != "Free" ? (
                       <Badge
                         variant="outline"
-                        className=" gap-1  text-black rounded-full bg-white border-[#FFC72C] border-2"
+                        className=" gap-1  text-white rounded-full bg-[#FFC72C]"
                       >
                         <p className="flex ">
-                          20 <AiOutlineFire size={14} /> || ${item.rate}
+                          20 <AiOutlineFire size={14} /> || {item.rate}
                         </p>
                       </Badge>
                     ) : (
@@ -196,7 +196,10 @@ const HomeCardSection = () => {
                         variant="outline"
                         className="flex gap-1 rounded-full bg-green-200"
                       >
-                        <p className="flex text-green-600"> Free</p>
+                        <p className="flex text-green-600">
+                          {" "}
+                          2 <AiOutlineFire size={14} /> || Free
+                        </p>
                       </Badge>
                     )}
                   </CardFooter>

@@ -4,6 +4,7 @@ import {
   getImageUrl,
   getNotifications,
   isUserValid,
+  
   signout,
 } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
@@ -31,19 +32,15 @@ import { AiOutlineHome } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
 import { FaX } from "react-icons/fa6";
 import { EmptyIcon } from "@/icons/EmptyIcon";
-import {
-  IoChatboxEllipsesOutline,
-  IoChatboxOutline,
-  IoFlashOutline,
-} from "react-icons/io5";
+import { IoChatboxEllipsesOutline, IoFlashOutline } from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../images/logorm.png";
 
 export default function Header() {
   const { user, isLoading, setUser, notifications, setNotifications } =
     useUser();
-  const { setIsUserValid, progress } = useAuth();
   const router = useRouter();
+  const { setIsUserValid, progress } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
   const { setProgress } = useAuth();
