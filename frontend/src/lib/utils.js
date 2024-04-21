@@ -7,7 +7,7 @@ export function cn(...inputs) {
 }
 
 export function constructMetadata({
-  title = "Qikelink.com || YC office Hour but over video",
+  title = "Qikelink.com || YC office Hour for every founder",
   description = "Qikelink is a startup advisory platform Connecting You To great founders for mentorship.",
   image = "/opengraph-image.jpg",
   icons = "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
