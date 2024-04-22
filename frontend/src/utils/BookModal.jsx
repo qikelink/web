@@ -521,6 +521,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                       sessionDate={date}
                       sessionTime={sessionTime}
                       purpose={formData.purpose}
+                      data={data}
                     />
                   )}
 
