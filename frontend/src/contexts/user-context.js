@@ -160,6 +160,8 @@ export const UserProvider = ({ children }) => {
             user.email
           ); // Cache for 1 hour
         } else if (pathname === "/") {
+          // const email = `${ user.email || user.superEmail}`;
+
           fetchDataAndCache(
             getNotifications,
             setNotifications,

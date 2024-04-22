@@ -4,7 +4,6 @@ import {
   getImageUrl,
   getNotifications,
   isUserValid,
-  
   signout,
 } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
@@ -154,7 +153,9 @@ export default function Header() {
                   {isNotificationOpen && (
                     <>
                       <div className="absolute  md:top-0 md:right-9 md:w-96 bg-white border border-gray-300 rounded-md mt-1 overflow-hidden shadow-lg">
-                        {notifications && notifications.items.length > 0 ? (
+                        {notifications &&
+                        notifications.items &&
+                        notifications.items.length > 0 ? (
                           notifications.items.map((item, index) => (
                             <div
                               className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
@@ -180,7 +181,7 @@ export default function Header() {
                           ))
                         ) : (
                           <div className="flex flex-col  items-center w-full h-full my-16">
-                            <EmptyIcon size={120} />
+                            <EmptyIcon size={150} />
                             <p className="text-center text-lg font-medium text-darktext">
                               No message received yet.
                             </p>

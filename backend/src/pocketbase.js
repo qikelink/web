@@ -153,9 +153,10 @@ export async function verifyRequest(
   await client.collection("mentors").create(data);
 }
 
-export async function updateMentor(id, username, phoneNumber, bio, awards) {
+export async function updateMentor(id, username, email, phoneNumber, bio, awards) {
   const data = {
     username: username,
+    email: email,
     phoneNumber: phoneNumber,
     bio: bio,
     awards: awards,

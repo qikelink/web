@@ -86,6 +86,7 @@ const SettingCard = () => {
       updateMentor(
         mentorId,
         formData.username,
+        formData.email,
         formData.phoneNumber,
         formData.bio,
         formData.awards
@@ -221,11 +222,11 @@ const SettingCard = () => {
           <Label className="text-lg">Email</Label>
           <Input
             className="py-6 px-3 bg-inputbackground"
-            placeholder="Please enter your full name"
+            placeholder="Please enter your email"
             name="email"
             type="email"
             value={formData.email}
-            readOnly
+            onChange={handleChange}
           />
         </div>
 
@@ -233,7 +234,7 @@ const SettingCard = () => {
           <Label className="text-lg">Phone number (optional)</Label>
           <Input
             className="py-6 px-3 bg-inputbackground"
-            placeholder="Please enter your full name"
+            placeholder="Please enter your cell number"
             name="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleChange}
@@ -241,7 +242,10 @@ const SettingCard = () => {
         </div>
 
         <div>
-          <Label className="text-lg">Availablity for Instant <span className="text-blue font-medium">Linkup</span></Label>
+          <Label className="text-lg">
+            Availablity for Instant{" "}
+            <span className="text-blue font-medium">Linkup</span>
+          </Label>
           <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
             <IoFlash />
             <div className="flex-1 ">
@@ -265,7 +269,7 @@ const SettingCard = () => {
         <Label className="text-lg">Bio</Label>
         <Textarea
           className="h-24 sm:h-36 bg-inputbackground"
-          placeholder="Write your Bio here e.g your hobbies, interests ETC"
+          placeholder="Write your bio here, feel free to brag about yourself!"
           name="bio"
           value={formData.bio}
           onChange={handleChange}
@@ -276,7 +280,7 @@ const SettingCard = () => {
         <Label className="text-lg">Work Experience</Label>
         <Textarea
           className="h-24 sm:h-36 bg-inputbackground"
-          placeholder="Notable awards and recognitions you want to mention separated by commas. eg winner of this.., first place at this, etc "
+          placeholder="Relevant work experiences separated by commas. eg CTO @startup, founder @startup, etc "
           name="awards"
           value={formData.awards}
           onChange={handleChange}

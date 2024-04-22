@@ -8,8 +8,6 @@ import OrganizationSection from "@/components/OrganizationSection";
 import { useAuth } from "@/contexts/auth-context";
 import { isUserValid } from "../../../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
-import { Button } from "@/components/ui/button";
-import { EmptyIcon } from "@/icons/EmptyIcon";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
