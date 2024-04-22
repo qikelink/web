@@ -651,7 +651,7 @@ const OrganizationSection = () => {
                               session.length === 0 &&
                               showSessions && (
                                 <div className="flex flex-col  items-center w-full h-full my-16">
-                                  <EmptyIcon size={120} />
+                                  <EmptyIcon size={150} />
                                   <p className="text-center text-lg font-medium text-darktext">
                                     No upcoming session.
                                   </p>
