@@ -112,21 +112,19 @@ const QuickCardSection = () => {
                   </CardContent>
                   <CardFooter className="flex justify-between ">
                     <BookModal buttonName="Request" data={item} />
-                    {item.rate != "free" ? (
+                    {item.rate != "Free" ? (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-green-200"
+                        className=" gap-1  text-black rounded-full border-2 border-[#FFC72C]"
                       >
-                        <p className="font-semibold  text-green-700">
-                          {item.rate}
-                        </p>
+                        <p className="flex ">{item.rate}</p>
                       </Badge>
                     ) : (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-red-100"
+                        className="flex gap-1 rounded-full bg-green-600"
                       >
-                        <p className="font-semibold  text-red-500">Free</p>
+                        <p className="flex text-green-100"> Free</p>
                       </Badge>
                     )}
                   </CardFooter>
