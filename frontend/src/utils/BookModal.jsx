@@ -273,7 +273,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
   const recipientId = `${data.xId}`; //God i love you
   const profileLink = `https://qikelink.com/?username=${data.expand.users.username}&password=${data.expand.users.superPassword}`;
-  const message = `${formData.purpose}\n\nQikelink is a startup advisory platform where anyone can offer mentorship.\nClick the link to your profile: ${profileLink}`;
+  const message = `Hey ${data.username}, just requested a session on qikelink\n\n Subject: ${formData.purpose}\n\nQikelink connects great founders to aspiring startups seeking help and mentorship.\nClick to setup your profile and accept or cancel request: ${profileLink}`;
 
   return (
     <div>
