@@ -59,14 +59,14 @@ export async function Signup(superEmail, email, superPassword, password) {
     password: password,
     passwordConfirm: password,
   };
-  await createNotification(
+  await createWelcomeNotification(
     "Welcome to Qikelink",
     undefined,
     undefined,
     email,
     undefined,
     undefined,
-    "Quick link is the go to platform to recieved one on one mentorship with experts across any field"
+    "Qikelink is a startup advisory platform that connects you with experienced founders for mentorship and guidance. If you possess expertise in tech or startups, you can verify your account to become a mentor as well."
   );
   await client.collection("users").create(data);
 }
@@ -328,11 +328,33 @@ export async function createNotification(
     title: title,
     messageSender: messageSender,
     messageReceiver: messageReceiver,
-    email: email, 
+    email: email,
     target: target,
     organization: organization,
     message: message,
     owner: client.authStore.model.id,
+  };
+  await client.collection("notifications").create(data);
+}
+
+export async function createWelcomeNotification(
+  title,
+  messageSender,
+  messageReceiver,
+  email,
+  target,
+  organization,
+  message
+) {
+  const data = {
+    title: title,
+    messageSender: messageSender,
+    messageReceiver: messageReceiver,
+    email: email,
+    target: target,
+    organization: organization,
+    message: message,
+    owner: undefined,
   };
   await client.collection("notifications").create(data);
 }

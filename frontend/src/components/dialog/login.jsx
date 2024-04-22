@@ -181,7 +181,7 @@ const LoginDialog = () => {
                   setIsLoading(false);
                   setEmail("");
                   setPassword("");
-                  setComfirmPass("")
+                  setComfirmPass("");
                 }, 2000);
               });
           }
@@ -193,22 +193,34 @@ const LoginDialog = () => {
   };
 
   const handleGoogle = async () => {
-    setIsLoadingGoogle(true);
-
     try {
+      setIsLoadingGoogle(true);
+
       if (!session) {
         await toggleGoogle(true);
-        signIn("google");
-      }
-
-      if (session) {
+        await signIn("google");
+      } else {
         const existingUsers = await getExistingUsers();
         const emailExists = existingUsers.some(
           (user) => user.superEmail === session.user.email
         );
 
-        if (emailExists) {
+        const emailExistsButDiffPassword = existingUsers.some(
+          (user) =>
+            user.superEmail === session.user.email &&
+            user.superPassword !== session.user.email
+        );
+
+        if (emailExistsButDiffPassword) {
+          toast({
+            title: "Email already exists",
+            description:
+              "Email already exists, please sign in with email and password or reset password",
+            variant: "destructive",
+          });
+        } else if (emailExists) {
           await login(session.user.email, session.user.email, setIsUserValid);
+          window.location.reload();
         } else {
           await Signup(
             session.user.email,
@@ -217,19 +229,18 @@ const LoginDialog = () => {
             session.user.email
           );
           await login(session.user.email, session.user.email, setIsUserValid);
+          window.location.reload();
         }
-
-        window.location.reload();
       }
     } catch (error) {
-      console.error("Error handling Google sign-in:", error);
+      console.error("Google sign-in error:", error);
     } finally {
       setIsLoadingGoogle(false);
     }
   };
 
   useEffect(() => {
-    if (session) {
+    if (session && !isUserValid) {
       getGoogle()
         .then((res) => {
           if (res.signIn === true) {

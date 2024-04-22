@@ -184,10 +184,6 @@ const BookModal = ({ buttonName, blue, data }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const isAnyFieldEmpty = Object.values(formData).some(
-      (value) => value === ""
-    );
-
     if (
       selectedOption === "" ||
       sessionTime === "" ||
