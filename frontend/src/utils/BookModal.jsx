@@ -60,6 +60,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   });
   const { user, createdOrganization, setNotifications } = useUser();
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectInterval, setSelectInterval] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const pathname = usePathname();
@@ -412,7 +413,62 @@ const BookModal = ({ buttonName, blue, data }) => {
                       <Label className="font-semibold">
                         Schedule Date/Time
                       </Label>
-                      <Input
+
+                      <div className="relative inline-block w-full">
+                        <select
+                          className="block appearance-none w-full bg-white border border-gray-300 rounded-md py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-blue-500"
+                          value={selectInterval}
+                          onChange={(e) => setSelectInterval(e.target.value)}
+                        >
+                          <option value="" disabled hidden>
+                            Interval
+                          </option>
+                          {/* {options.map((option) => ( */}
+                          <option
+                            // key={option.value}
+
+                            className="py-2"
+                          >
+                            1 Week
+                          </option>
+                          <option
+                            // key={option.value}
+
+                            className="py-2"
+                          >
+                            2 Week
+                          </option>
+                          <option
+                            // key={option.value}
+
+                            className="py-2"
+                          >
+                            3 Week
+                          </option>
+                          <option
+                            // key={option.value}
+
+                            className="py-2"
+                          >
+                            1 Month
+                          </option>
+                          {/* ))} */}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                          <svg
+                            className="fill-current h-4 w-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 12l-6-6 1.5-1.5L10 9l4.5-4.5L16 6l-6 6z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* <Input
                         className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                         type="time"
                         placeholder="Pick Time In This Format 9:00pm"
@@ -445,7 +501,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                             initialFocus
                           />
                         </PopoverContent>
-                      </Popover>
+                      </Popover> */}
                     </div>
                   )}
 
@@ -485,10 +541,10 @@ const BookModal = ({ buttonName, blue, data }) => {
 
                   {/* Questions section */}
                   <div>
-                    <Label className="font-semibold">Session details</Label>
+                    <Label className="font-semibold">Mentorship details</Label>
                     <Textarea
                       className="w-full mt-2 h-20"
-                      placeholder="Why do you want to request a session?"
+                      placeholder="Why do you want to request a Mentorship?"
                       value={formData.purpose}
                       onChange={handleChange}
                       name="purpose"
