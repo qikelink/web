@@ -181,13 +181,13 @@ const HomeCardSection = () => {
                     <div className="mt-1 line-clamp-4 ">{item.bio}</div>
                   </CardContent>
                   <CardFooter className="flex justify-between border-t py-2">
-                    <BookModal buttonName="LinkUp" data={item} />
+                    <BookModal buttonName="Request" data={item} />
                     {item.rate != "Free" ? (
                       <Badge
                         variant="outline"
                         className=" gap-1  text-black rounded-full border-2 border-[#FFC72C]"
                       >
-                        <p className="flex ">{item.rate}</p>
+                        <p className="flex ">{item.rate}/per Week</p>
                       </Badge>
                     ) : (
                       <Badge
