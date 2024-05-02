@@ -20,19 +20,18 @@ import {
 } from "@/components/ui/pagination";
 import { useUser } from "@/contexts/user-context";
 import { Skeleton } from "./ui/skeleton";
-import {
-  getAllSessions,
-  getImageUrl,
-} from "../../../backend/src/pocketbase";
+import { getAllSessions, getImageUrl } from "../../../backend/src/pocketbase";
 import { useToast } from "./ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { Label } from "./ui/label";
 import { BsHeadsetVr } from "react-icons/bs";
+import { useRouter } from "next/navigation";
 
 const UpcomingSection = () => {
   const { user, isLoadingUserData, allSessions, setAllSessions } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   function trimToCharacters(str) {
     if (str.length <= 70) {
@@ -128,6 +127,10 @@ const UpcomingSection = () => {
         variant: "default",
       });
     }
+  };
+
+  const handleNavigate = () => {
+    router.push("/");
   };
 
   return (
@@ -253,6 +256,14 @@ const UpcomingSection = () => {
           <p className="text-center text-xl font-medium text-darktext">
             No upcoming session.
           </p>
+          <Button
+            size="xl"
+            className="bg-blue rounded-lg text-lg mt-3 "
+            type="button"
+            onClick={handleNavigate}
+          >
+            Browse mentors
+          </Button>
         </div>
       )}
 

@@ -639,6 +639,7 @@ const VerifyModal = ({ blue, userData }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(true);
   const { toast } = useToast();
+  const { user } = useUser();
 
   const router = useRouter();
 
@@ -710,7 +711,7 @@ const VerifyModal = ({ blue, userData }) => {
   };
 
   const handleNavigate = () => {
-    router.push("/manager");
+    router.push("/manager/Upcoming");
   };
 
   async function copyBookingLink() {
@@ -757,7 +758,7 @@ const VerifyModal = ({ blue, userData }) => {
           </DialogTitle>
           <DialogDescription>
             Congratulations {userData.name} 🎉, verify your profile to get
-            listed as a mentor.
+            listed as a mentor on Qikelink.
           </DialogDescription>
 
           <div>
@@ -780,6 +781,7 @@ const VerifyModal = ({ blue, userData }) => {
                 <BsCopy />
               </button>
             </div>
+            {/* <p className="text-darktext text-base ">Share link to socials to start recieving requests</p> */}
           </div>
 
           <form className="space-y-3" onSubmit={handleSubmit}>
