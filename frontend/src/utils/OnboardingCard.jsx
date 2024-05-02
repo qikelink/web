@@ -27,7 +27,7 @@ import {
   updateSetting,
   verifyRequest,
 } from "../../../backend/src/pocketbase";
-import { BsFillSendArrowDownFill } from "react-icons/bs";
+import { BsCopy, BsFillSendArrowDownFill } from "react-icons/bs";
 import { useToast } from "@/components/ui/use-toast";
 import Select from "react-select";
 import { dataset } from "@/dummy_api/dataSet";
@@ -98,7 +98,6 @@ const OnboardingCard = () => {
     if (
       profileImage === "" ||
       formData.username === "" ||
-      formData.email === "" ||
       formData.bio === "" ||
       formData.awards === ""
     ) {
@@ -197,8 +196,8 @@ const OnboardingCard = () => {
               placeholder="Please enter your email"
               name="email"
               type="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={user ? user.email : ""}
+              readonly
             />
           </div>
 
@@ -714,6 +713,23 @@ const VerifyModal = ({ blue, userData }) => {
     router.push("/manager");
   };
 
+  async function copyBookingLink() {
+    try {
+      // Get the current BookCard URL
+      const BookCardUrl = `https://qikelink.com/book/${user.id}`;
+
+      // Copy the URL to the clipboard
+      await navigator.clipboard.writeText(BookCardUrl);
+      toast({
+        title: "Booking link copied",
+        description: "Booking link copied successfully to clickboard.",
+        variant: "default",
+      });
+    } catch (err) {
+      console.error("Failed to copy booking link: ", err);
+    }
+  }
+
   return (
     <div>
       <Dialog open={isDialogOpen} onClose={closeDialog}>
@@ -740,8 +756,31 @@ const VerifyModal = ({ blue, userData }) => {
             </DialogClose> */}
           </DialogTitle>
           <DialogDescription>
-            verify your profile to get listed as a mentor.
+            Congratulations {userData.name} 🎉, verify your profile to get
+            listed as a mentor.
           </DialogDescription>
+
+          <div>
+            <Label className="text-lg">
+              <span className="text-blue font-medium">Booking link</span>
+            </Label>
+            <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
+              {/* <IoFlash /> */}
+              <div className="flex-1 ">
+                <p className="text-sm font-medium leading-none">
+                  qikelink.com/book/{user.id}
+                </p>
+              </div>
+              <button
+                onClick={() => copyBookingLink()}
+                size="icon"
+                variant="outline"
+                type="button"
+              >
+                <BsCopy />
+              </button>
+            </div>
+          </div>
 
           <form className="space-y-3" onSubmit={handleSubmit}>
             {/* personal details */}
