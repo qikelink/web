@@ -50,12 +50,13 @@ const SettingCard = () => {
           phoneNumber: user.phoneNumber,
           bio: user.bio,
           awards: user.awards,
-          verified: mentor.verified,
+          verified: user.verified,
         }
       : defaultFormData;
 
     setFormData(initialFormData);
   }, [user]);
+  
 
   useEffect(() => {
     const savedQuickService = localStorage.getItem("quickService");
@@ -287,7 +288,7 @@ const SettingCard = () => {
         />
       </div>
 
-      <div className="flex flex-col space-y-2 md:justify-end gap-1 lg:gap-3 justify-center lg:flex-row items-center mt-6 lg:space-x-5">
+      <div className="flex space-x-2 md:justify-end gap-1 lg:gap-3 justify-center flex-row items-center mt-6 lg:space-x-5">
         <Button
           size="xl"
           className="bg-blue hover:bg-darkblue text-lg rounded-lg"

@@ -221,7 +221,7 @@ export default function Header() {
                   <p>Home</p>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/quickService"
                   onClick={() => setProgress(90)}
@@ -234,7 +234,7 @@ export default function Header() {
                   <IoFlashOutline size={22} className="ml-2" />
                   <p>Quick Service</p>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/notification"
@@ -257,7 +257,7 @@ export default function Header() {
                   )}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/bookmark"
                   onClick={() => setProgress(90)}
@@ -270,8 +270,8 @@ export default function Header() {
                   <PiBookBookmarkDuotone size={24} className="ml-2" />
                   <p>BookMarked</p>
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link
                   href="/sessions"
                   onClick={() => setProgress(90)}
@@ -284,9 +284,23 @@ export default function Header() {
                   <BsJournalBookmarkFill size={24} className="ml-2" />
                   <p>Sessions</p>
                 </Link>
+              </li> */}
+
+              <li>
+                <Link
+                  href="/manager/Organization"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/manager/Organization"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}
+                >
+                  <CgProfile size={24} className="ml-2" />
+                  <p>Dashboard</p>
+                </Link>
               </li>
 
-              <Separator orientation="horizontal" />
               <li>
                 <Link
                   href="/settings"
@@ -301,21 +315,7 @@ export default function Header() {
                   <p>Settings</p>
                 </Link>
               </li>
-
-              <li>
-                <Link
-                  href="/manager/Organization"
-                  onClick={() => setProgress(90)}
-                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                    pathname === "/manager/Organization"
-                      ? "bg-[#e2eff8] text-blue rounded-md"
-                      : ""
-                  }`}
-                >
-                  <CgProfile size={24} className="ml-2" />
-                  <p>Manager</p>
-                </Link>
-              </li>
+              <Separator orientation="horizontal" />
               <li>
                 <Link
                   href="/help"

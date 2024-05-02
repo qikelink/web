@@ -42,8 +42,8 @@ export const UserProvider = ({ children }) => {
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
   const [selectedButtons, setSelectedButtons] = useState("");
 
-  const link = window.location.pathname;
-  const id = link.split("/").pop();
+  const link = pathname;
+  const id = link.split("/book/").pop();
 
   // Function to fetch data and cache it
   const fetchDataAndCache = async (
@@ -92,7 +92,7 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem("mentor_cache_timestamp", Date.now());
         }
 
-        if (pathname === `/${id}`) {
+        if (pathname === `/book/${id}` && id !== '') {
           const mentorForBooking = await getMentorForBooking(id);
           setMentorForBooking(mentorForBooking);
         }

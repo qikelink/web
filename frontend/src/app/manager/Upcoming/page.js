@@ -8,6 +8,7 @@ import OrganizationSection from "@/components/UpcomingSection";
 import { useAuth } from "@/contexts/auth-context";
 import { isUserValid } from "../../../../../backend/src/pocketbase";
 import { BookmarkEmpty } from "@/components/emptystate/bookmarkEmpty";
+import UpcomingSection from "@/components/UpcomingSection";
 
 export default function page() {
   const [domLoaded, setDomLoaded] = useState(false);
@@ -31,7 +32,7 @@ export default function page() {
               {isUserValid ? (
                 <div className="w-full flex flex-col md:flex-row flex-col-reverse">
                   <div className="w-full md:w-2/3">
-                    <OrganizationSection />
+                    <UpcomingSection />
                   </div>
                   <div className=" md:w-1/3 w-full">
                     <ManagerList />

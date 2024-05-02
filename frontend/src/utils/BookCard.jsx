@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -20,11 +20,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import LoginDialog from "@/components/dialog/login";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { GrTag } from "react-icons/gr";
 import { SignInIcon } from "@/icons/SignInIcon";
@@ -39,28 +38,39 @@ import {
   getImageUrl,
   getNotifications,
   isUserValid,
-} from "../../../../backend/src/pocketbase";
-import TwitterDMButton from "@/utils/TwitterDm";
+} from "../../../backend/src/pocketbase";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const Page = () => {
+const BookCard = () => {
   const [date, setDate] = useState();
   const [isSpinning, setIsSpinning] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
   const [sessionTime, setSessionTime] = useState("");
   const [characterCount, setCharacterCount] = useState(800);
   const [formData, setFormData] = useState({
     purpose: "",
   });
-  const { user, mentorForBooking, createdOrganization, setNotifications } =
-    useUser();
+  const {
+    user,
+    isLoading,
+    mentorForBooking,
+    createdOrganization,
+    setNotifications,
+  } = useUser();
 
   const [selectedOption, setSelectedOption] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isloading, setIsloading] = useState(true);
   const pathname = usePathname();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const closeDialog = () => setIsDialogOpen(false);
+  const openDialog = () => setIsDialogOpen(true);
+
+  const handleLink = () => {
+    router.push("/get-started");
+  };
 
   const PAYSTACK_KEY =
     process.env.PAYSTACK_KEY ||
@@ -115,7 +125,7 @@ const Page = () => {
       });
 
     setIsSpinning(false);
-    setIsLoading(false);
+    setIsloading(false);
     setIsExpanded(false);
     setSelectedOption("");
     setDate(null);
@@ -129,7 +139,7 @@ const Page = () => {
       variant: "destructive",
     });
 
-    setIsLoading(false);
+    setIsloading(false);
     setIsSpinning(false);
   };
 
@@ -141,7 +151,7 @@ const Page = () => {
     });
     console.error("Payment initialization error:", error);
 
-    setIsLoading(false);
+    setIsloading(false);
     setIsSpinning(false);
   };
 
@@ -198,7 +208,7 @@ const Page = () => {
       });
       return;
     }
-    setIsLoading(!isLoading);
+    setIsloading(!isloading);
     setIsSpinning(true);
 
     if (mentorForBooking.rate !== "Free") {
@@ -247,78 +257,89 @@ const Page = () => {
     setIsDialogOpen(true);
   };
 
-  async function copyPageUrl() {
+  async function copyBookCardUrl() {
     try {
-      // Get the current page URL
-      const pageUrl = window.location.href;
+      // Get the current BookCard URL
+      const BookCardUrl = window.location.href;
 
       // Copy the URL to the clipboard
-      await navigator.clipboard.writeText(pageUrl);
+      await navigator.clipboard.writeText(BookCardUrl);
       toast({
         title: "Profile link copied",
         description: "Profile link copied successfully to clickboard.",
         variant: "default",
       });
     } catch (err) {
-      console.error("Failed to copy page URL: ", err);
+      console.error("Failed to copy BookCard URL: ", err);
     }
   }
 
-  const recipientId = mentorForBooking?.xId ?? ""; //God i love you
-  const username = mentorForBooking?.expand?.users?.username ?? "";
-  const superPassword = mentorForBooking?.expand?.users?.superPassword ?? "";
-  const profileLink = `https://qikelink.com/?username=${username}&password=${superPassword}`;
-  const message = `Hey ${
-    mentorForBooking?.username ?? ""
-  }, just requested a session on qikelink\n\n Subject: ${
-    formData.purpose
-  }\n\nQikelink connects great founders to aspiring startups seeking help and mentorship.\nClick to set up your profile and accept or cancel request: ${profileLink}`;
+  // const recipientId = mentorForBooking?.xId ?? ""; //God i love you
+  // const username = mentorForBooking?.expand?.users?.username ?? "";
+  // const superPassword = mentorForBooking?.expand?.users?.superPassword ?? "";
+  // const profileLink = `https://qikelink.com/?username=${username}&password=${superPassword}`;
+  // const message = `Hey ${
+  //   mentorForBooking?.username ?? ""
+  // }, just requested a session on qikelink\n\n Subject: ${
+  //   formData.purpose
+  // }\n\nQikelink connects great founders to aspiring startups seeking help and mentorship.\nClick to set up your profile and accept or cancel request: ${profileLink}`;
 
   return (
-    <div className="h-screen w-full p-2 text-black">
-      <form onSubmit={handleSubmit}>
+    <div className="h-fit w-full ">
+       <h2 className="text-xl font-semibold mb-2">Request session</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="border border-gray-200 rounded-lg p-5 lg:p-10"
+      >
         <div className="flex justify-between">
           <div className="flex gap-2">
-            {mentorForBooking &&
-            mentorForBooking.expand &&
-            mentorForBooking.expand.users ? (
-              <Avatar>
-                <AvatarImage
-                  src={
-                    mentorForBooking.expand.users.collectionId
-                      ? getImageUrl(
-                          mentorForBooking.expand.users.collectionId,
-                          mentorForBooking.expand.users.id,
-                          mentorForBooking.expand.users.avatar
-                        )
-                      : ""
-                  }
-                />
-                <AvatarFallback>
-                  {mentorForBooking.username
-                    ? mentorForBooking.username.slice(0, 2).toUpperCase()
-                    : "CN"}
-                </AvatarFallback>
-              </Avatar>
+            {isLoading ? (
+              <Skeleton className="w-10 h-10 rounded-full"></Skeleton>
             ) : (
-              <Avatar>
-                <AvatarFallback>
-                  {mentorForBooking.username
-                    ? mentorForBooking.username.slice(0, 2).toUpperCase()
-                    : "CN"}
-                </AvatarFallback>
-              </Avatar>
+              <>
+                {mentorForBooking &&
+                mentorForBooking.expand &&
+                mentorForBooking.expand.users ? (
+                  <Avatar>
+                    <AvatarImage
+                      src={
+                        mentorForBooking.expand.users.collectionId
+                          ? getImageUrl(
+                              mentorForBooking.expand.users.collectionId,
+                              mentorForBooking.expand.users.id,
+                              mentorForBooking.expand.users.avatar
+                            )
+                          : ""
+                      }
+                    />
+                    <AvatarFallback>
+                      {mentorForBooking.username
+                        ? mentorForBooking.username.slice(0, 2).toUpperCase()
+                        : "CN"}
+                    </AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <Avatar>
+                    <AvatarFallback>
+                      {mentorForBooking.username
+                        ? mentorForBooking.username.slice(0, 2).toUpperCase()
+                        : "CN"}
+                    </AvatarFallback>
+                  </Avatar>
+                )}
+                <div className="flex flex-col gap-1 items-start justify-center">
+                  <h4 className="text-small font-semibold leading-none text-default-600">
+                    {mentorForBooking.username
+                      ? mentorForBooking.username
+                      : "N/A"}
+                  </h4>
+                  <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
+                    {mentorForBooking.rating ? mentorForBooking.rating : "N/A"}
+                    <FaStar className="ml-1" color="#FFC72C" size={16} />
+                  </span>
+                </div>
+              </>
             )}
-
-            <div className="flex flex-col gap-1 items-start justify-center">
-              <h4 className="text-small font-semibold leading-none text-default-600">
-                {mentorForBooking.username ? mentorForBooking.username : "N/A"}
-              </h4>
-              <span className="text-sm tracking-tight text-default-400 flex align-middle justify-center">
-                {mentorForBooking.rating ? mentorForBooking.rating : "N/A"}
-                <FaStar className="ml-1" color="#FFC72C" size={16} />
-              </span>
-            </div>
           </div>
           <div className="flex space-x-2 items-center">
             <Toggle
@@ -329,7 +350,7 @@ const Page = () => {
               <BsJournalBookmarkFill />
             </Toggle>
             <Button
-              onClick={() => copyPageUrl()}
+              onClick={() => copyBookCardUrl()}
               size="icon"
               variant="outline"
               type="button"
@@ -338,46 +359,63 @@ const Page = () => {
             </Button>
           </div>
         </div>
-        <Badge variant="outline">
-          <GrTag color="green" />
-        </Badge>{" "}
-        {mentorForBooking && mentorForBooking.interests
-          ? mentorForBooking.interests.split(",").map((interest, index) => (
-              <Badge key={index} variant="outline">
-                {interest.trim()}
-              </Badge>
-            ))
-          : "N/A"}
+        {isLoading ? (
+          <Skeleton className="h-6 w-20 mt-2"></Skeleton>
+        ) : (
+          <>
+            <Badge variant="outline">
+              <GrTag color="green" />
+            </Badge>{" "}
+            {mentorForBooking && mentorForBooking.interests
+              ? mentorForBooking.interests.split(",").map((interest, index) => (
+                  <Badge key={index} variant="outline">
+                    {interest.trim()}
+                  </Badge>
+                ))
+              : "N/A"}
+          </>
+        )}
         <div className="space-y-3">
           {/* personal details */}
-          <div className="mt-3">
+          <div className="flex flex-col items-start space-y-2 mt-3 ">
             <Label className="font-semibold">Personal details</Label>
-            <div
-              className={`text-sm text-darktext max-w-[380px] mx-auto ${
-                isExpanded ? " line-clamp-none" : "line-clamp-2"
-              }`}
-            >
-              <p>{mentorForBooking.bio ? mentorForBooking.bio : "N/A"}</p>
-            </div>
-            <button
-              type="button"
-              onClick={toggleExpand}
-              className="text-blue-600 hover:underline focus:outline-none text-sm"
-            >
-              {isExpanded ? "Read Less" : "Read More"}
-            </button>
+            {isLoading ? (
+              <Skeleton className="h-16 w-full"></Skeleton>
+            ) : (
+              <>
+                <div
+                  className={`text-sm text-start text-darktext max-w-[380px]  ${
+                    isExpanded ? " line-clamp-none" : "line-clamp-2"
+                  }`}
+                >
+                  <p>{mentorForBooking.bio ? mentorForBooking.bio : "N/A"}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={toggleExpand}
+                  className="text-blue-600 hover:underline focus:outline-none text-sm"
+                >
+                  {isExpanded ? "Read Less" : "Read More"}
+                </button>{" "}
+              </>
+            )}
           </div>
-
           {/* Achievements section */}
           <div className="flex flex-col space-y-2 ">
             <Label className="font-semibold">Work Experiences</Label>
-            <ol className="text-sm text-darktext list-disc ml-4">
-              {mentorForBooking && mentorForBooking.awards
-                ? mentorForBooking.awards
-                    .split(",")
-                    .map((award, index) => <li key={index}>{award.trim()}</li>)
-                : "N/A"}
-            </ol>
+            {isLoading ? (
+              <Skeleton className="h-16 w-full"></Skeleton>
+            ) : (
+              <ol className="text-sm text-darktext list-disc ml-4">
+                {mentorForBooking && mentorForBooking.awards
+                  ? mentorForBooking.awards
+                      .split(",")
+                      .map((award, index) => (
+                        <li key={index}>{award.trim()}</li>
+                      ))
+                  : "N/A"}
+              </ol>
+            )}
           </div>
 
           {/* Time slot section */}
@@ -465,21 +503,27 @@ const Page = () => {
           {/* Questions section */}
           <div>
             <Label className="font-semibold">Session details</Label>
-            <Textarea
-              className="w-full mt-2 h-20"
-              placeholder="Why do you want to request a session?"
-              value={formData.purpose}
-              onChange={handleChange}
-              name="purpose"
-              maxLength={800} // Adding the maxLength attribute
-            />
-            <span className="ml-1 text-sm text-darktext">
-              {characterCount} characters remaining
-            </span>
+            {isLoading ? (
+              <Skeleton className="h-24 w-full"></Skeleton>
+            ) : (
+              <Textarea
+                className="w-full mt-2 h-20"
+                placeholder="Why do you want to request a session?"
+                value={formData.purpose}
+                onChange={handleChange}
+                name="purpose"
+                maxLength={800} // Adding the maxLength attribute
+              />
+            )}
+            {!isLoading && (
+              <span className="ml-1 text-sm text-darktext">
+                {characterCount} characters remaining
+              </span>
+            )}
           </div>
         </div>
         <div className="flex flex-col space-y-3">
-          {mentorForBooking && mentorForBooking.verified === true ? (
+          {isUserValid ? (
             <Button
               size="xl"
               className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
@@ -491,35 +535,46 @@ const Page = () => {
               />
             </Button>
           ) : (
-            <TwitterDMButton
-              recipientId={recipientId}
-              message={message}
-              requestAs={selectedOption}
-              sessionDate={date}
-              sessionTime={sessionTime}
-              purpose={formData.purpose}
-              data={mentorForBooking}
-            />
+            <Button
+              size="xl"
+              className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+              type="button"
+              onClick={openDialog}
+            >
+              Request
+            </Button>
           )}
+        </div>
+
+        <div className="flex space-x-1 justify-center items-center mt-8 ">
+          <p>claim your own link</p>
+          <button
+            variant="ghost"
+            className=" text-lg text-blue "
+            type="button"
+            onClick={handleLink}
+          >
+            get link
+          </button>
         </div>
       </form>
 
       <Dialog open={isDialogOpen} onClose={closeDialog}>
-        <DialogContent>
+        <DialogContent className="p-4 rounded-md">
           <div className="relative">
             <Button
               type="button"
               variant="outline"
               size="icon"
               onClick={closeDialog}
-              className="absolute top-0 right-0 -mt-6 -mr-2"
+              className="absolute top-0 right-0 "
             >
               <FaX size={16} />
             </Button>
             <div className="flex flex-col items-center gap-3 mt-4">
               <SignInIcon size={120} />
               <p className="text-darktext text-lg text-center">
-                Create account or sign in to continue
+                Create account or sign in to request
               </p>
               <LoginDialog />
             </div>
@@ -530,4 +585,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default BookCard;

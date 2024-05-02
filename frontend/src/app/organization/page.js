@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
-import OrganizationSection from "@/components/OrganizationSection";
+import OrganizationSection from "@/components/UpcomingSection";
 import ListSection from "@/utils/ListSection";
 import React from "react";
 
