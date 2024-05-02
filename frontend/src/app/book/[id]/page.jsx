@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import { useAuth } from "@/contexts/auth-context";
 import { useState, useEffect } from "react";
 
+export const runtime = "edge";
+
 const page = () => {
   const [domLoaded, setDomLoaded] = useState(false);
   const { setProgress } = useAuth();
