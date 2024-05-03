@@ -56,8 +56,9 @@ const UpcomingSection = () => {
   const createMeet = async () => {
     setIsSpinning(true);
     const roomId = await createRoom();
-    router.push(`/${roomId}`);
+    window.open(`https://meet.qikelink/${roomId}`, '_blank');
   };
+  
 
   const isNowSession = (sessionDate, sessionTime) => {
     const currentDate = new Date();
