@@ -45,6 +45,12 @@ export async function getMentor() {
     .getFirstListItem(`users = '${client.authStore.model.id}'`);
 }
 
+export async function getMentorForBooking(id) {
+  return await client
+    .collection("mentors")
+    .getFirstListItem(`users = '${id}'`, { expand: "users" });
+}
+
 export async function getGoogle() {
   return await client
     .collection("google")
@@ -153,7 +159,14 @@ export async function verifyRequest(
   await client.collection("mentors").create(data);
 }
 
-export async function updateMentor(id, username, email, phoneNumber, bio, awards) {
+export async function updateMentor(
+  id,
+  username,
+  email,
+  phoneNumber,
+  bio,
+  awards
+) {
   const data = {
     username: username,
     email: email,

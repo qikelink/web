@@ -37,15 +37,15 @@ const ManagerList = () => {
         </li>
         <li>
           <Link
-            href="/manager/Organization"
+            href="/manager/Upcoming"
             className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer hover:text-blue ${
-              pathname === "/manager/Organization"
+              pathname === "/manager/Upcoming"
                 ? "bg-[#f7fafc] text-blue"
                 : ""
             }`}
           >
-            <VscOrganization size={20} />
-            <p className="  lg:block">Organizations</p>
+            <VscOrganization className="hidden sm:inline" size={20} />
+            <p className="lg:block text-lg font-medium">Upcoming sessions</p>
           </Link>
         </li>
         <li>
@@ -55,8 +55,8 @@ const ManagerList = () => {
               pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
             } hover:text-blue`}
           >
-            <MdOutlineGroupAdd size={20} />
-            <p className=" lg:block">Session requests</p>
+            <MdOutlineGroupAdd className="hidden sm:inline" size={20} />
+            <p className="lg:block text-lg font-medium"> Session requests</p>
           </Link>
         </li>
 
