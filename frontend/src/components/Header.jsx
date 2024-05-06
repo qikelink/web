@@ -5,6 +5,7 @@ import {
   getNotifications,
   isUserValid,
   signout,
+  toggleGoogle,
 } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -45,10 +46,12 @@ export default function Header() {
   const { setProgress } = useAuth();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
-  const handleSignout = () => {
+  const handleSignout = async () => {
     setProgress(90);
-    window.location.reload();
+    await toggleGoogle(false);
     signout(setIsUserValid);
+   
+    window.location.reload();
     setUser([]);
   };
 
@@ -250,7 +253,7 @@ export default function Header() {
                     <p>Messages</p>
                   </div>
                   {notifications.items && notifications.items.length > 0 && (
-                    <span className=" bg-red text-white border rounded-full px-1">
+                    <span className=" bg-red-500 text-white border rounded-full px-1">
                       {" "}
                       {`${notifications.items.length}+`}
                     </span>

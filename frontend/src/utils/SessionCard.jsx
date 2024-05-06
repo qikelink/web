@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
@@ -38,7 +38,6 @@ const SessionCard = () => {
   } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
-
   useEffect(() => {
     if (user != undefined) {
       getAllSessions(user.id, user.email)
@@ -57,7 +56,7 @@ const SessionCard = () => {
     router.push(`/${roomId}`);
   };
 
-  const isNowSession = (sessionDate, sessionTime) => {
+  const isNowSession = (sessionDate, sessionTime, sessionInterval) => {
     const currentDate = new Date();
     const currentDateTime = currentDate.getTime();
     const [currentHour, currentMinute] = [
@@ -75,25 +74,34 @@ const SessionCard = () => {
     ); // Convert UTC to local timezone
     sessionDateTime.setHours(hour, minute, 0, 0);
 
-    // Check if the session date matches the current date
-    const isSameDate =
-      currentDate.toDateString() === sessionDateTime.toDateString();
+    // Parse the number of weeks or months from the sessionInterval string
+    const weeksMatch = sessionInterval.match(/\d+/);
+    const monthsMatch = sessionInterval.match(/\d+/);
+    const weeks = weeksMatch ? parseInt(weeksMatch[0]) : 0;
+    const months = monthsMatch ? parseInt(monthsMatch[0]) : 0;
 
-    const sessionEndTime = sessionDateTime.getTime() + 30 * 60 * 1000;
+    // Calculate session end time based on sessionInterval
+    let sessionEndTime = new Date(sessionDateTime);
+    if (sessionInterval.includes("week")) {
+      sessionEndTime.setDate(sessionEndTime.getDate() + weeks * 7);
+    } else if (sessionInterval.includes("month")) {
+      sessionEndTime.setMonth(sessionEndTime.getMonth() + months);
+    }
 
+    // Check if the current date and time fall within the interval
     return (
-      isSameDate &&
       currentDateTime >= sessionDateTime.getTime() &&
-      currentDateTime <= sessionEndTime
+      currentDateTime <= sessionEndTime.getTime()
     );
   };
 
-  const isPastSession = (sessionDate, sessionTime) => {
+  const isPastSession = (sessionDate, sessionTime, sessionInterval) => {
     const currentDate = new Date();
     const currentDateTime = currentDate.getTime();
 
     const [hour, minute] = sessionTime.split(":").map(Number);
 
+    // Convert sessionDate to local date object
     const sessionDateTimeUTC = new Date(sessionDate);
     const sessionDateTime = new Date(
       sessionDateTimeUTC.getTime() +
@@ -101,9 +109,16 @@ const SessionCard = () => {
     ); // Convert UTC to local timezone
     sessionDateTime.setHours(hour, minute, 0, 0);
 
-    const sessionEndTime = sessionDateTime.getTime() + 30 * 60 * 1000;
+    // Parse the number of weeks from the sessionInterval string
+    const weeksMatch = sessionInterval.match(/\d+/);
+    const weeks = weeksMatch ? parseInt(weeksMatch[0]) : 0;
 
-    return currentDateTime > sessionEndTime;
+    // Calculate session end time based on sessionInterval
+    let sessionEndTime = new Date(sessionDateTime);
+    sessionEndTime.setDate(sessionEndTime.getDate() + weeks * 7);
+
+    // Check if the current date and time have surpassed the end of the session interval
+    return currentDateTime > sessionEndTime.getTime();
   };
 
   const filteredSessions = allSessions.filter((item) => {
@@ -111,25 +126,25 @@ const SessionCard = () => {
       return (
         !item.approved &&
         !item.done &&
-        !isPastSession(item.sessionDate, item.sessionTime)
+        !isPastSession(item.sessionDate, item.sessionTime, item.interval)
       );
     } else if (selectedButtons === "Approved") {
       return (
         !item.done &&
         item.approved &&
-        !isPastSession(item.sessionDate, item.sessionTime)
+        !isPastSession(item.sessionDate, item.sessionTime, item.interval)
       );
     } else if (selectedButtons === "Canceled") {
       return (
         item.done &&
         !item.approved &&
-        !isPastSession(item.sessionDate, item.sessionTime)
+        !isPastSession(item.sessionDate, item.sessionTime, item.interval)
       );
     } else if (selectedButtons === "Past") {
-      return isPastSession(item.sessionDate, item.sessionTime);
+      return isPastSession(item.sessionDate, item.sessionTime, item.interval);
     } else {
       return (
-        isNowSession(item.sessionDate, item.sessionTime) &&
+        isNowSession(item.sessionDate, item.sessionTime, item.interval) &&
         item.approved &&
         !item.done
       );

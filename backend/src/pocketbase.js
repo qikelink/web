@@ -217,7 +217,8 @@ export async function createSession(
   sessionTime,
   sessionDate,
   host_name,
-  host_bio
+  host_bio,
+  interval
 ) {
   const data = {
     mentor: mentor,
@@ -228,6 +229,7 @@ export async function createSession(
     sessionDate: sessionDate,
     host_name: host_name,
     host_bio: host_bio,
+    interval: interval,
     owner: client.authStore.model.id,
   };
   await client.collection("sessions").create(data);
