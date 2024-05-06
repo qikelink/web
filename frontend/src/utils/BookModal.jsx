@@ -91,7 +91,8 @@ const BookModal = ({ buttonName, blue, data }) => {
       sessionTime,
       sessionDate,
       user.username,
-      user.bio
+      user.bio,
+      selectInterval
     )
       .then(() => {
         toast({
@@ -187,7 +188,7 @@ const BookModal = ({ buttonName, blue, data }) => {
 
     if (
       selectedOption === "" ||
-      sessionTime === "" ||
+      selectInterval === "" ||
       formData.purpose === ""
     ) {
       toast({
@@ -251,20 +252,20 @@ const BookModal = ({ buttonName, blue, data }) => {
     }
   };
 
-  async function copyPageUrl() {
+  async function copyProfileLink(item) {
     try {
-      // Get the current page URL
-      const pageUrl = window.location.href;
+      // Get the current BookCard URL
+      const BookCardUrl = `https://qikelink.com/book/${item.users}`;
 
       // Copy the URL to the clipboard
-      await navigator.clipboard.writeText(pageUrl);
+      await navigator.clipboard.writeText(BookCardUrl);
       toast({
-        title: "Profile link copied",
-        description: "Profile link copied successfully to clickboard.",
+        title: "Mentor link copied",
+        description: "Mentor link copied successfully to clickboard.",
         variant: "default",
       });
     } catch (err) {
-      console.error("Failed to copy page URL: ", err);
+      console.error("Failed to copy booking link: ", err);
     }
   }
 
@@ -341,7 +342,7 @@ const BookModal = ({ buttonName, blue, data }) => {
                           <BsJournalBookmarkFill />
                         </Toggle>
                         <Button
-                          onClick={() => copyPageUrl()}
+                          onClick={() => copyProfileLink(data)}
                           size="icon"
                           variant="outline"
                           type="button"
@@ -436,14 +437,14 @@ const BookModal = ({ buttonName, blue, data }) => {
 
                             className="py-2"
                           >
-                            2 Week
+                            2 Weeks
                           </option>
                           <option
                             // key={option.value}
 
                             className="py-2"
                           >
-                            3 Week
+                            3 Weeks
                           </option>
                           <option
                             // key={option.value}
