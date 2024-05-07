@@ -26,6 +26,8 @@ import {
   isUserValid,
   updateSetting,
   verifyRequest,
+  updateVerifyRequest,
+  getMentor,
 } from "../../../backend/src/pocketbase";
 import { BsCopy, BsFillSendArrowDownFill } from "react-icons/bs";
 import { useToast } from "@/components/ui/use-toast";
@@ -44,14 +46,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
+const options = dataset.map((item) => ({ value: item, label: item }));
+
 const OnboardingCard = () => {
   const [formData, setFormData] = useState({});
   const [profileImage, setProfileImage] = useState("");
   const [quickService, setQuickService] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
   const { toast } = useToast();
-  const { user, mentor, isLoading, setUser } = useUser();
+  const { user, mentor, setMentor, isLoading, setUser } = useUser();
   const [isSpinning, setIsSpinning] = useState(false);
 
   useEffect(() => {
@@ -95,6 +100,10 @@ const OnboardingCard = () => {
     const id = user.id;
     const imageToUpdate = profileImage ? profileImage : formData.avatar;
 
+    const interests = selectedOption
+      ? selectedOption.map((option) => option.label).join(", ")
+      : "";
+
     if (
       profileImage === "" ||
       formData.username === "" ||
@@ -120,6 +129,18 @@ const OnboardingCard = () => {
       formData.awards
     )
       .then(() => {
+        verifyRequest(
+          formData.username,
+          formData.phoneNumber,
+          formData.bio,
+          formData.awards,
+          undefined,
+          undefined,
+          undefined,
+          "Free",
+          interests,
+          "1.0/5.0"
+        );
         setIsSpinning(!isSpinning);
         toast({
           title: "profile created",
@@ -142,6 +163,14 @@ const OnboardingCard = () => {
           })
           .catch((error) => {
             console.error("Error fetching user data:", error);
+          });
+
+        getMentor()
+          .then((res) => {
+            setMentor(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching mentor data:", error);
           });
 
         setIsSpinning(false);
@@ -178,6 +207,18 @@ const OnboardingCard = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+          <div>
+            <Label className="font-semibold ">Areas of expertise</Label>
+            <Select
+              className="bg-inputbackground active:bg-inputbackground mt-1"
+              isMulti={true}
+              autoFocus={true}
+              defaultValue={selectedOption}
+              onChange={setSelectedOption}
+              options={options}
+            />
+          </div>
+
           <div>
             <Label className="text-lg">Full name</Label>
             <Input
@@ -251,7 +292,7 @@ const OnboardingCard = () => {
             </Button>
           )}
 
-          {showVerify ? <VerifyModal userData={user} /> : null}
+          {showVerify ? <VerifyModal userData={user} mentor={mentor} /> : null}
         </div>
       </div>
     </div>
@@ -628,9 +669,7 @@ const LoginDialog = () => {
   );
 };
 
-const options = dataset.map((item) => ({ value: item, label: item }));
-
-const VerifyModal = ({ blue, userData }) => {
+const VerifyModal = ({ blue, userData, mentor }) => {
   const [file, setFile] = useState("");
   const [formData, setFormData] = useState({
     contact: "",
@@ -674,7 +713,8 @@ const VerifyModal = ({ blue, userData }) => {
       ? selectedOption.map((option) => option.label).join(", ")
       : "";
 
-    verifyRequest(
+    updateVerifyRequest(
+      mentor.id,
       userData.name,
       userData.phoneNumber,
       userData.bio,

@@ -253,7 +253,7 @@ export default function Header() {
                     <p>Messages</p>
                   </div>
                   {notifications.items && notifications.items.length > 0 && (
-                    <span className=" bg-red-500 text-white border rounded-full px-1">
+                    <span className=" bg-red-500 text-white text-sm border rounded-full px-1">
                       {" "}
                       {`${notifications.items.length}+`}
                     </span>

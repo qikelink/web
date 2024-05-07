@@ -33,7 +33,7 @@ export async function GET(request) {
   }
 
   const accessToken = new AccessToken({
-    apiKey: process.env.API_KEY,
+    apiKey: process.env.HUDDLE_API_KEY,
     roomId: roomId,
     role: Role.HOST,
     permissions: {

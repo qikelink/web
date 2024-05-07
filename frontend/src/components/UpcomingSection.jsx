@@ -26,6 +26,7 @@ import { EmptyIcon } from "@/icons/EmptyIcon";
 import { Label } from "./ui/label";
 import { BsHeadsetVr } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { createRoom } from "@/utils/createRoom";
 
 const UpcomingSection = () => {
   const { user, isLoadingUserData, allSessions, setAllSessions } = useUser();
@@ -56,9 +57,8 @@ const UpcomingSection = () => {
   const createMeet = async () => {
     setIsSpinning(true);
     const roomId = await createRoom();
-    window.open(`https://meet.qikelink/${roomId}`, '_blank');
+    window.open(`https://meet.qikelink.com/${roomId}`, '_blank');
   };
-  
 
   const isNowSession = (sessionDate, sessionTime) => {
     const currentDate = new Date();
@@ -191,8 +191,8 @@ const UpcomingSection = () => {
                 </AlertTitle>
                 <AlertDescription className="line-clamp-2 hidden md:block">
                   {user.id !== item.owner
-                    ? trimToCharacters(item.expand.organization.org_about) ||
-                      trimToCharacters(item.expand.owner.bio)
+                    ? trimToCharacters(item.expand.owner.bio) ||
+                      trimToCharacters(item.expand.organization.org_about)
                     : trimToCharacters(item.expand.mentor.bio)}
                 </AlertDescription>
               </div>
