@@ -159,6 +159,36 @@ export async function verifyRequest(
   await client.collection("mentors").create(data);
 }
 
+
+export async function updateVerifyRequest(
+  id,
+  username,
+  phoneNumber,
+  bio,
+  awards,
+  contact,
+  account,
+  validId,
+  rate,
+  interests,
+  rating
+) {
+  const data = {
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+    contact: contact,
+    account: account,
+    validId: validId,
+    rate: rate,
+    interests: interests,
+    rating: rating,
+    users: client.authStore.model.id,
+  };
+  await client.collection("mentors").update(id, data);
+}
+
 export async function updateMentor(
   id,
   username,

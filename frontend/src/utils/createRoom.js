@@ -8,7 +8,7 @@ export const createRoom = async () => {
     }),
     headers: {
       "Content-type": "application/json",
-      "x-api-key": process.env.API_KEY,
+      "x-api-key": process.env.HUDDLE_API_KEY,
     },
     cache: "no-cache",
   });

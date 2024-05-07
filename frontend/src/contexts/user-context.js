@@ -86,13 +86,18 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem("user_cache", JSON.stringify(userData));
           localStorage.setItem("user_cache_timestamp", Date.now());
 
-          const mentorData = await getMentor();
-          setMentor(mentorData);
-          localStorage.setItem("mentor_cache", JSON.stringify(mentorData));
-          localStorage.setItem("mentor_cache_timestamp", Date.now());
+          if (
+            pathname === "/manager/Settings" ||
+            pathname === "/settings"
+          ) {
+            const mentorData = await getMentor();
+            setMentor(mentorData);
+            localStorage.setItem("mentor_cache", JSON.stringify(mentorData));
+            localStorage.setItem("mentor_cache_timestamp", Date.now());
+          }
         }
 
-        if (pathname === `/book/${id}` && id !== '') {
+        if (pathname === `/book/${id}` && id !== "") {
           const mentorForBooking = await getMentorForBooking(id);
           setMentorForBooking(mentorForBooking);
         }
