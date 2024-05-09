@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         className={cn(
-          " bg-background font-poppins text-foreground invisible-scrollbar",
+          " bg-background font-jakarta text-foreground invisible-scrollbar",
           fontSans.variable
         )}>
         <NextAuthProvider>

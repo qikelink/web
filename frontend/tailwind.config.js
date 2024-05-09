@@ -78,6 +78,7 @@ module.exports = {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         poppins: "Poppins",
         roboto: "Roboto",
+        jakarta: "Plus Jakarta Sans"
       },
 
       keyframes: {
