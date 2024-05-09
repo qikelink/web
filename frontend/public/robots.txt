@@ -7,3 +7,5 @@ Disallow: /accounts
 # Allow all crawlers
 User-agent: *
 Allow: /
+
+Sitemap: https://qikelink.com/sitemap.xml
