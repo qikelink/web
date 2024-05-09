@@ -29,13 +29,17 @@ export const metadata = constructMetadata()
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <meta
+          name="google-site-verification"
+          content="xsjX5FC2oPFgWCsgWb8LyLmMD3HhGG5sOsXdIMaiJV0"
+        />
+      </head>
       <body
         className={cn(
           " bg-background font-poppins text-foreground invisible-scrollbar",
           fontSans.variable
-        )}
-      >
+        )}>
         <NextAuthProvider>
           <AuthProvider>
             <UserProvider>
