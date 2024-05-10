@@ -49,7 +49,7 @@
   background: #888; 
   border-radius: 20em;
   cursor: pointer;
-}
+} 
 
 .custom-scrollbar::-webkit-scrollbar:horizontal{
   display: none;
@@ -117,7 +117,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground p-4;
+    @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }

@@ -1,41 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FaStar } from "react-icons/fa";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import BookModal from "./BookModal";
-import { BsJournalBookmarkFill } from "react-icons/bs";
 import { Badge } from "@/components/ui/badge";
-import { Toggle } from "@/components/ui/toggle";
-import KeywordBar from "@/utils/KeywordBar";
-import { dataset, list } from "@/dummy_api/dataSet";
-import Image from "next/image";
-import pic4 from "../../images/banner.png";
-import pic5 from "../../images/banner2.png";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user-context";
-import {
-  CreateBookmark,
-  getImageUrl,
-  getMentors,
-  isUserValid,
-} from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
-import { AiOutlineFire } from "react-icons/ai";
-import { GrTag } from "react-icons/gr";
 import { QikelinkLogo } from "@/icons/Qikelinklogo";
 import { Button } from "@/components/ui/button";
 import { CloudIcon } from "@/icons/CloudIcon";
 import { PeopleIcon } from "@/icons/PeopleIcon";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { FcGoogle } from "react-icons/fc";
 
 const LandingCard = () => {
   const { mentor, mentors, setMentors, isLoading } = useUser();
@@ -46,7 +22,7 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col space-y-6 font-jakarta bg-[#E6F2FF] h-[716px]">
+      <section className="flex flex-col justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] h-[716px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-thin">
@@ -66,7 +42,7 @@ const LandingCard = () => {
               <p className="font-bold text-xl ml-2">Qikelink</p>
             </div>
 
-            <Badge className="py-1" variant="secondary">
+            <Badge className="px-4 rounded-full" variant="secondary">
               Beta
             </Badge>
           </div>
@@ -79,40 +55,46 @@ const LandingCard = () => {
         </div>
 
         {/* Hero section */}
-        <div className="flex space-x-4 justify-evenly">
+        <div className="flex justify-evenly">
           {/* Hero cloud 1 */}
           <div className="w-1/5 mt-20">
             <CloudIcon />
           </div>
 
           {/* Hero Texts */}
-          <div className="flex flex-col space-y-6 items-center w-2/3">
+          <div className="flex w-full ">
             {/* Header text */}
-            <div className="text-5xl space-y-4 text-center font-semibold mt-6 tracking-wide">
-              <p className="text-[#5B5B5B]">Unlock Your Potential</p>
-              <p className="text-[#1C1C1C]"> with Qikelink</p>
-            </div>
-            {/* Subheading text */}
-            <p className="text-[#000000] text-xl w-full text-center font-thin">
-              {" "}
-              {/* Adjust width here */}
-              Join Millions using Qikelink to offer mentorship to their audience
-              or Access world-class mentorship for your personal growth anytime,
-              anywhere.
-            </p>
+            <div>
+              <div className="text-4xl space-y-4 font-bold tracking-wide">
+                <h2 className="text-[#5B5B5B] ">Unlock Your Potential </h2>
+                <h2 className="text-[#1C1C1C]">with Qikelink </h2>
+              </div>
+              {/* Subheading text */}
+              <p className="text-[#000000] mt-12 text-xl w-full font-thin">
+                {" "}
+                {/* Adjust width here */}
+                Join Millions using Qikelink to offer mentorship to their
+                audience or Access world-class mentorship for your personal
+                growth anytime, anywhere.
+              </p>
 
-            {/* CTA buttons */}
-            <div className="flex space-x-4 mt-16">
-              <Button size="lg" className="bg-[#007AFF]">
-                Claim your booking link
-              </Button>
-              <Button size="lg" className="bg-[#1C1C1C] px-10">
-                Browse mentors
-              </Button>
+              {/* CTA buttons */}
+              <div className="flex space-x-4 mt-16">
+                <Button size="xl" className="bg-[#007AFF] ">
+                    <Button  className="bg-white mr-2">
+                        <FcGoogle />
+                    </Button > {" "}
+                    
+                  Claim your booking link
+                </Button>
+                <Button size="xl" className="bg-[#1C1C1C] px-10">
+                  Browse mentors
+                </Button>
+              </div>
             </div>
 
             {/* Image section */}
-            <div className="mt-6">
+            <div className="mt-12">
               <PeopleIcon />
             </div>
           </div>
@@ -279,7 +261,7 @@ const LandingCard = () => {
       </section>
 
       {/* section six  */}
-      <section className="flex flex-col items-center justify-center font-jakarta bg-[#F24E1E0D] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-jakarta bg-[#FBF6F54A] h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
@@ -388,7 +370,7 @@ const LandingCard = () => {
         <div className="flex flex-col space-y-3 w-5/6">
           <p>Privacy policy</p>
           <p>Terms used</p>
-          <Separator className='bg-[#B0D6FF] '/>
+          <Separator className="bg-[#B0D6FF] " />
           <p>© 2024, Qikelink. All rights reserved.</p>
         </div>
       </section>

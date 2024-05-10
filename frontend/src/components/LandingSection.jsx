@@ -4,7 +4,7 @@ import LandingCard from "@/utils/LandingCard";
 const LandingSection = () => {
   return (
     <>
-      <div className="w-full flex flex-col overflow-y-auto custom-scrollbar">
+      <div className="w-full flex flex-col overflow-y-auto">
         <LandingCard />
       </div>
     </>

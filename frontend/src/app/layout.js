@@ -21,7 +21,7 @@ const fontSans = FontSans({
 //     "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
 //   twitter: {
 //     card: "summary_large_image",
-//   },
+//   }, 
 // };
 
 export const metadata = constructMetadata()
