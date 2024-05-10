@@ -102,13 +102,13 @@ export const UserProvider = ({ children }) => {
           setMentorForBooking(mentorForBooking);
         }
 
-        fetchDataAndCache(getMentors, setMentors, "mentors_cache", 3600); // Cache for 1 hour
-        fetchDataAndCache(
-          getQuickMentors,
-          setQuickMentors,
-          "quick_mentors_cache",
-          3600
-        ); // Cache for 1 hour
+        // fetchDataAndCache(getMentors, setMentors, "mentors_cache", 3600); // Cache for 1 hour
+        // fetchDataAndCache(
+        //   getQuickMentors,
+        //   setQuickMentors,
+        //   "quick_mentors_cache",
+        //   3600
+        // ); // Cache for 1 hour
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -174,7 +174,7 @@ export const UserProvider = ({ children }) => {
             user.id,
             user.email
           ); // Cache for 1 hour
-        } else if (pathname === "/") {
+        } else if (pathname === "/testing") {
           // const email = `${ user.email || user.superEmail}`;
 
           fetchDataAndCache(

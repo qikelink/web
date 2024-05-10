@@ -68,7 +68,7 @@ export default function Header() {
   }, [notifications]);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background">
+    <header className="sticky top-0 z-50 w-full bg-background pt-4">
       <div className="font-poppins flex justify-between items-center pb-3">
         <div className="flex items-center justify-between space-x-2 hover:cursor">
           {isDropdownOpen ? (
