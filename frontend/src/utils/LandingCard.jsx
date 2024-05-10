@@ -12,6 +12,15 @@ import { PeopleIcon } from "@/icons/PeopleIcon";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { FcGoogle } from "react-icons/fc";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import pic5 from "../../images/ment.png";
+import Image from "next/image";
+import { HiBars3BottomRight } from "react-icons/hi2";
 
 const LandingCard = () => {
   const { mentor, mentors, setMentors, isLoading } = useUser();
@@ -22,7 +31,7 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] h-[716px]">
+      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] h-screen lg:h-[716px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-thin">
@@ -35,42 +44,49 @@ const LandingCard = () => {
         </div>
 
         {/* Header  */}
-        <div className="bg-[#FFFFFFCC] rounded-full py-4 px-8 flex justify-between items-center w-3/4 mx-auto">
+        <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
           <div className="flex space-x-3">
             <div className="flex items-center">
               <QikelinkLogo />
               <p className="font-bold text-xl ml-2">Qikelink</p>
             </div>
 
-            <Badge className="px-4 rounded-full" variant="secondary">
+            <Badge
+              className="px-4 rounded-full bg-[#d6e7fa]"
+              variant="secondary">
               Beta
             </Badge>
           </div>
 
-          <div className="flex space-x-3 items-center">
+          <div className="flex hidden lg:block space-x-3 items-center">
             <Button variant="ghost">About</Button>
             <Button variant="ghost">Contact us</Button>
             <Button size="lg">Get started</Button>
           </div>
+          <div className="lg:hidden">
+            <Button variant="outline" className="rounded-full border-black">
+              <HiBars3BottomRight />
+            </Button>
+          </div>
         </div>
 
         {/* Hero section */}
-        <div className="flex justify-evenly">
+        <div className="flex justify-between relative">
           {/* Hero cloud 1 */}
-          <div className="w-1/5 mt-20">
+          <div className="w-1/5 mt-20 ">
             <CloudIcon />
           </div>
 
           {/* Hero Texts */}
-          <div className="flex w-full ">
+          <div className="grid lg:grid-cols-2 w-5/6 px-2 absolute mx-auto top-0 right-0 left-0 z-10 ">
             {/* Header text */}
             <div>
-              <div className="text-4xl space-y-4 font-bold tracking-wide">
-                <h2 className="text-[#5B5B5B] ">Unlock Your Potential </h2>
+              <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-4 font-bold tracking-wide">
+                <h2 className="text-[#5B5B5B] ">Unlock Your Potential</h2>
                 <h2 className="text-[#1C1C1C]">with Qikelink </h2>
               </div>
               {/* Subheading text */}
-              <p className="text-[#000000] mt-12 text-xl w-full font-thin">
+              <p className="text-[#000000] text-left lg:text-center mt-12 text-base lg:text-xl w-fit font-thin">
                 {" "}
                 {/* Adjust width here */}
                 Join Millions using Qikelink to offer mentorship to their
@@ -79,12 +95,11 @@ const LandingCard = () => {
               </p>
 
               {/* CTA buttons */}
-              <div className="flex space-x-4 mt-16">
+              <div className="flex flex-wrap justify-center lg:space-y-4 space-x-4 mt-16">
                 <Button size="xl" className="bg-[#007AFF] ">
-                    <Button  className="bg-white mr-2">
-                        <FcGoogle />
-                    </Button > {" "}
-                    
+                  <Button className="bg-white mr-2">
+                    <FcGoogle />
+                  </Button>{" "}
                   Claim your booking link
                 </Button>
                 <Button size="xl" className="bg-[#1C1C1C] px-10">
@@ -95,19 +110,25 @@ const LandingCard = () => {
 
             {/* Image section */}
             <div className="mt-12">
-              <PeopleIcon />
+              <Image
+                src={pic5}
+                width={500}
+                height={500}
+                className="rounded-md"
+                alt="Picture of the author"
+              />
             </div>
           </div>
 
           {/* Hero cloud 2 */}
-          <div className="w-1/5 mb-12">
+          <div className="w-1/5 -mt-14 ">
             <CloudIcon />
           </div>
         </div>
       </section>
 
       {/* section two  */}
-      <section className=" flex space-x-4 justify-evenly items-center font-jakarta bg-[#FFF2E6] h-[716px]">
+      <section className=" flex space-x-4 justify-evenly items-center font-jakarta bg-[#FFF2E6] h-screen lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero cloud 1 */}
@@ -178,7 +199,7 @@ const LandingCard = () => {
       </section>
 
       {/* section four  */}
-      <section className=" flex flex-col  items-center justify-center font-jakarta bg-[#00BA3E08] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center font-jakarta bg-[#00BA3E08] h-screen lg:h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -214,11 +235,11 @@ const LandingCard = () => {
       </section>
 
       {/* section five  */}
-      <section className="flex flex-col items-center justify-center font-jakarta bg-[#F24E1E0D] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-jakarta bg-[#F24E1E0D] h-screen lg:h-[716px]">
         {/* Hero section */}
         <div className="flex space-x-4 justify-evenly">
           {/* Hero cloud 1 */}
-          <div className="w-1/5 ">
+          <div className="w-1/5 hidden lg:block">
             <CloudIcon />
           </div>
 
@@ -229,9 +250,9 @@ const LandingCard = () => {
               Join the Community
             </p>
 
-            <div className="text-5xl space-y-4 text-center font-semibold">
+            <div className="text-4xl lg:text-5xl space-y-4 text-center font-semibold">
               <p className="text-[#600000]">Become Part of </p>
-              <div className="text-[#600000] flex space-x-2">
+              <div className="text-[#600000] flex flex-col space-x-2">
                 <p> Something Bigger </p>
                 <img src="/section5a.svg" alt="Section 5 image 1" />
               </div>
@@ -254,7 +275,7 @@ const LandingCard = () => {
           </div>
 
           {/* Hero cloud 2 */}
-          <div className="w-1/5 mr-12">
+          <div className="w-1/5 mr-12  hidden lg:block">
             <CloudIcon />
           </div>
         </div>
@@ -308,8 +329,7 @@ const LandingCard = () => {
           <div className="mt-20 w-[40%] space-y-3">
             <Input
               placeholder="Enter your email"
-              className="bg-white py-5 rounded-lg"
-            ></Input>
+              className="bg-white py-5 rounded-lg"></Input>
             <Button size="lg" className="bg-[#1C1C1C] px-10 w-full">
               Subscribe
             </Button>
@@ -318,30 +338,90 @@ const LandingCard = () => {
       </section>
 
       {/* section eight  */}
-      <section className=" flex space-x-4 justify-evenly items-center font-jakarta bg-[#0A84FF00] h-[716px]">
+      <section className=" flex justify-center  space-x-4 items-center  font-jakarta bg-emerald-50 h-screen lg:h-[716px]">
         {/* Hero section */}
 
-        {/* Hero Texts */}
-        <div className="flex flex-col space-y-6 w-1/2 items-center">
-          <div className="text-5xl space-y-4 text-left font-semibold w-1/2">
-            {/* Header text */}
-            <p className="text-[#007AFF] text-lg font-thin text-left">FAQs</p>
+        <div className=" w-5/6 flex space-y-6 flex-wrap justify-center lg:justify-between items-center">
+          {/* Hero Texts */}
+          <div className="flex flex-col space-y-6 items-center lg:w-1/2 relative">
+            <img src="/section2b.svg" alt="Section 2 image 2" />
+            <div className=" absolute mx-auto left-0 right-0 text-5xl space-y-2 font-semibold">
+              {/* Header text */}
+              <p className="text-[#007AFF] lg:text-lg font-thin text-left">
+                FAQs
+              </p>
 
-            <p className="text-[#007AFF] tracking-wide">
-              We have answered a few questions you may have for us
-            </p>
+              <p className="text-[#007AFF] tracking-wide">
+                We have answered a few questions you may have for us
+              </p>
 
-            {/* Subheading text */}
-            <p className="text-[#007AFF] text-xl w-full font-thin text-left">
-              {" "}
-              Qikelinksupport@gmail.com
-            </p>
+              {/* Subheading text */}
+              <p className="text-[#007AFF] text-xl w-full font-thin text-left">
+                {" "}
+                Qikelinksupport@gmail.com
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Hero cloud 2 */}
-        <div className="w-1/2 ">
-          <img src="/section2b.svg" alt="Section 2 image 2" />
+          {/* Hero cloud 2 */}
+          <div className="lg:w-1/2 w-full">
+            <div className="px-4 border-2 rounded-md bg-[#e6e6e6]">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem
+                  value="item-1"
+                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  <AccordionTrigger>What is Qikelink?</AccordionTrigger>
+                  <AccordionContent>
+                    Schedule live video sessions with experienced content
+                    creators at your convenience. Whether you need advice on
+                    video editing, product development, or marketing strategy,
+                    our platform makes it simple to connect with the right
+                    mentor for your needs.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem
+                  value="item-2"
+                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  <AccordionTrigger>How To Book A Mentor?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes. It comes with default styles that matches the other
+                    components&apos; aesthetic.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem
+                  value="item-3"
+                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  <AccordionTrigger>
+                    How Can I Make Money with Qikelink?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    Yes. It&apos;s animated by default, but you can disable it
+                    if you prefer.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem
+                  value="item-4"
+                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  <AccordionTrigger>
+                    How Trusted is This Platform
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    Yes. It&apos;s animated by default, but you can disable it
+                    if you prefer.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem
+                  value="item-5"
+                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  <AccordionTrigger>Do I Need Money To SignUp</AccordionTrigger>
+                  <AccordionContent>
+                    Yes. It&apos;s animated by default, but you can disable it
+                    if you prefer.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </div>
         </div>
       </section>
 

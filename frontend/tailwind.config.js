@@ -1,13 +1,14 @@
 const { fontFamily } = require("tailwindcss/defaultTheme")
 
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   prefix: "",
   theme: {
@@ -25,13 +26,13 @@ module.exports = {
         darktext: "#808191",
         lighttext: "#FFFFFF",
         verifiedblue: "#08A0F7",
-        blue: '#007AFF',
-        darkblue: '#002D62',
-        lightblue: '#ADD8E6',
-        lightblue2: '#F0F8FF',
-        inputbackground: '#7676801F',
+        blue: "#007AFF",
+        darkblue: "#002D62",
+        lightblue: "#ADD8E6",
+        lightblue2: "#F0F8FF",
+        inputbackground: "#7676801F",
         white: "#fff",
-        indigo: '#6C5ECF',
+        indigo: "#6C5ECF",
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -78,7 +79,7 @@ module.exports = {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         poppins: "Poppins",
         roboto: "Roboto",
-        jakarta: "Plus Jakarta Sans"
+        jakarta: "Basic",
       },
 
       keyframes: {
@@ -98,7 +99,7 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
 
 
 
