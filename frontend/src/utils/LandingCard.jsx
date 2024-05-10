@@ -118,7 +118,7 @@ const LandingCard = () => {
               {/* CTA buttons */}
               <div className="flex flex-wrap lg:justify-start justify-center space-y-3 sm:space-y-0 items-center sm:space-x-4 mt-8 lg:mt-12">
                 <Button onClick={handleClaim} size="xl" className="bg-[#007AFF] ">
-                  <Button  className="bg-white mr-2">
+                  <Button variant='ghost' className="">
                     <FcGoogle size={20} />
                   </Button>{" "}
                   Claim your booking link
