@@ -6,7 +6,7 @@ export function cn(...inputs) {
 }
 
 export function constructMetadata({
-  title = "Qikelink.com ||One-stop-shop mentorship platform",
+  title = "Qikelink.com || One-stop-shop mentorship platform",
   description = "Qikelink is a platform for individuals seeking mentorship and experienced content creators and industry leaders",
   image = "/image.png",
   icons = "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
