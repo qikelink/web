@@ -72,7 +72,7 @@ export async function Signup(superEmail, email, superPassword, password) {
     email,
     undefined,
     undefined,
-    "Welcome onboard! 🎉 Share your booking link and start engaging with your audience today! If you have any questions or need assistance, reach out via support@qikelink.com. Best regards, Wisdom, CEO, Qikelink."
+    "Welcome onboard! 🎉 Share your booking link and start engaging with your audience today! If you have any questions or need assistance, reach out via support@qikelink.com. Best regards, support team."
   );
   await client.collection("users").create(data);
 }
