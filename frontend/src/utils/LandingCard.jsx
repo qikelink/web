@@ -82,8 +82,7 @@ const LandingCard = () => {
 
             <Badge
               className="px-4 rounded-full bg-[#d6e7fa]"
-              variant="secondary"
-            >
+              variant="secondary">
               Beta
             </Badge>
           </div>
@@ -142,7 +141,12 @@ const LandingCard = () => {
                 {/* Adjust width here */}
                 Join Millions using Qikelink to offer mentorship to their
                 audience or Access world-class mentorship for your personal
-                growth anytime, anywhere.
+                growth anytime, anywhere and{" "}
+                <Badge
+                  className="px-4 text-xl rounded-3xl border-2 border-green-700 bg-green-500 text-white"
+                  variant="secondary">
+                  🥳 Free
+                </Badge>
               </p>
 
               {/* CTA buttons */}
@@ -150,12 +154,10 @@ const LandingCard = () => {
                 <Button
                   onClick={handleClaim}
                   size="xl"
-                  className="bg-[#007AFF] "
-                >
+                  className="bg-[#007AFF] ">
                   <Button
                     variant="ghost"
-                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2"
-                  >
+                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2">
                     <FcGoogle size={20} />
                   </Button>{" "}
                   Claim your booking link
@@ -163,8 +165,7 @@ const LandingCard = () => {
                 <Button
                   onClick={handleBrowse}
                   size="xl"
-                  className="bg-[#1C1C1C] px-10"
-                >
+                  className="bg-[#1C1C1C] px-10">
                   Browse mentors
                 </Button>
               </div>
@@ -400,8 +401,7 @@ const LandingCard = () => {
           <div className="mt-20 w-[80%] lg:w-[40%] space-y-3">
             <Input
               placeholder="Enter your email"
-              className="bg-white py-5 rounded-lg"
-            ></Input>
+              className="bg-white py-5 rounded-lg"></Input>
             <Button size="lg" className="bg-[#1C1C1C] px-10 w-full">
               Subscribe
             </Button>
@@ -441,8 +441,7 @@ const LandingCard = () => {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem
                   value="item-1"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>What is Qikelink?</AccordionTrigger>
                   <AccordionContent>
                     Qikelink connects creators and professionals with their
@@ -451,8 +450,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-2"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>
                     How To Get My Booking Link?
                   </AccordionTrigger>
@@ -465,8 +463,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-3"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>
                     How Can I Make Money with Qikelink?
                   </AccordionTrigger>
@@ -477,8 +474,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-4"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>
                     How Trusted is This Platform
                   </AccordionTrigger>
@@ -489,8 +485,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-5"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>Do I Need Money To SignUp</AccordionTrigger>
                   <AccordionContent>
                     No, signing up for Qikelink is absolutely free.
