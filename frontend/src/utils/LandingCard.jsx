@@ -141,12 +141,12 @@ const LandingCard = () => {
                 {/* Adjust width here */}
                 Join Millions using Qikelink to offer mentorship to their
                 audience or Access world-class mentorship for your personal
-                growth anytime, anywhere and{" "}
-                <Badge
+                growth anytime and anywhere for free
+                {/* <Badge
                   className="px-4 text-xl rounded-3xl border-2 border-green-700 bg-green-500 text-white"
                   variant="secondary">
                   🥳 Free
-                </Badge>
+                </Badge> */}
               </p>
 
               {/* CTA buttons */}
@@ -379,7 +379,7 @@ const LandingCard = () => {
       </section>
 
       {/* section seven  */}
-      <section className="flex flex-col items-center justify-center font-jakarta bg-[#007AFF] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-jakarta bg-[#007AFF] h-[560px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
