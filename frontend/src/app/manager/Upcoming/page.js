@@ -34,7 +34,7 @@ export default function page() {
                   <div className="w-full md:w-2/3">
                     <UpcomingSection />
                   </div>
-                  <div className=" md:w-1/3 w-full">
+                  <div className=" md:w-1/3 w-full px-2">
                     <ManagerList />
                   </div>
                 </div>

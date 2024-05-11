@@ -185,7 +185,9 @@ const SettingCard = () => {
   }
 
   return (
-    <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
+    <div className="px-1">
+     <h1 className="text-2xl font-semibold mb-3">Settings</h1>
+     <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
       {/* Profile image */}
       <Label className="text-lg">Profile Image</Label>
       {isLoading ? (
@@ -261,8 +263,8 @@ const SettingCard = () => {
 
         <div>
           <Label className="text-lg">
-            Booking link for{" "}
-            <span className="text-blue font-medium">Linkup</span>
+           {" "}
+            <span className="text-blue font-medium"> Booking link </span>
           </Label>
           <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
             {/* <IoFlash /> */}
@@ -336,6 +338,8 @@ const SettingCard = () => {
         ) : null}
       </div>
     </div>
+    </div>
+   
   );
 };
 

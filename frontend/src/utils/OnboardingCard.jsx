@@ -797,8 +797,8 @@ const VerifyModal = ({ blue, userData, mentor }) => {
             </DialogClose> */}
           </DialogTitle>
           <DialogDescription>
-            Congratulations {userData.name} 🎉, verify your profile to get
-            listed as a mentor on Qikelink.
+            Congratulations {userData.name} 🎉, final step, provide a valid ID,
+            social contact and payment details to complete setup.
           </DialogDescription>
 
           <div>
@@ -825,7 +825,7 @@ const VerifyModal = ({ blue, userData, mentor }) => {
           </div>
 
           <form className="space-y-3" onSubmit={handleSubmit}>
-            {/* personal details */}
+            {/* personal details
             <div>
               <div className="">
                 <div>
@@ -840,7 +840,7 @@ const VerifyModal = ({ blue, userData, mentor }) => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Achievements section */}
             <div>
@@ -874,7 +874,7 @@ const VerifyModal = ({ blue, userData, mentor }) => {
               <Input
                 name="account"
                 type="text"
-                placeholder="Payment account"
+                placeholder="Payment account and bank"
                 className=" bg-inputbackground mt-1 "
                 value={formData.account}
                 onChange={handleChange}

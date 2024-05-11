@@ -135,7 +135,7 @@ const UpcomingSection = () => {
   };
 
   return (
-    <div className="py-2">
+    <div className="p-2">
       {filteredSessions.length > 0 && (
         <div className="flex justify-between items-center">
           <h2 className="text-lg lg:text-xl">Upcoming sessions</h2>
