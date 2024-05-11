@@ -209,7 +209,7 @@ const SettingCard = () => {
         <Input
           id="picture"
           type="file"
-          className="sm:w-52 w-24 bg-inputbackground "
+          className="sm:w-52 w-32 bg-inputbackground "
           onChange={(e) => setProfileImage(e.target.files[0])}
         />
         {isLoading ? (

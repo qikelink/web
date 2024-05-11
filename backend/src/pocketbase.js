@@ -66,13 +66,13 @@ export async function Signup(superEmail, email, superPassword, password) {
     passwordConfirm: password,
   };
   await createWelcomeNotification(
-    "Welcome to Qikelink",
+    "Welcome to Qikelink 🎉",
     undefined,
     undefined,
     email,
     undefined,
     undefined,
-    "Qikelink is a startup advisory platform that connects you with experienced founders for mentorship and guidance. If you possess expertise in tech or startups, you can verify your account to become a mentor as well."
+    "Welcome onboard! 🎉 Share your booking link and start engaging with your audience today! If you have any questions or need assistance, reach out via support@qikelink.com. Best regards, support team."
   );
   await client.collection("users").create(data);
 }
@@ -158,7 +158,6 @@ export async function verifyRequest(
   };
   await client.collection("mentors").create(data);
 }
-
 
 export async function updateVerifyRequest(
   id,
