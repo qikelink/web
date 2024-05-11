@@ -45,6 +45,12 @@ export async function getMentor() {
     .getFirstListItem(`users = '${client.authStore.model.id}'`);
 }
 
+export async function getMentorForBooking(id) {
+  return await client
+    .collection("mentors")
+    .getFirstListItem(`users = '${id}'`, { expand: "users" });
+}
+
 export async function getGoogle() {
   return await client
     .collection("google")
@@ -60,13 +66,13 @@ export async function Signup(superEmail, email, superPassword, password) {
     passwordConfirm: password,
   };
   await createWelcomeNotification(
-    "Welcome to Qikelink",
+    "Welcome to Qikelink 🎉",
     undefined,
     undefined,
     email,
     undefined,
     undefined,
-    "Qikelink is a startup advisory platform that connects you with experienced founders for mentorship and guidance. If you possess expertise in tech or startups, you can verify your account to become a mentor as well."
+    "Welcome onboard! 🎉 Share your booking link and start engaging with your audience today! If you have any questions or need assistance, reach out via support@qikelink.com. Best regards, support team."
   );
   await client.collection("users").create(data);
 }
@@ -153,7 +159,43 @@ export async function verifyRequest(
   await client.collection("mentors").create(data);
 }
 
-export async function updateMentor(id, username, email, phoneNumber, bio, awards) {
+export async function updateVerifyRequest(
+  id,
+  username,
+  phoneNumber,
+  bio,
+  awards,
+  contact,
+  account,
+  validId,
+  rate,
+  interests,
+  rating
+) {
+  const data = {
+    username: username,
+    phoneNumber: phoneNumber,
+    bio: bio,
+    awards: awards,
+    contact: contact,
+    account: account,
+    validId: validId,
+    rate: rate,
+    interests: interests,
+    rating: rating,
+    users: client.authStore.model.id,
+  };
+  await client.collection("mentors").update(id, data);
+}
+
+export async function updateMentor(
+  id,
+  username,
+  email,
+  phoneNumber,
+  bio,
+  awards
+) {
   const data = {
     username: username,
     email: email,
@@ -204,7 +246,8 @@ export async function createSession(
   sessionTime,
   sessionDate,
   host_name,
-  host_bio
+  host_bio,
+  interval
 ) {
   const data = {
     mentor: mentor,
@@ -215,6 +258,7 @@ export async function createSession(
     sessionDate: sessionDate,
     host_name: host_name,
     host_bio: host_bio,
+    interval: interval,
     owner: client.authStore.model.id,
   };
   await client.collection("sessions").create(data);

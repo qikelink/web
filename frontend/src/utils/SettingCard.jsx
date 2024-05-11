@@ -22,6 +22,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoFlash } from "react-icons/io5";
 import { Switch } from "@/components/ui/switch";
+import { BsCopy, BsShareFill } from "react-icons/bs";
 
 const SettingCard = () => {
   const [formData, setFormData] = useState({});
@@ -50,7 +51,7 @@ const SettingCard = () => {
           phoneNumber: user.phoneNumber,
           bio: user.bio,
           awards: user.awards,
-          verified: mentor.verified,
+          verified: user.verified,
         }
       : defaultFormData;
 
@@ -166,8 +167,27 @@ const SettingCard = () => {
     }
   };
 
+  async function copyBookingLink() {
+    try {
+      // Get the current BookCard URL
+      const BookCardUrl = `https://qikelink.com/book/${user.id}`;
+
+      // Copy the URL to the clipboard
+      await navigator.clipboard.writeText(BookCardUrl);
+      toast({
+        title: "Booking link copied",
+        description: "Booking link copied successfully to clickboard.",
+        variant: "default",
+      });
+    } catch (err) {
+      console.error("Failed to copy booking link: ", err);
+    }
+  }
+
   return (
-    <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
+    <div className="px-1">
+     <h1 className="text-2xl font-semibold mb-3">Settings</h1>
+     <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
       {/* Profile image */}
       <Label className="text-lg">Profile Image</Label>
       {isLoading ? (
@@ -189,7 +209,7 @@ const SettingCard = () => {
         <Input
           id="picture"
           type="file"
-          className="sm:w-52 w-24 bg-inputbackground "
+          className="sm:w-52 w-32 bg-inputbackground "
           onChange={(e) => setProfileImage(e.target.files[0])}
         />
         {isLoading ? (
@@ -243,15 +263,25 @@ const SettingCard = () => {
 
         <div>
           <Label className="text-lg">
-            Availablity for Instant{" "}
-            <span className="text-blue font-medium">Linkup</span>
+           {" "}
+            <span className="text-blue font-medium"> Booking link </span>
           </Label>
           <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
-            <IoFlash />
+            {/* <IoFlash /> */}
             <div className="flex-1 ">
-              <p className="text-sm font-medium leading-none">Quick Service</p>
+              <p className="text-sm font-medium leading-none">
+                qikelink.com/book/{user.id}
+              </p>
             </div>
-            {formData.verified === true ? (
+            <button
+              onClick={() => copyBookingLink()}
+              size="icon"
+              variant="outline"
+              type="button"
+            >
+              <BsCopy />
+            </button>
+            {/* {formData.verified === true ? (
               mentor && mentor.username && mentor.username.length > 0 ? (
                 <Switch
                   checked={quickService}
@@ -260,7 +290,7 @@ const SettingCard = () => {
               ) : (
                 <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
               )
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       </div>
@@ -287,7 +317,7 @@ const SettingCard = () => {
         />
       </div>
 
-      <div className="flex flex-col space-y-2 md:justify-end gap-1 lg:gap-3 justify-center lg:flex-row items-center mt-6 lg:space-x-5">
+      <div className="flex space-x-2 md:justify-end gap-1 lg:gap-3 justify-center flex-row items-center mt-6 lg:space-x-5">
         <Button
           size="xl"
           className="bg-blue hover:bg-darkblue text-lg rounded-lg"
@@ -308,6 +338,8 @@ const SettingCard = () => {
         ) : null}
       </div>
     </div>
+    </div>
+   
   );
 };
 

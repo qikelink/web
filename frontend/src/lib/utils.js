@@ -6,11 +6,14 @@ export function cn(...inputs) {
 }
 
 export function constructMetadata({
-  title = "Qikelink.com || YC office Hour for every founder",
-  description = "Qikelink is a startup advisory platform connecting you to experienced founders for guidance.",
-  image = "/opengraph-image.png",
+  title = "Qikelink.com || One-stop-shop mentorship platform",
+  description = "Qikelink is a platform for individuals seeking mentorship and experienced content creators and industry leaders",
+  image = "/image.png",
   icons = "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
-  noIndex = false
+  alternates = {
+    canonical: "https://qikelink.com/",
+  },
+  noIndex = false,
 } = {}) {
   return {
     title,
@@ -20,25 +23,26 @@ export function constructMetadata({
       description,
       images: [
         {
-          url: image
-        }
-      ]
+          url: image,
+        },
+      ],
     },
+    alternates,
     twitter: {
       card: "summary_large_image",
       title,
       description,
       images: [image],
-      creator: "@winnerAzubuike & @WisdomN69527"
+      creator: "@winnerAzubuike & @WisdomN69527",
     },
     icons,
-    metadataBase: new URL('https://qikelink.com/'),
-    themeColor: '#FFF',
+    metadataBase: new URL("https://qikelink.com/"),
+    themeColor: "#FFF",
     ...(noIndex && {
       robots: {
         index: false,
-        follow: false
-      }
-    })
+        follow: false,
+      },
+    }),
   };
 }

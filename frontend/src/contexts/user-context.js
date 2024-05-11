@@ -14,6 +14,7 @@ import {
   getAllSessions,
   getMeetingRequests,
   getNotifications,
+  getMentorForBooking,
 } from "../../../backend/src/pocketbase";
 import { usePathname } from "next/navigation";
 
@@ -28,6 +29,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [mentors, setMentors] = useState([]);
   const [quickMentors, setQuickMentors] = useState([]);
+  const [mentorForBooking, setMentorForBooking] = useState({});
   const [mentor, setMentor] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [createdSessions, setCreatedSessions] = useState([]);
@@ -39,6 +41,9 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
   const [selectedButtons, setSelectedButtons] = useState("");
+
+  const link = pathname;
+  const id = link.split("/book/").pop();
 
   // Function to fetch data and cache it
   const fetchDataAndCache = async (
@@ -81,19 +86,29 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem("user_cache", JSON.stringify(userData));
           localStorage.setItem("user_cache_timestamp", Date.now());
 
-          const mentorData = await getMentor();
-          setMentor(mentorData);
-          localStorage.setItem("mentor_cache", JSON.stringify(mentorData));
-          localStorage.setItem("mentor_cache_timestamp", Date.now());
+          if (
+            pathname === "/manager/Settings" ||
+            pathname === "/settings"
+          ) {
+            const mentorData = await getMentor();
+            setMentor(mentorData);
+            localStorage.setItem("mentor_cache", JSON.stringify(mentorData));
+            localStorage.setItem("mentor_cache_timestamp", Date.now());
+          }
         }
 
-        fetchDataAndCache(getMentors, setMentors, "mentors_cache", 3600); // Cache for 1 hour
-        fetchDataAndCache(
-          getQuickMentors,
-          setQuickMentors,
-          "quick_mentors_cache",
-          3600
-        ); // Cache for 1 hour
+        if (pathname === `/book/${id}` && id !== "") {
+          const mentorForBooking = await getMentorForBooking(id);
+          setMentorForBooking(mentorForBooking);
+        }
+
+        // fetchDataAndCache(getMentors, setMentors, "mentors_cache", 3600); // Cache for 1 hour
+        // fetchDataAndCache(
+        //   getQuickMentors,
+        //   setQuickMentors,
+        //   "quick_mentors_cache",
+        //   3600
+        // ); // Cache for 1 hour
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -159,7 +174,7 @@ export const UserProvider = ({ children }) => {
             user.id,
             user.email
           ); // Cache for 1 hour
-        } else if (pathname === "/") {
+        } else if (pathname === "/testing") {
           // const email = `${ user.email || user.superEmail}`;
 
           fetchDataAndCache(
@@ -194,6 +209,7 @@ export const UserProvider = ({ children }) => {
         setMentors,
         mentor,
         setMentor,
+        mentorForBooking,
         bookmarks,
         setBookmarks,
         createdSessions,

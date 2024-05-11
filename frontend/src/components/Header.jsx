@@ -5,6 +5,7 @@ import {
   getNotifications,
   isUserValid,
   signout,
+  toggleGoogle,
 } from "../../../backend/src/pocketbase";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -34,6 +35,7 @@ import { EmptyIcon } from "@/icons/EmptyIcon";
 import { IoChatboxEllipsesOutline, IoFlashOutline } from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../images/logorm.png";
+import { QikelinkLogo } from "@/icons/Qikelinklogo";
 
 export default function Header() {
   const { user, isLoading, setUser, notifications, setNotifications } =
@@ -45,10 +47,12 @@ export default function Header() {
   const { setProgress } = useAuth();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
-  const handleSignout = () => {
+  const handleSignout = async () => {
     setProgress(90);
-    window.location.reload();
+    await toggleGoogle(false);
     signout(setIsUserValid);
+   
+    window.location.reload();
     setUser([]);
   };
 
@@ -65,23 +69,21 @@ export default function Header() {
   }, [notifications]);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background">
+    <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
       <div className="font-poppins flex justify-between items-center pb-3">
         <div className="flex items-center justify-between space-x-2 hover:cursor">
           {isDropdownOpen ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <FaX className="md:hidden" size={16} />
             </Badge>
           ) : (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <FaBars className="md:hidden" size={16} />
             </Badge>
           )}
@@ -90,13 +92,10 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <Image
-            onClick={() => router.push(`/`)}
-            src={logo}
-            width={150}
-            height={150}
-            layout="fixed"
-          />
+          <div className="flex items-center" onClick={() => router.push(`/`)}>
+            <QikelinkLogo />
+            <p className="font-bold text-xl ml-2">Qikelink</p>
+          </div>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">
           <div className="relative flex w-full">
@@ -127,8 +126,7 @@ export default function Header() {
                 <Badge
                   variant="outline"
                   className={"rounded-full p-2 hidden md:inline"}
-                  onClick={() => router.push("/sessions")}
-                >
+                  onClick={() => router.push("/sessions")}>
                   <BsHeadsetVr
                     size={20}
                     className="text-current hover:animate-spin cursor-pointer"
@@ -139,8 +137,7 @@ export default function Header() {
                   className={
                     "relative rounded-full p-2 hidden md:inline cursor-pointer"
                   }
-                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                >
+                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}>
                   <FaRegBell size={20} className="text-current" />
 
                   {notifications.items && notifications.items.length > 0 && (
@@ -160,8 +157,7 @@ export default function Header() {
                             <div
                               className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
                               onClick={() => router.push("/sessions")}
-                              key={index}
-                            >
+                              key={index}>
                               <div className="flex items-center">
                                 <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
                                 <div>
@@ -215,13 +211,12 @@ export default function Header() {
                   onClick={() => setProgress(90)}
                   className={`flex gap-4 justify-start py-5 cursor-pointer hover:text-blue ${
                     pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-                  }`}
-                >
+                  }`}>
                   <AiOutlineHome size={24} className="ml-2" />
                   <p>Home</p>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/quickService"
                   onClick={() => setProgress(90)}
@@ -234,7 +229,7 @@ export default function Header() {
                   <IoFlashOutline size={22} className="ml-2" />
                   <p>Quick Service</p>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/notification"
@@ -243,14 +238,13 @@ export default function Header() {
                     pathname === "/notification"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-start space-x-4">
                     <IoChatboxEllipsesOutline size={22} className="ml-2" />
                     <p>Messages</p>
                   </div>
                   {notifications.items && notifications.items.length > 0 && (
-                    <span className=" bg-red text-white border rounded-full px-1">
+                    <span className=" bg-red-500 text-white text-sm border rounded-full px-1">
                       {" "}
                       {`${notifications.items.length}+`}
                     </span>
@@ -259,19 +253,19 @@ export default function Header() {
               </li>
               <li>
                 <Link
-                  href="/bookmark"
+                  href="/mentors"
                   onClick={() => setProgress(90)}
                   className={`flex gap-4 items-center cursor-pointer py-5 px-1 hover:text-blue ${
-                    pathname === "/bookmark"
+                    pathname === "/mentors"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
                   }`}
                 >
                   <PiBookBookmarkDuotone size={24} className="ml-2" />
-                  <p>BookMarked</p>
+                  <p>Mentors</p>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/sessions"
                   onClick={() => setProgress(90)}
@@ -284,9 +278,22 @@ export default function Header() {
                   <BsJournalBookmarkFill size={24} className="ml-2" />
                   <p>Sessions</p>
                 </Link>
+              </li> */}
+
+              <li>
+                <Link
+                  href="/manager/Upcoming"
+                  onClick={() => setProgress(90)}
+                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
+                    pathname === "/manager/Organization"
+                      ? "bg-[#e2eff8] text-blue rounded-md"
+                      : ""
+                  }`}>
+                  <CgProfile size={24} className="ml-2" />
+                  <p>Dashboard</p>
+                </Link>
               </li>
 
-              <Separator orientation="horizontal" />
               <li>
                 <Link
                   href="/settings"
@@ -295,27 +302,12 @@ export default function Header() {
                     pathname === "/settings"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <IoMdSettings size={24} className="ml-2" />
                   <p>Settings</p>
                 </Link>
               </li>
-
-              <li>
-                <Link
-                  href="/manager/Organization"
-                  onClick={() => setProgress(90)}
-                  className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
-                    pathname === "/manager/Organization"
-                      ? "bg-[#e2eff8] text-blue rounded-md"
-                      : ""
-                  }`}
-                >
-                  <CgProfile size={24} className="ml-2" />
-                  <p>Manager</p>
-                </Link>
-              </li>
+              <Separator orientation="horizontal" />
               <li>
                 <Link
                   href="/help"
@@ -324,8 +316,7 @@ export default function Header() {
                     pathname === "/help"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <IoMdHelpCircleOutline size={24} className="ml-2" />
                   <p>Help</p>
                 </Link>
@@ -338,8 +329,7 @@ export default function Header() {
                     pathname === "/feedBack"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <MdOutlineFeedback size={24} className="ml-2" />
                   <p>Send FeedBack</p>
                 </Link>
@@ -348,8 +338,7 @@ export default function Header() {
                 <li>
                   <button
                     onClick={handleSignout}
-                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md"
-                  >
+                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md">
                     <MdLogout size={22} className="ml-2" />
                     <p>Sign Out</p>
                   </button>

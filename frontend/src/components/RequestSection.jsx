@@ -32,6 +32,7 @@ import {
 import { useToast } from "./ui/use-toast";
 import { EmptyIcon } from "@/icons/EmptyIcon";
 import { Label } from "./ui/label";
+import { useRouter } from "next/navigation";
 
 const RequestSection = () => {
   const {
@@ -42,6 +43,11 @@ const RequestSection = () => {
     setNotifications,
   } = useUser();
   const { toast } = useToast();
+  const router = useRouter();
+
+  const handleNavigate = () => {
+    router.push("/");
+  };
 
   function trimToCharacters(str) {
     if (str.length <= 70) {
@@ -172,7 +178,7 @@ const RequestSection = () => {
   };
 
   return (
-    <div className="py-2">
+    <div className="p-2">
       {meetingRequests.length > 0 && (
         <div className="flex justify-between items-center">
           <h2 className="text-lg lg:text-xl">Meeting Requests</h2>
@@ -289,6 +295,14 @@ const RequestSection = () => {
           <p className="text-center text-xl font-medium text-darktext">
             No request to show for now.
           </p>
+          <Button
+            size="xl"
+            className="bg-blue rounded-lg text-lg mt-3 "
+            type="button"
+            onClick={handleNavigate}
+          >
+            Browse mentors
+          </Button>
         </div>
       )}
 
