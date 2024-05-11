@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       {domLoaded && (
-        <main className=" lg:px-4 ">
+        <main className="px-2 lg:px-4 ">
           <Header />
           <HomeSection />
         </main>

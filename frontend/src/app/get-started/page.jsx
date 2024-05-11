@@ -16,7 +16,7 @@ const page = () => {
   return (
     <>
       {domLoaded && (
-        <main className=" lg:mx-4">
+        <main className="mx-2 lg:mx-4">
           <Header />
           <OnboardingComp/>
         </main>
