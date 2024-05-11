@@ -39,15 +39,17 @@ const FeedBackSection = () => {
         <ListSection />
       </div>
 
-      <form onSubmit={handleSendFeedback} className="grid w-full gap-2">
+      <form onSubmit={handleSendFeedback} className="px-2 w-full space-y-3 ">
+        <h1 className="text-2xl font-semibold mb-3">Send feedback</h1>
         <Textarea
+          className="h-64"
           placeholder="Type your message here."
           name="message"
           type="text"
           value={message}
           onChange={(e) => SetMessage(e.target.value)}
         />
-        <Button type="submit" className="w-1/4 item-end">
+        <Button type="submit" className="w-2/4 item-end">
           Send message
         </Button>
       </form>
