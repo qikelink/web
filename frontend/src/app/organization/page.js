@@ -7,7 +7,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <main className=" lg:mx-4">
+    <main className="mx-2 lg:mx-4">
       <Header />
       <div className="bg-white flex justify-center">
         <div className="flex flex-row justify-center mx-12 w-full bg-white">
