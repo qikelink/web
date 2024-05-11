@@ -27,22 +27,40 @@ import pic5 from "../../images/landin.png";
 import Image from "next/image";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
+import { isUserValid } from "../../../backend/src/pocketbase";
 
 const LandingCard = () => {
   const router = useRouter();
 
- const handleBrowse = () => {
+  const handleBrowse = () => {
     router.push("/mentors");
   };
 
- const handleClaim = () => {
-    router.push("/get-started");
+  const handleClaim = () => {
+    if (isUserValid) {
+      router.push("/settings");
+    } else {
+      router.push("/get-started");
+    }
+  };
+
+  const handleContact = () => {
+    const recipientEmail = "support@qikelink.com";
+    const subject = "Contact Us";
+
+    window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(
+      subject
+    )}`;
+  };
+
+  const handleAbout = () => {
+    router.push("/help");
   };
 
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] h-screen lg:h-screen">
+      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] min-h-[990px] lg:h-[716px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-thin">
@@ -64,16 +82,17 @@ const LandingCard = () => {
 
             <Badge
               className="px-4 rounded-full bg-[#d6e7fa]"
-              variant="secondary">
+              variant="secondary"
+            >
               Beta
             </Badge>
           </div>
 
           <div className="hidden lg:flex space-x-3 items-center">
-            <Button variant="ghost" onClick={() => router.push(`/help`)}>
+            <Button variant="ghost" onClick={handleAbout}>
               About
             </Button>
-            <Button variant="ghost" onClick={() => router.push(`/help`)}>
+            <Button variant="ghost" onClick={handleContact}>
               Contact us
             </Button>
             <Button size="lg" onClick={handleBrowse}>
@@ -87,13 +106,13 @@ const LandingCard = () => {
                   <HiBars3BottomRight size={20} />
                 </MenubarTrigger>
                 <MenubarContent className="flex flex-col space-y-3 bg-[#FFFFFFCC] p-2">
-                  <Button variant="ghost" onClick={() => router.push(`/help`)}>
+                  <Button onClick={handleAbout} variant="ghost">
                     About
                   </Button>
-                  <Button variant="ghost" onClick={() => router.push(`/help`)}>
+                  <Button onClick={handleContact} variant="ghost">
                     Contact us
                   </Button>
-                  <Button size="lg" onClick={handleBrowse}>
+                  <Button onClick={handleBrowse} size="lg">
                     Get started
                   </Button>
                 </MenubarContent>
@@ -131,8 +150,12 @@ const LandingCard = () => {
                 <Button
                   onClick={handleClaim}
                   size="xl"
-                  className="bg-[#007AFF] ">
-                  <Button variant="outline" className="bg-white mr-2">
+                  className="bg-[#007AFF] "
+                >
+                  <Button
+                    variant="ghost"
+                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2"
+                  >
                     <FcGoogle size={20} />
                   </Button>{" "}
                   Claim your booking link
@@ -140,7 +163,8 @@ const LandingCard = () => {
                 <Button
                   onClick={handleBrowse}
                   size="xl"
-                  className="bg-[#1C1C1C] px-10">
+                  className="bg-[#1C1C1C] px-10"
+                >
                   Browse mentors
                 </Button>
               </div>
@@ -166,7 +190,7 @@ const LandingCard = () => {
       </section>
 
       {/* section two  */}
-      <section className=" flex space-x-4 justify-evenly items-center font-jakarta bg-[#FFF2E6] h-[660px] lg:h-[716px]">
+      <section className=" flex space-x-4 justify-evenly items-center font-jakarta bg-[#FFF2E6] h-[540px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero cloud 1 */}
@@ -376,7 +400,8 @@ const LandingCard = () => {
           <div className="mt-20 w-[80%] lg:w-[40%] space-y-3">
             <Input
               placeholder="Enter your email"
-              className="bg-white py-5 rounded-lg"></Input>
+              className="bg-white py-5 rounded-lg"
+            ></Input>
             <Button size="lg" className="bg-[#1C1C1C] px-10 w-full">
               Subscribe
             </Button>
@@ -385,7 +410,7 @@ const LandingCard = () => {
       </section>
 
       {/* section eight  */}
-      <section className=" flex justify-center  space-x-4 items-center  font-jakarta bg-emerald-50 h-screen lg:h-[716px]">
+      <section className=" flex justify-center  space-x-4 items-center  font-jakarta bg-emerald-50 min-h-[990px] lg:h-[716px]">
         {/* Hero section */}
 
         <div className=" w-5/6 flex space-y-4 flex-wrap justify-center lg:justify-between items-center">
@@ -416,7 +441,8 @@ const LandingCard = () => {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem
                   value="item-1"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>What is Qikelink?</AccordionTrigger>
                   <AccordionContent>
                     Qikelink connects creators and professionals with their
@@ -425,7 +451,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-2"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>
                     How To Get My Booking Link?
                   </AccordionTrigger>
@@ -438,7 +465,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-3"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>
                     How Can I Make Money with Qikelink?
                   </AccordionTrigger>
@@ -449,7 +477,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-4"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>
                     How Trusted is This Platform
                   </AccordionTrigger>
@@ -460,7 +489,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-5"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>Do I Need Money To SignUp</AccordionTrigger>
                   <AccordionContent>
                     No, signing up for Qikelink is absolutely free.

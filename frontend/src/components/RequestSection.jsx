@@ -172,7 +172,7 @@ const RequestSection = () => {
   };
 
   return (
-    <div className="py-2">
+    <div className="p-2">
       {meetingRequests.length > 0 && (
         <div className="flex justify-between items-center">
           <h2 className="text-lg lg:text-xl">Meeting Requests</h2>

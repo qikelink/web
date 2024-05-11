@@ -7,8 +7,8 @@ const HelpSection = () => {
       <div className="hidden md:inline w-1/4 ">
         <ListSection />
       </div>
-      <div className=" w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
-        <div className="p-8 bg-secondary">
+      <div className=" w-full md:w-3/4 flex flex-col px-2 overflow-y-auto custom-scrollbar">
+        <div className="p-8 bg-secondary rounded-md">
           <h1 className="text-2xl font-semibold mb-4">Help Desk</h1>
           <div className="mb-6">
             <h2 className="text-lg font-semibold mb-2">
@@ -16,10 +16,10 @@ const HelpSection = () => {
             </h2>
             <p className="text-gray-700">
               Our company is developing a platform for connecting individuals
-              and enterprises with advisers for paid sessions. Similar to
+              and enterprises with mentors for one on one sessions. Similar to
               YouTube's model, it involves a rating system based on demand and
               features a user-friendly interface for booking and conducting
-              advisory sessions.
+              sessions.
             </p>
           </div>
           <div className="mb-6">
@@ -28,11 +28,11 @@ const HelpSection = () => {
             </h2>
             <p className="text-gray-700">
               The platform allows users to browse through a curated list of
-              advisers, view their profiles, ratings, and expertise areas. Users
-              can then book advisory sessions with their preferred advisers at
+              mentors, view their profiles, ratings, and expertise areas. Users
+              can then book one on one sessions with their preferred mentors at
               their convenience. The sessions are conducted virtually through
               the platform, offering a seamless and secure experience for both
-              advisers and users.
+              mentors and users.
             </p>
           </div>
           <div className="mb-6">
@@ -49,10 +49,10 @@ const HelpSection = () => {
                 <li>Rating system based on user feedback and demand</li>
                 <li>Secure payment processing for paid sessions</li>
                 <li>
-                  Virtual session capabilities for remote advisory meetings
+                  Virtual session capabilities for remote one on one sessions
                 </li>
-                <li>Profile customization options for advisers</li>
-                <li>Advanced search filters for finding specific advisers</li>
+                <li>Profile customization options for mentors</li>
+                <li>Advanced search filters for finding specific mentors</li>
               </ul>
             </p>
           </div>
@@ -63,7 +63,7 @@ const HelpSection = () => {
             <p className="text-gray-700">
               To get started, simply sign up for an account on our platform.
               Once registered, you can start browsing through our list of
-              advisers, view their profiles, and book sessions based on your
+              mentors, view their profiles, and book sessions based on your
               preferences and availability.
             </p>
           </div>

@@ -69,7 +69,7 @@ export default function Header() {
   }, [notifications]);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background pt-4">
+    <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
       <div className="font-poppins flex justify-between items-center pb-3">
         <div className="flex items-center justify-between space-x-2 hover:cursor">
           {isDropdownOpen ? (
@@ -282,7 +282,7 @@ export default function Header() {
 
               <li>
                 <Link
-                  href="/manager/Organization"
+                  href="/manager/Upcoming"
                   onClick={() => setProgress(90)}
                   className={`flex gap-4 justify-start items-center py-5 px-1 cursor-pointer hover:text-blue ${
                     pathname === "/manager/Organization"

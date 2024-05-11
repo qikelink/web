@@ -1,4 +1,5 @@
 export const dataset = [
+  "All",
   "SaaS",
   "B2B",
   "Fintech",

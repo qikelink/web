@@ -95,7 +95,7 @@ const HomeCardSection = () => {
 
   return (
     <>
-      <div>
+      <div className="px-2">
         <KeywordBar data={dataset} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full py-2">
           <Card className="hidden flex justify-center item-center bg-black ">

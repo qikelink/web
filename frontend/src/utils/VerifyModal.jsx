@@ -163,7 +163,7 @@ const VerifyModal = ({ blue, userData }) => {
               <Input
                 name="account"
                 type="text"
-                placeholder="Payment account"
+                placeholder="Payment account and bank"
                 className=" bg-inputbackground mt-1 "
                 value={formData.account}
                 onChange={handleChange}
