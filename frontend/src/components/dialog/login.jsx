@@ -158,12 +158,14 @@ const LoginDialog = () => {
           } else {
             Signup(email, email, password, password)
               .then(() => {
-                toggleMode();
                 toast({
                   title: "Account created",
                   description:
-                    "Account created successfully! Login with new credentials.",
+                    "Account created successfully! Signing in with new credentials.",
                   variant: "default",
+                });
+                login(email, password, setIsUserValid).then(() => {
+                  window.location.reload();
                 });
               })
               .catch((error) => {
