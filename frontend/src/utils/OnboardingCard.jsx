@@ -429,12 +429,14 @@ const LoginDialog = () => {
           } else {
             Signup(email, email, password, password)
               .then(() => {
-                toggleMode();
                 toast({
                   title: "Account created",
                   description:
-                    "Account created successfully! Login with new credentials.",
+                    "Account created successfully! Signing in with new credentials.",
                   variant: "default",
+                });
+                login(email, password, setIsUserValid).then(() => {
+                  window.location.reload();
                 });
               })
               .catch((error) => {
@@ -530,6 +532,7 @@ const LoginDialog = () => {
     : "Continue with google";
 
   const linkText = isSignIn ? "Create an account" : "Sign In";
+  const Description = isSignIn ? "Sign Into Your Account To Get Started." : "Create An Account To Get Started With Qikelink.";
 
   return (
     <Dialog open={isDialogOpen} onClose={closeDialog}>
@@ -554,7 +557,7 @@ const LoginDialog = () => {
             </DialogClose>
           </DialogTitle>
           <DialogDescription className="text-left">
-            Create An Account To Get Started With Qikelink.
+            {Description}
           </DialogDescription>
         </DialogHeader>
         <div>
