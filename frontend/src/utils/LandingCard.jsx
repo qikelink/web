@@ -64,7 +64,7 @@ const LandingCard = () => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
 
-      if (currentScrollPos > prevScrollPos) {
+      if (currentScrollPos > prevScrollPos + 3) {
         // Scrolling down
         navbar.classList.add(
           "fixed",
