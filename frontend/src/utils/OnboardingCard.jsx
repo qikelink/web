@@ -182,7 +182,7 @@ const OnboardingCard = () => {
   return (
     <div className="h-fit text-lg">
       {/* Profile image */}
-      <h2 className="text-xl font-semibold mb-2">Get started</h2>
+      <h2 className="text-xl font-semibold mb-2">Setup your profile</h2>
       <div className="border border-gray-200 rounded-lg p-4 lg:p-10">
         <Label className="text-lg">Profile Image</Label>
         {isLoading ? (
