@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "@/contexts/user-context";
 import { useToast } from "@/components/ui/use-toast";
@@ -57,10 +57,55 @@ const LandingCard = () => {
     router.push("/help");
   };
 
+  useEffect(() => {
+    let prevScrollPos = window.scrollY;
+    const navbar = document.getElementById("navbar");
+
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+
+      if (currentScrollPos > prevScrollPos) {
+        // Scrolling down
+        navbar.classList.add(
+          "fixed",
+          "-top-10",
+          "left-0",
+          "right-0",
+          "bg-white",
+          "z-50"
+        );
+      } else {
+        // Scrolling up
+        if (currentScrollPos === 0) {
+          // Reached the top of the page
+          navbar.classList.remove(
+            "fixed",
+            "top-0",
+            "w-full",
+            "left-0",
+            "right-0",
+            "bg-white",
+            "z-50"
+          );
+        }
+      }
+
+      prevScrollPos = currentScrollPos;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // JSX remains the same as before
+
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] min-h-[990px] lg:h-[716px]">
+      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] min-h-screen lg:h-[716px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-thin">
@@ -73,7 +118,7 @@ const LandingCard = () => {
         </div>
 
         {/* Header  */}
-        <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
+        <div id="navbar" className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
           <div className="flex space-x-3">
             <div className="flex items-center">
               <QikelinkLogo />
