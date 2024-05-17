@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -15,15 +13,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Menubar,
   MenubarContent,
@@ -48,13 +37,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BsShareFill, BsJournalBookmarkFill } from "react-icons/bs";
-import { Toggle } from "@/components/ui/toggle";
-import { FaStar } from "react-icons/fa";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
 import { usePathname, useRouter } from "next/navigation";
-import { GrTag } from "react-icons/gr";
 import { SignInIcon } from "@/icons/SignInIcon";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { usePaystackPayment } from "react-paystack";
@@ -74,9 +59,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { QikelinkLogo } from "@/icons/Qikelinklogo";
 import { ImCross } from "react-icons/im";
 import LoginDialog from "@/components/dialog/login";
+import { format } from "date-fns";
 
 const BookCard2 = () => {
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -248,6 +234,42 @@ const BookCard2 = () => {
     }
     setIsloading(!isloading);
     setIsSpinning(true);
+
+    if (mentorForBooking.rate !== "Free" || !paid) {
+      setIsDialogOpen(false);
+      initializePayment({
+        onSuccess: setPaid(true),
+        onClose: handlePaymentCancel,
+      });
+    } else {
+      handlePaymentSuccess();
+    }
+  };
+
+  const handlePaystack = async (event) => {
+    event.preventDefault();
+
+    if (!isUserValid) {
+      handleClick();
+    }
+
+    if (mentorForBooking.rate !== "Free" || !paid) {
+      setIsDialogOpen(false);
+      initializePayment({
+        onSuccess: setPaid(true),
+        onClose: handlePaymentCancel,
+      });
+    } else {
+      handlePaymentSuccess();
+    }
+  };
+
+  const handleStripe = async (event) => {
+    event.preventDefault();
+
+    if (!isUserValid) {
+      handleClick();
+    }
 
     if (mentorForBooking.rate !== "Free" || !paid) {
       setIsDialogOpen(false);
@@ -522,7 +544,7 @@ const BookCard2 = () => {
                     <img src="/wallet.svg" alt="Chat icon" className="mr-1" />
                     {mentorForBooking.rate
                       ? mentorForBooking.rate
-                      : "Session fee"}
+                      : "Booking Fee"}
                   </div>
                   <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light">
                     <img src="/clock.svg" alt="Chat icon" className="mr-1" />
@@ -532,8 +554,10 @@ const BookCard2 = () => {
                 <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light text-left ">
                   <img src="/calendar.svg" alt="Chat icon" className="mr-1" />
                   <p className="line-clamp-1">
-                    {sessionTime ? sessionTime : "Time -"}{" "}
-                    {date ? date : "Date"}{" "}
+                    {sessionTime || date
+                      ? `${sessionTime}`
+                      : "Pick session time"}{" "}
+                    {date ? format(date, "EEEE, MMMM dd, yyyy") : ""}
                   </p>
                 </div>
                 <Separator className="bg-gray-100 my-3 hidden lg:block" />
@@ -580,7 +604,7 @@ const BookCard2 = () => {
                 <Label>
                   Select time <span className="text-darktext">(required)</span>
                 </Label>
-                <div className="flex space-x-3">
+                <div className="flex space-x-3 justify-evenly">
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -592,11 +616,11 @@ const BookCard2 = () => {
                       >
                         <img
                           src="/calendar2.svg"
-                          alt="Chat icon"
+                          alt="Calendar icon"
                           className="mr-1"
                         />
                         {date ? (
-                          format(date, "MMMM dd, yyyy ")
+                          format(date, "MMMM dd, yyyy")
                         ) : (
                           <span className="text-[#0A84FF]">Pick a date</span>
                         )}
@@ -704,6 +728,7 @@ const BookCard2 = () => {
                 <Button
                   variant="outline"
                   className="py-6 px-10 rounded-lg text-xl font-medium text-[#635BFF]"
+                  onClick={isUserValid ? openDialog : openDialog}
                 >
                   <img
                     src="/stripe.svg"
@@ -715,7 +740,7 @@ const BookCard2 = () => {
                 <Button
                   variant="outline"
                   className="py-6 px-8 rounded-lg text-lg font-medium"
-                  onClick={isUserValid ? handleSubmit : openDialog}
+                  onClick={isUserValid ? handlePaystack : openDialog}
                 >
                   <img
                     src="/paystack.png"
@@ -726,9 +751,19 @@ const BookCard2 = () => {
                 </Button>
               </div>
               <p className="text-xs text-darktext flex items-center">
-                {!paid ? 'No payment detected yet..' : 'Payment successful, book away!'}
+                {mentorForBooking.rate === "Free"
+                  ? null
+                  : !paid && mentorForBooking.rate !== "Free"
+                  ? "No payment detected yet.."
+                  : "Payment successful, book away!"}
                 <AiOutlineLoading3Quarters
-                  className={`${!paid ? "ml-1 animate-spin" : "hidden"}`}
+                  className={`${
+                    mentorForBooking.rate === "Free"
+                      ? "hidden"
+                      : !paid && mentorForBooking.rate !== "Free"
+                      ? "ml-1 animate-spin"
+                      : "hidden"
+                  }`}
                 />
               </p>
             </div>

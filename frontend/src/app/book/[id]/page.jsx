@@ -3,6 +3,7 @@
 import BookComp from "@/components/BookComp";
 import Header from "@/components/Header";
 import { useAuth } from "@/contexts/auth-context";
+import BookCard2 from "@/utils/BookCard2";
 import { useState, useEffect } from "react";
 
 export const runtime = "edge";
@@ -18,9 +19,8 @@ const page = () => {
   return (
     <>
       {domLoaded && (
-        <main className="mx-2 lg:mx-4">
-          <Header />
-          <BookComp/>
+          <main className=" ">
+          <BookCard2/>
         </main>
       )}
     </>
