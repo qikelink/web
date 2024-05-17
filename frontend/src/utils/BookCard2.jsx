@@ -253,6 +253,10 @@ const BookCard2 = () => {
       handleClick();
     }
 
+    if (mentorForBooking.rate === null) {
+      return;
+    }
+
     if (mentorForBooking.rate !== "Free" || !paid) {
       setIsDialogOpen(false);
       initializePayment({
@@ -269,6 +273,10 @@ const BookCard2 = () => {
 
     if (!isUserValid) {
       handleClick();
+    }
+
+    if (mentorForBooking.rate === null) {
+      return;
     }
 
     if (mentorForBooking.rate !== "Free" || !paid) {
@@ -389,7 +397,7 @@ const BookCard2 = () => {
               <MenubarTrigger>
                 <HiBars3BottomRight size={20} />
               </MenubarTrigger>
-              <MenubarContent className="flex flex-col space-y-3 bg-[#FFFFFFCC] p-2">
+              <MenubarContent className="flex flex-col space-y-3 bg-[#FFFFFF] p-2">
                 <Button onClick={handleAbout} variant="ghost">
                   About
                 </Button>
@@ -475,11 +483,9 @@ const BookCard2 = () => {
                       {mentorForBooking && mentorForBooking.interests
                         ? mentorForBooking.interests
                             .split(",")
-                            .map((interest, index) => (
-                              <Badge key={index} variant="outline">
-                                {interest.trim()}
-                              </Badge>
-                            ))
+                            .slice(0, 2) // Limit to the first two interests
+                            .map((interest) => interest.trim()) // Trim each interest
+                            .join(" + ") // Join with a plus sign
                         : "N/A"}
                     </p>
                   </div>
@@ -637,7 +643,7 @@ const BookCard2 = () => {
                   </Popover>
 
                   <Input
-                    className="bg-gray-200 rounded-full py-2 text-[#0A84FF] w-3/4"
+                    className="bg-gray-200 rounded-full py-2 text-[#0A84FF] w-full px-3"
                     type="time"
                     placeholder="9:00pm"
                     value={sessionTime}
@@ -792,9 +798,9 @@ const BookCard2 = () => {
                 </Button>
               )}
 
-              <p className="text-center mt-2 text-base">
+              <p className="text-center mt-2 text-sm">
                 claim your own link{" "}
-                <button variant="ghost" className=" text-lg text-blue ">
+                <button variant="ghost" className=" text-base text-blue ">
                   get link
                 </button>
               </p>
@@ -855,7 +861,13 @@ const BookCard2 = () => {
                   <p className="text-darktext text-lg text-center">
                     Create account or sign in to book
                   </p>
-                  <LoginDialog />
+                  <LoginDialog
+                    loginText="Sign In"
+                    buttonColor="bg-black"
+                    buttonHoverColor="bg-gray-600"
+                    buttonSize="lg"
+                    textHoverColor="white"
+                  />
                 </div>
               </div>
             </DialogContent>
