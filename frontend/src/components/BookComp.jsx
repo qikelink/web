@@ -2,6 +2,7 @@ import ListSection from "@/utils/ListSection";
 import React from "react";
 
 import BookCard from "@/utils/BookCard";
+import BookCard2 from "@/utils/BookCard2";
 
 const BookComp = () => {
   return (
@@ -12,7 +13,7 @@ const BookComp = () => {
         </div>
         <div className=" w-full md:w-3/4 flex flex-col px-1 overflow-y-auto custom-scrollbar">
           {/* <HomeCardSection /> */}
-          <BookCard />
+          <BookCard2 />
         </div>
       </div>
     </>
