@@ -100,7 +100,7 @@ const LandingCard = () => {
     };
   }, []);
 
-  // JSX remains the same as before
+  
 
   return (
     <>
