@@ -105,7 +105,7 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] min-h-[990px] lg:h-[660px]">
+      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] min-h-[900px] lg:h-[660px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-thin">
