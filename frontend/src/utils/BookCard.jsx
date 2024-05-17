@@ -372,7 +372,7 @@ const BookCard = () => {
                     {interest.trim()}
                   </Badge>
                 ))
-              : "N/A"}
+              : "Interests"}
           </>
         )}
         <div className="space-y-3">

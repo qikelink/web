@@ -31,7 +31,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import googleLogo from "../../../public/google.png";
 
-const LoginDialog = () => {
+const LoginDialog = ({ loginText = "Log In", buttonColor = "bg-blue", buttonHoverColor = "bg-lightblue2", buttonSize = 'sm', textHoverColor = 'text-primary' }) => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [password, setPassword] = useState("");
   const [comfirmPass, setComfirmPass] = useState("");
@@ -265,13 +265,13 @@ const LoginDialog = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button
+      <Button
           type="button"
-          size="sm"
-          className="w-full bg-blue text-secondary hover:text-primary hover:bg-lightblue2 rounded-md text-lg"
+          size={buttonSize}
+          className={`w-full ${buttonColor} text-secondary hover:${textHoverColor} hover:${buttonHoverColor} rounded-md text-lg`}
         >
           <CgProfile className="mr-2 h-4 w-4" />
-          Log in
+          {loginText}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm rounded-md">

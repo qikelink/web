@@ -48,16 +48,269 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BsShareFill, BsJournalBookmarkFill } from "react-icons/bs";
+import { Toggle } from "@/components/ui/toggle";
+import { FaStar } from "react-icons/fa";
+import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@/contexts/user-context";
+import { usePathname, useRouter } from "next/navigation";
+import { GrTag } from "react-icons/gr";
+import { SignInIcon } from "@/icons/SignInIcon";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { usePaystackPayment } from "react-paystack";
+import { FaX } from "react-icons/fa6";
+import {
+  CreateBookmark,
+  createNotification,
+  createSession,
+  getImageUrl,
+  getNotifications,
+  isUserValid,
+} from "../../../backend/src/pocketbase";
+import { Skeleton } from "@/components/ui/skeleton";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/navigation";
 import { QikelinkLogo } from "@/icons/Qikelinklogo";
 import { ImCross } from "react-icons/im";
+import LoginDialog from "@/components/dialog/login";
 
 const BookCard2 = () => {
   const [date, setDate] = useState();
+  const [isSpinning, setIsSpinning] = useState(false);
+  const { toast } = useToast();
+  const [isExpanded, setIsExpanded] = useState(false);
   const [sessionTime, setSessionTime] = useState("");
+  const [characterCount, setCharacterCount] = useState(800);
+  const [formData, setFormData] = useState({
+    purpose: "",
+    email: "",
+    name: "",
+  });
+  const {
+    user,
+    isLoading,
+    mentorForBooking,
+    createdOrganization,
+    setNotifications,
+  } = useUser();
+
+  const [selectedOption, setSelectedOption] = useState("");
+  const [isloading, setIsloading] = useState(true);
+  const pathname = usePathname();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [paid, setPaid] = useState(false);
+
+  const closeDialog = () => setIsDialogOpen(false);
+  const openDialog = () => setIsDialogOpen(true);
+
+  const handleLink = () => {
+    router.push("/get-started");
+  };
+
+  const PAYSTACK_KEY =
+    process.env.PAYSTACK_KEY ||
+    "pk_live_7783d09436e5356ced8146ba3de4cacdcd614645";
+
+  const handlePaymentSuccess = () => {
+    const orgId = selectedOption === "Individual" ? undefined : selectedOption;
+    let sessionDate = date
+      ? new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        ).toISOString()
+      : new Date().toISOString();
+
+    const requestMessageReceiver = `Hello you have received a session request from ${user.name}, accept or reject request from session requests under manager section.`;
+    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
+
+    createSession(
+      mentorForBooking.id,
+      mentorForBooking.rating,
+      orgId,
+      formData.purpose,
+      sessionTime,
+      sessionDate,
+      user.username,
+      user.bio
+    )
+      .then(() => {
+        toast({
+          title: "Booking request sent",
+          description: "Booking request sent successfully!",
+          variant: "default",
+        });
+        closeDialog();
+      })
+      .finally(() => {
+        createNotification(
+          "Session Request",
+          requestMessageSender,
+          requestMessageReceiver,
+          undefined,
+          mentorForBooking.expand.users.id,
+          orgId
+        ).then(() => {
+          getNotifications(user.id, user.email)
+            .then((res) => {
+              setNotifications(res);
+            })
+            .catch((error) => {
+              console.error("Error fetching notifications data:", error);
+            });
+        });
+      });
+
+    setIsSpinning(false);
+    setIsloading(false);
+    setIsExpanded(false);
+    setSelectedOption("");
+    setDate(null);
+    setFormData({ purpose: "" });
+  };
+
+  const handlePaymentCancel = () => {
+    toast({
+      title: "Payment canceled",
+      description: "Please complete payment to be able to request a session.",
+      variant: "destructive",
+    });
+
+    setIsloading(false);
+    setIsSpinning(false);
+  };
+
+  const handlePaymentError = (error) => {
+    toast({
+      title: "Payment initialization failed",
+      description: "An error occurred during payment initialization.",
+      variant: "destructive",
+    });
+    console.error("Payment initialization error:", error);
+
+    setIsloading(false);
+    setIsSpinning(false);
+  };
+
+  const config = {
+    publicKey: PAYSTACK_KEY,
+    reference: new Date().getTime().toString(),
+    email: user.email,
+    currency: "NGN",
+    amount:
+      mentorForBooking && mentorForBooking.rate
+        ? mentorForBooking.rate * 100
+        : 0,
+    onSuccess: handlePaymentSuccess,
+    onCancel: handlePaymentCancel,
+    onError: handlePaymentError,
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const options = createdOrganization.map((org) => ({
+    value: org.id,
+    label: org.username,
+  }));
+
+  // to add the default one too
+  options.unshift({ value: "Individual", label: "Individual" });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const remainingCharacters = 800 - value.length; // Calculate remaining characters
+    setCharacterCount(remainingCharacters); // Update character count state
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!isUserValid) {
+      handleClick();
+    }
+
+    if (
+      selectedOption === "" ||
+      sessionTime === "" ||
+      formData.purpose === "" ||
+      formData.email === "" ||
+      formData.name === ""
+    ) {
+      toast({
+        title: "Please provide all values",
+        description: "All fields are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setIsloading(!isloading);
+    setIsSpinning(true);
+
+    if (mentorForBooking.rate !== "Free" || !paid) {
+      setIsDialogOpen(false);
+      initializePayment({
+        onSuccess: setPaid(true),
+        onClose: handlePaymentCancel,
+      });
+    } else {
+      handlePaymentSuccess();
+    }
+  };
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleBookmarkToggle = (mentorForBooking) => {
+    CreateBookmark(
+      mentorForBooking.username,
+      mentorForBooking.rate,
+      mentorForBooking.bio,
+      mentorForBooking.awards,
+      mentorForBooking.interests,
+      mentorForBooking.rating,
+      mentorForBooking.id
+    )
+      .then(() => {
+        toast({
+          title: "Added to bookmarks",
+          description: "Added to bookmarks successfully!",
+          variant: "default",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Failed to add to bookmarks",
+          description: "An error occurred while adding to bookmarks.",
+          variant: "destructive",
+        });
+        console.error("Bookmark addition error:", error);
+      });
+  };
+
+  const handleClick = () => {
+    setIsDialogOpen(true);
+  };
+
+  async function copyBookCardUrl() {
+    try {
+      // Get the current BookCard URL
+      const BookCardUrl = window.location.href;
+
+      // Copy the URL to the clipboard
+      await navigator.clipboard.writeText(BookCardUrl);
+      toast({
+        title: "Profile link copied",
+        description: "Profile link copied successfully to clickboard.",
+        variant: "default",
+      });
+    } catch (err) {
+      console.error("Failed to copy BookCard URL: ", err);
+    }
+  }
 
   const router = useRouter();
 
@@ -78,53 +331,10 @@ const BookCard2 = () => {
     router.push("/help");
   };
 
-  //   useEffect(() => {
-  //     let prevScrollPos = window.scrollY;
-  //     const navbar = document.getElementById("navbar");
-
-  //     const handleScroll = () => {
-  //       const currentScrollPos = window.scrollY;
-
-  //       if (currentScrollPos > prevScrollPos) {
-  //         // Scrolling down
-  //         navbar.classList.add(
-  //           "fixed",
-  //           "-top-10",
-  //           "left-0",
-  //           "right-0",
-  //           "bg-white",
-  //           "z-50"
-  //         );
-  //       } else {
-  //         // Scrolling up
-  //         if (currentScrollPos === 0) {
-  //           // Reached the top of the page
-  //           navbar.classList.remove(
-  //             "fixed",
-  //             "top-0",
-  //             "w-full",
-  //             "left-0",
-  //             "right-0",
-  //             "bg-white",
-  //             "z-50"
-  //           );
-  //         }
-  //       }
-
-  //       prevScrollPos = currentScrollPos;
-  //     };
-
-  //     window.addEventListener("scroll", handleScroll);
-
-  //     return () => {
-  //       window.removeEventListener("scroll", handleScroll);
-  //     };
-  //   }, []);
-
   return (
-    <div className="bg-[#D9EBFF] absolute px-4 lg:px-12 py-6 h-full flex flex-col space-y-3">
+    <div className="bg-[#D9EBFF] absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3">
       {/* Header */}
-      <div className="bg-[#FFFFFFCC]  rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
+      <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
         <div className="flex space-x-3">
           <div className="flex items-center">
             <QikelinkLogo />
@@ -143,9 +353,13 @@ const BookCard2 = () => {
           <Button variant="ghost" onClick={handleContact}>
             Contact us
           </Button>
-          <Button size="lg" onClick={handleBrowse}>
-            Get started
-          </Button>
+          <LoginDialog
+            loginText="Sign In"
+            buttonColor="bg-black"
+            buttonHoverColor="bg-gray-800"
+            buttonSize="lg"
+            textHoverColor="white"
+          />
         </div>
         <div className="lg:hidden">
           <Menubar>
@@ -160,16 +374,20 @@ const BookCard2 = () => {
                 <Button onClick={handleContact} variant="ghost">
                   Contact us
                 </Button>
-                <Button onClick={handleBrowse} size="lg">
-                  Get started
-                </Button>
+                <LoginDialog
+                  loginText="Sign In"
+                  buttonColor="bg-black"
+                  buttonHoverColor="bg-gray-600"
+                  buttonSize="lg"
+                  textHoverColor="white"
+                />
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
         </div>
       </div>
       <div className="rounded-xl relative bg-[#FFFFFF] p-4 h-full overflow-hidden">
-        <div className="h-full overflow-y-auto lg:flex space-x-6">
+        <div className="h-full overflow-y-auto lg:flex lg:space-x-6">
           {/* Banner, Avatar and chat button */}
           <div className="lg:w-[30%]">
             <div>
@@ -180,10 +398,46 @@ const BookCard2 = () => {
                   className="rounded-xl mx-auto w-full"
                 />
                 <div className="absolute -bottom-5 left-3">
-                  <Avatar className="h-16 w-16 ">
-                    <AvatarImage src={"/image.png"} />
-                    <AvatarFallback>'CN'</AvatarFallback>
-                  </Avatar>
+                  {isLoading ? (
+                    <Skeleton className="w-10 h-10 rounded-full"></Skeleton>
+                  ) : (
+                    <>
+                      {mentorForBooking &&
+                      mentorForBooking.expand &&
+                      mentorForBooking.expand.users ? (
+                        <Avatar>
+                          <AvatarImage
+                            src={
+                              mentorForBooking.expand.users.collectionId
+                                ? getImageUrl(
+                                    mentorForBooking.expand.users.collectionId,
+                                    mentorForBooking.expand.users.id,
+                                    mentorForBooking.expand.users.avatar
+                                  )
+                                : ""
+                            }
+                          />
+                          <AvatarFallback>
+                            {mentorForBooking.username
+                              ? mentorForBooking.username
+                                  .slice(0, 2)
+                                  .toUpperCase()
+                              : "CN"}
+                          </AvatarFallback>
+                        </Avatar>
+                      ) : (
+                        <Avatar>
+                          <AvatarFallback>
+                            {mentorForBooking.username
+                              ? mentorForBooking.username
+                                  .slice(0, 2)
+                                  .toUpperCase()
+                              : "CN"}
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -191,10 +445,20 @@ const BookCard2 = () => {
                 <div className="flex space-x-3 items-center">
                   <div className="flex flex-col ml-1">
                     <p className="text-start text-gray-800 text-base">
-                      Mel Robbins
+                      {mentorForBooking.username
+                        ? mentorForBooking.username
+                        : "John Doe"}
                     </p>
                     <p className="text-start text-darktext text-sm">
-                      Youtuber + Educator
+                      {mentorForBooking && mentorForBooking.interests
+                        ? mentorForBooking.interests
+                            .split(",")
+                            .map((interest, index) => (
+                              <Badge key={index} variant="outline">
+                                {interest.trim()}
+                              </Badge>
+                            ))
+                        : "N/A"}
                     </p>
                   </div>
                 </div>
@@ -208,17 +472,37 @@ const BookCard2 = () => {
 
             <div className="lg:flex lg:flex-col-reverse lg:space-y-4 lg:w-[90%]">
               <div className="space-y-2 mt-4">
-                <p className="text-sm text-darktext hidden lg:block mt-2">About</p>
+                <p className="text-sm text-darktext hidden lg:block mt-2">
+                  About
+                </p>
                 <p className="text-black text-base lg:hidden">
                   Coaching Call <span className="text-darktext">(20mins)</span>
                 </p>
-                <p className="text-darktext lg:text-gray-700 text-sm line-clamp-3 lg:line-clamp-none lg:tracking-wide ">
-                  Co-founder and CEO @qikelink. Prev. CTO @bustleup,
-                  Ex-Outreachy Intern, I bring a wealth of experience in
-                  software development and startup ventures. I am poised to
-                  provide expert advice on all aspects of startups, both
-                  technical and business-related.
-                </p>
+
+                {isLoading ? (
+                  <Skeleton className="h-16 w-full"></Skeleton>
+                ) : (
+                  <>
+                    <div
+                      className={`text-darktext lg:text-gray-700 text-sm line-clamp-3 lg:line-clamp-none lg:tracking-wide  ${
+                        isExpanded ? " line-clamp-none" : "line-clamp-3"
+                      }`}
+                    >
+                      <p>
+                        {mentorForBooking.bio
+                          ? mentorForBooking.bio
+                          : "Mentor Bio"}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={toggleExpand}
+                      className="text-blue-600 hover:underline focus:outline-none text-sm"
+                    >
+                      {isExpanded ? "Read Less" : "Read More"}
+                    </button>{" "}
+                  </>
+                )}
               </div>
               {/* Button sections */}
               <div className="flex flex-col space-y-3 mt-2">
@@ -236,7 +520,9 @@ const BookCard2 = () => {
                 <div className="flex space-x-3">
                   <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light">
                     <img src="/wallet.svg" alt="Chat icon" className="mr-1" />
-                    $50
+                    {mentorForBooking.rate
+                      ? mentorForBooking.rate
+                      : "Session fee"}
                   </div>
                   <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light">
                     <img src="/clock.svg" alt="Chat icon" className="mr-1" />
@@ -246,7 +532,8 @@ const BookCard2 = () => {
                 <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light text-left ">
                   <img src="/calendar.svg" alt="Chat icon" className="mr-1" />
                   <p className="line-clamp-1">
-                    16:00 - 17:00, Wednesday, May 15, 2024{" "}
+                    {sessionTime ? sessionTime : "Time -"}{" "}
+                    {date ? date : "Date"}{" "}
                   </p>
                 </div>
                 <Separator className="bg-gray-100 my-3 hidden lg:block" />
@@ -257,9 +544,11 @@ const BookCard2 = () => {
           <Separator className="bg-gray-100 my-3 sm:hidden" />
 
           {/* Enter Details section */}
-          <div className="lg:w-[40%] lg:overflow-y-auto w-fit">
+          <div className="lg:w-[40%] lg:overflow-y-auto ">
             <div className="flex flex-col space-y-3 mt-4 lg:mt-0">
-              <p className="text-base font-semibold my-2 lg:my-0">Enter Details</p>
+              <p className="text-base font-semibold my-2 lg:my-0">
+                Enter Details
+              </p>
 
               <div className="space-y-2">
                 <Label>
@@ -268,6 +557,9 @@ const BookCard2 = () => {
                 <Input
                   className="rounded-full py-6 px-4"
                   placeholder="Enter your email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -278,6 +570,9 @@ const BookCard2 = () => {
                 <Input
                   className="rounded-full py-6 px-4"
                   placeholder="Enter your name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -327,21 +622,39 @@ const BookCard2 = () => {
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="flex flex-col space-y-2">
                 <Label>
                   Book as <span className="text-darktext">(required)</span>
                 </Label>
-                <Select>
-                  <SelectTrigger className="w-2/4 bg-gray-200 rounded-full text-[#0A84FF]">
-                    <SelectValue placeholder="Individual" />
-                  </SelectTrigger>
-                  <SelectContent className="h-fit bg-transparent">
-                    <SelectGroup>
-                      <SelectItem value="individual">Individual</SelectItem>
-                      <SelectItem value="team">Team</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <div className="relative inline-block w-2/4 bg-gray-200 rounded-full">
+                  <select
+                    className="block appearance-none  text-[#0A84FF] w-full bg-gray-200 rounded-full border border-gray-300  py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-blue-500"
+                    value={selectedOption}
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                  >
+                    {options.map((option) => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        className="py-2"
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 12l-6-6 1.5-1.5L10 9l4.5-4.5L16 6l-6 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -349,11 +662,24 @@ const BookCard2 = () => {
                   Reason for session
                   <span className="text-darktext ml-1">(required)</span>
                 </Label>
-                <Textarea
-                  className="h-20 sm:h-28 rounded-2xl"
-                  placeholder="Please share what you need my help on."
-                  name="reason"
-                ></Textarea>
+
+                {isLoading ? (
+                  <Skeleton className="h-24 w-full"></Skeleton>
+                ) : (
+                  <Textarea
+                    className="h-20 sm:h-28 rounded-2xl"
+                    placeholder="Please share what you need my help on."
+                    name="reason"
+                    value={formData.purpose}
+                    onChange={handleChange}
+                    maxLength={800} // Adding the maxLength attribute
+                  />
+                )}
+                {/* {!isLoading && (
+                  <span className="ml-1 text-sm text-darktext">
+                    {characterCount} characters remaining
+                  </span>
+                )} */}
               </div>
             </div>
 
@@ -368,7 +694,7 @@ const BookCard2 = () => {
                   className="bg-[#F2F8FF] rounded-full text-darktext font-light"
                 >
                   <img src="/wallet.svg" alt="Chat icon" className="mr-1" />
-                  $50
+                  {mentorForBooking.rate ? mentorForBooking.rate : " Fee"}
                 </Button>
               </div>
               <p className="text-sm text-darktext">
@@ -389,6 +715,7 @@ const BookCard2 = () => {
                 <Button
                   variant="outline"
                   className="py-6 px-8 rounded-lg text-lg font-medium"
+                  onClick={isUserValid ? handleSubmit : openDialog}
                 >
                   <img
                     src="/paystack.png"
@@ -398,13 +725,37 @@ const BookCard2 = () => {
                   Paystack
                 </Button>
               </div>
+              <p className="text-xs text-darktext flex items-center">
+                {!paid ? 'No payment detected yet..' : 'Payment successful, book away!'}
+                <AiOutlineLoading3Quarters
+                  className={`${!paid ? "ml-1 animate-spin" : "hidden"}`}
+                />
+              </p>
             </div>
 
             {/* Buttons request and claim link */}
             <div className="mt-6 space-y-3">
-              <Button className="bg-[#0A84FF] w-full rounded-xl" size="xl">
-                Book Now
-              </Button>
+              {isUserValid ? (
+                <Button
+                  size="xl"
+                  className="bg-blue hover:bg-darkblue rounded-xl text-lg w-full"
+                  onClick={handleSubmit}
+                >
+                  {isSpinning ? "Booking.." : "Book Now"}
+                  <AiOutlineLoading3Quarters
+                    className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+                  />
+                </Button>
+              ) : (
+                <Button
+                  size="xl"
+                  className="bg-blue hover:bg-darkblue rounded-xl text-lg w-full"
+                  type="button"
+                  onClick={openDialog}
+                >
+                  Book Now
+                </Button>
+              )}
 
               <p className="text-center mt-2 text-base">
                 claim your own link{" "}
@@ -451,6 +802,29 @@ const BookCard2 = () => {
               </CardFooter>
             </Card>
           </div>
+
+          <Dialog open={isDialogOpen} onClose={closeDialog}>
+            <DialogContent className="p-4 rounded-lg w-[90%]">
+              <div className="relative">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={closeDialog}
+                  className="absolute top-0 right-0 "
+                >
+                  <FaX size={16} />
+                </Button>
+                <div className="flex flex-col items-center gap-3 mt-4">
+                  <SignInIcon size={100} />
+                  <p className="text-darktext text-lg text-center">
+                    Create account or sign in to book
+                  </p>
+                  <LoginDialog />
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
@@ -465,7 +839,7 @@ export const Chat = () => {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2"
+          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2 lg:hidden"
         >
           <img src="/chat.svg" alt="Chat icon" className="mr-1" />
           Chat
