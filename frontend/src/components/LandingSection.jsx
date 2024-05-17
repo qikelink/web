@@ -6,8 +6,7 @@ const LandingSection = () => {
   return (
     <>
       <div className="w-full flex flex-col overflow-y-auto">
-        {/* <LandingCard /> */}
-        <BookCard2/>
+        <LandingCard />
       </div>
     </>
   );
