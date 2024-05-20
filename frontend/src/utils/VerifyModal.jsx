@@ -15,9 +15,9 @@ import { Input } from "@/components/ui/input";
 import { verifyRequest } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import Select from "react-select";
-import { dataset } from "@/dummy_api/dataSet";
+import { payment } from "@/dummy_api/dataSet";
 
-const options = dataset.map((item) => ({ value: item, label: item }));
+const options = payment.map((item) => ({ value: item, label: item }));
 
 const VerifyModal = ({ blue, userData }) => {
   const [file, setFile] = useState("");
