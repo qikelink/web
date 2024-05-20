@@ -186,102 +186,102 @@ const SettingCard = () => {
 
   return (
     <div className="px-1">
-     <h1 className="text-2xl font-semibold mb-3">Settings</h1>
-     <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
-      {/* Profile image */}
-      <Label className="text-lg">Profile Image</Label>
-      {isLoading ? (
-        <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
-      ) : (
-        user && (
-          <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
-            <AvatarImage
-              src={getImageUrl(user.collectionId, user.id, user.avatar)}
-            />
-            <AvatarFallback>
-              {" "}
-              {user.email.slice(0, 2).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-        )
-      )}
-      <div className="flex justify-between items-center gap-3 mt-4">
-        <Input
-          id="picture"
-          type="file"
-          className="sm:w-52 w-32 bg-inputbackground "
-          onChange={(e) => setProfileImage(e.target.files[0])}
-        />
+      <h1 className="text-2xl font-semibold mb-3">Settings</h1>
+      <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
+        {/* Profile image */}
+        <Label className="text-lg">Profile Image</Label>
         {isLoading ? (
-          <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
+          <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
         ) : (
-          <Badge
-            variant="outline"
-            className={`rounded-full ${
-              formData.verified === true ? "bg-green-600" : "bg-red-500"
-            } text-secondary h-8 flex justify-center font-bold text-xs sm:text-sm text-wrap lg:mr-5 sm:px-6 px-3`}
-          >
-            {formData.verified === true ? "Verified" : "Not verified"}
-          </Badge>
+          user && (
+            <Avatar className="h-24 w-24 mt-3 md:h-32 md:w-32">
+              <AvatarImage
+                src={getImageUrl(user.collectionId, user.id, user.avatar)}
+              />
+              <AvatarFallback>
+                {" "}
+                {user.email.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          )
         )}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-        <div>
-          <Label className="text-lg">Full name</Label>
+        <div className="flex justify-between items-center gap-3 mt-4">
           <Input
-            className="py-6 px-3 bg-inputbackground"
-            placeholder="Please enter your full name"
-            name="username"
-            type="text"
-            value={formData.username}
-            onChange={handleChange}
+            id="picture"
+            type="file"
+            className="sm:w-52 w-32 bg-inputbackground "
+            onChange={(e) => setProfileImage(e.target.files[0])}
           />
-        </div>
-        <div>
-          <Label className="text-lg">Email</Label>
-          <Input
-            className="py-6 px-3 bg-inputbackground"
-            placeholder="Please enter your email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <Label className="text-lg">Phone number (optional)</Label>
-          <Input
-            className="py-6 px-3 bg-inputbackground"
-            placeholder="Please enter your cell number"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <Label className="text-lg">
-           {" "}
-            <span className="text-blue font-medium"> Booking link </span>
-          </Label>
-          <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
-            {/* <IoFlash /> */}
-            <div className="flex-1 ">
-              <p className="text-sm font-medium leading-none">
-                qikelink.com/book/{user.id}
-              </p>
-            </div>
-            <button
-              onClick={() => copyBookingLink()}
-              size="icon"
+          {isLoading ? (
+            <Skeleton className="w-20 h-8 rounded-xl"></Skeleton>
+          ) : (
+            <Badge
               variant="outline"
-              type="button"
+              className={`rounded-full ${
+                formData.verified === true ? "bg-green-600" : "bg-red-500"
+              } text-secondary h-8 flex justify-center font-bold text-xs sm:text-sm text-wrap lg:mr-5 sm:px-6 px-3`}
             >
-              <BsCopy />
-            </button>
-            {/* {formData.verified === true ? (
+              {formData.verified === true ? "Verified" : "Not verified"}
+            </Badge>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+          <div>
+            <Label className="text-lg">Full name</Label>
+            <Input
+              className="py-6 px-3 bg-inputbackground"
+              placeholder="Please enter your full name"
+              name="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Label className="text-lg">Email</Label>
+            <Input
+              className="py-6 px-3 bg-inputbackground"
+              placeholder="Please enter your email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label className="text-lg">Phone number (optional)</Label>
+            <Input
+              className="py-6 px-3 bg-inputbackground"
+              placeholder="Please enter your cell number"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label className="text-lg">
+              {" "}
+              <span className="text-blue font-medium"> Booking link </span>
+            </Label>
+            <div className=" flex items-center space-x-4 rounded-md border px-3 py-4 bg-inputbackground">
+              {/* <IoFlash /> */}
+              <div className="flex-1 ">
+                <p className="text-sm font-medium leading-none">
+                  qikelink.com/book/{user.id}
+                </p>
+              </div>
+              <button
+                onClick={() => copyBookingLink()}
+                size="icon"
+                variant="outline"
+                type="button"
+              >
+                <BsCopy />
+              </button>
+              {/* {formData.verified === true ? (
               mentor && mentor.username && mentor.username.length > 0 ? (
                 <Switch
                   checked={quickService}
@@ -291,55 +291,54 @@ const SettingCard = () => {
                 <Skeleton className="rounded-2xl w-12 h-6"></Skeleton>
               )
             ) : null} */}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-6">
-        <Label className="text-lg">Bio</Label>
-        <Textarea
-          className="h-24 sm:h-36 bg-inputbackground"
-          placeholder="Write your bio here, feel free to brag about yourself!"
-          name="bio"
-          value={formData.bio}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="mt-6">
-        <Label className="text-lg">Work Experience</Label>
-        <Textarea
-          className="h-24 sm:h-36 bg-inputbackground"
-          placeholder="Relevant work experiences separated by commas. eg CTO @startup, founder @startup, etc "
-          name="awards"
-          value={formData.awards}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="flex space-x-2 md:justify-end gap-1 lg:gap-3 justify-center flex-row items-center mt-6 lg:space-x-5">
-        <Button
-          size="xl"
-          className="bg-blue hover:bg-darkblue text-lg rounded-lg"
-          onClick={handleSubmit}
-        >
-          {isSpinning ? "Updating profile" : "Update profile"}
-          <AiOutlineLoading3Quarters
-            className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+        <div className="mt-6">
+          <Label className="text-lg">Bio</Label>
+          <Textarea
+            className="h-24 sm:h-36 bg-inputbackground"
+            placeholder="Write your bio here, feel free to brag about yourself!"
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
           />
-        </Button>
+        </div>
 
-        {formData.verified === true || mentor.length > 0 ? null : !isLoading &&
-          formData.username !== "" &&
-          formData.phoneNumber !== "" &&
-          formData.bio !== "" &&
-          formData.awards !== "" ? (
-          <VerifyModal userData={user} />
-        ) : null}
+        <div className="mt-6">
+          <Label className="text-lg">Work Experience</Label>
+          <Textarea
+            className="h-24 sm:h-36 bg-inputbackground"
+            placeholder="Relevant work experiences separated by commas. eg CTO @startup, founder @startup, etc "
+            name="awards"
+            value={formData.awards}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="flex space-x-2 md:justify-end gap-1 lg:gap-3 justify-center flex-row items-center mt-6 lg:space-x-5">
+          <Button
+            size="xl"
+            className="bg-blue hover:bg-darkblue text-lg rounded-lg"
+            onClick={handleSubmit}
+          >
+            {isSpinning ? "Updating profile" : "Update profile"}
+            <AiOutlineLoading3Quarters
+              className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
+            />
+          </Button>
+
+          {formData.verified === true ||
+          mentor.length > 0 ? null : !isLoading &&
+            formData.username !== "" &&
+            formData.bio !== "" &&
+            formData.awards !== "" ? (
+            <VerifyModal userData={user} />
+          ) : null}
+        </div>
       </div>
     </div>
-    </div>
-   
   );
 };
 

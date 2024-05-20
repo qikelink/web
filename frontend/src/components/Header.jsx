@@ -77,9 +77,9 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
-      <div className="font-poppins flex justify-between items-center pb-3">
+      <div className="font-jakarta flex justify-between items-center pb-3">
         <div className="flex items-center justify-between space-x-2 hover:cursor">
-          {isDropdownOpen ? (
+          {isUserValid && isDropdownOpen ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
@@ -87,7 +87,7 @@ export default function Header() {
             >
               <FaX className="md:hidden" size={16} />
             </Badge>
-          ) : (
+          ) : isUserValid ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
@@ -95,9 +95,13 @@ export default function Header() {
             >
               <FaBars className="md:hidden" size={16} />
             </Badge>
+          ) : (
+            <Badge variant={"outline"} className="p-2 mr-3 hidden">
+              <FaBars size={20} />
+            </Badge>
           )}
 
-          <Badge variant={"outline"} className="p-2 mr-3 hidden md:block">
+          <Badge variant={"outline"} className="p-2 mr-3 hidden">
             <FaBars size={20} />
           </Badge>
 
@@ -174,14 +178,17 @@ export default function Header() {
                               key={index}
                             >
                               <div className="flex items-center">
-                                <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
+                                {/* <div className="w-2 h-2 bg-blue rounded-full mr-2"></div> */}
                                 <div>
                                   <p className="text-base font-semibold">
                                     {item.title}
                                   </p>
-                                  <p className="text-sm text-gray-600">
+                                  <p className="text-sm font-light text-gray-600 mt-1">
                                     {user.id === item.owner
                                       ? item.messageSender
+                                      : !item.messageReceiver &&
+                                        !item.messageSender
+                                      ? item.message
                                       : item.messageReceiver}
                                   </p>
                                 </div>

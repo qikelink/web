@@ -114,23 +114,6 @@ const VerifyModal = ({ blue, userData }) => {
           </DialogDescription>
 
           <form className="space-y-3" onSubmit={handleSubmit}>
-            {/* personal details */}
-            <div>
-              <div className="">
-                <div>
-                  <Label className="font-semibold ">Interests</Label>
-                  <Select
-                    className="bg-inputbackground active:bg-inputbackground mt-1"
-                    isMulti={true}
-                    autoFocus={true}
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                  />
-                </div>
-              </div>
-            </div>
-
             {/* Achievements section */}
             <div>
               <Label className="font-semibold ">Valid ID</Label>
@@ -157,13 +140,29 @@ const VerifyModal = ({ blue, userData }) => {
               />
             </div>
 
+            {/* Payment method */}
+            <div>
+              <div className="">
+                <div>
+                  <Label className="font-semibold ">Payment method</Label>
+                  <Select
+                    className="bg-inputbackground active:bg-inputbackground mt-1"
+                    autoFocus={true}
+                    defaultValue={selectedOption}
+                    onChange={setSelectedOption}
+                    options={options}
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* Questions section */}
             <div>
-              <Label className="font-semibold ">Payment details</Label>
+              <Label className="font-semibold">Payment details</Label>
               <Input
                 name="account"
                 type="text"
-                placeholder="Payment account and bank"
+                placeholder="Email or Payment account and bank"
                 className=" bg-inputbackground mt-1 "
                 value={formData.account}
                 onChange={handleChange}

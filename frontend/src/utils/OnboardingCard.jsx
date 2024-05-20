@@ -32,7 +32,7 @@ import {
 import { BsCopy, BsFillSendArrowDownFill } from "react-icons/bs";
 import { useToast } from "@/components/ui/use-toast";
 import Select from "react-select";
-import { dataset } from "@/dummy_api/dataSet";
+import { dataset, datasetOnboarding } from "@/dummy_api/dataSet";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { Separator } from "@/components/ui/separator";
@@ -46,7 +46,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-const options = dataset.map((item) => ({ value: item, label: item }));
+const options = datasetOnboarding.map((item) => ({ value: item, label: item }));
 
 const OnboardingCard = () => {
   const [formData, setFormData] = useState({});
@@ -104,18 +104,29 @@ const OnboardingCard = () => {
       ? selectedOption.map((option) => option.label).join(", ")
       : "";
 
-    if (
-      profileImage === "" ||
-      formData.username === "" ||
-      formData.bio === "" ||
-      formData.awards === ""
-    ) {
-      toast({
-        title: "Missing required field",
-        description: "Please complete all required fields to continue.",
-        variant: "destructive",
+    let missingFields = [];
+
+    if (formData.bio === "") {
+      missingFields.push("bio");
+    }
+
+    if (formData.username === "") {
+      missingFields.push("full name");
+    }
+
+    if (profileImage === "") {
+      missingFields.push("profile image");
+    }
+
+    if (missingFields.length > 0) {
+      missingFields.forEach((field) => {
+        toast({
+          title: "Missing required field",
+          description: `Please add your ${field} to continue.`,
+          variant: "destructive",
+        });
       });
-      return;
+      return false; // Indicate that there are missing fields
     }
 
     setIsSpinning(true);
@@ -208,7 +219,7 @@ const OnboardingCard = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
           <div>
-            <Label className="font-semibold ">Areas of expertise</Label>
+            <Label className=" text-lg">Area of expertise</Label>
             <Select
               className="bg-inputbackground active:bg-inputbackground mt-1"
               isMulti={true}
@@ -266,7 +277,7 @@ const OnboardingCard = () => {
         </div>
 
         <div className="mt-6">
-          <Label className="text-lg">Work Experience</Label>
+          <Label className="text-lg">Work Experience (optional)</Label>
           <Textarea
             className="h-24 sm:h-36 bg-inputbackground"
             placeholder="Relevant work experiences separated by commas. eg CTO @startup, founder @startup, etc "
@@ -532,7 +543,9 @@ const LoginDialog = () => {
     : "Continue with google";
 
   const linkText = isSignIn ? "Create an account" : "Sign In";
-  const Description = isSignIn ? "Sign Into Your Account To Get Started." : "Create An Account To Get Started With Qikelink.";
+  const Description = isSignIn
+    ? "Sign Into Your Account To Get Started."
+    : "Create An Account To Get Started With Qikelink.";
 
   return (
     <Dialog open={isDialogOpen} onClose={closeDialog}>

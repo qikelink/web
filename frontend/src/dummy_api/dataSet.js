@@ -102,8 +102,9 @@
 //   "Cybersecurity"
 // ];
 
-export const dataset = [
-  "All",
+export const dataset = ["PAYPAL", "Bank Account"];
+
+export const datasetOnboarding = [
   "Gaming",
   "Fitness",
   "Fashion",
@@ -173,9 +174,8 @@ export const dataset = [
   "Technology",
   "Health",
   "Lifestyle",
-  "Career"
+  "Career",
 ];
-
 
 export const sessions = [
   "9:00-9:30 AM",
