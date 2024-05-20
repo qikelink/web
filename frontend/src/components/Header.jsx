@@ -51,7 +51,7 @@ export default function Header() {
     setProgress(90);
     await toggleGoogle(false);
     signout(setIsUserValid);
-   
+
     window.location.reload();
     setUser([]);
   };
@@ -68,6 +68,13 @@ export default function Header() {
     }
   }, [notifications]);
 
+  const getInitials = (username) => {
+    if (username && username.length >= 2) {
+      return username.substring(0, 2).toUpperCase();
+    }
+    return username ? username.toUpperCase() : "";
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
       <div className="font-poppins flex justify-between items-center pb-3">
@@ -76,14 +83,16 @@ export default function Header() {
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
               <FaX className="md:hidden" size={16} />
             </Badge>
           ) : (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
               <FaBars className="md:hidden" size={16} />
             </Badge>
           )}
@@ -92,7 +101,10 @@ export default function Header() {
             <FaBars size={20} />
           </Badge>
 
-          <div className="flex items-center" onClick={() => router.push(`/`)}>
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => router.push(`/`)}
+          >
             <QikelinkLogo />
             <p className="font-bold text-xl ml-2">Qikelink</p>
           </div>
@@ -126,7 +138,8 @@ export default function Header() {
                 <Badge
                   variant="outline"
                   className={"rounded-full p-2 hidden md:inline"}
-                  onClick={() => router.push("/sessions")}>
+                  onClick={() => router.push("/sessions")}
+                >
                   <BsHeadsetVr
                     size={20}
                     className="text-current hover:animate-spin cursor-pointer"
@@ -137,7 +150,8 @@ export default function Header() {
                   className={
                     "relative rounded-full p-2 hidden md:inline cursor-pointer"
                   }
-                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}>
+                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                >
                   <FaRegBell size={20} className="text-current" />
 
                   {notifications.items && notifications.items.length > 0 && (
@@ -157,7 +171,8 @@ export default function Header() {
                             <div
                               className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
                               onClick={() => router.push("/sessions")}
-                              key={index}>
+                              key={index}
+                            >
                               <div className="flex items-center">
                                 <div className="w-2 h-2 bg-blue rounded-full mr-2"></div>
                                 <div>
@@ -192,7 +207,9 @@ export default function Header() {
                   <AvatarImage
                     src={getImageUrl(user.collectionId, user.id, user.avatar)}
                   />
-                  <AvatarFallback>{"QK"}</AvatarFallback>
+                  <AvatarFallback>
+                    {user && user.name ? getInitials(user.name) : "QK"}
+                  </AvatarFallback>
                 </Avatar>
               </div>
             ) : (
@@ -211,7 +228,8 @@ export default function Header() {
                   onClick={() => setProgress(90)}
                   className={`flex gap-4 justify-start py-5 cursor-pointer hover:text-blue ${
                     pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-                  }`}>
+                  }`}
+                >
                   <AiOutlineHome size={24} className="ml-2" />
                   <p>Home</p>
                 </Link>
@@ -238,7 +256,8 @@ export default function Header() {
                     pathname === "/notification"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <div className="flex justify-start space-x-4">
                     <IoChatboxEllipsesOutline size={22} className="ml-2" />
                     <p>Messages</p>
@@ -288,7 +307,8 @@ export default function Header() {
                     pathname === "/manager/Organization"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <CgProfile size={24} className="ml-2" />
                   <p>Dashboard</p>
                 </Link>
@@ -302,7 +322,8 @@ export default function Header() {
                     pathname === "/settings"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <IoMdSettings size={24} className="ml-2" />
                   <p>Settings</p>
                 </Link>
@@ -316,7 +337,8 @@ export default function Header() {
                     pathname === "/help"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <IoMdHelpCircleOutline size={24} className="ml-2" />
                   <p>Help</p>
                 </Link>
@@ -329,7 +351,8 @@ export default function Header() {
                     pathname === "/feedBack"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}>
+                  }`}
+                >
                   <MdOutlineFeedback size={24} className="ml-2" />
                   <p>Send FeedBack</p>
                 </Link>
@@ -338,7 +361,8 @@ export default function Header() {
                 <li>
                   <button
                     onClick={handleSignout}
-                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md">
+                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md"
+                  >
                     <MdLogout size={22} className="ml-2" />
                     <p>Sign Out</p>
                   </button>

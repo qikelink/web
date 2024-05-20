@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "@/contexts/user-context";
@@ -27,10 +27,12 @@ import pic5 from "../../images/landin.png";
 import Image from "next/image";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
-import { isUserValid } from "../../../backend/src/pocketbase";
+import { Subscribe, isUserValid } from "../../../backend/src/pocketbase";
 
 const LandingCard = () => {
   const router = useRouter();
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
 
   const handleBrowse = () => {
     router.push("/mentors");
@@ -55,6 +57,28 @@ const LandingCard = () => {
 
   const handleAbout = () => {
     router.push("/help");
+  };
+
+  const handleSubscribe = () => {
+    Subscribe(email)
+      .then(() => {
+        toast({
+          title: "Subscription successful",
+          description: "Hooray! email has been added to list successfully!",
+          variant: "default",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Failed to subscribe ",
+          description: "Failed to subscribe to mailing list, please try again.",
+          variant: "destructive",
+        });
+        console.error("Mailing list subscription error:", error);
+      })
+      .finally(() => {
+        setEmail("");
+      });
   };
 
   useEffect(() => {
@@ -100,8 +124,6 @@ const LandingCard = () => {
     };
   }, []);
 
-  
-
   return (
     <>
       {/* section one  */}
@@ -118,16 +140,20 @@ const LandingCard = () => {
         </div>
 
         {/* Header  */}
-        <div id="navbar" className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
+        <div
+          id="navbar"
+          className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto"
+        >
           <div className="flex space-x-3">
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <QikelinkLogo />
               <p className="font-bold text-xl ml-2">Qikelink</p>
             </div>
 
             <Badge
               className="px-4 rounded-full bg-[#d6e7fa]"
-              variant="secondary">
+              variant="secondary"
+            >
               Beta
             </Badge>
           </div>
@@ -199,10 +225,12 @@ const LandingCard = () => {
                 <Button
                   onClick={handleClaim}
                   size="xl"
-                  className="bg-[#007AFF] ">
+                  className="bg-[#007AFF] "
+                >
                   <Button
                     variant="ghost"
-                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2">
+                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2"
+                  >
                     <FcGoogle size={20} />
                   </Button>{" "}
                   Claim your booking link
@@ -210,7 +238,8 @@ const LandingCard = () => {
                 <Button
                   onClick={handleBrowse}
                   size="xl"
-                  className="bg-[#1C1C1C] px-10">
+                  className="bg-[#1C1C1C] px-10"
+                >
                   Browse mentors
                 </Button>
               </div>
@@ -445,9 +474,16 @@ const LandingCard = () => {
           {/* CTA buttons */}
           <div className="mt-20 w-[80%] lg:w-[40%] space-y-3">
             <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="bg-white py-5 rounded-lg"></Input>
-            <Button size="lg" className="bg-[#1C1C1C] px-10 w-full">
+              className="bg-white py-5 rounded-lg"
+            ></Input>
+            <Button
+              size="lg"
+              className="bg-[#1C1C1C] px-10 w-full"
+              onClick={handleSubscribe}
+            >
               Subscribe
             </Button>
           </div>
@@ -486,7 +522,8 @@ const LandingCard = () => {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem
                   value="item-1"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>What is Qikelink?</AccordionTrigger>
                   <AccordionContent>
                     Qikelink connects creators and professionals with their
@@ -495,7 +532,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-2"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>
                     How To Get My Booking Link?
                   </AccordionTrigger>
@@ -508,7 +546,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-3"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>
                     How Can I Make Money with Qikelink?
                   </AccordionTrigger>
@@ -519,7 +558,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-4"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>
                     How Trusted is This Platform
                   </AccordionTrigger>
@@ -530,7 +570,8 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-5"
-                  className="bg-white p-2 my-3 border-0 rounded-md">
+                  className="bg-white p-2 my-3 border-0 rounded-md"
+                >
                   <AccordionTrigger>Do I Need Money To SignUp</AccordionTrigger>
                   <AccordionContent>
                     No, signing up for Qikelink is absolutely free.
