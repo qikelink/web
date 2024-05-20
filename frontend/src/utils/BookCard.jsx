@@ -508,7 +508,7 @@ const BookCard = () => {
             ) : (
               <Textarea
                 className="w-full mt-2 h-20"
-                placeholder="Why do you want to request a session?"
+                placeholder="Please provide details on what we will work on during this mentorship"
                 value={formData.purpose}
                 onChange={handleChange}
                 name="purpose"
