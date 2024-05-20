@@ -166,19 +166,28 @@ const HomeCardSection = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="text-small text-default-400 ">
-                    <div className="flex gap-2 flex-wrap item-center">
-                      <Badge variant="outline">
+                    <div className="flex items-center space-x-1">
+                      <Badge variant="outline" className='py-1'>
                         <GrTag color="green" />
                       </Badge>{" "}
-                      {item && item.interests
-                        ? item.interests.split(",").map((interest, index) => (
-                            <Badge key={index} variant="outline">
-                              {trimToSevenCharacters(interest.trim())}
-                            </Badge>
-                          ))
-                        : "N/A"}
+                      <div className="overflow-hidden text-ellipsis whitespace-nowrap flex space-x-1">
+                        {item && item.interests
+                          ? item.interests
+                              .split(",")
+                              .map((interest, index) => (
+                                <span key={index} className="inline-block">
+                                  <Badge variant="outline">
+                                    {trimToSevenCharacters(interest.trim())}
+                                  </Badge>
+                                </span>
+                              ))
+                              
+                          : "N/A"}
+                      </div>
                     </div>
-                    <div className="mt-1 line-clamp-4 ">{item.bio}</div>
+                    <div className="mt-1 line-clamp-4 text-sm font-light ">
+                      {item.bio}
+                    </div>
                   </CardContent>
                   <CardFooter className="flex justify-between border-t py-2">
                     <BookModal buttonName="Request" data={item} />

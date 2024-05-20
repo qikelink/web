@@ -103,6 +103,7 @@
 // ];
 
 export const dataset = [
+  "All",
   "Gaming",
   "Fitness",
   "Fashion",

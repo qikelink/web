@@ -361,12 +361,19 @@ const BookCard2 = () => {
     router.push("/help");
   };
 
+  const getInitials = (username) => {
+    if (username && username.length >= 3) {
+      return username.substring(0, 3).toUpperCase();
+    }
+    return username ? username.toUpperCase() : "";
+  };
+
   return (
     <div className="bg-[#D9EBFF] absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3">
       {/* Header */}
       <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
         <div className="flex space-x-3">
-          <div className="flex items-center">
+          <div className="flex items-center cursor-pointer">
             <QikelinkLogo />
             <p className="font-bold text-xl ml-2">Qikelink</p>
           </div>
@@ -384,7 +391,7 @@ const BookCard2 = () => {
             Contact us
           </Button>
           <LoginDialog
-            loginText="Sign In"
+            loginText={!isUserValid ? "Sign In" : getInitials(user.username)}
             buttonColor="bg-black"
             buttonHoverColor="bg-gray-800"
             buttonSize="lg"
@@ -405,7 +412,7 @@ const BookCard2 = () => {
                   Contact us
                 </Button>
                 <LoginDialog
-                  loginText="Sign In"
+                 loginText={!isUserValid ? "Sign In" : getInitials(user.username)}
                   buttonColor="bg-black"
                   buttonHoverColor="bg-gray-600"
                   buttonSize="lg"

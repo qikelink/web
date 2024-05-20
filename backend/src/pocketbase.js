@@ -72,8 +72,17 @@ export async function Signup(superEmail, email, superPassword, password) {
     email,
     undefined,
     undefined,
-    "Welcome onboard! 🎉 Share your booking link and start engaging with your audience today! If you have any questions or need assistance, reach out via support@qikelink.com. Best regards, support team."
+    "Welcome onboard! 🎉 Share your booking link and start engaging with your audience today! Need assistance?, send us an email via support@qikelink.com. Best regards."
   );
+  // await createWelcomeNotification(
+  //   "Wagwan!, your booking link 🎉",
+  //   undefined,
+  //   undefined,
+  //   email,
+  //   undefined,
+  //   undefined,
+  //   `Welcome onboard friend! 🎉 here's your booking link incase you missed it earlier qikelink.com/book/${user.id}.`
+  // );
   await client.collection("users").create(data);
 }
 
@@ -206,6 +215,12 @@ export async function updateMentor(
   await client.collection("mentors").update(id, data);
 }
 
+export async function Subscribe(email) {
+  const data = {
+    email: email,
+  };
+  await client.collection("mailList").create(data);
+}
 export async function CreateBookmark(
   username,
   rate,

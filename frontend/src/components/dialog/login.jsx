@@ -31,7 +31,13 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import googleLogo from "../../../public/google.png";
 
-const LoginDialog = ({ loginText = "Log In", buttonColor = "bg-blue", buttonHoverColor = "bg-lightblue2", buttonSize = 'sm', textHoverColor = 'text-primary' }) => {
+const LoginDialog = ({
+  loginText = "Sign In",
+  buttonColor = "bg-blue",
+  buttonHoverColor = "bg-lightblue2",
+  buttonSize = "sm",
+  textHoverColor = "text-primary",
+}) => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [password, setPassword] = useState("");
   const [comfirmPass, setComfirmPass] = useState("");
@@ -261,11 +267,14 @@ const LoginDialog = ({ loginText = "Log In", buttonColor = "bg-blue", buttonHove
     : "Continue with google";
 
   const linkText = isSignIn ? "Create an account" : "Sign In";
+  const Description = isSignIn
+    ? "Sign Into Your Account To Get Started."
+    : "Create An Account To Get Started With Qikelink.";
 
   return (
     <Dialog>
       <DialogTrigger>
-      <Button
+        <Button
           type="button"
           size={buttonSize}
           className={`w-full ${buttonColor} text-secondary hover:${textHoverColor} hover:${buttonHoverColor} rounded-md text-lg`}
@@ -278,13 +287,13 @@ const LoginDialog = ({ loginText = "Log In", buttonColor = "bg-blue", buttonHove
         <DialogHeader className="mt-2 mb-2">
           <DialogTitle className="flex justify-between">
             {" "}
-            {isSignIn ? "Log in" : "Sign up"}{" "}
+            {isSignIn ? "Sign In" : "Sign Up"}{" "}
             <DialogClose asChild>
               <ImCross size={12} />
             </DialogClose>
           </DialogTitle>
           <DialogDescription className="text-left">
-            Get Started With Airbnb For Consulting.
+            {Description}
           </DialogDescription>
         </DialogHeader>
         <div>
