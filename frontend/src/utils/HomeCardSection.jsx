@@ -97,8 +97,18 @@ const HomeCardSection = () => {
     <>
       <div className="px-2">
         <KeywordBar data={dataset} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full py-2">
-          <Card className="hidden flex justify-center item-center bg-black ">
+        <div className=" py-2">
+          <img
+            src="/banner.png"
+            alt="banner image"
+            className="rounded-xl mx-auto w-full hidden md:block"
+          />
+          <img
+            src="/banner2.png"
+            alt="banner image"
+            className="rounded-xl mx-auto w-full md:hidden"
+          />
+          {/* <Card className="hidden flex justify-center item-center bg-black ">
             <Image
               src={pic4}
               width={450}
@@ -115,7 +125,7 @@ const HomeCardSection = () => {
               className="rounded-md"
               alt="Picture of the author"
             />
-          </Card>
+          </Card> */}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
@@ -167,21 +177,18 @@ const HomeCardSection = () => {
                   </CardHeader>
                   <CardContent className="text-small text-default-400 ">
                     <div className="flex items-center space-x-1">
-                      <Badge variant="outline" className='py-1'>
+                      <Badge variant="outline" className="py-1">
                         <GrTag color="green" />
                       </Badge>{" "}
                       <div className="overflow-hidden text-ellipsis whitespace-nowrap flex space-x-1">
                         {item && item.interests
-                          ? item.interests
-                              .split(",")
-                              .map((interest, index) => (
-                                <span key={index} className="inline-block">
-                                  <Badge variant="outline">
-                                    {trimToSevenCharacters(interest.trim())}
-                                  </Badge>
-                                </span>
-                              ))
-                              
+                          ? item.interests.split(",").map((interest, index) => (
+                              <span key={index} className="inline-block">
+                                <Badge variant="outline">
+                                  {trimToSevenCharacters(interest.trim())}
+                                </Badge>
+                              </span>
+                            ))
                           : "N/A"}
                       </div>
                     </div>
