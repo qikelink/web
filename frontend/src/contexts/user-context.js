@@ -88,6 +88,7 @@ export const UserProvider = ({ children }) => {
 
           if (
             pathname === "/manager/Settings" ||
+            pathname === "/manager/Account" ||
             pathname === "/settings"
           ) {
             const mentorData = await getMentor();

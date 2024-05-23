@@ -141,6 +141,8 @@ export async function toggleGoogle(signIn) {
 }
 
 export async function verifyRequest(
+  duration,
+  rate,
   username,
   phoneNumber,
   bio,
@@ -148,9 +150,9 @@ export async function verifyRequest(
   contact,
   account,
   validId,
-  rate,
   interests,
-  rating
+  rating,
+  balance
 ) {
   const data = {
     username: username,
@@ -163,6 +165,8 @@ export async function verifyRequest(
     rate: rate,
     interests: interests,
     rating: rating,
+    duration: duration,
+    balance: balance,
     users: client.authStore.model.id,
   };
   await client.collection("mentors").create(data);
@@ -199,18 +203,24 @@ export async function updateVerifyRequest(
 
 export async function updateMentor(
   id,
+  duration,
+  rate,
   username,
   email,
   phoneNumber,
   bio,
-  awards
+  awards,
+  balance
 ) {
   const data = {
+    duration: duration,
+    rate: rate,
     username: username,
     email: email,
     phoneNumber: phoneNumber,
     bio: bio,
     awards: awards,
+    balance: balance,
   };
   await client.collection("mentors").update(id, data);
 }

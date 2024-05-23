@@ -77,7 +77,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
-      <div className="font-jakarta flex justify-between items-center pb-3">
+      <div className="font-roboto flex justify-between items-center pb-3">
         <div className="flex items-center justify-between space-x-2 hover:cursor">
           {isUserValid && isDropdownOpen ? (
             <Badge
