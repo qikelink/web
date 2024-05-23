@@ -65,7 +65,7 @@ const VerifyModal = ({ blue, userData }) => {
       formData.contact,
       formData.account,
       file,
-      "Free",
+      "0",
       interests,
       "1.0/5.0"
     )

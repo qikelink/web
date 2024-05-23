@@ -14,6 +14,7 @@ import {
   toggleQuickService,
   updateMentor,
   updateSetting,
+  verifyRequest,
 } from "../../../backend/src/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/user-context";
@@ -86,11 +87,32 @@ const SettingCard = () => {
     if (mentorId && mentorId.length > 0) {
       updateMentor(
         mentorId,
+        undefined,
+        undefined,
         formData.username,
         formData.email,
         formData.phoneNumber,
         formData.bio,
         formData.awards
+      ).then(() => {
+        getMentor()
+          .then((res) => {
+            setMentor(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching mentor updated data:", error);
+          });
+      });
+    }
+
+    if (!mentorId) {
+      verifyRequest(
+        undefined,
+        undefined,
+        formData.username,
+        formData.phoneNumber,
+        formData.bio,
+        formData.awards,
       ).then(() => {
         getMentor()
           .then((res) => {
@@ -200,7 +222,9 @@ const SettingCard = () => {
               />
               <AvatarFallback>
                 {" "}
-                {user.email.slice(0, 2).toUpperCase()}
+                {user && user.email
+                  ? user.email.slice(0, 2).toUpperCase()
+                  : "QK"}
               </AvatarFallback>
             </Avatar>
           )
@@ -279,7 +303,7 @@ const SettingCard = () => {
                 variant="outline"
                 type="button"
               >
-                <BsCopy />
+                <BsCopy className=" text-blue" />
               </button>
               {/* {formData.verified === true ? (
               mentor && mentor.username && mentor.username.length > 0 ? (

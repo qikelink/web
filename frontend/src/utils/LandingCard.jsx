@@ -127,7 +127,7 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12 font-jakarta bg-[#E6F2FF] min-h-[900px] lg:h-[660px]">
+      <section className="flex flex-col lg:justify-stretch space-y-12 font-roboto bg-[#E6F2FF] min-h-[900px] lg:h-[660px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-thin">
@@ -265,7 +265,7 @@ const LandingCard = () => {
       </section>
 
       {/* section two  */}
-      <section className=" flex space-x-4 justify-evenly items-center font-jakarta bg-[#FFF2E6] h-[540px] lg:h-[716px]">
+      <section className=" flex space-x-4 justify-evenly items-center font-roboto bg-[#FFF2E6] h-[540px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero cloud 1 */}
@@ -300,7 +300,7 @@ const LandingCard = () => {
       </section>
 
       {/* section three  */}
-      <section className=" flex flex-col  items-center justify-center font-jakarta bg-[#E6F2FF] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center font-roboto bg-[#E6F2FF] h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -340,7 +340,7 @@ const LandingCard = () => {
       </section>
 
       {/* section four  */}
-      <section className=" flex flex-col  items-center justify-center font-jakarta bg-[#00BA3E08] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center font-roboto bg-[#00BA3E08] h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -375,7 +375,7 @@ const LandingCard = () => {
       </section>
 
       {/* section five  */}
-      <section className="flex flex-col items-center justify-center font-jakarta bg-[#F24E1E0D] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-roboto bg-[#F24E1E0D] h-[716px]">
         {/* Hero section */}
         <div className="flex space-x-4 justify-evenly">
           {/* Hero cloud 1 */}
@@ -426,7 +426,7 @@ const LandingCard = () => {
       </section>
 
       {/* section six  */}
-      <section className="flex flex-col items-center justify-center font-jakarta bg-[#FBF6F54A] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-roboto bg-[#FBF6F54A] h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
@@ -453,7 +453,7 @@ const LandingCard = () => {
       </section>
 
       {/* section seven  */}
-      <section className="flex flex-col items-center justify-center font-jakarta bg-[#007AFF] h-[560px] lg:h-[716px]">
+      <section className="flex flex-col items-center justify-center font-roboto bg-[#007AFF] h-[560px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
@@ -491,7 +491,7 @@ const LandingCard = () => {
       </section>
 
       {/* section eight  */}
-      <section className=" flex justify-center  space-x-4 items-center  font-jakarta bg-emerald-50 min-h-[990px] lg:h-[716px]">
+      <section className=" flex justify-center  space-x-4 items-center  font-roboto bg-emerald-50 min-h-[990px] lg:h-[716px]">
         {/* Hero section */}
 
         <div className=" w-5/6 flex space-y-4 flex-wrap justify-center lg:justify-between items-center">
@@ -586,7 +586,7 @@ const LandingCard = () => {
       </section>
 
       {/* section nine  */}
-      <section className=" flex flex-col space-y-4 py-8 items-center font-jakarta bg-[#E6F2FF] h-[245px]">
+      <section className=" flex flex-col space-y-4 py-8 items-center font-roboto bg-[#E6F2FF] h-[245px]">
         {/* Footer section */}
 
         <div className="flex justify-between w-5/6">

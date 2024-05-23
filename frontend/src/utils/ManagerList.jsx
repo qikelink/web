@@ -32,7 +32,7 @@ const ManagerList = () => {
             }`}
           >
             <IoMdSettings size={20} />
-            <p>Profile Settings</p>
+            <p> Settings</p>
           </Link>
         </li>
         <li>
@@ -45,7 +45,7 @@ const ManagerList = () => {
             }`}
           >
             <VscOrganization className="hidden sm:inline" size={20} />
-            <p className="lg:block text-lg font-medium">Upcoming sessions</p>
+            <p className="lg:block text-lg font-medium">Upcoming</p>
           </Link>
         </li>
         <li>
@@ -56,9 +56,25 @@ const ManagerList = () => {
             } hover:text-blue`}
           >
             <MdOutlineGroupAdd className="hidden sm:inline" size={20} />
-            <p className="lg:block text-lg font-medium"> Session requests</p>
+            <p className="lg:block text-lg font-medium"> Requests</p>
           </Link>
         </li>
+
+        <li>
+          <Link
+           href="/manager/Account"
+           className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer ${
+             pathname === "/manager/Account" ? "bg-[#f7fafc] text-blue" : ""
+           } hover:text-blue`}
+          >
+            <CgProfile  className="hidden sm:inline" size={20} />
+            <p className="lg:block text-lg font-medium">Account</p>
+          </Link>
+        </li>
+
+       
+
+        <Separator orientation="horizontal" className="hidden md:block" />
 
         <li className="hidden md:block">
           <Link
@@ -71,20 +87,7 @@ const ManagerList = () => {
             <p>Metrics</p>
           </Link>
         </li>
-
-        <Separator orientation="horizontal" className="hidden md:block" />
-
-        <li className="hidden md:block">
-          <Link
-            href="/Profile"
-            className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
-              pathname === "/Profile" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
-            <CgProfile size={20} />
-            <p>Profile</p>
-          </Link>
-        </li>
+       
         <li className="hidden md:block">
           <Link
             href="/FeedBack"

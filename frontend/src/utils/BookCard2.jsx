@@ -363,13 +363,13 @@ const BookCard2 = () => {
 
   const getInitials = (username) => {
     if (username && username.length >= 3) {
-      return username.substring(0, 3).toUpperCase();
+      return username.substring(0, 3);
     }
-    return username ? username.toUpperCase() : "";
+    return username ? username.toLowerCase() : "";
   };
 
   return (
-    <div className="bg-[#D9EBFF] absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3">
+    <div className="bg-[#D9EBFF] absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 font-roboto">
       {/* Header */}
       <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
         <div className="flex space-x-3">
@@ -391,7 +391,7 @@ const BookCard2 = () => {
             Contact us
           </Button>
           <LoginDialog
-            loginText={!isUserValid ? "Sign In" : getInitials(user.username)}
+            loginText={!isUserValid ? "Sign In" : getInitials(user.name)}
             buttonColor="bg-black"
             buttonHoverColor="bg-gray-800"
             buttonSize="lg"
@@ -412,7 +412,7 @@ const BookCard2 = () => {
                   Contact us
                 </Button>
                 <LoginDialog
-                 loginText={!isUserValid ? "Sign In" : getInitials(user.username)}
+                 loginText={!isUserValid ? "Sign In" : getInitials(user.name)}
                   buttonColor="bg-black"
                   buttonHoverColor="bg-gray-600"
                   buttonSize="lg"
@@ -511,7 +511,7 @@ const BookCard2 = () => {
                   About
                 </p>
                 <p className="text-black text-base lg:hidden">
-                  Coaching Call <span className="text-darktext">(20mins)</span>
+                  Coaching Call <span className="text-darktext">({mentorForBooking.duration}mins)</span>
                 </p>
 
                 {isLoading ? (
@@ -549,19 +549,19 @@ const BookCard2 = () => {
                   <p>
                     {" "}
                     Coaching Call{" "}
-                    <span className="text-darktext">(20mins)</span>
+                    <span className="text-darktext">({mentorForBooking.duration}mins)</span>
                   </p>
                 </div>
                 <div className="flex space-x-3">
                   <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light">
                     <img src="/wallet.svg" alt="Chat icon" className="mr-1" />
                     {mentorForBooking.rate
-                      ? mentorForBooking.rate
+                      ? `$${mentorForBooking.rate}`
                       : "Booking Fee"}
                   </div>
                   <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light">
                     <img src="/clock.svg" alt="Chat icon" className="mr-1" />
-                    20mins
+                    {mentorForBooking.duration}mins
                   </div>
                 </div>
                 <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light text-left ">
@@ -731,7 +731,7 @@ const BookCard2 = () => {
                   className="bg-[#F2F8FF] rounded-full text-darktext font-light"
                 >
                   <img src="/wallet.svg" alt="Chat icon" className="mr-1" />
-                  {mentorForBooking.rate ? mentorForBooking.rate : " Fee"}
+                  {mentorForBooking.rate ? `$${mentorForBooking.rate}` : " Fee"}
                 </Button>
               </div>
               <p className="text-sm text-darktext">
@@ -899,7 +899,7 @@ export const Chat = () => {
           Chat
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
+      <DialogContent className="font-roboto w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
         <DialogHeader className="mt-2 mb-2">
           <DialogTitle className="flex justify-between">
             Message

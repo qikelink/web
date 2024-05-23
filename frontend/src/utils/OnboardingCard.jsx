@@ -148,7 +148,7 @@ const OnboardingCard = () => {
           undefined,
           undefined,
           undefined,
-          "Free",
+          "0",
           interests,
           "1.0/5.0"
         );
@@ -738,7 +738,7 @@ const VerifyModal = ({ blue, userData, mentor }) => {
       formData.contact,
       formData.account,
       file,
-      "Free",
+      "0",
       interests,
       "1.0/5.0"
     )
