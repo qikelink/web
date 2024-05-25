@@ -127,10 +127,10 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12 font-roboto bg-[#E6F2FF] min-h-[900px] lg:h-[660px]">
+      <section className="flex flex-col lg:justify-stretch space-y-12 font-Inter bg-[#E6F2FF] min-h-[900px] lg:h-[660px]">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
-          <p className="text-sm text-white font-thin">
+          <p className="text-sm text-white font-normal">
             Thanks for trying the beta version of Qikelink. Please let us know
             what we should work on to make it better! Submit your{" "}
             <a className="underline" href="/feedBack">
@@ -142,8 +142,7 @@ const LandingCard = () => {
         {/* Header  */}
         <div
           id="navbar"
-          className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto"
-        >
+          className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
           <div className="flex space-x-3">
             <div className="flex items-center cursor-pointer">
               <QikelinkLogo />
@@ -152,8 +151,7 @@ const LandingCard = () => {
 
             <Badge
               className="px-4 rounded-full bg-[#d6e7fa]"
-              variant="secondary"
-            >
+              variant="secondary">
               Beta
             </Badge>
           </div>
@@ -199,15 +197,15 @@ const LandingCard = () => {
           </div>
 
           {/* Hero Texts */}
-          <div className="grid lg:grid-cols-2 w-5/6 px-2 absolute mx-auto top-0 right-0 left-0 z-10 ">
+          <div className="grid lg:grid-cols-2 w-5/6 px-2 absolute mx-auto top-0 right-0 left-0 z-10  ">
             {/* Header text */}
-            <div>
-              <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-bold tracking-wide">
+            <div className="">
+              <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-extrabold ">
                 <h2 className="text-[#5B5B5B] ">Unlock Your Potential</h2>
                 <h2 className="text-[#1C1C1C]">with Qikelink </h2>
               </div>
               {/* Subheading text */}
-              <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-xl w-fit font-normal">
+              <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-xl w-fit font-medium">
                 {" "}
                 {/* Adjust width here */}
                 Join Millions using Qikelink to offer mentorship to their
@@ -225,12 +223,10 @@ const LandingCard = () => {
                 <Button
                   onClick={handleClaim}
                   size="xl"
-                  className="bg-[#007AFF] "
-                >
+                  className="bg-[#007AFF] ">
                   <Button
                     variant="ghost"
-                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2"
-                  >
+                    className="bg-[#FFFFFF] rounded-md  px-4 mr-2">
                     <FcGoogle size={20} />
                   </Button>{" "}
                   Claim your booking link
@@ -238,8 +234,7 @@ const LandingCard = () => {
                 <Button
                   onClick={handleBrowse}
                   size="xl"
-                  className="bg-[#1C1C1C] px-10"
-                >
+                  className="bg-[#1C1C1C] px-10">
                   Browse mentors
                 </Button>
               </div>
@@ -249,8 +244,8 @@ const LandingCard = () => {
             <div className="mt-12 flex justify-center items-center">
               <Image
                 src={pic5}
-                width={450}
-                height={450}
+                width={410}
+                height={410}
                 className="rounded-md"
                 alt="Picture of the author"
               />
@@ -265,7 +260,7 @@ const LandingCard = () => {
       </section>
 
       {/* section two  */}
-      <section className=" flex space-x-4 justify-evenly items-center font-roboto bg-[#FFF2E6] h-[540px] lg:h-[716px]">
+      <section className=" flex space-x-4 justify-evenly items-center font-Inter bg-[#FFF2E6] h-[540px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero cloud 1 */}
@@ -276,7 +271,7 @@ const LandingCard = () => {
         {/* Hero Texts */}
         <div className="flex flex-col space-y-6 items-center w-2/3">
           {/* Header text */}
-          <p className="text-[#6B3600] text-lg font-thin">
+          <p className="text-[#6B3600] text-lg font-medium">
             Discover mentorship
           </p>
 
@@ -285,7 +280,7 @@ const LandingCard = () => {
             <p className="text-[#6B3600]"> Industry Leaders</p>
           </div>
           {/* Subheading text */}
-          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-thin">
+          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal">
             {" "}
             {/* Adjust width here */}
             Join a vibrant community of seasoned content creators. Find the
@@ -300,7 +295,7 @@ const LandingCard = () => {
       </section>
 
       {/* section three  */}
-      <section className=" flex flex-col  items-center justify-center font-roboto bg-[#E6F2FF] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center font-Inter bg-[#E6F2FF] h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -312,14 +307,16 @@ const LandingCard = () => {
         {/* Hero Texts */}
         <div className="flex flex-col space-y-5 items-center  w-2/3">
           {/* Header text */}
-          <p className="text-[#007AFF] text-lg font-thin">Booking Made Easy</p>
+          <p className="text-[#007AFF] text-lg font-medium">
+            Booking Made Easy
+          </p>
 
           <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
             <p className="text-[#007AFF]">Book meet with any </p>
             <p className="text-[#007AFF]"> Mentor with ease</p>
           </div>
           {/* Subheading text */}
-          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-thin">
+          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal">
             {" "}
             Schedule live video sessions with experienced content creators at
             your convenience. Whether you need advice on video editing, product
@@ -340,7 +337,7 @@ const LandingCard = () => {
       </section>
 
       {/* section four  */}
-      <section className=" flex flex-col  items-center justify-center font-roboto bg-[#00BA3E08] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center font-Inter bg-[#00BA3E08] h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -351,7 +348,7 @@ const LandingCard = () => {
         {/* Hero Texts */}
         <div className="flex flex-col space-y-5 items-center w-2/3">
           {/* Header text */}
-          <p className="text-[#004015] text-lg font-thin">
+          <p className="text-[#004015] text-lg font-medium">
             customise your booking link
           </p>
 
@@ -360,7 +357,7 @@ const LandingCard = () => {
             <p className="text-[#004015]"> link as you want</p>
           </div>
           {/* Subheading text */}
-          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-thin ">
+          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
             {" "}
             Own your link in every way, add custom colors, graphics, quotes and
             more. Share your booking link to the world to start engaging with
@@ -375,7 +372,7 @@ const LandingCard = () => {
       </section>
 
       {/* section five  */}
-      <section className="flex flex-col items-center justify-center font-roboto bg-[#F24E1E0D] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-Inter bg-[#F24E1E0D] h-[716px]">
         {/* Hero section */}
         <div className="flex space-x-4 justify-evenly">
           {/* Hero cloud 1 */}
@@ -386,14 +383,14 @@ const LandingCard = () => {
           {/* Hero Texts */}
           <div className="flex flex-col space-y-4 items-center w-2/3">
             {/* Header text */}
-            <p className="text-[#600000] text-lg font-thin">
+            <p className="text-[#600000] text-lg font-medium">
               Join the Community
             </p>
 
             <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
               <p className="text-[#600000]">Become Part of </p>
               <div className="text-[#600000] flex flex-col space-x-2">
-                <p> Something Bigger </p>
+                <p> Somesmg Bigger </p>
                 <img
                   className="mt-6"
                   src="/section5a.svg"
@@ -402,7 +399,7 @@ const LandingCard = () => {
               </div>
             </div>
             {/* Subheading text */}
-            <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-thin ">
+            <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
               {" "}
               Join Qikelink today and become part of a thriving community of
               entrepreneurs, content creators, and mentors. Together, we're
@@ -426,19 +423,21 @@ const LandingCard = () => {
       </section>
 
       {/* section six  */}
-      <section className="flex flex-col items-center justify-center font-roboto bg-[#FBF6F54A] h-[716px]">
+      <section className="flex flex-col items-center justify-center font-Inter bg-[#FBF6F54A] h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
         <div className="flex flex-col space-y-5 items-center w-2/3">
           {/* Header text */}
-          <p className="text-[#1C1C1C] text-lg font-thin">Onboarding for you</p>
+          <p className="text-[#1C1C1C] text-lg font-medium">
+            Onboarding for you
+          </p>
 
           <div className="text-3xl lg:text-6xl space-y-4 text-center font-semibold">
             <p className="text-[#1C1C1C]">Explore qikelink </p>
           </div>
           {/* Subheading text */}
-          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-thin ">
+          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
             {" "}
             Discover the full potential of qikelink by watching our quick demo,
             where we walk you through all the features that can revolutionize
@@ -453,20 +452,20 @@ const LandingCard = () => {
       </section>
 
       {/* section seven  */}
-      <section className="flex flex-col items-center justify-center font-roboto bg-[#007AFF] h-[560px] lg:h-[716px]">
+      <section className="flex flex-col items-center justify-center font-Inter bg-[#007AFF] h-[560px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
         <div className="flex flex-col space-y-5 items-center w-2/3">
           {/* Header text */}
-          <p className="text-[#E6F1FE] text-lg font-thin">Newsletter</p>
+          <p className="text-[#E6F1FE] text-lg font-normal">Newsletter</p>
 
           <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
             <p className="text-[#E6F2FF]">Get latest updates </p>
             <p className="text-[#E6F2FF]"> Join community </p>
           </div>
           {/* Subheading text */}
-          <p className="text-[#E6F1FE] text-base lg:text-xl w-full text-center font-thin ">
+          <p className="text-[#E6F1FE] text-base lg:text-xl w-full text-center font-normal ">
             {" "}
             Subscribe to our newsletter to get weekly updates.
           </p>
@@ -477,13 +476,11 @@ const LandingCard = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="bg-white py-5 rounded-lg"
-            ></Input>
+              className="bg-white py-5 rounded-lg"></Input>
             <Button
               size="lg"
               className="bg-[#1C1C1C] px-10 w-full"
-              onClick={handleSubscribe}
-            >
+              onClick={handleSubscribe}>
               Subscribe
             </Button>
           </div>
@@ -491,25 +488,25 @@ const LandingCard = () => {
       </section>
 
       {/* section eight  */}
-      <section className=" flex justify-center  space-x-4 items-center  font-roboto bg-emerald-50 min-h-[990px] lg:h-[716px]">
+      <section className=" flex justify-center  space-x-4 items-center  font-Inter bg-emerald-50 min-h-[990px] lg:h-[716px]">
         {/* Hero section */}
 
         <div className=" w-5/6 flex space-y-4 flex-wrap justify-center lg:justify-between items-center">
           {/* Hero Texts */}
           <div className="flex flex-col space-y-6 items-center lg:w-1/2 relative">
             <img src="/section2b.svg" alt="Section 2 image 2" />
-            <div className="text-3xl absolute mx-auto left-0 right-0 lg:text-6xl space-y-2 font-semibold">
+            <div className="text-3xl absolute mx-auto left-0 right-0 lg:text-5xl font-semibold">
               {/* Header text */}
-              <p className="text-[#007AFF] lg:text-lg font-thin text-left">
+              <p className="text-[#007AFF] lg:text-lg font-medium text-left">
                 FAQs
               </p>
 
-              <p className="text-[#007AFF] tracking-wide">
+              <p className="text-[#007AFF] lg:w-1/2">
                 We have answered a few questions you may have for us
               </p>
 
               {/* Subheading text */}
-              <p className="text-[#007AFF] text-xl w-full font-thin text-left">
+              <p className="text-[#007AFF] text-xl w-full font-normal text-left">
                 {" "}
                 support@qikelink.com
               </p>
@@ -522,8 +519,7 @@ const LandingCard = () => {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem
                   value="item-1"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>What is Qikelink?</AccordionTrigger>
                   <AccordionContent>
                     Qikelink connects creators and professionals with their
@@ -532,8 +528,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-2"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>
                     How To Get My Booking Link?
                   </AccordionTrigger>
@@ -546,8 +541,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-3"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>
                     How Can I Make Money with Qikelink?
                   </AccordionTrigger>
@@ -558,8 +552,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-4"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>
                     How Trusted is This Platform
                   </AccordionTrigger>
@@ -570,8 +563,7 @@ const LandingCard = () => {
                 </AccordionItem>
                 <AccordionItem
                   value="item-5"
-                  className="bg-white p-2 my-3 border-0 rounded-md"
-                >
+                  className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>Do I Need Money To SignUp</AccordionTrigger>
                   <AccordionContent>
                     No, signing up for Qikelink is absolutely free.
@@ -586,7 +578,7 @@ const LandingCard = () => {
       </section>
 
       {/* section nine  */}
-      <section className=" flex flex-col space-y-4 py-8 items-center font-roboto bg-[#E6F2FF] h-[245px]">
+      <section className=" flex flex-col space-y-4 py-8 items-center font-Inter bg-[#E6F2FF] h-[245px]">
         {/* Footer section */}
 
         <div className="flex justify-between w-5/6">

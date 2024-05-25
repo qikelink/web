@@ -168,8 +168,7 @@ const HomeCardSection = () => {
                         <Toggle
                           aria-label="Toggle italic"
                           variant="outline"
-                          onClick={() => handleBookmarkToggle(item)}
-                        >
+                          onClick={() => handleBookmarkToggle(item)}>
                           <BsJournalBookmarkFill />
                         </Toggle>
                       </div>
@@ -192,7 +191,7 @@ const HomeCardSection = () => {
                           : "N/A"}
                       </div>
                     </div>
-                    <div className="mt-1 line-clamp-4 text-sm font-light ">
+                    <div className="mt-1 line-clamp-4 text-sm font-normal ">
                       {item.bio}
                     </div>
                   </CardContent>
@@ -201,15 +200,13 @@ const HomeCardSection = () => {
                     {item.rate != "Free" ? (
                       <Badge
                         variant="outline"
-                        className=" gap-1  text-black rounded-full border-2 border-[#FFC72C]"
-                      >
+                        className=" gap-1  text-black rounded-full border-2 border-[#FFC72C]">
                         <p className="flex ">{item.rate}/per Week</p>
                       </Badge>
                     ) : (
                       <Badge
                         variant="outline"
-                        className="flex gap-1 rounded-full bg-green-600"
-                      >
+                        className="flex gap-1 rounded-full bg-green-600">
                         <p className="flex text-green-100"> Free</p>
                       </Badge>
                     )}

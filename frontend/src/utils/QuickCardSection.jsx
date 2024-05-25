@@ -106,7 +106,7 @@ const QuickCardSection = () => {
                           ))
                         : "N/A"}
                     </div>
-                    <div className="mt-2 line-clamp-4">{item.bio}</div>
+                    <div className="mt-2 text-sm line-clamp-4">{item.bio}</div>
 
                     <Separator className="my-2 -mb-4" />
                   </CardContent>

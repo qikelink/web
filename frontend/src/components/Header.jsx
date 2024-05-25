@@ -77,22 +77,20 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
-      <div className="font-roboto flex justify-between items-center pb-3">
+      <div className="font-Inter flex justify-between items-center pb-3">
         <div className="flex items-center justify-between space-x-2 hover:cursor">
           {isUserValid && isDropdownOpen ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <FaX className="md:hidden" size={16} />
             </Badge>
           ) : isUserValid ? (
             <Badge
               variant={"outline"}
               className={"p-2 md:hidden"}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <FaBars className="md:hidden" size={16} />
             </Badge>
           ) : (
@@ -107,8 +105,7 @@ export default function Header() {
 
           <div
             className="flex items-center cursor-pointer"
-            onClick={() => router.push(`/`)}
-          >
+            onClick={() => router.push(`/`)}>
             <QikelinkLogo />
             <p className="font-bold text-xl ml-2">Qikelink</p>
           </div>
@@ -142,8 +139,7 @@ export default function Header() {
                 <Badge
                   variant="outline"
                   className={"rounded-full p-2 hidden md:inline"}
-                  onClick={() => router.push("/sessions")}
-                >
+                  onClick={() => router.push("/sessions")}>
                   <BsHeadsetVr
                     size={20}
                     className="text-current hover:animate-spin cursor-pointer"
@@ -154,8 +150,7 @@ export default function Header() {
                   className={
                     "relative rounded-full p-2 hidden md:inline cursor-pointer"
                   }
-                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                >
+                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}>
                   <FaRegBell size={20} className="text-current" />
 
                   {notifications.items && notifications.items.length > 0 && (
@@ -175,8 +170,7 @@ export default function Header() {
                             <div
                               className="flex items-center justify-between px-4 py-2 border-b cursor-pointer border-gray-300"
                               onClick={() => router.push("/sessions")}
-                              key={index}
-                            >
+                              key={index}>
                               <div className="flex items-center">
                                 {/* <div className="w-2 h-2 bg-blue rounded-full mr-2"></div> */}
                                 <div>
@@ -235,8 +229,7 @@ export default function Header() {
                   onClick={() => setProgress(90)}
                   className={`flex gap-4 justify-start py-5 cursor-pointer hover:text-blue ${
                     pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-                  }`}
-                >
+                  }`}>
                   <AiOutlineHome size={24} className="ml-2" />
                   <p>Home</p>
                 </Link>
@@ -263,8 +256,7 @@ export default function Header() {
                     pathname === "/notification"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <div className="flex justify-start space-x-4">
                     <IoChatboxEllipsesOutline size={22} className="ml-2" />
                     <p>Messages</p>
@@ -285,8 +277,7 @@ export default function Header() {
                     pathname === "/mentors"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <PiBookBookmarkDuotone size={24} className="ml-2" />
                   <p>Mentors</p>
                 </Link>
@@ -314,8 +305,7 @@ export default function Header() {
                     pathname === "/manager/Organization"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <CgProfile size={24} className="ml-2" />
                   <p>Dashboard</p>
                 </Link>
@@ -329,8 +319,7 @@ export default function Header() {
                     pathname === "/settings"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <IoMdSettings size={24} className="ml-2" />
                   <p>Settings</p>
                 </Link>
@@ -344,8 +333,7 @@ export default function Header() {
                     pathname === "/help"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <IoMdHelpCircleOutline size={24} className="ml-2" />
                   <p>Help</p>
                 </Link>
@@ -358,8 +346,7 @@ export default function Header() {
                     pathname === "/feedBack"
                       ? "bg-[#e2eff8] text-blue rounded-md"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <MdOutlineFeedback size={24} className="ml-2" />
                   <p>Send FeedBack</p>
                 </Link>
@@ -368,8 +355,7 @@ export default function Header() {
                 <li>
                   <button
                     onClick={handleSignout}
-                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md"
-                  >
+                    className="flex gap-4 justify-start items-center py-5 px-1 cursor-pointer text-red-500 rounded-md">
                     <MdLogout size={22} className="ml-2" />
                     <p>Sign Out</p>
                   </button>

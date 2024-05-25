@@ -369,52 +369,50 @@ const BookCard2 = () => {
     return username ? username.toLowerCase() : "";
   };
 
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
+  // const AUTO_REPLY =
 
-const [message, setMessage] = useState("");
-const [messages, setMessages] = useState([]);
-const messagesEndRef = useRef(null);
-// const AUTO_REPLY = 
+  const handleInputChange = (e) => {
+    setMessage(e.target.value);
+  };
 
-const handleInputChange = (e) => {
-  setMessage(e.target.value);
-};
+  const handleSendMessage = async () => {
+    if (message.trim() !== "") {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: message, sender: "user" },
+      ]);
 
-const handleSendMessage = async () => {
-  if (message.trim() !== "") {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: message, sender: "user" },
-    ]);
+      // Call the backend function to get the AI response
+      const aiResponse = await getGroqChatCompletion(message);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: aiResponse.choices[0]?.message?.content, sender: "bot" },
+      ]);
 
-    // Call the backend function to get the AI response
-    const aiResponse = await getGroqChatCompletion(message)
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: aiResponse.choices[0]?.message?.content, sender: "bot" },
-    ]);
+      setMessage("");
+    }
+  };
 
-    setMessage("");
-  }
-};
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
 
-const handleKeyDown = (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    handleSendMessage();
-  }
-};
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-const scrollToBottom = () => {
-  messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-};
-
-useEffect(() => {
-  scrollToBottom();
-}, [messages]);
-
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
-    <div className="bg-[#D9EBFF] text-sm absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 font-roboto">
+    <div className="bg-[#D9EBFF] text-sm absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 font-Inter">
       {/* Header */}
       <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
         <div className="flex space-x-3">
@@ -885,7 +883,11 @@ useEffect(() => {
                 <div className="relative w-full">
                   <Input
                     className="rounded-lg py-6 px-4 pr-12"
-                    placeholder={`${messages ? 'Book a session to have unlimited chatting' : 'Enter message'}`}
+                    placeholder={`${
+                      messages
+                        ? "Book a session to have unlimited chatting"
+                        : "Enter message"
+                    }`}
                     value={message}
                     disabled={`${messages ? true : false}`}
                     onChange={handleInputChange}
@@ -946,13 +948,12 @@ export const Chat = () => {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2 lg:hidden"
-        >
+          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2 lg:hidden">
           <img src="/chat.svg" alt="Chat icon" className="mr-1" />
           Chat
         </Button>
       </DialogTrigger>
-      <DialogContent className="font-roboto w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
+      <DialogContent className="font-Inter w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
         <DialogHeader className="mt-2 mb-2">
           <DialogTitle className="flex justify-between">
             Message
