@@ -1,3 +1,4 @@
+const { Inter } = require("next/font/google");
 const { fontFamily } = require("tailwindcss/defaultTheme")
 
 
@@ -78,7 +79,7 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         poppins: "Poppins",
-        roboto: "Roboto",
+        Inter: "Inter",
         jakarta: "Plus Jakarta Sans",
       },
 

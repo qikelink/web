@@ -36,7 +36,7 @@ const KeywordBar = ({ data }) => {
           <Button
             key={buttonText}
             variant="secondary"
-            className={`w-fit font-medium text-base hover:bg-blue  ${
+            className={`w-fit font-medium text-sm hover:bg-blue  ${
               selectedButtons === buttonText
                 ? "bg-blue text-secondary "
                 : index === 0

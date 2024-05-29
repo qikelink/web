@@ -38,15 +38,14 @@ const ListSection = () => {
   return (
     <div className="flex flex-row justify-between h-full w-full ">
       {/* menu items */}
-      <ul className="flex text-base flex-col grow">
+      <ul className="flex text-base font-normal flex-col grow">
         <li>
           <Link
             href="/"
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-            }`}
-          >
+            }`}>
             <AiOutlineHome size={22} className="ml-2" />
             <p>Home</p>
           </Link>
@@ -59,8 +58,7 @@ const ListSection = () => {
               pathname === "/quickService"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}
-          >
+            }`}>
             <IoFlashOutline size={22} className="ml-2" />
             <p>Quick Service</p>
           </Link>
@@ -73,8 +71,7 @@ const ListSection = () => {
               pathname === "/bookmark"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}
-          >
+            }`}>
             <PiBookBookmarkDuotone size={22} className="ml-2" />
             <p>BookMarked</p>
           </Link>
@@ -87,8 +84,7 @@ const ListSection = () => {
               pathname === "/sessions"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            } hover:text-blue`}
-          >
+            } hover:text-blue`}>
             <BsJournalBookmarkFill size={22} className="ml-2" />
             <p>Sessions</p>
           </Link>
@@ -101,8 +97,7 @@ const ListSection = () => {
               pathname === "/manager/Settings"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}
-          >
+            }`}>
             <PiDesktopTower size={22} className="ml-2 font-semibold" />
             <p>Profile</p>
           </Link>
@@ -115,8 +110,7 @@ const ListSection = () => {
             onClick={() => setProgress(90)}
             className={`flex gap-4 justify-start items-center py-5 cursor-pointer hover:text-blue ${
               pathname === "/help" ? "bg-[#e2eff8] text-blue rounded-md" : ""
-            }`}
-          >
+            }`}>
             <IoMdHelpCircleOutline size={22} className="ml-2" />
             <p>Help</p>
           </Link>
@@ -129,8 +123,7 @@ const ListSection = () => {
               pathname === "/feedBack"
                 ? "bg-[#e2eff8] text-blue rounded-md"
                 : ""
-            }`}
-          >
+            }`}>
             <MdOutlineFeedback size={22} className="ml-2" />
             <p>Send FeedBack</p>
           </Link>
@@ -139,8 +132,7 @@ const ListSection = () => {
           <li>
             <button
               onClick={handleSignout}
-              className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red-500 rounded-md"
-            >
+              className="flex gap-4 justify-start items-center py-5 cursor-pointer text-red-500 rounded-md">
               <MdLogout size={22} className="ml-2" />
               <p>Sign Out</p>
             </button>
