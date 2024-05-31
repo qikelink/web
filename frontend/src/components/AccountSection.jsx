@@ -11,9 +11,11 @@ import {
   updateMentor,
   verifyRequest,
 } from "../../../backend/src/pocketbase";
+import { EmptyIcon } from "@/icons/EmptyIcon";
+import { Skeleton } from "./ui/skeleton";
 
 const AccountSection = () => {
-  const { user, mentor, setMentor } = useUser();
+  const { user, mentor, setMentor, reviews, isReviewLoading } = useUser();
   const { toast } = useToast();
   const [formData, setFormData] = useState({});
   const [isSpinning, setIsSpinning] = useState(false);
@@ -99,12 +101,12 @@ const AccountSection = () => {
 
   const handleWithdraw = (event) => {
     event.preventDefault();
-    
-    if (formData.balance < 20) {
+
+    if (formData.balance < 50) {
       toast({
         title: "Balance too low to withdraw",
         description:
-          "Sorry, your balance is lower than our withdrawable balance of $20! Complete more sessions to increase your balance.",
+          "Sorry, your balance is lower than our withdrawable balance of $50! Complete more sessions to increase your balance.",
         variant: "default",
       });
       return;
@@ -152,9 +154,9 @@ const AccountSection = () => {
     }
   };
 
-  const { cap, sessionsNeeded } = getCapAndSessionsNeeded(formData.meetingsHeld);
-
-
+  const { cap, sessionsNeeded } = getCapAndSessionsNeeded(
+    formData.meetingsHeld
+  );
 
   return (
     <section className="space-y-4">
@@ -231,7 +233,8 @@ const AccountSection = () => {
               onChange={handleChange}
             />
             <p className="text-sm text-darktext ml-1">
-            Capped at ${cap}, remaining {sessionsNeeded} more sessions to unlock more
+              Capped at ${cap}, remaining {sessionsNeeded} more sessions to
+              unlock more
             </p>
           </div>
 
@@ -242,7 +245,7 @@ const AccountSection = () => {
       </div>
 
       {/* review section */}
-      <div className="bg-gray-100 rounded-xl px-4 py-3 space-y-3">
+      <div className="bg-gray-100 rounded-xl px-4 py-3 space-y-3 h-72">
         <div className=" rounded-xl bg-gray-100 flex justify-between items-center">
           <div className="flex flex-col">
             <p className="text-black text-lg font-medium">Session Reviews</p>
@@ -253,24 +256,29 @@ const AccountSection = () => {
           </Button>
         </div>
 
-        <div className="flex-1 ">
-          <p className="text-base font-medium leading-tight bg-white p-2 rounded-lg">
-            "Had a good session with azubuike, was totally worth it 100% -
-            James"
-          </p>
-        </div>
-        <div className="flex-1 ">
-          <p className="text-base font-medium leading-tight bg-white p-2 rounded-lg">
-            "Had a good session with azubuike, was totally worth it 100% -
-            James"
-          </p>
-        </div>
-        <div className="flex-1 ">
-          <p className="text-base font-medium leading-tight bg-white p-2 rounded-lg">
-            "Had a good session with azubuike, was totally worth it 100% -
-            James"
-          </p>
-        </div>
+        {isReviewLoading ? (
+          <div className="flex flex-col space-y-2">
+            <Skeleton className=" h-12 w-full rounded-lg bg-white" />
+            <Skeleton className=" h-12 w-full rounded-lg bg-white" />
+            <Skeleton className=" h-12 w-full rounded-lg bg-white" />
+            <Skeleton className=" h-12 w-full rounded-lg bg-white" />
+          </div>
+        ) : reviews.length > 0 ? (
+          reviews.map((item, index) => (
+            <div key={index} className="flex-1 ">
+              <p className="text-base font-medium leading-tight bg-white p-2 rounded-lg">
+                {`${item.comment} - ${item.expand.author.name}`}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center w-full ">
+            <EmptyIcon size={100} />
+            <p className="text-center text-lg font-medium text-darktext">
+              No reviews recieved yet.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

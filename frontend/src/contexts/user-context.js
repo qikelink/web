@@ -15,6 +15,7 @@ import {
   getMeetingRequests,
   getNotifications,
   getMentorForBooking,
+  getReviews,
 } from "../../../backend/src/pocketbase";
 import { usePathname } from "next/navigation";
 
@@ -34,11 +35,13 @@ export const UserProvider = ({ children }) => {
   const [bookmarks, setBookmarks] = useState([]);
   const [createdSessions, setCreatedSessions] = useState([]);
   const [allSessions, setAllSessions] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [createdOrganization, setCreatedOrganization] = useState([]);
   const [allOrganization, setAllOrganization] = useState([]);
   const [meetingRequests, setMeetingRequests] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isReviewLoading, setIsReviewLoading] = useState(true);
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
   const [selectedButtons, setSelectedButtons] = useState("");
 
@@ -95,6 +98,12 @@ export const UserProvider = ({ children }) => {
             setMentor(mentorData);
             localStorage.setItem("mentor_cache", JSON.stringify(mentorData));
             localStorage.setItem("mentor_cache_timestamp", Date.now());
+
+            const reviewData = await getReviews();
+            setReviews(reviewData);
+            localStorage.setItem("review_cache", JSON.stringify(reviewData));
+            localStorage.setItem("review_cache_timestamp", Date.now());
+            setIsReviewLoading(false);
           }
         }
 
@@ -175,7 +184,17 @@ export const UserProvider = ({ children }) => {
             user.id,
             user.email
           ); // Cache for 1 hour
-        } else if (pathname === "/") {
+        }
+        // else if (pathname === "/manager/Account") {
+        //   fetchDataAndCache(
+        //     getReviews,
+        //     setReviews,
+        //     "reviews_cache",
+        //     3600,
+        //     user.id
+        //   );
+        // }
+        else if (pathname === "/") {
           // const email = `${ user.email || user.superEmail}`;
 
           fetchDataAndCache(
@@ -203,6 +222,7 @@ export const UserProvider = ({ children }) => {
         user,
         setUser,
         isLoading,
+        isReviewLoading,
         isLoadingUserData,
         quickMentors,
         setQuickMentors,
@@ -216,6 +236,8 @@ export const UserProvider = ({ children }) => {
         createdSessions,
         allSessions,
         setAllSessions,
+        reviews,
+        setReviews,
         createdOrganization,
         allOrganization,
         setAllOrganization,
