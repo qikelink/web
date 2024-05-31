@@ -1,7 +1,7 @@
 "use strict";
 const Groq = require("groq-sdk");
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
+  apiKey: process.env.GROQ_API_KEY || "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",
   dangerouslyAllowBrowser: true,
 });
 
