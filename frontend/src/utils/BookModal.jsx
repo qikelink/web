@@ -551,36 +551,24 @@ const BookModal = ({ buttonName, blue, data }) => {
                       name="purpose"
                       maxLength={800} // Adding the maxLength attribute
                     />
-                    <span className="ml-1 text-sm text-darktext">
+                    {/* <span className="ml-1 text-sm text-darktext">
                       {characterCount} characters remaining
-                    </span>
+                    </span> */}
                   </div>
                 </div>
                 <div className="flex flex-col space-y-3">
-                  {data.verified === true ? (
-                    <Button
-                      size="xl"
-                      className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
-                      type="submit"
-                    >
-                      {isSpinning ? "Requesting" : "Request"}
-                      <AiOutlineLoading3Quarters
-                        className={`${
-                          isSpinning ? "ml-3 animate-spin" : "hidden"
-                        }`}
-                      />
-                    </Button>
-                  ) : (
-                    <TwitterDMButton
-                      recipientId={recipientId}
-                      message={message}
-                      requestAs={selectedOption}
-                      sessionDate={date}
-                      sessionTime={sessionTime}
-                      purpose={formData.purpose}
-                      data={data}
+                  <Button
+                    size="xl"
+                    className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                    type="submit"
+                  >
+                    {isSpinning ? "Requesting" : "Request"}
+                    <AiOutlineLoading3Quarters
+                      className={`${
+                        isSpinning ? "ml-3 animate-spin" : "hidden"
+                      }`}
                     />
-                  )}
+                  </Button>
 
                   <DialogClose asChild>
                     <Button

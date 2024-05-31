@@ -457,3 +457,12 @@ export async function sendQuestion(question, organization) {
   };
   await client.collection("questions").create(data);
 }
+
+
+export async function getReviews() {
+  return await client.collection("reviews").getFullList({
+    filter: `mentor = '${client.authStore.model.id}'`,
+    expand: "author, mentor",
+    sort: "-created",
+  });
+}
