@@ -190,7 +190,7 @@ const RequestSection = () => {
           {[...Array(3)].map((_, index) => (
             <Skeleton key={index} className="h-24 w-full rounded-md" />
           ))}
-        </div>
+        </div> 
       ) : meetingRequests.length > 0 ? (
         meetingRequests.map((item, index) => (
           <Alert
