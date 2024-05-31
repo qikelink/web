@@ -97,7 +97,7 @@ const VerifyModal = ({ blue, userData }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button size="xl" variant="outline" className="text-lg rounded-lg">
+          <Button size="xl" variant="outline" className="text-base rounded-lg">
             <p className={blue ? "text-blue" : ""}>Get verified </p>
             <BsFillSendArrowDownFill
               color={blue ? "#0096FF" : "#0096FF"}
@@ -171,7 +171,7 @@ const VerifyModal = ({ blue, userData }) => {
             <DialogFooter>
               <Button
                 size="xl"
-                className="bg-blue hover:bg-darkblue rounded-lg text-lg w-full mt-3"
+                className="bg-blue hover:bg-darkblue rounded-lg text-base w-full mt-3"
                 type="submit"
               >
                 Submit

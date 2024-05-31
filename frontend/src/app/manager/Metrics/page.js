@@ -26,7 +26,7 @@ export default function page() {
       {domLoaded && (
         <main className="mx-2 lg:mx-4">
           <Header />
-          <div className="min-h-screen relative font-poppins w-full flex flex-row py-1 overflow-contain">
+          <div className="min-h-screen relative  w-full flex flex-row py-1 overflow-contain">
             <div className="hidden md:inline w-1/4 ">
               <ListSection />
             </div>

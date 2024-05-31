@@ -9,20 +9,10 @@ import HuddleContextProvider from "@/contexts/HuddleContextProvider";
 import NextAuthProvider from "@/contexts/SessionProvider";
 
 const fontSans = FontSans({
-  subsets: ["latin"],
+  subsets: ["vietnamese"],
   variable: "--font-sans",
   weight: "400",
 });
-
-// export const metadata = {
-//   title: "Qikelink.com || Democractizing YC office Hour",
-//   description: "Connecting You To Your Next Level Growth",
-//   icons:
-//     "https://bafkreif7fy6ndk7v7zqpmcbsngr5fnohjgvdpappfr7r3c33h6ie7oda7a.ipfs.nftstorage.link/",
-//   twitter: {
-//     card: "summary_large_image",
-//   },
-// };
 
 export const metadata = constructMetadata();
 

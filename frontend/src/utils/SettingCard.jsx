@@ -208,10 +208,10 @@ const SettingCard = () => {
 
   return (
     <div className="px-1">
-      <h1 className="text-2xl font-semibold mb-3">Settings</h1>
-      <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-lg">
+      <h1 className="text-xl font-semibold mb-3">Settings</h1>
+      <div className="h-fit border border-gray-200 rounded-lg lg:p-10 p-4 text-base">
         {/* Profile image */}
-        <Label className="text-lg">Profile Image</Label>
+        <Label className="text-base">Profile Image</Label>
         {isLoading ? (
           <Skeleton className="h-24 w-24 mt-3 md:h-32 md:w-32 rounded-full"></Skeleton>
         ) : (
@@ -252,7 +252,7 @@ const SettingCard = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
           <div>
-            <Label className="text-lg">Full name</Label>
+            <Label className="text-base">Full name</Label>
             <Input
               className="py-6 px-3 bg-inputbackground"
               placeholder="Please enter your full name"
@@ -263,7 +263,7 @@ const SettingCard = () => {
             />
           </div>
           <div>
-            <Label className="text-lg">Email</Label>
+            <Label className="text-base">Email</Label>
             <Input
               className="py-6 px-3 bg-inputbackground"
               placeholder="Please enter your email"
@@ -275,7 +275,7 @@ const SettingCard = () => {
           </div>
 
           <div>
-            <Label className="text-lg">Phone number (optional)</Label>
+            <Label className="text-base">Phone number (optional)</Label>
             <Input
               className="py-6 px-3 bg-inputbackground"
               placeholder="Please enter your cell number"
@@ -286,7 +286,7 @@ const SettingCard = () => {
           </div>
 
           <div>
-            <Label className="text-lg">
+            <Label className="text-base">
               {" "}
               <span className="text-blue font-medium"> Booking link </span>
             </Label>
@@ -320,7 +320,7 @@ const SettingCard = () => {
         </div>
 
         <div className="mt-6">
-          <Label className="text-lg">Bio</Label>
+          <Label className="text-base">Bio</Label>
           <Textarea
             className="h-24 sm:h-36 bg-inputbackground"
             placeholder="Write your bio here, feel free to brag about yourself!"
@@ -331,7 +331,7 @@ const SettingCard = () => {
         </div>
 
         <div className="mt-6">
-          <Label className="text-lg">Work Experience</Label>
+          <Label className="text-base">Work Experience</Label>
           <Textarea
             className="h-24 sm:h-36 bg-inputbackground"
             placeholder="Relevant work experiences separated by commas. eg CTO @startup, founder @startup, etc "
@@ -344,7 +344,7 @@ const SettingCard = () => {
         <div className="flex space-x-2 md:justify-end gap-1 lg:gap-3 justify-center flex-row items-center mt-6 lg:space-x-5">
           <Button
             size="xl"
-            className="bg-blue hover:bg-darkblue text-lg rounded-lg"
+            className="bg-blue hover:bg-darkblue text-base rounded-lg"
             onClick={handleSubmit}
           >
             {isSpinning ? "Updating profile" : "Update profile"}

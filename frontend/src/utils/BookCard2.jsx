@@ -411,8 +411,9 @@ const BookCard2 = () => {
     scrollToBottom();
   }, [messages]);
 
+
   return (
-    <div className="bg-[#D9EBFF] text-sm absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 font-Inter">
+    <div className="bg-[#D9EBFF] text-sm absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 ">
       {/* Header */}
       <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
         <div className="flex space-x-3">
@@ -475,9 +476,9 @@ const BookCard2 = () => {
                 <img
                   src="/banner.svg"
                   alt="banner image"
-                  className="rounded-xl mx-auto w-full"
+                  className="rounded-lg mx-auto w-full"
                 />
-                <div className="absolute -bottom-5 left-3">
+                <div className="absolute -bottom-5 left-3 p-2 bg-[#D9EBFF] rounded-full">
                   {isLoading ? (
                     <Skeleton className="w-10 h-10 rounded-full"></Skeleton>
                   ) : (
@@ -883,13 +884,13 @@ const BookCard2 = () => {
                 <div className="relative w-full">
                   <Input
                     className="rounded-lg py-6 px-4 pr-12"
-                    placeholder={`${
-                      messages
-                        ? "Book a session to have unlimited chatting"
-                        : "Enter message"
-                    }`}
+                    placeholder={
+                      messages.length === 0
+                        ? "Enter message"
+                        : "Book a session to have unlimited chatting"
+                    }
                     value={message}
-                    disabled={`${messages ? true : false}`}
+                    disabled={messages.length !== 0}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                   />
@@ -953,7 +954,7 @@ export const Chat = () => {
           Chat
         </Button>
       </DialogTrigger>
-      <DialogContent className="font-Inter w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
+      <DialogContent className=" w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
         <DialogHeader className="mt-2 mb-2">
           <DialogTitle className="flex justify-between">
             Message

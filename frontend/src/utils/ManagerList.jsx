@@ -29,23 +29,19 @@ const ManagerList = () => {
             href="/manager/Settings"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/manager/Settings" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+            }`}>
             <IoMdSettings size={20} />
-            <p> Settings</p>
+            <p className="lg:block text-md "> Settings</p>
           </Link>
         </li>
         <li>
           <Link
             href="/manager/Upcoming"
             className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer hover:text-blue ${
-              pathname === "/manager/Upcoming"
-                ? "bg-[#f7fafc] text-blue"
-                : ""
-            }`}
-          >
+              pathname === "/manager/Upcoming" ? "bg-[#f7fafc] text-blue" : ""
+            }`}>
             <VscOrganization className="hidden sm:inline" size={20} />
-            <p className="lg:block text-lg font-medium">Upcoming</p>
+            <p className="lg:block text-md ">Upcoming</p>
           </Link>
         </li>
         <li>
@@ -53,26 +49,22 @@ const ManagerList = () => {
             href="/manager/Request"
             className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer ${
               pathname === "/manager/Request" ? "bg-[#f7fafc] text-blue" : ""
-            } hover:text-blue`}
-          >
+            } hover:text-blue`}>
             <MdOutlineGroupAdd className="hidden sm:inline" size={20} />
-            <p className="lg:block text-lg font-medium"> Requests</p>
+            <p className="lg:block text-md "> Requests</p>
           </Link>
         </li>
 
         <li>
           <Link
-           href="/manager/Account"
-           className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer ${
-             pathname === "/manager/Account" ? "bg-[#f7fafc] text-blue" : ""
-           } hover:text-blue`}
-          >
-            <CgProfile  className="hidden sm:inline" size={20} />
-            <p className="lg:block text-lg font-medium">Account</p>
+            href="/manager/Account"
+            className={`flex gap-2 items-center rounded-md py-5 px-6 md:px-4 cursor-pointer ${
+              pathname === "/manager/Account" ? "bg-[#f7fafc] text-blue" : ""
+            } hover:text-blue`}>
+            <CgProfile className="hidden sm:inline" size={20} />
+            <p className="lg:block text-md ">Account</p>
           </Link>
         </li>
-
-       
 
         <Separator orientation="horizontal" className="hidden md:block" />
 
@@ -81,22 +73,20 @@ const ManagerList = () => {
             href="/manager/Metrics"
             className={`flex gap-2 items-center rounded-md cursor-pointer py-5 px-4 hover:text-blue ${
               pathname === "/manager/Metrics" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+            }`}>
             <VscGraphLine size={20} />
-            <p>Metrics</p>
+            <p className="lg:block text-md ">Metrics</p>
           </Link>
         </li>
-       
+
         <li className="hidden md:block">
           <Link
             href="/FeedBack"
             className={`flex gap-2 items-center rounded-md py-5 px-4 cursor-pointer hover:text-blue ${
               pathname === "/FeedBack" ? "bg-[#f7fafc] text-blue" : ""
-            }`}
-          >
+            }`}>
             <MdOutlineFeedback size={20} />
-            <p>Send FeedBack</p>
+            <p className="lg:block text-md ">Send FeedBack</p>
           </Link>
         </li>
       </ul>

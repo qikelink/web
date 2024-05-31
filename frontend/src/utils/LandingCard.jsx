@@ -127,7 +127,7 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12 font-Inter bg-[#E6F2FF] min-h-[900px] lg:h-[660px]">
+      <section className="flex flex-col lg:justify-stretch space-y-12  bg-[#E6F2FF] min-h-[900px] lg:h-[716px] ">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-normal">
@@ -190,7 +190,7 @@ const LandingCard = () => {
         </div>
 
         {/* Hero section */}
-        <div className="flex justify-between relative">
+        <div className="flex justify-end relative">
           {/* Hero cloud 1 */}
           <div className="w-1/5 mt-20 ">
             <CloudIcon />
@@ -200,21 +200,21 @@ const LandingCard = () => {
           <div className="grid lg:grid-cols-2 w-5/6 px-2 absolute mx-auto top-0 right-0 left-0 z-10  ">
             {/* Header text */}
             <div className="">
-              <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-extrabold ">
+              <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-bold ">
                 <h2 className="text-[#5B5B5B] ">Unlock Your Potential</h2>
                 <h2 className="text-[#1C1C1C]">with Qikelink </h2>
               </div>
               {/* Subheading text */}
-              <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-xl w-fit font-medium">
+              <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-lg w-fit font-normal">
                 {" "}
                 {/* Adjust width here */}
                 Join Millions using Qikelink to offer mentorship to their
                 audience or Access world-class mentorship for your personal
-                growth anytime and anywhere for free
+                growth anytime and anywhere for free.
                 {/* <Badge
                   className="px-4 text-xl rounded-3xl border-2 border-green-700 bg-green-500 text-white"
                   variant="secondary">
-                  🥳 Free
+                   Free
                 </Badge> */}
               </p>
 
@@ -260,7 +260,7 @@ const LandingCard = () => {
       </section>
 
       {/* section two  */}
-      <section className=" flex space-x-4 justify-evenly items-center font-Inter bg-[#FFF2E6] h-[540px] lg:h-[716px]">
+      <section className=" flex space-x-4 justify-evenly items-center  bg-[#FFF2E6] h-[540px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero cloud 1 */}
@@ -295,7 +295,7 @@ const LandingCard = () => {
       </section>
 
       {/* section three  */}
-      <section className=" flex flex-col  items-center justify-center font-Inter bg-[#E6F2FF] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center  bg-[#E6F2FF] h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -337,7 +337,7 @@ const LandingCard = () => {
       </section>
 
       {/* section four  */}
-      <section className=" flex flex-col  items-center justify-center font-Inter bg-[#00BA3E08] h-[716px]">
+      <section className=" flex flex-col  items-center justify-center  bg-[#00BA3E08] h-[716px]">
         {/* Hero section */}
 
         {/* Top images */}
@@ -372,7 +372,7 @@ const LandingCard = () => {
       </section>
 
       {/* section five  */}
-      <section className="flex flex-col items-center justify-center font-Inter bg-[#F24E1E0D] h-[716px]">
+      <section className="flex flex-col items-center justify-center  bg-[#F24E1E0D] h-[716px]">
         {/* Hero section */}
         <div className="flex space-x-4 justify-evenly">
           {/* Hero cloud 1 */}
@@ -423,7 +423,7 @@ const LandingCard = () => {
       </section>
 
       {/* section six  */}
-      <section className="flex flex-col items-center justify-center font-Inter bg-[#FBF6F54A] h-[716px]">
+      <section className="flex flex-col items-center justify-center  bg-[#FBF6F54A] h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
@@ -452,7 +452,7 @@ const LandingCard = () => {
       </section>
 
       {/* section seven  */}
-      <section className="flex flex-col items-center justify-center font-Inter bg-[#007AFF] h-[560px] lg:h-[716px]">
+      <section className="flex flex-col items-center justify-center  bg-[#007AFF] h-[560px] lg:h-[716px]">
         {/* Hero section */}
 
         {/* Hero Texts */}
@@ -488,7 +488,7 @@ const LandingCard = () => {
       </section>
 
       {/* section eight  */}
-      <section className=" flex justify-center  space-x-4 items-center  font-Inter bg-emerald-50 min-h-[990px] lg:h-[716px]">
+      <section className=" flex justify-center  space-x-4 items-center   bg-emerald-50 min-h-[990px] lg:h-[716px]">
         {/* Hero section */}
 
         <div className=" w-5/6 flex space-y-4 flex-wrap justify-center lg:justify-between items-center">
@@ -578,7 +578,7 @@ const LandingCard = () => {
       </section>
 
       {/* section nine  */}
-      <section className=" flex flex-col space-y-4 py-8 items-center font-Inter bg-[#E6F2FF] h-[245px]">
+      <section className=" flex flex-col space-y-4 py-8 items-center bg-[#E6F2FF] h-[245px]">
         {/* Footer section */}
 
         <div className="flex justify-between w-5/6">
