@@ -528,7 +528,7 @@ const BookCard2 = () => {
                     <p className="text-start text-gray-800 text-base">
                       {mentorForBooking.username
                         ? mentorForBooking.username
-                        : "John Doe"}
+                        : "Loading Loading"}
                     </p>
                     <p className="text-start text-darktext text-sm">
                       {mentorForBooking && mentorForBooking.interests
@@ -745,7 +745,7 @@ const BookCard2 = () => {
                   <Textarea
                     className="h-20 sm:h-28 rounded-2xl"
                     placeholder="Please share what you need my help on."
-                    name="reason"
+                    name="purpose"
                     value={formData.purpose}
                     onChange={handleChange}
                     maxLength={800} // Adding the maxLength attribute
