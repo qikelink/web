@@ -82,9 +82,8 @@ const BookCard2 = () => {
     setNotifications,
   } = useUser();
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("Individual");
   const [isloading, setIsloading] = useState(true);
-  const pathname = usePathname();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [paid, setPaid] = useState(false);
 
@@ -108,7 +107,7 @@ const BookCard2 = () => {
       : new Date().toISOString();
 
     const requestMessageReceiver = `Hello you have received a session request from ${user.name}, accept or reject request from session requests under manager section.`;
-    const requestMessageSender = `Hello you have requested a session with ${data.username}, you would be notified as soon as session is approved.`;
+    const requestMessageSender = `Hello you have requested a session with ${mentorForBooking.username}, you would be notified as soon as session is approved.`;
 
     createSession(
       mentorForBooking.id,
@@ -151,8 +150,9 @@ const BookCard2 = () => {
     setIsloading(false);
     setIsExpanded(false);
     setSelectedOption("");
+    setSessionTime("");
     setDate(null);
-    setFormData({ purpose: "" });
+    setFormData({ purpose: "", email: "", name: "" });
   };
 
   const handlePaymentCancel = () => {
@@ -178,15 +178,15 @@ const BookCard2 = () => {
     setIsSpinning(false);
   };
 
+  const amount =
+    mentorForBooking.rate !== "Free" ? mentorForBooking.rate * 100 : 10;
+
   const config = {
     publicKey: PAYSTACK_KEY,
     reference: new Date().getTime().toString(),
-    email: user.email,
+    email: formData.email,
     currency: "NGN",
-    amount:
-      mentorForBooking && mentorForBooking.rate
-        ? mentorForBooking.rate * 100
-        : 0,
+    amount: mentorForBooking.rate * 100,
     onSuccess: handlePaymentSuccess,
     onCancel: handlePaymentCancel,
     onError: handlePaymentError,
@@ -233,10 +233,10 @@ const BookCard2 = () => {
       });
       return;
     }
-    setIsloading(!isloading);
+    
     setIsSpinning(true);
 
-    if (mentorForBooking.rate !== "Free" || !paid) {
+    if (mentorForBooking.rate !== "Free") {
       setIsDialogOpen(false);
       initializePayment({
         onSuccess: setPaid(true),
@@ -363,8 +363,8 @@ const BookCard2 = () => {
   };
 
   const getInitials = (username) => {
-    if (username && username.length >= 3) {
-      return username.substring(0, 3);
+    if (username && username.length >= 2) {
+      return username.substring(0, 2);
     }
     return username ? username.toLowerCase() : "";
   };
@@ -410,7 +410,6 @@ const BookCard2 = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
 
   return (
     <div className="bg-[#D9EBFF] text-sm absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 ">
@@ -568,7 +567,8 @@ const BookCard2 = () => {
                     <div
                       className={`text-darktext lg:text-gray-700 text-sm line-clamp-3 lg:line-clamp-none lg:tracking-wide  ${
                         isExpanded ? " line-clamp-none" : "line-clamp-3"
-                      }`}>
+                      }`}
+                    >
                       <p>
                         {mentorForBooking.bio
                           ? mentorForBooking.bio
@@ -578,7 +578,8 @@ const BookCard2 = () => {
                     <button
                       type="button"
                       onClick={toggleExpand}
-                      className="text-blue-600 hover:underline focus:outline-none text-sm">
+                      className="text-blue-600 hover:underline focus:outline-none text-sm"
+                    >
                       {isExpanded ? "Read Less" : "Read More"}
                     </button>{" "}
                   </>
@@ -668,7 +669,8 @@ const BookCard2 = () => {
                         className={cn(
                           "w-full justify-start text-left font-normal rounded-lg bg-gray-200 text-[#0A84FF]",
                           !date && "text-muted-foreground"
-                        )}>
+                        )}
+                      >
                         <img
                           src="/calendar2.svg"
                           alt="Calendar icon"
@@ -707,14 +709,16 @@ const BookCard2 = () => {
                 </Label>
                 <div className="relative inline-block w-2/4 bg-gray-200 rounded-lg">
                   <select
-                    className="block appearance-none  text-[#0A84FF] w-full bg-gray-200 rounded-lg border border-gray-300  py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-blue-500"
+                    className="block appearance-none text-[#0A84FF] w-full bg-gray-200 rounded-lg border border-gray-300 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-blue-500"
                     value={selectedOption}
-                    onChange={(e) => setSelectedOption(e.target.value)}>
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                  >
                     {options.map((option) => (
                       <option
                         key={option.value}
                         value={option.value}
-                        className="py-2">
+                        className="py-2"
+                      >
                         {option.label}
                       </option>
                     ))}
@@ -723,7 +727,8 @@ const BookCard2 = () => {
                     <svg
                       className="fill-current h-4 w-4"
                       xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20">
+                      viewBox="0 0 20 20"
+                    >
                       <path
                         fillRule="evenodd"
                         d="M10 12l-6-6 1.5-1.5L10 9l4.5-4.5L16 6l-6 6z"
@@ -767,7 +772,8 @@ const BookCard2 = () => {
                 <Label>Payment </Label>
                 <Button
                   variant="secondary"
-                  className="bg-[#F2F8FF] rounded-full text-darktext font-light">
+                  className="bg-[#F2F8FF] rounded-full text-darktext font-light"
+                >
                   <img src="/wallet.svg" alt="Chat icon" className="mr-1" />
                   {mentorForBooking.rate ? `$${mentorForBooking.rate}` : " Fee"}
                 </Button>
@@ -779,7 +785,8 @@ const BookCard2 = () => {
                 <Button
                   variant="outline"
                   className="py-6 px-10 rounded-lg text-xl font-medium text-[#635BFF]"
-                  onClick={isUserValid ? openDialog : openDialog}>
+                  onClick={isUserValid ? openDialog : openDialog}
+                >
                   <img
                     src="/stripe.svg"
                     alt="stripe icon"
@@ -790,7 +797,8 @@ const BookCard2 = () => {
                 <Button
                   variant="outline"
                   className="py-6 px-8 rounded-lg text-lg font-medium"
-                  onClick={isUserValid ? handlePaystack : openDialog}>
+                  onClick={isUserValid ? handlePaystack : openDialog}
+                >
                   <img
                     src="/paystack.png"
                     alt="paystack icon"
@@ -823,7 +831,8 @@ const BookCard2 = () => {
                 <Button
                   size="xl"
                   className="bg-blue hover:bg-darkblue rounded-xl text-lg w-full"
-                  onClick={handleSubmit}>
+                  onClick={handleSubmit}
+                >
                   {isSpinning ? "Booking.." : "Book Now"}
                   <AiOutlineLoading3Quarters
                     className={`${isSpinning ? "ml-3 animate-spin" : "hidden"}`}
@@ -834,7 +843,8 @@ const BookCard2 = () => {
                   size="xl"
                   className="bg-blue hover:bg-darkblue rounded-xl text-lg w-full"
                   type="button"
-                  onClick={openDialog}>
+                  onClick={openDialog}
+                >
                   Book Now
                 </Button>
               )}
@@ -873,7 +883,8 @@ const BookCard2 = () => {
                         msg.sender === "user"
                           ? "bg-sky-200 justify-self-end"
                           : "bg-gray-100 self-start"
-                      }`}>
+                      }`}
+                    >
                       <p>{msg.text}</p>
                     </div>
                   ))}
@@ -896,7 +907,8 @@ const BookCard2 = () => {
                   />
                   <button
                     className="absolute inset-y-0 right-0 flex items-center pr-4"
-                    onClick={handleSendMessage}>
+                    onClick={handleSendMessage}
+                  >
                     <img
                       src="/send.svg"
                       alt="Send message"
@@ -916,7 +928,8 @@ const BookCard2 = () => {
                   variant="outline"
                   size="icon"
                   onClick={closeDialog}
-                  className="absolute top-0 right-0 ">
+                  className="absolute top-0 right-0 "
+                >
                   <FaX size={16} />
                 </Button>
                 <div className="flex flex-col items-center gap-3 mt-4">
@@ -949,7 +962,8 @@ export const Chat = () => {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2 lg:hidden">
+          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2 lg:hidden"
+        >
           <img src="/chat.svg" alt="Chat icon" className="mr-1" />
           Chat
         </Button>
