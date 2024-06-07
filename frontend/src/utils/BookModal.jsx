@@ -155,7 +155,7 @@ const BookModal = ({ buttonName, blue, data }) => {
   const config = {
     publicKey: PAYSTACK_KEY,
     reference: new Date().getTime().toString(),
-    email: user.email,
+    email: user.superEmail,
     currency: "NGN",
     amount: data.rate * 100,
     onSuccess: handlePaymentSuccess,
