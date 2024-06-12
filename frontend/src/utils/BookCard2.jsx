@@ -61,6 +61,8 @@ import { ImCross } from "react-icons/im";
 import LoginDialog from "@/components/dialog/login";
 import { format } from "date-fns";
 import { getGroqChatCompletion, main } from "./AI";
+import { FaStripeS } from "react-icons/fa6";
+
 
 const BookCard2 = () => {
   const [date, setDate] = useState(null);
@@ -413,64 +415,12 @@ const BookCard2 = () => {
 
 
   return (
-    <div className="bg-[#D9EBFF] text-sm absolute px-4 lg:px-12 py-6 h-full w-full flex flex-col space-y-3 ">
+    <div className="bg-[#D9EBFF] text-sm absolute px-2 lg:px-12 lg:py-6 py-2 h-full w-full flex flex-col space-y-3 ">
       {/* Header */}
-      <div className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[100%] mx-auto">
-        <div className="flex space-x-3">
-          <div className="flex items-center cursor-pointer">
-            <QikelinkLogo />
-            <p className="font-bold text-xl ml-2">Qikelink</p>
-          </div>
-
-          <Badge className="px-4 rounded-full bg-[#d6e7fa]" variant="secondary">
-            Beta
-          </Badge>
-        </div>
-
-        <div className="hidden lg:flex space-x-3 items-center">
-          <Button variant="ghost" onClick={handleAbout}>
-            About
-          </Button>
-          <Button variant="ghost" onClick={handleContact}>
-            Contact us
-          </Button>
-          <LoginDialog
-            loginText={!isUserValid ? "Sign In" : getInitials(user.name)}
-            buttonColor="bg-black"
-            buttonHoverColor="bg-gray-800"
-            buttonSize="lg"
-            textHoverColor="white"
-          />
-        </div>
-        <div className="lg:hidden">
-          <Menubar>
-            <MenubarMenu>
-              <MenubarTrigger>
-                <HiBars3BottomRight size={20} />
-              </MenubarTrigger>
-              <MenubarContent className="flex flex-col space-y-3 bg-[#FFFFFF] p-2">
-                <Button onClick={handleAbout} variant="ghost">
-                  About
-                </Button>
-                <Button onClick={handleContact} variant="ghost">
-                  Contact us
-                </Button>
-                <LoginDialog
-                  loginText={!isUserValid ? "Sign In" : getInitials(user.name)}
-                  buttonColor="bg-black"
-                  buttonHoverColor="bg-gray-600"
-                  buttonSize="lg"
-                  textHoverColor="white"
-                />
-              </MenubarContent>
-            </MenubarMenu>
-          </Menubar>
-        </div>
-      </div>
       <div className="rounded-xl relative bg-[#FFFFFF] p-4 h-full overflow-hidden">
         <div className="h-full overflow-y-auto lg:flex lg:space-x-6">
           {/* Banner, Avatar and chat button */}
-          <div className="lg:w-[30%]">
+          <div className="lg:w-[30%] ">
             <div>
               <div className="relative w-full">
                 <img
@@ -525,7 +475,7 @@ const BookCard2 = () => {
               <div className="flex justify-between items-center mt-5">
                 <div className="flex space-x-3 items-center">
                   <div className="flex flex-col ml-1">
-                    <p className="text-start text-gray-800 text-base">
+                    <p className="text-start text-gray-800 text-base font-semibold">
                       {mentorForBooking.username
                         ? mentorForBooking.username
                         : "Loading Loading"}
@@ -551,9 +501,9 @@ const BookCard2 = () => {
 
             <div className="lg:flex lg:flex-col-reverse lg:space-y-4 lg:w-[90%]">
               <div className="space-y-2 mt-4">
-                <h2 className="text-sm text-black hidden lg:block mt-2">
+                <p className="text-sm text-black hidden lg:block mt-2 font-semibold">
                   About
-                </h2>
+                </p>
                 <p className="text-black text-sm lg:hidden">
                   Coaching Call{" "}
                   <span className="text-darktext">
@@ -589,15 +539,15 @@ const BookCard2 = () => {
                 <p className="text-base font-semibold mt-2 lg:hidden">
                   Booking Info
                 </p>
-                <div className="text-black text-xl hidden lg:block">
+                <div className="text-black hidden lg:block">
                   {/* <p className="text-sm text-darktext">Title</p> */}
-                  <h2 className="font-sm">
+                  <p className="font-semibold">
                     {" "}
                     Coaching Call{" "}
                     <span className="text-darktext">
                       ({mentorForBooking.duration}mins)
                     </span>
-                  </h2>
+                  </p>
                 </div>
                 <div className="flex space-x-3">
                   <div className="bg-[#F2F8FF] flex space-x-1 px-3 py-1 rounded-full text-darktext font-light">
@@ -775,21 +725,17 @@ const BookCard2 = () => {
               <p className="text-sm text-darktext">
                 All transactions are secure and encrypted
               </p>
-              <div className="flex space-x-3 items-center justify-start">
+              <div className="flex space-x-3 items-center justify-center">
                 <Button
                   variant="outline"
-                  className="py-6 px-10 rounded-lg text-xl font-medium text-[#635BFF]"
+                  className="py-6 px-8 rounded-lg text-sm font-medium gap-4 "
                   onClick={isUserValid ? openDialog : openDialog}>
-                  <img
-                    src="/stripe.svg"
-                    alt="stripe icon"
-                    className="mr-2 w-5 h-5"
-                  />
+                  <FaStripeS color="purple" />
                   Stripe
                 </Button>
                 <Button
                   variant="outline"
-                  className="py-6 px-8 rounded-lg text-lg font-medium"
+                  className="py-6 px-8 rounded-lg text-sm font-medium"
                   onClick={isUserValid ? handlePaystack : openDialog}>
                   <img
                     src="/paystack.png"
@@ -832,7 +778,7 @@ const BookCard2 = () => {
               ) : (
                 <Button
                   size="xl"
-                  className="bg-blue hover:bg-darkblue rounded-xl text-lg w-full"
+                  className="bg-blue hover:bg-darkblue rounded-xl text-sm w-full"
                   type="button"
                   onClick={openDialog}>
                   Book Now
