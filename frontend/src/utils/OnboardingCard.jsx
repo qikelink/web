@@ -141,6 +141,8 @@ const OnboardingCard = () => {
     )
       .then(() => {
         verifyRequest(
+          undefined,
+          "1",
           formData.username,
           formData.phoneNumber,
           formData.bio,
@@ -148,7 +150,6 @@ const OnboardingCard = () => {
           undefined,
           undefined,
           undefined,
-          "0",
           interests,
           "1.0/5.0"
         );
@@ -738,7 +739,7 @@ const VerifyModal = ({ blue, userData, mentor }) => {
       formData.contact,
       formData.account,
       file,
-      "0",
+      undefined,
       interests,
       "1.0/5.0"
     )
