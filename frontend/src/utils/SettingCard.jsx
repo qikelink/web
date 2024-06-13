@@ -112,7 +112,7 @@ const SettingCard = () => {
         formData.username,
         formData.phoneNumber,
         formData.bio,
-        formData.awards,
+        formData.awards
       ).then(() => {
         getMentor()
           .then((res) => {
