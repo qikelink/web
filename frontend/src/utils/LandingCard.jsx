@@ -127,7 +127,7 @@ const LandingCard = () => {
   return (
     <>
       {/* section one  */}
-      <section className="flex flex-col lg:justify-stretch space-y-12  bg-[#E6F2FF] min-h-[900px] lg:h-[716px] ">
+      <section className="flex flex-col lg:justify-stretch space-y-12  bg-[#E6F2FF] h-screen lg:h-screen ">
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-normal">
@@ -163,7 +163,7 @@ const LandingCard = () => {
             <Button variant="ghost" onClick={handleContact}>
               Contact us
             </Button>
-            <Button size="lg" onClick={handleBrowse}>
+            <Button size="lg" onClick={handleBrowse} className="bg-[#007AFF]">
               Get started
             </Button>
           </div>
@@ -180,7 +180,10 @@ const LandingCard = () => {
                   <Button onClick={handleContact} variant="ghost">
                     Contact us
                   </Button>
-                  <Button onClick={handleBrowse} size="lg">
+                  <Button
+                    className="bg-[#007AFF]"
+                    onClick={handleBrowse}
+                    size="lg">
                     Get started
                   </Button>
                 </MenubarContent>
@@ -201,8 +204,10 @@ const LandingCard = () => {
             {/* Header text */}
             <div className="">
               <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-bold ">
-                <h2 className="text-[#5B5B5B] ">Unlock Your Potential</h2>
-                <h2 className="text-[#1C1C1C]">with Qikelink </h2>
+                <h2 className="text-[#0B3558] ">
+                  Unlock And Grow Your Potential
+                </h2>
+                {/* <h2 className="text-[#1C1C1C]">with Qikelink </h2> */}
               </div>
               {/* Subheading text */}
               <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-lg w-fit font-normal">
