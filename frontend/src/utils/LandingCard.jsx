@@ -202,7 +202,7 @@ const LandingCard = () => {
           {/* Hero Texts */}
           <div className="grid lg:grid-cols-2 w-5/6 px-2 absolute mx-auto top-0 right-0 left-0 z-10  ">
             {/* Header text */}
-            <div className="">
+            <div className="mt-8">
               <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-bold ">
                 <h2 className="text-[#0B3558] ">
                   Unlock And Grow Your Potential
