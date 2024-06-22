@@ -23,7 +23,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import pic5 from "../../images/landin.png";
+import pic5 from "../../images/elon_ada.png";
 import Image from "next/image";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
@@ -142,11 +142,15 @@ const LandingCard = () => {
         {/* Header  */}
         <div
           id="navbar"
-          className="bg-[#FFFFFFCC] rounded-full py-4 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
-          <div className="flex space-x-3">
+          className="bg-[#FFFFFFCC] rounded-full py-2 px-4 lg:px-8 flex justify-between items-center w-[90%] lg:w-5/6 mx-auto">
+          <div className="flex space-x-3 items-center">
             <div className="flex items-center cursor-pointer">
-              <QikelinkLogo />
-              <p className="font-bold text-xl ml-2">Qikelink</p>
+              <img
+                src="https://bafybeiaocft3rynitw5llws2tfldor4tugj525lhgc5wfshpfipvtzn2iy.ipfs.nftstorage.link/"
+                alt="Description of GIF"
+                className="h-10 w-auto mb-5"
+              />
+              <p className="font-bold text-xl">Qikelink</p>
             </div>
 
             <Badge
@@ -182,7 +186,7 @@ const LandingCard = () => {
                   </Button>
                   <Button
                     className="bg-[#007AFF]"
-                    onClick={handleBrowse}
+                    onClick={handleClaim}
                     size="lg">
                     Get started
                   </Button>
@@ -202,10 +206,10 @@ const LandingCard = () => {
           {/* Hero Texts */}
           <div className="grid lg:grid-cols-2 w-5/6 px-2 absolute mx-auto top-0 right-0 left-0 z-10  ">
             {/* Header text */}
-            <div className="">
+            <div className="mt-8">
               <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-bold ">
-                <h2 className="text-[#0B3558] ">
-                  Unlock And Grow Your Potential
+                <h2 className="text-[#000e44] ">
+                  Unlock Your Digital Potential with QikeLink
                 </h2>
                 {/* <h2 className="text-[#1C1C1C]">with Qikelink </h2> */}
               </div>
@@ -213,9 +217,9 @@ const LandingCard = () => {
               <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-lg w-fit font-normal">
                 {" "}
                 {/* Adjust width here */}
-                Join Millions using Qikelink to offer mentorship to their
-                audience or Access world-class mentorship for your personal
-                growth anytime and anywhere for free.
+                Join millions using QikeLink to monetize their digital presence!
+                💰✨ Access virtually anyone, anytime, anywhere – all for free.
+                🌍🔗
                 {/* <Badge
                   className="px-4 text-xl rounded-3xl border-2 border-green-700 bg-green-500 text-white"
                   variant="secondary">
@@ -234,13 +238,13 @@ const LandingCard = () => {
                     className="bg-[#FFFFFF] rounded-md  px-4 mr-2">
                     <FcGoogle size={20} />
                   </Button>{" "}
-                  Claim your booking link
+                  Claim your ID
                 </Button>
                 <Button
                   onClick={handleBrowse}
                   size="xl"
                   className="bg-[#1C1C1C] px-10">
-                  Browse mentors
+                  Find Leaders
                 </Button>
               </div>
             </div>
@@ -277,19 +281,19 @@ const LandingCard = () => {
         <div className="flex flex-col space-y-6 items-center w-2/3">
           {/* Header text */}
           <p className="text-[#6B3600] text-lg font-medium">
-            Discover mentorship
+            Forge Strategic Connections
           </p>
 
           <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
             <p className="text-[#6B3600]">Connect With</p>
-            <p className="text-[#6B3600]"> Industry Leaders</p>
+            <p className="text-[#6B3600]"> Anyone, Anywhere</p>
           </div>
           {/* Subheading text */}
           <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal">
             {" "}
             {/* Adjust width here */}
-            Join a vibrant community of seasoned content creators. Find the
-            guidance you need to navigate challenges and accelerate your growth.
+            Join a vibrant community of seasoned pace setters. Find the guidance
+            you need to navigate challenges and accelerate your growth.
           </p>
         </div>
 
@@ -313,20 +317,20 @@ const LandingCard = () => {
         <div className="flex flex-col space-y-5 items-center  w-2/3">
           {/* Header text */}
           <p className="text-[#007AFF] text-lg font-medium">
-            Booking Made Easy
+            Effortless Connections
           </p>
 
           <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
-            <p className="text-[#007AFF]">Book meet with any </p>
-            <p className="text-[#007AFF]"> Mentor with ease</p>
+            <p className="text-[#007AFF]">Connect with</p>
+            <p className="text-[#007AFF]"> Your Dream Contacts Easily</p>
           </div>
           {/* Subheading text */}
           <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal">
             {" "}
-            Schedule live video sessions with experienced content creators at
-            your convenience. Whether you need advice on video editing, product
+            Schedule live video sessions with experienced leaders at your
+            convenience. Whether you need advice on video editing, product
             development, or marketing strategy, our platform makes it simple to
-            connect with the right mentor for your needs.
+            connect with the right Persons for your needs.
           </p>
         </div>
 
@@ -354,19 +358,19 @@ const LandingCard = () => {
         <div className="flex flex-col space-y-5 items-center w-2/3">
           {/* Header text */}
           <p className="text-[#004015] text-lg font-medium">
-            customise your booking link
+            customise your QikeLink ID
           </p>
 
           <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
             <p className="text-[#004015]">Customize your </p>
-            <p className="text-[#004015]"> link as you want</p>
+            <p className="text-[#004015]"> ID as you want</p>
           </div>
           {/* Subheading text */}
           <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
             {" "}
             Own your link in every way, add custom colors, graphics, quotes and
-            more. Share your booking link to the world to start engaging with
-            your audience on Qikelink.
+            more. Share your booking link to the world to start engaging with on
+            Qikelink.
           </p>
         </div>
 
@@ -389,13 +393,13 @@ const LandingCard = () => {
           <div className="flex flex-col space-y-4 items-center w-2/3">
             {/* Header text */}
             <p className="text-[#600000] text-lg font-medium">
-              Join the Community
+              Join Our Community
             </p>
 
             <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
               <p className="text-[#600000]">Become Part of </p>
               <div className="text-[#600000] flex flex-col space-x-2">
-                <p> Somesmg Bigger </p>
+                <p> Something Bigger </p>
                 <img
                   className="mt-6"
                   src="/section5a.svg"
@@ -408,14 +412,14 @@ const LandingCard = () => {
               {" "}
               Join Qikelink today and become part of a thriving community of
               entrepreneurs, content creators, and mentors. Together, we're
-              shaping the future of content creation and empowering creators to
+              shaping the future of social Media and empowering Individuals to
               achieve their goals
             </p>
 
             {/* CTA buttons */}
             <div className="mt-20">
               <Button onClick={handleClaim} size="lg" className="bg-[#007AFF]">
-                Claim your booking link
+                Claim your Qikelink ID
               </Button>
             </div>
           </div>
@@ -527,8 +531,8 @@ const LandingCard = () => {
                   className="bg-white p-2 my-3 border-0 rounded-md">
                   <AccordionTrigger>What is Qikelink?</AccordionTrigger>
                   <AccordionContent>
-                    Qikelink connects creators and professionals with their
-                    audience for personalized one-on-one sessions.
+                    Personalized Connections 🔗 QikeLink connects leaders with
+                    their audience for one-on-one sessions.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem
@@ -551,8 +555,8 @@ const LandingCard = () => {
                     How Can I Make Money with Qikelink?
                   </AccordionTrigger>
                   <AccordionContent>
-                    With Qikelink, you can monetize your expertise by offering
-                    one-on-one sessions to your audience.
+                    Earn from Your Expertise 💵 Offer one-on-one sessions to
+                    your audience and monetize your skills.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem
@@ -562,8 +566,8 @@ const LandingCard = () => {
                     How Trusted is This Platform
                   </AccordionTrigger>
                   <AccordionContent>
-                    Qikelink prioritizes trust and reliability to ensure a
-                    secure platform for both mentors and users.
+                    A Secure Platform 🔒 QikeLink prioritizes trust and
+                    reliability for users.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem
