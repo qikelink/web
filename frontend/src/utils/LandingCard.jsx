@@ -28,6 +28,7 @@ import Image from "next/image";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 import { Subscribe, isUserValid } from "../../../backend/src/pocketbase";
+import { AiFillDollarCircle } from "react-icons/ai";
 
 const LandingCard = () => {
   const router = useRouter();
@@ -146,8 +147,8 @@ const LandingCard = () => {
           <div className="flex space-x-3 items-center">
             <div className="flex items-center cursor-pointer">
               <img
-                src="https://bafybeiaocft3rynitw5llws2tfldor4tugj525lhgc5wfshpfipvtzn2iy.ipfs.nftstorage.link/"
-                alt="Description of GIF"
+                src="https://bafybeiaocft3rynitw5llws2tfldor4tugj525lhgc5wfshpfipvtzn2iy.ipfs.dweb.link/"
+                alt="GIF"
                 className="h-10 w-auto mb-5"
               />
               <p className="font-bold text-xl">Qikelink</p>
@@ -167,7 +168,7 @@ const LandingCard = () => {
             <Button variant="ghost" onClick={handleContact}>
               Contact us
             </Button>
-            <Button size="lg" onClick={handleBrowse} className="bg-[#007AFF]">
+            <Button size="lg" onClick={handleClaim} className="bg-[#007AFF]">
               Get started
             </Button>
           </div>
@@ -209,22 +210,17 @@ const LandingCard = () => {
             <div className="mt-8">
               <div className="text-3xl text-center lg:text-left lg:text-6xl space-y-3 font-bold ">
                 <h2 className="text-[#000e44] ">
-                  Unlock Your Digital Potential with QikeLink
+                  Increase Your Internet Income
                 </h2>
                 {/* <h2 className="text-[#1C1C1C]">with Qikelink </h2> */}
               </div>
               {/* Subheading text */}
               <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-lg w-fit font-normal">
                 {" "}
-                {/* Adjust width here */}
-                Join millions using QikeLink to monetize their digital presence!
-                💰✨ Access virtually anyone, anytime, anywhere – all for free.
-                🌍🔗
-                {/* <Badge
-                  className="px-4 text-xl rounded-3xl border-2 border-green-700 bg-green-500 text-white"
-                  variant="secondary">
-                   Free
-                </Badge> */}
+                Supercharge your online earnings? you can increase your internet
+                income by a whopping 50%! Our innovative link-in-bio platform
+                allows you to connect with your audience through direct video
+                calls.
               </p>
 
               {/* CTA buttons */}
@@ -252,9 +248,11 @@ const LandingCard = () => {
             {/* Image section */}
             <div className="mt-12 flex justify-center items-center">
               <Image
-                src={pic5}
-                width={410}
-                height={410}
+                src={
+                  "https://img.freepik.com/free-photo/dark-skinned-woman-talking-about-project-with-coworkers-late-night-course-video-conference-smartphone-busy-employee-using-modern-technology-network-wireless-doing-overtime-job_482257-9215.jpg?t=st=1719355210~exp=1719358810~hmac=33848292b34bf55eb59bac0810eaae5e55fd3bccc684abd7a437f3d68f66183c&w=1480"
+                }
+                width={550}
+                height={550}
                 className="rounded-md"
                 alt="Picture of the author"
               />
@@ -280,20 +278,23 @@ const LandingCard = () => {
         {/* Hero Texts */}
         <div className="flex flex-col space-y-6 items-center w-2/3">
           {/* Header text */}
-          <p className="text-[#6B3600] text-lg font-medium">
-            Forge Strategic Connections
+          <p className="text-[#6B3600] text-center text-lg font-medium">
+            Connect, Earn, Grow
           </p>
 
-          <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
-            <p className="text-[#6B3600]">Connect With</p>
-            <p className="text-[#6B3600]"> Anyone, Anywhere</p>
+          <div className="text-3xl lg:text-5xl space-y-3 text-center font-semibold">
+            <p className="text-[#6B3600]">
+              Connect With Your Audience Personally
+            </p>
           </div>
           {/* Subheading text */}
           <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal">
             {" "}
             {/* Adjust width here */}
-            Join a vibrant community of seasoned pace setters. Find the guidance
-            you need to navigate challenges and accelerate your growth.
+            With Qikelink, you can seamlessly integrate video calls into your
+            bio link, allowing your followers to connect with you like never
+            before. Turn casual followers into loyal fans by offering them a
+            unique, personal experience.
           </p>
         </div>
 
@@ -320,17 +321,16 @@ const LandingCard = () => {
             Effortless Connections
           </p>
 
-          <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
-            <p className="text-[#007AFF]">Connect with</p>
-            <p className="text-[#007AFF]"> Your Dream Contacts Easily</p>
+          <div className="text-3xl lg:text-5xl space-y-3 text-center font-semibold">
+            <p className="text-[#007AFF]">Earn While Doing What You Love</p>
           </div>
           {/* Subheading text */}
           <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal">
             {" "}
-            Schedule live video sessions with experienced leaders at your
-            convenience. Whether you need advice on video editing, product
-            development, or marketing strategy, our platform makes it simple to
-            connect with the right Persons for your needs.
+            Monetize your time and expertise by earning for direct video calls.
+            Whether you're an influencer, educator, or professional, Qikelink
+            provides the tools to boost your income effortlessly. Watch your
+            earnings soar as you build meaningful connections.
           </p>
         </div>
 
@@ -361,16 +361,16 @@ const LandingCard = () => {
             customise your QikeLink ID
           </p>
 
-          <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
-            <p className="text-[#004015]">Customize your </p>
-            <p className="text-[#004015]"> ID as you want</p>
+          <div className="text-3xl lg:text-5xl space-y-3 text-center font-semibold">
+            <p className="text-[#004015]">Grow Your Brand</p>
           </div>
           {/* Subheading text */}
           <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
             {" "}
-            Own your link in every way, add custom colors, graphics, quotes and
-            more. Share your booking link to the world to start engaging with on
-            Qikelink.
+            Stand out in the crowded digital space by offering personalized
+            interactions. Qikelink helps you grow your brand by making it easier
+            to engage with your audience, fostering trust, and enhancing your
+            online presence.
           </p>
         </div>
 
@@ -393,13 +393,12 @@ const LandingCard = () => {
           <div className="flex flex-col space-y-4 items-center w-2/3">
             {/* Header text */}
             <p className="text-[#600000] text-lg font-medium">
-              Join Our Community
+              Ready to Transform Your Online Earnings?
             </p>
 
             <div className="text-3xl lg:text-6xl space-y-3 text-center font-semibold">
               <p className="text-[#600000]">Become Part of </p>
               <div className="text-[#600000] flex flex-col space-x-2">
-                <p> Something Bigger </p>
                 <img
                   className="mt-6"
                   src="/section5a.svg"
@@ -410,10 +409,9 @@ const LandingCard = () => {
             {/* Subheading text */}
             <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
               {" "}
-              Join Qikelink today and become part of a thriving community of
-              entrepreneurs, content creators, and mentors. Together, we're
-              shaping the future of social Media and empowering Individuals to
-              achieve their goals
+              Join the Qikelink community today and start connecting with your
+              audience on a deeper level. Elevate your brand, boost your
+              earnings, and make every interaction count.
             </p>
 
             {/* CTA buttons */}
@@ -432,33 +430,7 @@ const LandingCard = () => {
       </section>
 
       {/* section six  */}
-      <section className="flex flex-col items-center justify-center  bg-[#FBF6F54A] h-[716px]">
-        {/* Hero section */}
-
-        {/* Hero Texts */}
-        <div className="flex flex-col space-y-5 items-center w-2/3">
-          {/* Header text */}
-          <p className="text-[#1C1C1C] text-lg font-medium">
-            Onboarding for you
-          </p>
-
-          <div className="text-3xl lg:text-6xl space-y-4 text-center font-semibold">
-            <p className="text-[#1C1C1C]">Explore qikelink </p>
-          </div>
-          {/* Subheading text */}
-          <p className="text-[#1C1C1C] text-base lg:text-xl w-full text-center font-normal ">
-            {" "}
-            Discover the full potential of qikelink by watching our quick demo,
-            where we walk you through all the features that can revolutionize
-            how you engage with your audience.
-          </p>
-
-          {/* CTA buttons */}
-          <div className="mt-20">
-            <img src="/section6a.svg" alt="Section 6 image 1" />
-          </div>
-        </div>
-      </section>
+      {/*  */}
 
       {/* section seven  */}
       <section className="flex flex-col items-center justify-center  bg-[#007AFF] h-[560px] lg:h-[716px]">
@@ -562,12 +534,9 @@ const LandingCard = () => {
                 <AccordionItem
                   value="item-4"
                   className="bg-white p-2 my-3 border-0 rounded-md">
-                  <AccordionTrigger>
-                    How Trusted is This Platform
-                  </AccordionTrigger>
+                  <AccordionTrigger>Privacy Policy?</AccordionTrigger>
                   <AccordionContent>
-                    A Secure Platform 🔒 QikeLink prioritizes trust and
-                    reliability for users.
+                    We respect your privacy and ensure your data is secure.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem
@@ -592,8 +561,7 @@ const LandingCard = () => {
 
         <div className="flex justify-between w-5/6">
           <div className="flex items-center">
-            <QikelinkLogo />
-            <p className="font-bold text-base lg:text-xl ml-2">Qikelink.com</p>
+            <p className="font-bold text-base lg:text-xl ">Qikelink.com</p>
           </div>
 
           <div className="flex flex-col space-y-2" variant="secondary">

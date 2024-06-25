@@ -77,8 +77,8 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background pt-4 px-4">
-      <div className="font-Inter flex justify-between items-center pb-3">
-        <div className="flex items-center justify-between space-x-2 hover:cursor">
+      <div className="font-Inter flex justify-between items-center pb-3 ">
+        <div className="flex items-center justify-between hover:cursor">
           {isUserValid && isDropdownOpen ? (
             <Badge
               variant={"outline"}
@@ -106,8 +106,13 @@ export default function Header() {
           <div
             className="flex items-center cursor-pointer"
             onClick={() => router.push(`/`)}>
-            <QikelinkLogo />
-            <p className="font-bold text-xl ml-2">Qikelink</p>
+            <img
+              src="https://bafybeiaocft3rynitw5llws2tfldor4tugj525lhgc5wfshpfipvtzn2iy.ipfs.dweb.link/"
+              alt="GIF"
+              className="h-10 w-auto mb-5"
+            />
+            {/* <QikelinkLogo /> */}
+            <p className="font-bold text-xl ">Qikelink</p>
           </div>
         </div>
         <div className="hidden sm:inline gap-4 justify-center">

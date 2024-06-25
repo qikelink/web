@@ -108,24 +108,6 @@ const HomeCardSection = () => {
             alt="banner image"
             className="rounded-xl mx-auto w-full md:hidden"
           />
-          {/* <Card className="hidden flex justify-center item-center bg-black ">
-            <Image
-              src={pic4}
-              width={450}
-              height={450}
-              className="rounded-md hidden md:block"
-              alt="Picture of the author"
-            />
-          </Card>
-          <Card className="hidden flex justify-center item-center bg-gray-200">
-            <Image
-              src={pic5}
-              width={450}
-              height={450}
-              className="rounded-md"
-              alt="Picture of the author"
-            />
-          </Card> */}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
