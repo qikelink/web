@@ -249,7 +249,7 @@ const LandingCard = () => {
             <div className="mt-12 flex justify-center items-center">
               <Image
                 src={
-                  "https://img.freepik.com/free-photo/dark-skinned-woman-talking-about-project-with-coworkers-late-night-course-video-conference-smartphone-busy-employee-using-modern-technology-network-wireless-doing-overtime-job_482257-9215.jpg?t=st=1719355210~exp=1719358810~hmac=33848292b34bf55eb59bac0810eaae5e55fd3bccc684abd7a437f3d68f66183c&w=1480"
+                  "https://live.staticflickr.com/65535/53816683941_1f2c09fee1_b.jpg"
                 }
                 width={550}
                 height={550}
