@@ -162,7 +162,7 @@ const LandingCard = () => {
           <p className="text-sm text-white font-normal">
             Closed beta version of Qikelink is here! Claim your ID now to be among
             the first{" "}
-            <CountdownTimer duration={600} /><br/>
+            <CountdownTimer duration={600} /> {" "}
             <a className="underline" href="/register">
               Claim your ID
             </a>{" "}
