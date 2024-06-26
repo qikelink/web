@@ -125,6 +125,34 @@ const LandingCard = () => {
     };
   }, []);
 
+  const CountdownTimer = ({ duration }) => {
+    const [time, setTime] = useState(duration);
+
+    useEffect(() => {
+      const countdownInterval = setInterval(() => {
+        setTime((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(countdownInterval);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(countdownInterval);
+    }, []);
+
+    const formatTime = (seconds) => {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes < 10 ? "0" : ""}${minutes}:${
+        remainingSeconds < 10 ? "0" : ""
+      }${remainingSeconds}`;
+    };
+
+    return <span className="countdown">{formatTime(time)}</span>;
+  };
+
   return (
     <>
       {/* section one  */}
@@ -132,11 +160,13 @@ const LandingCard = () => {
         {/* Beta highlight */}
         <div className="py-2 text-center bg-[#007AFF] ">
           <p className="text-sm text-white font-normal">
-            Thanks for trying the beta version of Qikelink. Please let us know
-            what we should work on to make it better! Submit your{" "}
-            <a className="underline" href="/feedBack">
-              feedback here
-            </a>
+            Closed beta version of Qikelink is here! Claim your ID now to be among
+            the first{" "}
+            <CountdownTimer duration={600} /><br/>
+            <a className="underline" href="/register">
+              Claim your ID
+            </a>{" "}
+            before the countdown ends!
           </p>
         </div>
 
@@ -217,10 +247,10 @@ const LandingCard = () => {
               {/* Subheading text */}
               <p className="text-[#000000] lg:text-left text-center mt-6 text-base lg:text-lg w-fit font-normal">
                 {" "}
-                Supercharge your online earnings? you can increase your internet
-                income by a whopping 50%! Our innovative link-in-bio platform
-                allows you to connect with your audience through direct video
-                calls.
+                Supercharge your online earnings? Don't miss out—our innovative
+                link-in-bio platform allows you to earn while connecting with
+                your audience through direct video calls. Act now and stay ahead
+                of the curve!
               </p>
 
               {/* CTA buttons */}
