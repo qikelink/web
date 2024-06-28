@@ -269,7 +269,7 @@ const LandingCard = () => {
                 <Button
                   onClick={handleBrowse}
                   size="xl"
-                  className="bg-[#1C1C1C] px-10">
+                  className="bg-[#1C1C1C] px-14">
                   Find Leaders
                 </Button>
               </div>

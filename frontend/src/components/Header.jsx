@@ -107,8 +107,8 @@ export default function Header() {
             className="flex items-center cursor-pointer"
             onClick={() => router.push(`/`)}>
             <img
-              src="https://bafybeiaocft3rynitw5llws2tfldor4tugj525lhgc5wfshpfipvtzn2iy.ipfs.dweb.link/"
-              alt="GIF"
+              src="https://i.imgur.com/r8ujuKx.gif"
+              alt="x"
               className="h-10 w-auto mb-5"
             />
             {/* <QikelinkLogo /> */}

@@ -91,9 +91,13 @@ const BookCard2 = () => {
   const closeDialog = () => setIsDialogOpen(false);
   const openDialog = () => setIsDialogOpen(true);
 
-  const handleLink = () => {
-    router.push("/get-started");
-  };
+    const handleClaim = () => {
+      if (isUserValid) {
+        router.push("/settings");
+      } else {
+        router.push("/get-started");
+      }
+    };
 
   const PAYSTACK_KEY =
     process.env.PAYSTACK_KEY ||
@@ -516,7 +520,7 @@ const BookCard2 = () => {
                         <p>You can send a message for free to your mentor.</p>
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4 py-4 flex-grow">
+                    <div className="grid gap-4 py-4 flex-grow overflow-scroll">
                       {messages.map((msg, index) => (
                         <div
                           key={index}
@@ -881,7 +885,10 @@ const BookCard2 = () => {
 
               <p className="text-center mt-2 text-sm">
                 claim your own link{" "}
-                <button variant="ghost" className=" text-base text-blue ">
+                <button
+                  variant="ghost"
+                  onClick={handleClaim}
+                  className=" text-base text-blue ">
                   get link
                 </button>
               </p>
@@ -983,44 +990,3 @@ const BookCard2 = () => {
 
 export default BookCard2;
 
-export const Chat = () => {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="py-2 px-4 bg-[#F2F8FF] rounded-lg mr-2 lg:hidden">
-          <img src="/chat.svg" alt="Chat icon" className="mr-1" />
-          Chat
-        </Button>
-      </DialogTrigger>
-      <DialogContent className=" w-[90%] sm:max-w-[425px] h-[80%] rounded-2xl">
-        <DialogHeader className="mt-2 mb-2">
-          <DialogTitle className="flex justify-between">
-            Message
-            <DialogClose asChild>
-              <ImCross className="rounded-full p-1 bg-gray-200 w-5 h-5" />
-            </DialogClose>
-          </DialogTitle>
-          <Separator className="bg-gray-200 my-2" />
-          <DialogDescription className="text-left p-2 w-full bg-[#FFF2E6] rounded-lg flex space-x-2 items-start">
-            <img src="/chatnotify.svg" alt="Chat icon" className="mt-1" />
-            <p>You can send a message for free to your mentor.</p>
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4"></div>
-        <DialogFooter>
-          <div className="relative w-full">
-            <Input
-              className="rounded-full py-6 px-4 pr-12"
-              placeholder="Enter message"
-            />
-            <button className="absolute inset-y-0 right-0 flex items-center pr-4">
-              <img src="/send.svg" alt="Send message" className="h-6 w-6" />
-            </button>
-          </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
